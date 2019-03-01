@@ -11,7 +11,8 @@ public enum tileType
 	Tree,
 	Geyser,
 	GateUp,
-	GateDown
+	GateDown,
+	ShortWall
 }
 
 public enum buttonType
@@ -31,7 +32,8 @@ public class traversibleGround : ScriptableObject
 	"Tree",
 	"Geyser",
 	"GateUp",
-	"GateDown"
+	"GateDown",
+	"ShortWall"
 	};
 	public List<bool> traversePossibilities;
 }
