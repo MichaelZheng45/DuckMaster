@@ -144,7 +144,6 @@ public class CreateMesh : MonoBehaviour {
 		for (int rows = size - 1; rows >= 0;rows--)
 		{
 			string readLine = reader.ReadLine();
-			Debug.Log(readLine + rows);
 			for (int  cols = 0; cols < size; cols++)
 			{
 				Vector3 newPos = new Vector3(cols * distance, rows * distance, 0);
@@ -336,7 +335,6 @@ public class CreateMesh : MonoBehaviour {
 			openList.RemoveAt(0);
 			openlistCount--;
 		}
-		Debug.Log("Nodes processes: " + closedList.Count);
 			
 		foreach (nodeData nodeTemp in closedList)
 		{
