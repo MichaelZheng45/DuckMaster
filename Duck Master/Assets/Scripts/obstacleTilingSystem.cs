@@ -46,12 +46,12 @@ public class tile
 	public Vector3 pos;
 	public tileType tType;
 	public buttonType typeButton;
-
+	public int heightVal;
 	//pathfinding information
 	public tile prevTile;
 	public float costSofar;
 	public float costWithHeurestics;
-	public bool walkable = true;
+	public bool walkable = true; //unwalkable is tile that the duck cannot access due to certain non tile things like unfreindlies
 
 	public	float getHeurestic()
 	{
@@ -155,7 +155,7 @@ public class obstacleTilingSystem : MonoBehaviour
 				newTile.pos = new Vector3(XPos, AddHeight * heightTile, ZPos);
 				int tileTypeIndex = getTileTypeFromColor(levelColor0);
 				newTile.tType = (tileType)tileTypeIndex;
-
+				newTile.heightVal = heightTile;
 				//generate that actual gameobject
 				GameObject spawnTile = tileTypeObject[tileTypeIndex];
 				GameObject tileObj = Instantiate(spawnTile, newTile.pos, transform.rotation);
@@ -199,7 +199,7 @@ public class obstacleTilingSystem : MonoBehaviour
 		}
     }
 
-	public List<Vector3> getTilePath(Vector3 from, Vector3 to, List<bool> travableTile, bool ignoreWalkable)
+	public List<Vector3> getTilePathDuck(Vector3 from, Vector3 to, List<bool> travableTile)
 	{
 		//Create list data to keep track of
 		List<tile> openList = new List<tile>();
@@ -223,9 +223,8 @@ public class obstacleTilingSystem : MonoBehaviour
 
 		//getTargetNode
 		tile targetNode = tileList[getIndexOfTile(targetPos)];
-		if (!travableTile[(int)targetNode.tType] || targetNode == firstNode || (!targetNode.walkable && !ignoreWalkable))
+		if (!travableTile[(int)targetNode.tType] || targetNode == firstNode || (!targetNode.walkable))
 		{
-			Debug.Log("same Node");
 			return path;
 		}
 
@@ -243,7 +242,6 @@ public class obstacleTilingSystem : MonoBehaviour
 			//maybe a check if the nodes processed is too much then stop or something
 			if(targetNode == curNode)
 			{
-				Debug.Log("Found Tile");
 				foundToTile = true;
 			}
 			else
@@ -267,8 +265,8 @@ public class obstacleTilingSystem : MonoBehaviour
                                     tile adjTile = tileList[adjIndex];
                                     tileType adjType = adjTile.tType;
 
-									//if it cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
-                                    if (travableTile[(int)adjType] && !closedList.Contains(adjTile) && curNode != adjTile && !(!adjTile.walkable && !ignoreWalkable))
+									//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
+                                    if ( adjTile.heightVal <= curNode.heightVal && travableTile[(int)adjType] && !closedList.Contains(adjTile) && curNode != adjTile && (adjTile.walkable))
                                     {
                                         adjTile.costSofar = curNode.costSofar + (adjTile.pos - curPos).magnitude;
                                         adjTile.costWithHeurestics = adjTile.costSofar + (targetPos - adjTile.pos).magnitude;
@@ -324,7 +322,133 @@ public class obstacleTilingSystem : MonoBehaviour
 
 		return path;
 	}
-	
+
+	public List<Vector3> getTilePathPlayer(Vector3 from, Vector3 to, List<bool> travableTile)
+	{
+		//Create list data to keep track of
+		List<tile> openList = new List<tile>();
+		HashSet<tile> closedList = new HashSet<tile>();
+		List<Vector3> path = new List<Vector3>();
+		int openListCount = 0;
+		int nodesProcessed = 0; //processed is when it is thrown into the closed list
+
+		//Allocate positions
+		Vector3 startingPos = from;
+		Vector3 targetPos = to;
+
+		//Get the first node
+		tile firstNode = tileList[getIndexOfTile(startingPos)];
+		firstNode.costSofar = 0;
+		firstNode.costWithHeurestics = (targetPos - startingPos).magnitude;
+
+		//Add Node
+		openList.Add(firstNode);
+		openListCount++;
+
+		//getTargetNode
+		tile targetNode = tileList[getIndexOfTile(targetPos)];
+		if (!travableTile[(int)targetNode.tType] || targetNode == firstNode)
+		{
+			return path;
+		}
+
+		//conditions for other stuff like limiting the range etc.
+		bool loop = true;
+
+		//condition when tile is found
+		bool foundToTile = false;
+		while (loop && openListCount > 0 && !foundToTile) //&& if node is not found, count should be fine but in case
+		{
+			tile curNode = openList[0];
+			Vector3 curPos = curNode.pos;
+
+			//to create the index is i = (row * Colsize) + column where col is x
+			//maybe a check if the nodes processed is too much then stop or something
+			if (targetNode == curNode)
+			{
+
+				foundToTile = true;
+			}
+			else
+			{
+				if (!closedList.Contains(curNode))
+				{
+					//iterate through all adjacents
+					for (int row = -1; row < 2; row++)
+					{
+						for (int col = -1; col < 2; col++)
+						{
+							if (col == 0 || row == 0)
+							{
+								//check tile information
+								int adjIndex = ((row + (int)curNode.index2.y) * tileCountX) + (col + (int)curNode.index2.x);
+
+								//making sure that the index is within bounds of the "2d" array 
+								if (adjIndex < tileCountX * tileCountZ && curNode.index2.y + row < tileCountZ && curNode.index2.y + row >= 0
+									&& curNode.index2.x < tileCountX && curNode.index2.x >= 0)
+								{
+									tile adjTile = tileList[adjIndex];
+									tileType adjType = adjTile.tType;
+
+									//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
+									if (adjTile.heightVal == curNode.heightVal && travableTile[(int)adjType] && !closedList.Contains(adjTile) && curNode != adjTile)
+									{
+										adjTile.costSofar = curNode.costSofar + (adjTile.pos - curPos).magnitude;
+										Vector2 manhattanDis = (targetPos - adjTile.pos);
+										adjTile.costWithHeurestics = adjTile.costSofar + Mathf.Abs(manhattanDis.x) + Mathf.Abs(manhattanDis.y);
+										adjTile.prevTile = curNode;
+
+										//place the node into a queue 
+										bool placed = false;
+										for (int i = 0; i < openListCount; i++)
+										{
+											if (openList[i].costWithHeurestics > adjTile.costWithHeurestics)
+											{
+												placed = true;
+												openList.Insert(i, adjTile);
+												openListCount++;
+												i = openListCount;
+											}
+										}
+
+										if (placed == false)
+										{
+											openList.Insert(openListCount, adjTile);
+											openListCount++;
+										}
+									}
+								}
+							}
+						}
+					}
+					nodesProcessed++;
+					closedList.Add(curNode);
+				}
+			}
+			openList.RemoveAt(0);
+			openListCount--;
+		}
+
+		if (foundToTile)
+		{
+			path.Add(targetNode.pos + new Vector3(0, 1, 0));
+			bool finishPath = false;
+			tile curTile = targetNode;
+
+			while (!finishPath)
+			{
+				curTile = curTile.prevTile;
+				path.Add(curTile.pos + new Vector3(0, 1, 0));
+				if (curTile == firstNode)
+				{
+					finishPath = true;
+				}
+			}
+		}
+
+		return path;
+	}
+
 	int getTileTypeFromColor(Color32 type)
 	{
 		bool foundTileType = false;

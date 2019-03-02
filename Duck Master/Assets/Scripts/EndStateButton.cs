@@ -28,7 +28,7 @@ public class EndStateButton : MonoBehaviour
 			//check for duckTransform and see if nearby  
 			if ((thisTransform.position - GameManager.Instance.getduckTrans().position).magnitude < duckDistanceReq)
             {
-				Debug.Log("GameEnds");
+
 			}
         }
     }

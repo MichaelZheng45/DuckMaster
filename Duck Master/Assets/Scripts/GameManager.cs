@@ -80,8 +80,8 @@ public class GameManager : MonoBehaviour
         //temporary clicking movement
         if(rightClick)
         {
-            List<Vector3> tilePath = tilingSys.getTilePath(playerTransform.position,hit.transform.position, 
-                playerActionSys.getTraverseData().traversePossibilities, true);
+            List<Vector3> tilePath = tilingSys.getTilePathPlayer(playerTransform.position,hit.transform.position, 
+                playerActionSys.getTraverseData().traversePossibilities);
             if (tilePath.Count > 0)
             {
                 playerActionSys.applyNewPath(tilePath);
@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     public void clickOnDuck()
     {
         //check if the duck is nearby, if not nothing happens
-        if((duckTransform.position - playerTransform.position).magnitude < 1.5 &&  duckBehaviourSys.isBeingHeld == false)
+        if((duckTransform.position - playerTransform.position).magnitude < 1.5 &&  duckBehaviourSys.mDuckState != DuckStates.HELD)
         {
             playerActionSys.isHoldingDuck = true;
 			duckBehaviourSys.pickUpDuck();
@@ -135,9 +135,8 @@ public class GameManager : MonoBehaviour
 		//do pathfinding
 		if(duckBehaviourSys.isRecallable())
 		{
-			Debug.Log("Recalling");
-			List<Vector3> tilePath = tilingSys.getTilePath(duckTransform.position, playerTransform.position,
-						 duckBehaviourSys.traverseData.traversePossibilities, false);
+			List<Vector3> tilePath = tilingSys.getTilePathDuck(duckTransform.position, playerTransform.position,
+						 duckBehaviourSys.traverseData.traversePossibilities);
 			if (tilePath.Count > 0)
 			{
 				//give to duck

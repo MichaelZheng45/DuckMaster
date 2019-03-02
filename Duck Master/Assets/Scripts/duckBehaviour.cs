@@ -2,31 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DuckStates
+{
+	INVALID = -1,
+	STILL,
+	FOLLOW,
+	HELD,
+	RETURN,
+	RUN,
+	INAIR,
+	TRAPPED
+}
+
 public class duckBehaviour : MonoBehaviour
 {
 	public traversibleGround traverseData;
 
-	//all conditions
-	public bool canFollow;
-	public bool isBeingHeld;
-	bool returnMoving;
-	bool run;
-	public bool inAir;
+	public DuckStates mDuckState;
 
 	//follow data
-	public bool startFollowing; //check to start following
-	public float followThreshold; //the range to start following
-	public float followVelocity; // velocity to follow
-	public float targetRadius; //circle size of the target point, so not a direct movement to target
-	public float toPointDistance; // the distance to then update new target
+	[SerializeField] bool startFollowing; //check to start following
+	[SerializeField] float followThreshold; //the range to start following
+	[SerializeField] float followVelocity; // velocity to follow
+	[SerializeField] float targetRadius; //circle size of the target point, so not a direct movement to target
+	[SerializeField] float toPointDistance; // the distance to then update new target
 	Queue<Vector3> positionListData; //list of the targets
-	public float updatePositionTime; //timer to create new target point path
+	[SerializeField] float updatePositionTime; //timer to create new target point path
 	float updateTimeCount = 0;
 	int positionCount = 0;
 	Vector3 targetPoint;
 
 	//pathfindin data
-	public List<Vector3> tilePath;
+	List<Vector3> tilePath;
 	int tilePathIndex;
 	[SerializeField] float pathApproachValue;
 	[SerializeField] float pathVelocity;
@@ -36,7 +43,7 @@ public class duckBehaviour : MonoBehaviour
 
 	//throw data
 	Vector3 startingPos;
-	public Vector3 targetPos;
+	Vector3 targetPos;
 	[SerializeField] float startingVelocity;
 	[SerializeField] float gravity;
 	float maxAirTime;
@@ -57,12 +64,8 @@ public class duckBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		inAir = false;
-		returnMoving = false;
+		mDuckState = DuckStates.FOLLOW;
 		tilePath = new List<Vector3>();
-		returnMoving = false;
-		canFollow = true;
-		run = false;
         positionListData = new Queue<Vector3>();
         duckTransform = gameObject.transform;
     }
@@ -70,30 +73,20 @@ public class duckBehaviour : MonoBehaviour
 	private void Update()
 	{
 		//every or so frame check if duck is near unfreindlies
-		if(frameCount > runCheckPerFrame && !run)
+		if(frameCount > runCheckPerFrame && mDuckState != DuckStates.RUN)
 		{
 			runTar = GameManager.Instance.checkToRun(fleeRange);
 			frameCount = 0;
 
 			if (runTar != Vector3.zero)
 			{
-				Debug.Log("RUN");
-				run = true;
-				canFollow = false;
-				positionListData.Clear(); //clear all follow positions
-				returnMoving = false;
-				isBeingHeld = false;
-
-				if(inAir)
+				if (mDuckState == DuckStates.INAIR)
 				{
-					inAir = false;
 					runTar = playerTransform.position;
 				}
+				mDuckState = DuckStates.RUN;
+				positionListData.Clear(); //clear all follow positions
 
-			}
-			else
-			{
-				run = false;
 			}
 		}
 		frameCount++;
@@ -103,19 +96,19 @@ public class duckBehaviour : MonoBehaviour
 	void FixedUpdate()
 	{
 		
-		if (run) //run away ducko! The unfriendlies
+		if (mDuckState == DuckStates.RUN) //run away ducko! The unfriendlies
 		{
 			Vector3 dir = (runTar - duckTransform.position);
 			if (dir.magnitude < runToApproach)
 			{
-				run = false;
+				mDuckState = DuckStates.STILL;
 			}
 			else
 			{
 				duckTransform.position += dir.normalized * runVelocity;
 			}
 		}
-		else if (inAir)
+		else if (mDuckState == DuckStates.INAIR)
 		{
 			currentAirTime += Time.deltaTime;
 			if (currentAirTime < maxAirTime)
@@ -127,7 +120,7 @@ public class duckBehaviour : MonoBehaviour
 			}
 			else
 			{
-				inAir = false;
+				mDuckState = DuckStates.STILL;
 				//check if landed on geyser
 				Vector3 target = GameManager.Instance.checkGeyser(targetPos, startingPos);
 				if (target != Vector3.zero)
@@ -139,21 +132,20 @@ public class duckBehaviour : MonoBehaviour
 		else
 		{
 			int tilePathCount = tilePath.Count;
-			if (canFollow) //follow
+			if (mDuckState == DuckStates.FOLLOW) //follow
 			{
-				returnMoving = false;
 				if (positionListData.Count == 0)
 				{
 					addnewPos();
 				}
 				followPlayer();
 			}
-			else if (returnMoving && tilePathCount != 0) //recall
+			else if (mDuckState == DuckStates.RETURN && tilePathCount != 0) //recall
 			{
 				movePaths();
 			}
 
-			if (isBeingHeld)
+			if (mDuckState == DuckStates.HELD)
 			{
 				duckTransform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
 			}
@@ -180,8 +172,7 @@ public class duckBehaviour : MonoBehaviour
 		if (tilePathIndex < 0)
 		{
 			tilePath.Clear();
-			canFollow = true;
-			returnMoving = false;
+			mDuckState = DuckStates.FOLLOW;
 
 			//begin following
 			targetPoint = positionListData.Dequeue();
@@ -251,8 +242,8 @@ public class duckBehaviour : MonoBehaviour
 	//find new target position in the follow path
     void addnewPos()
     {
-        Vector3 newPos = new Vector3(playerTransform.position.x, 0, playerTransform.position.z);
-        newPos += new Vector3(Random.Range(-targetRadius * 100, targetRadius * 100) / 100, 1, Random.Range(-targetRadius * 100, targetRadius * 100) / 100);
+		Vector3 newPos = playerTransform.position;
+        newPos += new Vector3(Random.Range(-targetRadius * 100, targetRadius * 100) / 100, 0, Random.Range(-targetRadius * 100, targetRadius * 100) / 100);
         positionListData.Enqueue(newPos);
         positionCount++;
     }
@@ -260,14 +251,14 @@ public class duckBehaviour : MonoBehaviour
 	//send in the new path to be read and activate return
 	public void applyNewPath(List<Vector3> newPath)
 	{
-		returnMoving = true;
+		mDuckState = DuckStates.RETURN;
 		tilePath = newPath;
 		tilePathIndex = tilePath.Count - 1;
 	}
 
 	public bool isRecallable()
 	{
-		if(!canFollow && !returnMoving && !isBeingHeld && !inAir)
+		if(mDuckState == DuckStates.STILL)
 		{
 			return true;
 		}
@@ -276,17 +267,14 @@ public class duckBehaviour : MonoBehaviour
 
 	public void pickUpDuck()
 	{
-		canFollow = false;
-		isBeingHeld = true;
+		mDuckState = DuckStates.HELD;
 		positionListData.Clear();
 		//place duck ontop of player 
 	}
 
 	public void throwDuck(Vector3 target)
 	{
-		isBeingHeld = false;
-		canFollow = false;
-		inAir = true;
+		mDuckState = DuckStates.INAIR;
 
 		startingPos = duckTransform.position;
 		targetPos = target;
@@ -297,14 +285,11 @@ public class duckBehaviour : MonoBehaviour
 		float heightDiff = targetPos.y - startingPos.y; //difference in height between two points
 		float theta = Mathf.Atan((Mathf.Pow(startingVelocity, 2) + Mathf.Sqrt(Mathf.Pow(startingVelocity, 4) + gravity*(gravity*distance*distance + (2*heightDiff*Mathf.Pow(startingVelocity,2))))) / (gravity * distance));
 
-		Debug.Log(theta * Mathf.Rad2Deg);
 		heightDiff = startingPos.y - targetPos.y - 1; //initial height compared to the ground 0, which is tile position + 1
 		maxAirTime = (startingVelocity * Mathf.Sin(theta) + Mathf.Sqrt(Mathf.Pow(startingVelocity*Mathf.Sin(theta),2) + 2*gravity*heightDiff))/gravity;
 		currentAirTime = 0;
 
 		dir = dir.normalized * Mathf.Cos(theta);
 		initialVelocity = new Vector3(dir.x, Mathf.Sin(theta), dir.z) * startingVelocity;
-		
 	}
-
 }
