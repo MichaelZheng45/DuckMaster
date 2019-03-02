@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
     public void clickOnDuck()
     {
         //check if the duck is nearby, if not nothing happens
-        if((duckTransform.position - playerTransform.position).magnitude < 1.5 &&  duckBehaviourSys.isBeingHeld == false)
+        if((duckTransform.position - playerTransform.position).magnitude < 1.5 &&  duckBehaviourSys.mDuckState != DuckStates.HELD)
         {
             playerActionSys.isHoldingDuck = true;
 			duckBehaviourSys.pickUpDuck();
