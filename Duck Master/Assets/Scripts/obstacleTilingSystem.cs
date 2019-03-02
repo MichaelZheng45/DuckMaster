@@ -62,7 +62,6 @@ public class tile
 public class obstacleTilingSystem : MonoBehaviour
 {
 	//tileMapInfo
-	Color32 empty;
     float tileSize = 1;
     [SerializeField]float mapScaleX; //size of the map(private)
     [SerializeField]float mapScaleZ;
@@ -79,17 +78,17 @@ public class obstacleTilingSystem : MonoBehaviour
     float maxZ;
 
 	List<tile> tileList;
-	List<tileBehaviour> tileObjList;
+	List<tileBehaviour> tileObjList; //tile information in terms of game object.
 	List<tile> buttonRelatedTiles;
 
 	//levelData height
-	[SerializeField] float AddHieght;
+	[SerializeField] float AddHeight;
     [SerializeField] Texture2D levelData_ht0;
 	[SerializeField] Texture2D levelData_ht1;
 	[SerializeField] Texture2D levelData_ht2;
 	[SerializeField] TextAsset specialFileData;
 	[SerializeField] List<bool> buttonAffectedTilesCheck;
-    [SerializeField] List<GameObject> tileTypeObject;
+    [SerializeField] List<GameObject> tileTypeObject; //tile prefabs
     [SerializeField] List<Color32> colorToTile;
 	[SerializeField] List<GameObject> specials;
 	// Start is called before the first frame update
@@ -99,7 +98,6 @@ public class obstacleTilingSystem : MonoBehaviour
 
 	void Start()
     {
-		empty = new Color32(0, 0, 0, 255);
         tileList = new List<tile>();
 		tileObjList = new List<tileBehaviour>();
 		buttonRelatedTiles = new List<tile> ();
@@ -116,27 +114,49 @@ public class obstacleTilingSystem : MonoBehaviour
         minZ = -mapScaleZ / 2;
         maxZ = mapScaleZ / 2;
 
+		//create each tile
         for (int row = 0; row < tileCountZ; row++) //z?
         {
 			for (int col = 0; col < tileCountX; col++) //x?
 			{
+				//find tile type with verticality
+				Color32 levelColor0 = levelData_ht0.GetPixel(col, row);
+				Color32 levelColor1 = levelData_ht1.GetPixel(col, row);
+				Color32 levelColor2 = levelData_ht2.GetPixel(col, row);
+
+				Color32 tileColor;
+				int heightTile = 0;
+
+				if(levelColor2.r != 0 && levelColor2.g != 0 && levelColor2.b != 0)
+				{
+					tileColor = levelColor2;
+					heightTile = 2;
+				}
+				else if (levelColor1.r != 0 && levelColor1.g != 0 && levelColor1.b != 0)
+				{
+					tileColor = levelColor1;
+					heightTile = 1;
+				}
+				else
+				{
+					tileColor = levelColor0;
+					heightTile = 0;
+				}
+
+				//generate tile class
 				tile newTile = new tile();
 				int index = (row * tileCountX) + col;
 
-				//do tile data generate
+				//add tile data
 				newTile.index = index;
 				newTile.index2 = new Vector2(col, row);
 				float XPos = (col * tileSize) + tileSize / 2 - mapScaleX / 2;
 				float ZPos = (row * tileSize) + tileSize / 2 - mapScaleZ / 2;
-				newTile.pos = new Vector3(XPos, 0, ZPos);
-
-				Color32 levelColor0 = levelData_ht0.GetPixel(col, row);
-				Color32 levelColor1 = levelData_ht1.GetPixel(col, row);
-				Color32 levelColor2 = levelData_ht2.GetPixel(col, row);
-				int hieghtTile;
+				newTile.pos = new Vector3(XPos, AddHeight * heightTile, ZPos);
 				int tileTypeIndex = getTileTypeFromColor(levelColor0);
 				newTile.tType = (tileType)tileTypeIndex;
 
+				//generate that actual gameobject
 				GameObject spawnTile = tileTypeObject[tileTypeIndex];
 				GameObject tileObj = Instantiate(spawnTile, newTile.pos, transform.rotation);
 
@@ -144,6 +164,7 @@ public class obstacleTilingSystem : MonoBehaviour
 				tileList.Add(newTile);
 				amtOfTiles++;
 
+				//set the gameObject components to the list if they exists
 				tileBehaviour tileB = tileObj.GetComponent<tileBehaviour>();
 				if(tileB != null)
 				{
@@ -154,7 +175,7 @@ public class obstacleTilingSystem : MonoBehaviour
 					tileObjList.Add(null);
 				}
 				
-
+				//add all tiles that are affected by buttons
 				if (buttonAffectedTilesCheck[tileTypeIndex])
 				{
 					buttonRelatedTiles.Add(newTile);

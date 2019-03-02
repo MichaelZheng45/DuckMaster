@@ -306,9 +306,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c4dc2c6ee27d8147b8547d139e724ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sizeX: 20
-  sizeZ: 20
-  levelData: {fileID: 2800000, guid: 05d74da9bbf93c84f8ea174433d3db75, type: 3}
+  mapScaleX: 20
+  mapScaleZ: 20
+  AddHeight: 1
+  levelData_ht0: {fileID: 2800000, guid: 6d2a494cb36b2a84ca0fa77cdaf6fd5a, type: 3}
+  levelData_ht1: {fileID: 2800000, guid: e85d7271e3be1274b903d3e210d58d82, type: 3}
+  levelData_ht2: {fileID: 2800000, guid: 53642b73d8809f5459f9a636168dca66, type: 3}
   specialFileData: {fileID: 4900000, guid: 07cb33725f7f4ef4f9dd1f7b1db15501, type: 3}
   buttonAffectedTilesCheck: 00000000000101
   tileTypeObject:

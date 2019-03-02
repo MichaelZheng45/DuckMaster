@@ -20,4 +20,5 @@ MonoBehaviour:
   - Geyser
   - GateUp
   - GateDown
-  traversePossibilities: 00010100010001
+  - ShortWall
+  traversePossibilities: 00010100010000
