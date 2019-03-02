@@ -80,8 +80,8 @@ public class GameManager : MonoBehaviour
         //temporary clicking movement
         if(rightClick)
         {
-            List<Vector3> tilePath = tilingSys.getTilePath(playerTransform.position,hit.transform.position, 
-                playerActionSys.getTraverseData().traversePossibilities, true);
+            List<Vector3> tilePath = tilingSys.getTilePathPlayer(playerTransform.position,hit.transform.position, 
+                playerActionSys.getTraverseData().traversePossibilities);
             if (tilePath.Count > 0)
             {
                 playerActionSys.applyNewPath(tilePath);
@@ -135,9 +135,8 @@ public class GameManager : MonoBehaviour
 		//do pathfinding
 		if(duckBehaviourSys.isRecallable())
 		{
-			Debug.Log("Recalling");
-			List<Vector3> tilePath = tilingSys.getTilePath(duckTransform.position, playerTransform.position,
-						 duckBehaviourSys.traverseData.traversePossibilities, false);
+			List<Vector3> tilePath = tilingSys.getTilePathDuck(duckTransform.position, playerTransform.position,
+						 duckBehaviourSys.traverseData.traversePossibilities);
 			if (tilePath.Count > 0)
 			{
 				//give to duck

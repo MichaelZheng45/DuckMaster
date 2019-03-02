@@ -29,7 +29,6 @@ public class tileBehaviour : MonoBehaviour
 
 	public void changedByButton(tileType newType)
 	{
-		Debug.Log("Change Type");
 		tType = newType;
 		if(buttonActive)
 		{

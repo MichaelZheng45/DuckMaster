@@ -77,7 +77,6 @@ public class duckBehaviour : MonoBehaviour
 
 			if (runTar != Vector3.zero)
 			{
-				Debug.Log("RUN");
 				run = true;
 				canFollow = false;
 				positionListData.Clear(); //clear all follow positions
@@ -251,8 +250,8 @@ public class duckBehaviour : MonoBehaviour
 	//find new target position in the follow path
     void addnewPos()
     {
-        Vector3 newPos = new Vector3(playerTransform.position.x, 0, playerTransform.position.z);
-        newPos += new Vector3(Random.Range(-targetRadius * 100, targetRadius * 100) / 100, 1, Random.Range(-targetRadius * 100, targetRadius * 100) / 100);
+		Vector3 newPos = playerTransform.position;
+        newPos += new Vector3(Random.Range(-targetRadius * 100, targetRadius * 100) / 100, 0, Random.Range(-targetRadius * 100, targetRadius * 100) / 100);
         positionListData.Enqueue(newPos);
         positionCount++;
     }
@@ -297,7 +296,6 @@ public class duckBehaviour : MonoBehaviour
 		float heightDiff = targetPos.y - startingPos.y; //difference in height between two points
 		float theta = Mathf.Atan((Mathf.Pow(startingVelocity, 2) + Mathf.Sqrt(Mathf.Pow(startingVelocity, 4) + gravity*(gravity*distance*distance + (2*heightDiff*Mathf.Pow(startingVelocity,2))))) / (gravity * distance));
 
-		Debug.Log(theta * Mathf.Rad2Deg);
 		heightDiff = startingPos.y - targetPos.y - 1; //initial height compared to the ground 0, which is tile position + 1
 		maxAirTime = (startingVelocity * Mathf.Sin(theta) + Mathf.Sqrt(Mathf.Pow(startingVelocity*Mathf.Sin(theta),2) + 2*gravity*heightDiff))/gravity;
 		currentAirTime = 0;
