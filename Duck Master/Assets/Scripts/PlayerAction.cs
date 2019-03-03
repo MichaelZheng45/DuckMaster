@@ -69,4 +69,10 @@ public class PlayerAction : MonoBehaviour
         tilePath = newPath;
         tilePathIndex = tilePath.Count -1;
     }
+
+    //Will: need this for Zipline stuff
+    public bool CheckMoving()
+    {
+        return moving;
+    }
 }

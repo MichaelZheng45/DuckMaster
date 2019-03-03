@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -390,20 +390,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   traverseData: {fileID: 11400000, guid: ed326cb04d9f7cf42a31511efeea2f3b, type: 2}
-  canFollow: 0
-  isBeingHeld: 0
-  inAir: 0
+  mDuckState: 0
   startFollowing: 0
   followThreshold: 0.6
   followVelocity: 0.09
   targetRadius: 1
   toPointDistance: 1
   updatePositionTime: 1
-  tilePath: []
   pathApproachValue: 0.5
   pathVelocity: 0.1
   duckHeightAtHold: 1.38
-  targetPos: {x: 0, y: 0, z: 0}
   startingVelocity: 10
   gravity: 9.81
   fleeRange: 1.3
@@ -835,5 +831,89 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 36233061253936611, guid: c9d9a9a7b8c1f1442b7c9c8f0bc2f2c0,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9d9a9a7b8c1f1442b7c9c8f0bc2f2c0, type: 3}
+--- !u!1001 &3279339051927072234
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3279339051572409995, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_Name
+      value: Zipline
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051572409999, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051684763833, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279339051684763833, guid: 3d5b04c917f6d644a97339a885c17172,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.49
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3d5b04c917f6d644a97339a885c17172, type: 3}
