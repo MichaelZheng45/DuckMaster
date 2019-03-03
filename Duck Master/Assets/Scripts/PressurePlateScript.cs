@@ -44,12 +44,14 @@ public class PressurePlateScript : MonoBehaviour
         {
             pressed = true;
             playerCollider = other;
+            rend.material = pressedMat;
             GameManager.Instance.buttonActivated();
         }
 
         //If duck here, add player
         if (pressed == true && tag == "Player")
             playerCollider = other;
+        
         
         //If player here add duck
         if (pressed == true && tag == "Duck")           
