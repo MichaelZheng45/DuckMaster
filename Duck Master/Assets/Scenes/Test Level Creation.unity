@@ -390,20 +390,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   traverseData: {fileID: 11400000, guid: ed326cb04d9f7cf42a31511efeea2f3b, type: 2}
-  canFollow: 0
-  isBeingHeld: 0
-  inAir: 0
+  mDuckState: 0
   startFollowing: 0
   followThreshold: 0.6
   followVelocity: 0.09
   targetRadius: 1
   toPointDistance: 1
   updatePositionTime: 1
-  tilePath: []
   pathApproachValue: 0.5
   pathVelocity: 0.1
   duckHeightAtHold: 1.38
-  targetPos: {x: 0, y: 0, z: 0}
   startingVelocity: 10
   gravity: 9.81
   fleeRange: 1.3
@@ -598,6 +594,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1050653461}
   - component: {fileID: 1050653460}
+  - component: {fileID: 1050653462}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -639,6 +636,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1050653462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050653459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102aef11bba9e2a44878fc68fd08a3be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1625430204
 GameObject:
   m_ObjectHideFlags: 0
