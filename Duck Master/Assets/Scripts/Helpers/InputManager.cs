@@ -67,6 +67,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             mSwipeData[0].deltaPos = Input.mousePosition - lastLeftClick;
+			mSwipeData[0].isSwiping = true;
 			lastLeftClick = Input.mousePosition;
 		}
 		// Reset when we let go
@@ -74,12 +75,13 @@ public class InputManager : MonoBehaviour
         {
             upLeftClick = Input.mousePosition;
             mSwipeData[0].deltaPos = Vector3.zero;
+			mSwipeData[0].isSwiping = false;
         }
         if (Input.GetMouseButton(1))
         {
             lastRightClick = Input.mousePosition;
         }
-        
+
 #elif MOBILE
 		// Get the current touches and make sure we are capped at 5
         taps = Input.touches;
@@ -148,6 +150,25 @@ public class InputManager : MonoBehaviour
 						}
                         break;
                     }
+					case TouchPhase.Canceled:
+					{
+						// we were not swiping
+						if(!mSwipeData[i].isSwiping)
+						{
+							// we have tapped
+							// probably need to have an event fire here?
+							Debug.Log("We Have Tappdown");
+						}
+						// we were swiping
+						else
+						{
+							// we have stopped swiping
+							// probably need to have an event fire here?
+							Debug.Log("We Have Swipedown");
+							mSwipeData[i].isSwiping = false;
+						}
+                        break;
+					}
                 }
             }
         }
