@@ -8,6 +8,8 @@
 // These are used to not have pointless code run below
 
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 public class InputManager : MonoBehaviour
 {
@@ -43,7 +45,7 @@ public class InputManager : MonoBehaviour
         public bool isSwiping;
     }
 
-	const int MAX_TAPS = 5;
+	public const int MAX_TAPS = 5;
 	// Keeping track of swipes
 	SwipeData[] mSwipeData;
 
@@ -65,18 +67,19 @@ public class InputManager : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             mSwipeData[0].deltaPos = Input.mousePosition - lastLeftClick;
-        }
+			lastLeftClick = Input.mousePosition;
+		}
 		// Reset when we let go
         else if (Input.GetMouseButtonUp(0))
         {
             upLeftClick = Input.mousePosition;
             mSwipeData[0].deltaPos = Vector3.zero;
         }
-        if (rightClick)
+        if (Input.GetMouseButton(1))
         {
             lastRightClick = Input.mousePosition;
         }
-        lastLeftClick = Input.mousePosition;
+        
 #elif MOBILE
 		// Get the current touches and make sure we are capped at 5
         taps = Input.touches;
@@ -152,7 +155,7 @@ public class InputManager : MonoBehaviour
 	}
 
 	// Generic get function that will work with both platforms
-	public bool GetInput(int dist = 100, int layer = 1)
+	public List<RaycastHit> GetInput(int dist = 100, int layer = 1)
     {
 #if DESKTOP
         return GetLeftMouseClickHit(dist, layer);
@@ -164,63 +167,89 @@ public class InputManager : MonoBehaviour
 	// This might get wonky with clicks, shouldn't worry about it as PC isn't our target right now
 	// Layer is what layermask you want to collide with
 	// DO NOT BIT ADJUST IT DOES IT FOR YOU
-    public bool GetLeftMouseClickHit(int dist = 100, int layer = 1)
+    public List<RaycastHit> GetLeftMouseClickHit(int dist = 100, int layer = 1)
     {
 #if DESKTOP
+		RaycastHit rayHit;
+		List<RaycastHit> ret = new List<RaycastHit>();
         if (!leftClick)
-            return false;
+            return ret;
 
         Ray ray = Camera.main.ScreenPointToRay(lastLeftClick);
-        return Physics.Raycast(ray, dist, 1 << layer);
+		if(Physics.Raycast(ray, out rayHit, dist, 1 << layer))
+		{
+			ret.Add(rayHit);
+		}
+        return ret;
 #endif
-        return false;
+        return null;
     }
 
 	// This might get wonky with clicks, shouldn't worry about it as PC isn't our target right now
 	// Layer is what layermask you want to collide with
 	// DO NOT BIT ADJUST IT DOES IT FOR YOU
-	public bool GetRightMouseClickHit(int dist = 100, int layer = 1)
+	public List<RaycastHit> GetRightMouseClickHit(int dist = 100, int layer = 1)
     {
 #if DESKTOP
-        if (!rightClick)
-            return false;
+		RaycastHit rayHit;
+		List<RaycastHit> ret = new List<RaycastHit>();
+		if (!rightClick)
+			return ret;
 
-        Ray ray = Camera.main.ScreenPointToRay(lastRightClick);
-        return Physics.Raycast(ray, dist, 1 << layer);
+		Ray ray = Camera.main.ScreenPointToRay(lastRightClick);
+		if (Physics.Raycast(ray, out rayHit, dist, 1 << layer))
+		{
+			ret.Add(rayHit);
+		}
+		return ret;
 #endif
-        return false;
+		return null;
     }
 
 	// Mobile specific single input
 	// Layer is what layermask you want to collide with
 	// DO NOT BIT ADJUST IT DOES IT FOR YOU
-	public bool GetSingleTapHit(int dist = 100, int layer = 1)
+	public List<RaycastHit> GetSingleTapHit(int dist = 100, int layer = 1)
     {
+
 #if MOBILE
+		RaycastHit rayHit;
+		List<RaycastHit> ret = new List<RaycastHit>();
         if(tapCount == 0 || mSwipeData[0].isSwiping)
-            return false;
+            return ret;
 
         Ray ray = Camera.main.ScreenPointToRay(taps[0].position);
-        return Physics.Raycast(ray, dist, 1 << layer);
+		if(Physics.Raycast(ray, out rayHit, dist, 1 << layer))
+		{
+			ret.Add(rayHit);
+		}
+        return ret;
 #endif
-        return false;
+		return null;
     }
 
 	// Mobile specific multiple input
 	// Layer is what layermask you want to collide with
 	// DO NOT BIT ADJUST IT DOES IT FOR YOU
-	public bool[] GetMultipleTapHit(int dist = 100, int layer = 1)
+	public List<RaycastHit> GetMultipleTapHit(int dist = 100, int layer = 1)
     {
 #if MOBILE
-        bool[] ret = new bool[tapCount];
+		List<RaycastHit> ret = new List<RaycastHit>();
         if (tapCount == 0)
             return ret;
         Ray ray;
+		RaycastHit rayHit;
         Camera main = Camera.main;
         for(int i = 0; i < tapCount; ++i)
         {
-            ray = main.ScreenPointToRay(taps[i].position);
-            ret[i] = Physics.Raycast(ray, dist, 1 << layer);
+			if(!mSwipeData[i].isSwiping)
+			{
+			    ray = main.ScreenPointToRay(taps[i].position);
+				if(Physics.Raycast(ray, out rayHit, dist, 1 << layer));
+				{
+					ret.Add(rayHit);
+				}
+			}
         }
         return ret;
 #endif
@@ -229,22 +258,42 @@ public class InputManager : MonoBehaviour
 
 	// Get the Swipe data
 	// If you want to set the deltaPos to zero send TRUE
-	public SwipeData GetSwipeData(bool reset = false)
+	public SwipeData GetSwipeDataIndex(int index, bool reset = false)
     {
-		SwipeData returnData = new SwipeData
-		{
-			deltaPos = mSwipeData[0].deltaPos
-		};
+		SwipeData returnData = mSwipeData[index];
 		if (reset)
         {
-            mSwipeData[0].deltaPos.x = 0.0f;
-            mSwipeData[0].deltaPos.y = 0.0f;
+			mSwipeData[index].deltaPos = Vector2.zero;
         }
 
         returnData.direction = FindDirection(returnData.deltaPos);
 
         return returnData;
     }
+
+	public SwipeData[] GetSwipeData(bool reset = false)
+	{
+		SwipeData[] returnData = new SwipeData[MAX_TAPS];
+		Array.Copy(mSwipeData, returnData, MAX_TAPS);
+		//Debug.Log(returnData[0].deltaPos + "\n" + returnData[0].isSwiping);
+		if(reset)
+		{
+#if DESKTOP
+			// HARD CODED: Only 2 mouse buttons should be used
+			for(int i = 0; i < 2; ++i)
+			{
+				mSwipeData[i].deltaPos = Vector2.zero;
+			}
+#elif MOBILE
+			for(int i = 0; i < tapCount; ++i)
+			{
+				mSwipeData[i].deltaPos = Vector2.zero;
+			}
+#endif
+		}
+		
+		return returnData;
+	}
 
 	// Helper function that returns the generic direction
 	private SwipeDirection FindDirection(Vector2 vector)
