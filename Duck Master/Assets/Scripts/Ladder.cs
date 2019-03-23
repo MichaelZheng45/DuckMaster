@@ -61,24 +61,27 @@ public class Ladder : MonoBehaviour
     {
         if (isActive)
         {
-            if (other.gameObject.tag == "Player" && !otherLadder.GetUsing())
-            {
-                action = other.gameObject.GetComponent<PlayerAction>();
-
-                if (!action.isHoldingDuck)
-                {
-                    isPlayerUsing = true;
-                    player = other.gameObject;
-                }
-            }
+            //Test logic
+            UseLadder(other.gameObject);
+            //if (other.gameObject.tag == "Player" && !otherLadder.GetUsing())
+            //{
+            //    action = other.gameObject.GetComponent<PlayerAction>();
+            //
+            //    if (!action.isHoldingDuck)
+            //    {
+            //        isPlayerUsing = true;
+            //        player = other.gameObject;
+            //    }
+            //}
         }
 
         else
         {
             if (other.gameObject.tag == "Player" || other.gameObject.tag == "Duck")
             {
-                isActive = true;
-                target.SetActive(true);
+                SetLadder(true);
+                //isActive = true;
+                //target.SetActive(true);
             }
         }
     }
@@ -91,9 +94,7 @@ public class Ladder : MonoBehaviour
             {
                 if (action.CheckMoving())
                 {
-                    isPlayerUsing = false;
-                    player = null;
-                    action = null;
+                    StopUse();
                 }
             }
         }
@@ -102,5 +103,49 @@ public class Ladder : MonoBehaviour
     public bool GetUsing()
     {
         return isPlayerUsing;
+    }
+
+    public void SetLadder(bool active)
+    {
+        if (!isChild)
+        {
+            isActive = active;
+            target.SetActive(active);
+        }
+    }
+    //Make sure to check Player has stopped pathing when using this function specifically. Use PlayerAction.CheckMoving()  
+    public void UseLadder(GameObject playerObj)
+    {
+        if (isActive)
+        {
+            if (playerObj.tag == "Player")
+            {
+                if (!otherLadder.GetUsing())
+                {
+                    action = playerObj.GetComponent<PlayerAction>();
+
+                    if (!action.isHoldingDuck)
+                    {
+                        player = playerObj;
+                        isPlayerUsing = true;
+                    }
+
+                    else
+                        action = null;
+                    
+                }
+            }
+
+            else
+                print("Use Ladder Error: Player was not passed in");
+        }
+    }
+
+    //This is a general safety measure depending on where the logic will be
+    public void StopUse()
+    {
+        isPlayerUsing = false;
+        player = null;
+        action = null;
     }
 }
