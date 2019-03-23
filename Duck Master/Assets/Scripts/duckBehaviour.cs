@@ -19,6 +19,7 @@ public class duckBehaviour : MonoBehaviour
 	public traversibleGround traverseData;
 
 	public DuckStates mDuckState;
+	public DuckStates GetDuckStates() { return mDuckState; }
 
 	//follow data
 	[SerializeField] bool startFollowing; //check to start following
