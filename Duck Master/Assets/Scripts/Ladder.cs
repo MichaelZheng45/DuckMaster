@@ -59,35 +59,21 @@ public class Ladder : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //Test Logic
         if (isActive)
-        {
-            //Test logic
             UseLadder(other.gameObject);
-            //if (other.gameObject.tag == "Player" && !otherLadder.GetUsing())
-            //{
-            //    action = other.gameObject.GetComponent<PlayerAction>();
-            //
-            //    if (!action.isHoldingDuck)
-            //    {
-            //        isPlayerUsing = true;
-            //        player = other.gameObject;
-            //    }
-            //}
-        }
-
         else
         {
             if (other.gameObject.tag == "Player" || other.gameObject.tag == "Duck")
             {
                 SetLadder(true);
-                //isActive = true;
-                //target.SetActive(true);
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+        //Test Logic
         if (other.gameObject.tag == "Player")
         {
             if (action != null)
