@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 534669904}
   - component: {fileID: 534669903}
   - component: {fileID: 534669906}
+  - component: {fileID: 534669907}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -369,12 +370,28 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41fa1310cb9d6d2498de8a6d3fb5ddba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   camSpeed: 0.2
+--- !u!114 &534669907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2db5d50a80d0664aa658f2c61605ef4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 1050653459}
+  lowerBounds: {x: 0, y: 0}
+  upperBounds: {x: 0, y: 0}
+  cameraSpeed: 1
 --- !u!1 &568412048
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,7 +714,7 @@ PrefabInstance:
     - target: {fileID: 3279339051572409999, guid: daebb2e3e6b23fc45b263ec7302ceeba,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.94
+      value: 1.93
       objectReference: {fileID: 0}
     - target: {fileID: 3279339051572409999, guid: daebb2e3e6b23fc45b263ec7302ceeba,
         type: 3}
@@ -707,7 +724,7 @@ PrefabInstance:
     - target: {fileID: 3279339051572409999, guid: daebb2e3e6b23fc45b263ec7302ceeba,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.61
+      value: -5.62
       objectReference: {fileID: 0}
     - target: {fileID: 3279339051572409999, guid: daebb2e3e6b23fc45b263ec7302ceeba,
         type: 3}
@@ -752,7 +769,7 @@ PrefabInstance:
     - target: {fileID: 3279339051684763833, guid: daebb2e3e6b23fc45b263ec7302ceeba,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.01
+      value: 5.26
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3279339051572409996, guid: daebb2e3e6b23fc45b263ec7302ceeba, type: 3}
@@ -767,6 +784,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1050653461}
   - component: {fileID: 1050653460}
+  - component: {fileID: 1050653462}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -808,6 +826,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1050653462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050653459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102aef11bba9e2a44878fc68fd08a3be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swipeTolerance: 25
 --- !u!1 &1625430204
 GameObject:
   m_ObjectHideFlags: 0

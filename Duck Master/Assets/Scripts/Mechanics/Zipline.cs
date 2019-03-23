@@ -67,7 +67,7 @@ public class Zipline : MonoBehaviour
     {
         if (playerObj.tag == "Player")
         {
-            PlayerAction action = playerObj.GetComponent<PlayerAction>();
+            action = playerObj.GetComponent<PlayerAction>();
 
             if (!action.isHoldingDuck)
             {
