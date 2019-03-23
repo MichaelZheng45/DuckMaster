@@ -583,7 +583,7 @@ public class obstacleTilingSystem : MonoBehaviour
 
 			node.tType = (tileType)node.typeButton;
 
-			tileObjList[node.index].changedByButton(node.tType);
+			tileObjList[node.index].gateChangeState(node.tType);
 		}
 	}
 
