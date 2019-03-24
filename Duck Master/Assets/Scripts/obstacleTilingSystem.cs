@@ -61,6 +61,9 @@ public class tile
 
 public class obstacleTilingSystem : MonoBehaviour
 {
+	[SerializeField]
+	GameObject levelFolder;
+
 	//tileMapInfo
     float tileSize = 1;
     [SerializeField]float mapScaleX; //size of the map(private)
@@ -98,105 +101,6 @@ public class obstacleTilingSystem : MonoBehaviour
 
 	void Start()
     {
-        tileList = new List<tile>();
-		tileObjList = new List<tileBehaviour>();
-		buttonRelatedTiles = new List<tile> ();
-
-        mapTransform = gameObject.transform;
-
-        tileCountX = (int)(mapScaleX / tileSize);
-        tileCountZ = (int)(mapScaleZ / tileSize);
-
-        //find min max
-        minX = -mapScaleX / 2;
-        maxX = mapScaleX / 2;
-
-        minZ = -mapScaleZ / 2;
-        maxZ = mapScaleZ / 2;
-
-		//create each tile
-        for (int row = 0; row < tileCountZ; row++) //z?
-        {
-			for (int col = 0; col < tileCountX; col++) //x?
-			{
-				//find tile type with verticality
-				Color32 levelColor0 = levelData_ht0.GetPixel(col, row);
-				Color32 levelColor1 = levelData_ht1.GetPixel(col, row);
-				Color32 levelColor2 = levelData_ht2.GetPixel(col, row);
-
-				Color32 tileColor;
-				int heightTile = 0;
-
-				if(levelColor2.r != 0 && levelColor2.g != 0 && levelColor2.b != 0)
-				{
-					tileColor = levelColor2;
-					heightTile = 2;
-				}
-				else if (levelColor1.r != 0 && levelColor1.g != 0 && levelColor1.b != 0)
-				{
-					tileColor = levelColor1;
-					heightTile = 1;
-				}
-				else
-				{
-					tileColor = levelColor0;
-					heightTile = 0;
-				}
-
-				//generate tile class
-				tile newTile = new tile();
-				int index = (row * tileCountX) + col;
-
-				//add tile data
-				newTile.index = index;
-				newTile.index2 = new Vector2(col, row);
-				float XPos = (col * tileSize) + tileSize / 2 - mapScaleX / 2;
-				float ZPos = (row * tileSize) + tileSize / 2 - mapScaleZ / 2;
-				newTile.pos = new Vector3(XPos, AddHeight * heightTile, ZPos);
-				int tileTypeIndex = getTileTypeFromColor(levelColor0);
-				newTile.tType = (tileType)tileTypeIndex;
-				newTile.heightVal = heightTile;
-				//generate that actual gameobject
-				GameObject spawnTile = tileTypeObject[tileTypeIndex];
-				GameObject tileObj = Instantiate(spawnTile, newTile.pos, transform.rotation);
-
-				//add tile
-				tileList.Add(newTile);
-				amtOfTiles++;
-
-				//set the gameObject components to the list if they exists
-				tileBehaviour tileB = tileObj.GetComponent<tileBehaviour>();
-				if(tileB != null)
-				{
-					tileObjList.Add(tileB);
-				}
-				else
-				{
-					tileObjList.Add(null);
-				}
-				
-				//add all tiles that are affected by buttons
-				if (buttonAffectedTilesCheck[tileTypeIndex])
-				{
-					buttonRelatedTiles.Add(newTile);
-					newTile.typeButton = (buttonType)tileTypeIndex;
-				}
-            }
-        }
-
-        //spawn specials. Source: http://saadkhawaja.com/read-text-file-line-line/
-        string[] lineInFile = specialFileData.text.Split('\n');
-        foreach(string line in lineInFile)
-        {
-			string[] lineData = line.Split(' ');
-			int specialType = int.Parse(lineData[1]);
-			int posX = int.Parse(lineData[3]);
-			int posZ = int.Parse(lineData[5]);
-			string type = lineData[6];
-
-			tile atTile = tileList[(posZ * tileCountX) + posX];
-			GameObject specialObj = Instantiate(specials[specialType], atTile.pos + new Vector3(0,1,0), transform.rotation);
-		}
     }
 
 	public List<Vector3> getTilePathDuck(Vector3 from, Vector3 to, List<bool> travableTile)
@@ -610,5 +514,110 @@ public class obstacleTilingSystem : MonoBehaviour
 			}
 		}
 		return unWalkables;
+	}
+
+	[ContextMenu("Create Level")]
+	public void CreateLevel()
+	{
+		tileList = new List<tile>();
+		tileObjList = new List<tileBehaviour>();
+		buttonRelatedTiles = new List<tile>();
+
+		mapTransform = gameObject.transform;
+
+		tileCountX = (int)(mapScaleX / tileSize);
+		tileCountZ = (int)(mapScaleZ / tileSize);
+
+		//find min max
+		minX = -mapScaleX / 2;
+		maxX = mapScaleX / 2;
+
+		minZ = -mapScaleZ / 2;
+		maxZ = mapScaleZ / 2;
+
+		//create each tile
+		for (int row = 0; row < tileCountZ; row++) //z?
+		{
+			for (int col = 0; col < tileCountX; col++) //x?
+			{
+				//find tile type with verticality
+				Color32 levelColor0 = levelData_ht0.GetPixel(col, row);
+				Color32 levelColor1 = levelData_ht1.GetPixel(col, row);
+				Color32 levelColor2 = levelData_ht2.GetPixel(col, row);
+
+				Color32 tileColor;
+				int heightTile = 0;
+
+				if (levelColor2.r != 0 && levelColor2.g != 0 && levelColor2.b != 0)
+				{
+					tileColor = levelColor2;
+					heightTile = 2;
+				}
+				else if (levelColor1.r != 0 && levelColor1.g != 0 && levelColor1.b != 0)
+				{
+					tileColor = levelColor1;
+					heightTile = 1;
+				}
+				else
+				{
+					tileColor = levelColor0;
+					heightTile = 0;
+				}
+
+				//generate tile class
+				tile newTile = new tile();
+				int index = (row * tileCountX) + col;
+
+				//add tile data
+				newTile.index = index;
+				newTile.index2 = new Vector2(col, row);
+				float XPos = (col * tileSize) + tileSize / 2 - mapScaleX / 2;
+				float ZPos = (row * tileSize) + tileSize / 2 - mapScaleZ / 2;
+				newTile.pos = new Vector3(XPos, AddHeight * heightTile, ZPos);
+				int tileTypeIndex = getTileTypeFromColor(levelColor0);
+				newTile.tType = (tileType)tileTypeIndex;
+				newTile.heightVal = heightTile;
+				//generate that actual gameobject
+				GameObject spawnTile = tileTypeObject[tileTypeIndex];
+				GameObject tileObj = Instantiate(spawnTile, newTile.pos, transform.rotation);
+				tileObj.transform.parent = levelFolder.transform;
+
+				//add tile
+				tileList.Add(newTile);
+				amtOfTiles++;
+
+				//set the gameObject components to the list if they exists
+				tileBehaviour tileB = tileObj.GetComponent<tileBehaviour>();
+				if (tileB != null)
+				{
+					tileObjList.Add(tileB);
+				}
+				else
+				{
+					tileObjList.Add(null);
+				}
+
+				//add all tiles that are affected by buttons
+				if (buttonAffectedTilesCheck[tileTypeIndex])
+				{
+					buttonRelatedTiles.Add(newTile);
+					newTile.typeButton = (buttonType)tileTypeIndex;
+				}
+			}
+		}
+
+		//spawn specials. Source: http://saadkhawaja.com/read-text-file-line-line/
+		string[] lineInFile = specialFileData.text.Split('\n');
+		foreach (string line in lineInFile)
+		{
+			string[] lineData = line.Split(' ');
+			int specialType = int.Parse(lineData[1]);
+			int posX = int.Parse(lineData[3]);
+			int posZ = int.Parse(lineData[5]);
+			string type = lineData[6];
+
+			tile atTile = tileList[(posZ * tileCountX) + posX];
+			GameObject specialObj = Instantiate(specials[specialType], atTile.pos + new Vector3(0, 1, 0), transform.rotation);
+		}
 	}
 }
