@@ -37,16 +37,7 @@ public class Zipline : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
-        {
-            action = other.gameObject.GetComponent<PlayerAction>();
-
-            if (!action.isHoldingDuck)
-            {
-                isPlayerUsing = true;
-                player = other.gameObject;
-            }
-        }
+        UseZipline(other.gameObject);
     }
 
     private void OnTriggerExit(Collider other)
@@ -56,10 +47,33 @@ public class Zipline : MonoBehaviour
         {
             if (action.CheckMoving())
             {
-                isPlayerUsing = false;
-                player = null;
-                action = null;
+                StopUse();
             }
         }
+    }
+
+    public void UseZipline(GameObject playerObj)
+    {
+        if (playerObj.tag == "Player")
+        {
+            action = playerObj.GetComponent<PlayerAction>();
+
+            if (!action.isHoldingDuck)
+            {
+                isPlayerUsing = true;
+                player = playerObj;
+            }
+        }
+
+        else
+        {
+            print("Use Zipline Error: Player not passed");
+        }
+    }
+    public void StopUse()
+    {
+        isPlayerUsing = false;
+        player = null;
+        action = null;
     }
 }
