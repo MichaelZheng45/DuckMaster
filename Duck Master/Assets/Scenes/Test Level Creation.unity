@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 624687239}
   - component: {fileID: 624687238}
   - component: {fileID: 624687237}
+  - component: {fileID: 624687243}
   - component: {fileID: 624687242}
   m_Layer: 10
   m_Name: DUCK!
@@ -493,6 +494,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &624687243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624687236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c3032648f22ca24fb04ffa6cd387dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentRotation: 0
+  rotationFactor: 0
 --- !u!1 &670656595
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,6 +663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 102aef11bba9e2a44878fc68fd08a3be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swipeTolerance: 25
 --- !u!1 &1625430204
 GameObject:
   m_ObjectHideFlags: 0
