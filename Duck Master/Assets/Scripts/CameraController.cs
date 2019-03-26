@@ -15,6 +15,8 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     float cameraSpeed = 1.0f;
+	[SerializeField]
+	float cameraRotationSpeed = 1.5f;
 
 	InputManager.SwipeData[] swipeData;
 	Vector2 moveDirection;
@@ -34,20 +36,24 @@ public class CameraController : MonoBehaviour
 		// Change this to first and none of last
 		if(swipeData[0].isSwiping && !swipeData[1].isSwiping)
 		{
-			moveDirection = Quaternion.Euler(0, 0, 45) * moveDirection * Time.deltaTime * cameraSpeed;
+			moveDirection = Quaternion.Euler(0, 0, -(transform.rotation.eulerAngles.y)) * moveDirection * Time.deltaTime * cameraSpeed;
 			Vector3 tempPos = transform.position + new Vector3(-moveDirection.x, 0, -moveDirection.y);
 
 			// this has to change somehow? To a bounding box? Something for later on.
+			// TO DO: Center based on the level
 			if (tempPos.x >= lowerBounds.x && tempPos.x <= upperBounds.x && tempPos.z >= lowerBounds.y && tempPos.z <= upperBounds.y)
 			{
 				transform.position = tempPos;
 			}
+			Debug.Log("Move direction:" + moveDirection);
 		}
 		else if(swipeData[0].isSwiping && swipeData[1].isSwiping)
 		{
 			// do rotation instead
-			Debug.Log("Other");
-			transform.Rotate(0, moveDirection.x, 0);
+			//transform.Rotate(0, moveDirection.x, 0);
+			// TO DO: Make it center of map
+			transform.RotateAround(Vector3.zero, Vector3.up, cameraRotationSpeed * moveDirection.y * Time.deltaTime);
+			Debug.Log("Camera Rotation" + transform.rotation.eulerAngles);
 		}
     }
 }
