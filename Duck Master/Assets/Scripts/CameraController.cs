@@ -19,22 +19,25 @@ public class CameraController : MonoBehaviour
 	float cameraRotationSpeed = 1.5f;
 
 	InputManager.SwipeData[] swipeData;
+	int swipeCount;
 	Vector2 moveDirection;
 
     // Start is called before the first frame update
     void Start()
     {
         inputManager = gameManager.GetComponent<InputManager>();
-		swipeData = new InputManager.SwipeData[InputManager.MAX_TAPS];
+		swipeData = InputManager.DefaultSwipeDataArray;
     }
 
     // Update is called once per frame
     void Update()
     {
-        swipeData = inputManager.GetSwipeData(true);// * Time.deltaTime;
+		swipeCount = inputManager.GetSwipeCount();
+		swipeData = inputManager.GetSwipeData();
 		moveDirection = swipeData[0].deltaPos;
+
 		// Change this to first and none of last
-		if(swipeData[0].isSwiping && !swipeData[1].isSwiping)
+		if (swipeCount == 1)
 		{
 			moveDirection = Quaternion.Euler(0, 0, -(transform.rotation.eulerAngles.y)) * moveDirection * Time.deltaTime * cameraSpeed;
 			Vector3 tempPos = transform.position + new Vector3(-moveDirection.x, 0, -moveDirection.y);
@@ -45,15 +48,16 @@ public class CameraController : MonoBehaviour
 			{
 				transform.position = tempPos;
 			}
-			Debug.Log("Move direction:" + moveDirection);
 		}
-		else if(swipeData[0].isSwiping && swipeData[1].isSwiping)
+		else if(swipeCount >= 2)
 		{
+			
 			// do rotation instead
 			//transform.Rotate(0, moveDirection.x, 0);
 			// TO DO: Make it center of map
-			transform.RotateAround(Vector3.zero, Vector3.up, cameraRotationSpeed * moveDirection.y * Time.deltaTime);
-			Debug.Log("Camera Rotation" + transform.rotation.eulerAngles);
+			float rotation = (swipeData[0].direction == InputManager.SwipeDirection.RIGHT || swipeData[0].direction == InputManager.SwipeDirection.LEFT) ?
+				cameraRotationSpeed * moveDirection.x * Time.deltaTime : cameraRotationSpeed * moveDirection.y * Time.deltaTime;
+			transform.RotateAround(Vector3.zero, Vector3.up, rotation);
 		}
     }
 }
