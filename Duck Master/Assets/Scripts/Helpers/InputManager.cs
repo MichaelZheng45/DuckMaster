@@ -39,8 +39,7 @@ public class InputManager : MonoBehaviour
 	// Used to contain the data needed to process and keep track of swipes
     public struct SwipeData
     {
-        public Vector2 startPosition;
-        public Vector2 deltaPos;
+        public Vector2 startPos, currentPos, deltaPos;
         public SwipeDirection direction;
         public bool isSwiping;
     }
@@ -49,8 +48,10 @@ public class InputManager : MonoBehaviour
 	// Keeping track of swipes
 	SwipeData[] mSwipeData;
 
-    // Start is called before the first frame update
-    void Start()
+	public static SwipeData[] DefaultSwipeData = new SwipeData[MAX_TAPS];
+
+	// Start is called before the first frame update
+	void Start()
     {
         mSwipeData = new SwipeData[MAX_TAPS];
     }
@@ -109,25 +110,30 @@ public class InputManager : MonoBehaviour
                 {
                     case TouchPhase.Began:
                     {
-                        mSwipeData[i].startPosition = taps[i].position;
+                        mSwipeData[i].startPos = taps[i].position;
                         break;
                     }
                     case TouchPhase.Moved:
                     {
+						mSwipeData[i].currentPos = taps[i].position;
+						mSwipeData[i].deltaPos = taps[i].deltaPosition;
 						// we are currently swiping
-						if(mSwipeData[i].isSwiping)
-						{
-							// we are swiping
-							// so we need to continue swiping
-							mSwipeData[i].deltaPos += taps[i].deltaPosition;
-						}
+						//if(mSwipeData[i].isSwiping)
+						//{
+						//	// we are swiping
+						//	// so we need to continue swiping
+						//	
+						//	
+						//	//mSwipeData[i].deltaPos += taps[i].deltaPosition;
+						//}
 						// we aren't previously swiping and we are outside the swipe tolerance
-						else if(Mathf.Abs(taps[i].position.x - mSwipeData[i].startPosition.x) > swipeTolerance || Mathf.Abs(taps[i].position.y - mSwipeData[i].startPosition.y) > swipeTolerance)
+						if(!mSwipeData[i].isSwiping && (Mathf.Abs(taps[i].position.x - mSwipeData[i].startPos.x) > swipeTolerance || Mathf.Abs(taps[i].position.y - mSwipeData[i].startPos.y) > swipeTolerance))
 						{
 							// we need to start swiping
 							mSwipeData[i].isSwiping = true;
-							mSwipeData[i].deltaPos = Vector2.zero;
+							mSwipeData[i].deltaPos = mSwipeData[i].currentPos = Vector2.zero;
 							mSwipeData[i].direction = SwipeDirection.NONE;
+							Debug.Log("We have started a swipe");
 						}
                         break;
                     }
@@ -138,15 +144,17 @@ public class InputManager : MonoBehaviour
 						{
 							// we have tapped
 							// probably need to have an event fire here?
-							Debug.Log("We Have Tappdown");
+							Debug.Log("END: We Have Tappdown");
 						}
 						// we were swiping
 						else
 						{
 							// we have stopped swiping
 							// probably need to have an event fire here?
-							Debug.Log("We Have Swipedown");
+							Debug.Log("END: We Have Swipedown");
 							mSwipeData[i].isSwiping = false;
+							mSwipeData[i].startPos = mSwipeData[i].deltaPos = mSwipeData[i].currentPos = Vector2.zero;
+							mSwipeData[i].direction = SwipeDirection.NONE;
 						}
                         break;
                     }
@@ -157,15 +165,17 @@ public class InputManager : MonoBehaviour
 						{
 							// we have tapped
 							// probably need to have an event fire here?
-							Debug.Log("We Have Tappdown");
+							Debug.Log("CANCEL: We Have Tappdown");
 						}
 						// we were swiping
 						else
 						{
 							// we have stopped swiping
 							// probably need to have an event fire here?
-							Debug.Log("We Have Swipedown");
+							Debug.Log("CANCEL: We Have Swipedown");
 							mSwipeData[i].isSwiping = false;
+							mSwipeData[i].startPos = mSwipeData[i].deltaPos = mSwipeData[i].currentPos = Vector2.zero;
+							mSwipeData[i].direction = SwipeDirection.NONE;
 						}
                         break;
 					}
@@ -279,48 +289,54 @@ public class InputManager : MonoBehaviour
 
 	// Get the Swipe data
 	// If you want to set the deltaPos to zero send TRUE
-	public SwipeData GetSwipeDataIndex(int index, bool reset = false)
+	public SwipeData GetSwipeDataIndex(int index)
     {
 		SwipeData returnData = mSwipeData[index];
-		if (reset)
-        {
-			mSwipeData[index].deltaPos = Vector2.zero;
-        }
-
         returnData.direction = FindDirection(returnData.deltaPos);
 
         return returnData;
     }
 
-	public SwipeData[] GetSwipeData(bool reset = false)
+	public SwipeData[] GetSwipeData()
 	{
-		SwipeData[] returnData = new SwipeData[MAX_TAPS];
-		Array.Copy(mSwipeData, returnData, MAX_TAPS);
-		//Debug.Log(returnData[0].deltaPos + "\n" + returnData[0].isSwiping);
-		if(reset)
-		{
+		//SwipeData[] returnData = new SwipeData[MAX_TAPS];
+		//Array.Copy(mSwipeData, returnData, MAX_TAPS);
+
+		int iter;
 #if DESKTOP
-			// HARD CODED: Only 2 mouse buttons should be used
-			for(int i = 0; i < 2; ++i)
-			{
-				mSwipeData[i].deltaPos = Vector2.zero;
-			}
+		iter = 2;
 #elif MOBILE
-			for(int i = 0; i < tapCount; ++i)
-			{
-				mSwipeData[i].deltaPos = Vector2.zero;
-			}
+		iter = tapCount;
 #endif
+		for (int i = 0; i < iter; ++i)
+		{
+			mSwipeData[i].direction = FindDirection(mSwipeData[i].deltaPos);
 		}
-		
-		return returnData;
+		return mSwipeData;
 	}
 
 	// Helper function that returns the generic direction
 	private SwipeDirection FindDirection(Vector2 vector)
-    {
-        return (vector.x > vector.y) ?
-            ((vector.x >= 0) ? SwipeDirection.RIGHT : SwipeDirection.LEFT) :
-            ((vector.y >= 0) ? SwipeDirection.UP : SwipeDirection.DOWN);
+	{
+		if(vector.sqrMagnitude == 0)
+		{
+			return SwipeDirection.NONE;
+		}
+		return (Mathf.Abs(vector.x) > Mathf.Abs(vector.y)) ?
+					((vector.x >= 0) ? SwipeDirection.RIGHT : SwipeDirection.LEFT) :
+					((vector.y >= 0) ? SwipeDirection.UP : SwipeDirection.DOWN);
     }
+
+	public List<int> GetSwipeCount()
+	{
+		List<int> ret = new List<int>();
+		for(int i = 0; i < MAX_TAPS; ++i)
+		{
+			if(mSwipeData[i].isSwiping)
+			{
+				ret.Add(i);
+			}
+		}
+		return ret;
+	}
 }
