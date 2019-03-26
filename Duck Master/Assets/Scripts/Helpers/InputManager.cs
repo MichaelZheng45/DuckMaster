@@ -16,7 +16,7 @@ public class InputManager : MonoBehaviour
 #if DESKTOP
 	// Keep track of it we have clicked, where we started the click, and if we recently let go
     bool leftClick, rightClick;
-    Vector3 lastLeftClick, lastRightClick;
+    Vector3 lastMousePos, lastLeftClickPos, lastRightClickPos;
     Vector3 upLeftClick;
 #elif MOBILE
 	// Keep track of the current touches and amount
@@ -64,13 +64,13 @@ public class InputManager : MonoBehaviour
 #if DESKTOP
         leftClick = Input.GetMouseButtonDown(0);
         rightClick = Input.GetMouseButtonDown(1);
-        
+
 		// If our mouse is down we get delta for swiping
-        if (Input.GetMouseButton(0))
+		if (Input.GetMouseButton(0))
         {
-            mSwipeData[0].deltaPos = Input.mousePosition - lastLeftClick;
+			lastLeftClickPos = Input.mousePosition;
+			mSwipeData[0].deltaPos = Input.mousePosition - lastMousePos;
 			mSwipeData[0].isSwiping = true;
-			lastLeftClick = Input.mousePosition;
 		}
 		// Reset when we let go
         else if (Input.GetMouseButtonUp(0))
@@ -81,8 +81,16 @@ public class InputManager : MonoBehaviour
         }
         if (Input.GetMouseButton(1))
         {
-            lastRightClick = Input.mousePosition;
+			lastRightClickPos = Input.mousePosition;
+			mSwipeData[1].deltaPos = Input.mousePosition - lastMousePos;
+			mSwipeData[1].isSwiping = true;
         }
+		else if(Input.GetMouseButtonUp(1))
+		{
+			mSwipeData[1].deltaPos = Vector3.zero;
+			mSwipeData[1].isSwiping = false;
+		}
+		lastMousePos = Input.mousePosition;
 
 #elif MOBILE
 		// Get the current touches and make sure we are capped at 5
@@ -224,7 +232,7 @@ public class InputManager : MonoBehaviour
         if (!leftClick)
             return ret;
 
-        Ray ray = Camera.main.ScreenPointToRay(lastLeftClick);
+        Ray ray = Camera.main.ScreenPointToRay(lastLeftClickPos);
 		if(Physics.Raycast(ray, out rayHit, dist, 1 << layer))
 		{
 			ret.Add(rayHit);
@@ -246,7 +254,7 @@ public class InputManager : MonoBehaviour
 		if (!rightClick)
 			return ret;
 
-		Ray ray = Camera.main.ScreenPointToRay(lastRightClick);
+		Ray ray = Camera.main.ScreenPointToRay(lastRightClickPos);
 		if (Physics.Raycast(ray, out rayHit, dist, 1 << layer))
 		{
 			ret.Add(rayHit);
