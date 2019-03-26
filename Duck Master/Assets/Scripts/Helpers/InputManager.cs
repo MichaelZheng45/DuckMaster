@@ -13,6 +13,14 @@ using System;
 
 public class InputManager : MonoBehaviour
 {
+	/////// The taps might not work but will always have to be checked in update because of the fact that they get reset every frame \\\\\\\\
+
+	/// <summary>
+	/// Class to abstract the difference between PC and Mobile platform
+	/// This makes it easier to iterate and develop code for testing on both platforms
+	/// </summary>
+
+	Camera mainCamera;
 #if DESKTOP
 	// Keep track of it we have clicked, where we started the click, and if we recently let go
     bool leftClick, rightClick;
@@ -25,7 +33,7 @@ public class InputManager : MonoBehaviour
 #endif
 	[Tooltip("Pixel Distance A Tap Becomes A Swipe")]
     [SerializeField]
-    float swipeTolerance = 25f;
+    int swipeTolerance = 25;
 	// Enums used for generic direction
     public enum SwipeDirection
     {
@@ -51,45 +59,65 @@ public class InputManager : MonoBehaviour
 	public static SwipeData[] DefaultSwipeDataArray = new SwipeData[MAX_TAPS];
 	public static SwipeData DefaultSwipeData = new SwipeData();
 
+	// Data for storing raycasts
+	List<RaycastHit> mRaycastHits;
+
+	public static RaycastHit DefaultRaycastHit = new RaycastHit();
+
 	// Start is called before the first frame update
 	void Start()
     {
+		mainCamera = Camera.main;
 		mSwipeData = DefaultSwipeDataArray;
+		RaycastHit temp = new RaycastHit();
+		mRaycastHits = new List<RaycastHit>(new RaycastHit[] { temp, temp, temp, temp, temp });
+		mRaycastHits.Capacity = MAX_TAPS;
 	}
 
     // Update is called once per frame
     void Update()
     {
-        // in editor or on pc
-#if DESKTOP
-        leftClick = Input.GetMouseButtonDown(0);
-        rightClick = Input.GetMouseButtonDown(1);
-
-		// If our mouse is down we get delta for swiping
-		if (Input.GetMouseButton(0))
-        {
-			lastLeftClickPos = Input.mousePosition;
-			mSwipeData[0].deltaPos = Input.mousePosition - lastMousePos;
-			mSwipeData[0].isSwiping = true;
-		}
-		// Reset when we let go
-        else if (Input.GetMouseButtonUp(0))
-        {
-            upLeftClick = Input.mousePosition;
-            mSwipeData[0].deltaPos = Vector3.zero;
-			mSwipeData[0].isSwiping = false;
-        }
-        if (Input.GetMouseButton(1))
-        {
-			lastRightClickPos = Input.mousePosition;
-			mSwipeData[1].deltaPos = Input.mousePosition - lastMousePos;
-			mSwipeData[1].isSwiping = true;
-        }
-		else if(Input.GetMouseButtonUp(1))
+		for (int i = 0; i < MAX_TAPS; ++i)
 		{
-			mSwipeData[1].deltaPos = Vector3.zero;
-			mSwipeData[1].isSwiping = false;
+			mRaycastHits[i] = DefaultRaycastHit;
 		}
+		// in editor or on pc
+#if DESKTOP
+		// TO DO: needs to be changes for clicks + swipes
+		// If our mouse is down we get delta for swiping
+		for(int i = 0; i < 2; ++i)
+		{
+			if (Input.GetMouseButtonDown(i))
+			{
+				mSwipeData[i].startPos = Input.mousePosition;
+			}
+			else if (Input.GetMouseButton(i))
+			{
+				mSwipeData[i].deltaPos = (Vector2)lastMousePos - mSwipeData[i].currentPos;
+				mSwipeData[i].currentPos = (Vector2)lastMousePos;
+				if(!mSwipeData[i].isSwiping && (Mathf.Abs(lastMousePos.x - mSwipeData[i].startPos.x) > swipeTolerance || Mathf.Abs(lastMousePos.y - mSwipeData[i].startPos.y) > swipeTolerance))
+				{
+					mSwipeData[i].isSwiping = true;
+					mSwipeData[i].direction = SwipeDirection.NONE;
+				}
+			}
+			else if(Input.GetMouseButtonUp(i))
+			{
+				if(mSwipeData[i].isSwiping)
+				{
+					mSwipeData[i].isSwiping = false;
+					mSwipeData[i].deltaPos = Vector2.zero;
+				}
+				else
+				{
+					Ray ray = mainCamera.ScreenPointToRay(lastMousePos);
+					RaycastHit rayHit;
+					Physics.Raycast(ray, out rayHit, 100);
+					mRaycastHits[i] = rayHit;
+				}
+			}
+		}
+		Debug.Log(mRaycastHits[0].collider);
 		lastMousePos = Input.mousePosition;
 
 #elif MOBILE
@@ -110,7 +138,7 @@ public class InputManager : MonoBehaviour
         //  In order to detect a tap
         //      I need to know if my touch has ended and is not swiping
         //      
-        
+        Debug.Log(mRaycastHits[0].collider);
         if(tapCount > 0)
         {
             for (int i = 0; i < tapCount; ++i)
@@ -126,23 +154,13 @@ public class InputManager : MonoBehaviour
                     {
 						mSwipeData[i].currentPos = taps[i].position;
 						mSwipeData[i].deltaPos = taps[i].deltaPosition;
-						// we are currently swiping
-						//if(mSwipeData[i].isSwiping)
-						//{
-						//	// we are swiping
-						//	// so we need to continue swiping
-						//	
-						//	
-						//	//mSwipeData[i].deltaPos += taps[i].deltaPosition;
-						//}
 						// we aren't previously swiping and we are outside the swipe tolerance
 						if(!mSwipeData[i].isSwiping && (Mathf.Abs(taps[i].position.x - mSwipeData[i].startPos.x) > swipeTolerance || Mathf.Abs(taps[i].position.y - mSwipeData[i].startPos.y) > swipeTolerance))
 						{
 							// we need to start swiping
 							mSwipeData[i].isSwiping = true;
-							mSwipeData[i].deltaPos = mSwipeData[i].currentPos = Vector2.zero;
+							//mSwipeData[i].deltaPos = mSwipeData[i].currentPos = Vector2.zero;
 							mSwipeData[i].direction = SwipeDirection.NONE;
-							Debug.Log("START: Swipe : Index - " + i);
 						}
                         break;
                     }
@@ -153,6 +171,10 @@ public class InputManager : MonoBehaviour
 						{
 							// we have tapped
 							// probably need to have an event fire here?
+							Ray ray = mainCamera.ScreenPointToRay(taps[i].position);
+							RaycastHit rayHit;
+							Physics.Raycast(ray, out rayHit, 100);
+							mRaycastHits[i] = rayHit;
 							Debug.Log("END: Tapped");
 						}
 						// we were swiping
@@ -173,9 +195,7 @@ public class InputManager : MonoBehaviour
 								else
 								{
 									mSwipeData[j] = mSwipeData[k];
-								}
-								Debug.Log(j + " : " + k);
-								
+								}	
 							}
 						}
                         break;
@@ -207,7 +227,13 @@ public class InputManager : MonoBehaviour
 #endif
 	}
 
-	// Generic get function that will work with both platforms
+	// For getting the raycast hit object
+	public List<RaycastHit> GetTapHits()
+	{
+		return mRaycastHits;
+	}
+
+	// For looking at a specific layer
 	// Input: Distance to look, Layer number to look for collision on
 	// Output: A list of raycasthit if hits happened
 	// DO NOT BIT ADJUST LAYERMASK IT DOES IT FOR YOU
@@ -232,7 +258,7 @@ public class InputManager : MonoBehaviour
         if (!leftClick)
             return ret;
 
-        Ray ray = Camera.main.ScreenPointToRay(lastLeftClickPos);
+		Ray ray = mainCamera.ScreenPointToRay(lastLeftClickPos);
 		if(Physics.Raycast(ray, out rayHit, dist, 1 << layer))
 		{
 			ret.Add(rayHit);
@@ -254,7 +280,7 @@ public class InputManager : MonoBehaviour
 		if (!rightClick)
 			return ret;
 
-		Ray ray = Camera.main.ScreenPointToRay(lastRightClickPos);
+		Ray ray = mainCamera.ScreenPointToRay(lastRightClickPos);
 		if (Physics.Raycast(ray, out rayHit, dist, 1 << layer))
 		{
 			ret.Add(rayHit);
@@ -277,7 +303,7 @@ public class InputManager : MonoBehaviour
         if(tapCount == 0 || mSwipeData[0].isSwiping)
             return ret;
 
-        Ray ray = Camera.main.ScreenPointToRay(taps[0].position);
+        Ray ray = mainCamera.ScreenPointToRay(taps[0].position);
 		if(Physics.Raycast(ray, out rayHit, dist, 1 << layer))
 		{
 			ret.Add(rayHit);
@@ -299,12 +325,11 @@ public class InputManager : MonoBehaviour
             return ret;
         Ray ray;
 		RaycastHit rayHit;
-        Camera main = Camera.main;
         for(int i = 0; i < tapCount; ++i)
         {
 			if(!mSwipeData[i].isSwiping)
 			{
-			    ray = main.ScreenPointToRay(taps[i].position);
+			    ray = mainCamera.ScreenPointToRay(taps[i].position);
 				if(Physics.Raycast(ray, out rayHit, dist, 1 << layer));
 				{
 					ret.Add(rayHit);
@@ -353,16 +378,16 @@ public class InputManager : MonoBehaviour
 					((vector.y >= 0) ? SwipeDirection.UP : SwipeDirection.DOWN);
     }
 
-	public List<int> GetSwipeCount()
+	public int GetSwipeCount()
 	{
-		List<int> ret = new List<int>();
+		int num = 0;
 		for(int i = 0; i < MAX_TAPS; ++i)
 		{
 			if(mSwipeData[i].isSwiping)
 			{
-				ret.Add(i);
+				num++;
 			}
 		}
-		return ret;
+		return num;
 	}
 }

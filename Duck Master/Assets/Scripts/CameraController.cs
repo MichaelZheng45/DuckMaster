@@ -19,7 +19,7 @@ public class CameraController : MonoBehaviour
 	float cameraRotationSpeed = 1.5f;
 
 	InputManager.SwipeData[] swipeData;
-	List<int> swipeCount;
+	int swipeCount;
 	Vector2 moveDirection;
 
     // Start is called before the first frame update
@@ -35,10 +35,9 @@ public class CameraController : MonoBehaviour
 		swipeCount = inputManager.GetSwipeCount();
 		swipeData = inputManager.GetSwipeData();
 		moveDirection = swipeData[0].deltaPos;
-		//Debug.Log(moveDirection);
 
 		// Change this to first and none of last
-		if(swipeCount.Count == 1)
+		if (swipeCount == 1)
 		{
 			moveDirection = Quaternion.Euler(0, 0, -(transform.rotation.eulerAngles.y)) * moveDirection * Time.deltaTime * cameraSpeed;
 			Vector3 tempPos = transform.position + new Vector3(-moveDirection.x, 0, -moveDirection.y);
@@ -50,8 +49,9 @@ public class CameraController : MonoBehaviour
 				transform.position = tempPos;
 			}
 		}
-		else if(swipeCount.Count >= 2)
+		else if(swipeCount >= 2)
 		{
+			
 			// do rotation instead
 			//transform.Rotate(0, moveDirection.x, 0);
 			// TO DO: Make it center of map
