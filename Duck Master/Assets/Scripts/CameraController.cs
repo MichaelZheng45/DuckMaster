@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         inputManager = gameManager.GetComponent<InputManager>();
-		swipeData = InputManager.DefaultSwipeData;
+		swipeData = InputManager.DefaultSwipeDataArray;
     }
 
     // Update is called once per frame

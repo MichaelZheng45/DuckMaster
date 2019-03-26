@@ -48,13 +48,14 @@ public class InputManager : MonoBehaviour
 	// Keeping track of swipes
 	SwipeData[] mSwipeData;
 
-	public static SwipeData[] DefaultSwipeData = new SwipeData[MAX_TAPS];
+	public static SwipeData[] DefaultSwipeDataArray = new SwipeData[MAX_TAPS];
+	public static SwipeData DefaultSwipeData = new SwipeData();
 
 	// Start is called before the first frame update
 	void Start()
     {
-        mSwipeData = new SwipeData[MAX_TAPS];
-    }
+		mSwipeData = DefaultSwipeDataArray;
+	}
 
     // Update is called once per frame
     void Update()
@@ -133,7 +134,7 @@ public class InputManager : MonoBehaviour
 							mSwipeData[i].isSwiping = true;
 							mSwipeData[i].deltaPos = mSwipeData[i].currentPos = Vector2.zero;
 							mSwipeData[i].direction = SwipeDirection.NONE;
-							Debug.Log("We have started a swipe");
+							Debug.Log("START: Swipe : Index - " + i);
 						}
                         break;
                     }
@@ -144,17 +145,30 @@ public class InputManager : MonoBehaviour
 						{
 							// we have tapped
 							// probably need to have an event fire here?
-							Debug.Log("END: We Have Tappdown");
+							Debug.Log("END: Tapped");
 						}
 						// we were swiping
 						else
 						{
 							// we have stopped swiping
 							// probably need to have an event fire here?
-							Debug.Log("END: We Have Swipedown");
-							mSwipeData[i].isSwiping = false;
-							mSwipeData[i].startPos = mSwipeData[i].deltaPos = mSwipeData[i].currentPos = Vector2.zero;
-							mSwipeData[i].direction = SwipeDirection.NONE;
+							Debug.Log("END: End Swipe : Index - " + i);
+							//mSwipeData[i].isSwiping = false;
+							//mSwipeData[i].startPos = mSwipeData[i].deltaPos = mSwipeData[i].currentPos = Vector2.zero;
+							//mSwipeData[i].direction = SwipeDirection.NONE;
+							for(int j = i, k = i + 1; j < MAX_TAPS; ++j, ++k)
+							{
+								if(k == MAX_TAPS)
+								{
+									mSwipeData[j] = DefaultSwipeData;
+								}
+								else
+								{
+									mSwipeData[j] = mSwipeData[k];
+								}
+								Debug.Log(j + " : " + k);
+								
+							}
 						}
                         break;
                     }
@@ -165,14 +179,14 @@ public class InputManager : MonoBehaviour
 						{
 							// we have tapped
 							// probably need to have an event fire here?
-							Debug.Log("CANCEL: We Have Tappdown");
+							Debug.Log("CANCEL: Tapped");
 						}
 						// we were swiping
 						else
 						{
 							// we have stopped swiping
 							// probably need to have an event fire here?
-							Debug.Log("CANCEL: We Have Swipedown");
+							Debug.Log("CANCEL: End Swipe : Index - " + i);
 							mSwipeData[i].isSwiping = false;
 							mSwipeData[i].startPos = mSwipeData[i].deltaPos = mSwipeData[i].currentPos = Vector2.zero;
 							mSwipeData[i].direction = SwipeDirection.NONE;
