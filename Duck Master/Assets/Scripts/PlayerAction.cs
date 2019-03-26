@@ -24,6 +24,10 @@ public class PlayerAction : MonoBehaviour
     bool moving;
     int tilePathIndex;
     public float approachValue;
+
+    //Will: need this for Altimeter stuff
+    //Vector3 currentTilePos;
+
     void Start()
     {
         playerTransform = gameObject.transform;
@@ -74,5 +78,15 @@ public class PlayerAction : MonoBehaviour
     public bool CheckMoving()
     {
         return moving;
+    }
+
+    //Will: Altimeter processing
+    private void OnTriggerEnter(Collider other)
+    {
+        //Should probably switch over to a tag system maybe, but this will do for now
+        if (other.gameObject.name == "ground(Clone)")
+        {
+            GameManager.Instance.GetAltimeter().CheckAltitude(other.transform.position);
+        }
     }
 }
