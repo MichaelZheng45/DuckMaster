@@ -200,6 +200,9 @@ public class InputManager : MonoBehaviour
 	}
 
 	// Generic get function that will work with both platforms
+	// Input: Distance to look, Layer number to look for collision on
+	// Output: A list of raycasthit if hits happened
+	// DO NOT BIT ADJUST LAYERMASK IT DOES IT FOR YOU
 	public List<RaycastHit> GetInput(int dist = 100, int layer = 1)
     {
 #if DESKTOP
@@ -210,9 +213,10 @@ public class InputManager : MonoBehaviour
     }
 
 	// This might get wonky with clicks, shouldn't worry about it as PC isn't our target right now
-	// Layer is what layermask you want to collide with
-	// DO NOT BIT ADJUST IT DOES IT FOR YOU
-    public List<RaycastHit> GetLeftMouseClickHit(int dist = 100, int layer = 1)
+	// Input: Distance to look, Layer number to look for collision on
+	// Output: A list of raycasthit if hits happened
+	// DO NOT BIT ADJUST LAYERMASK IT DOES IT FOR YOU
+	public List<RaycastHit> GetLeftMouseClickHit(int dist = 100, int layer = 1)
     {
 #if DESKTOP
 		RaycastHit rayHit;
@@ -231,8 +235,9 @@ public class InputManager : MonoBehaviour
     }
 
 	// This might get wonky with clicks, shouldn't worry about it as PC isn't our target right now
-	// Layer is what layermask you want to collide with
-	// DO NOT BIT ADJUST IT DOES IT FOR YOU
+	// Input: Distance to look, Layer number to look for collision on
+	// Output: A list of raycasthit if hits happened
+	// DO NOT BIT ADJUST LAYERMASK IT DOES IT FOR YOU
 	public List<RaycastHit> GetRightMouseClickHit(int dist = 100, int layer = 1)
     {
 #if DESKTOP
@@ -252,8 +257,9 @@ public class InputManager : MonoBehaviour
     }
 
 	// Mobile specific single input
-	// Layer is what layermask you want to collide with
-	// DO NOT BIT ADJUST IT DOES IT FOR YOU
+	// Input: Distance to look, Layer number to look for collision on
+	// Output: A list of raycasthit if hits happened
+	// DO NOT BIT ADJUST LAYERMASK IT DOES IT FOR YOU
 	public List<RaycastHit> GetSingleTapHit(int dist = 100, int layer = 1)
     {
 
@@ -274,8 +280,9 @@ public class InputManager : MonoBehaviour
     }
 
 	// Mobile specific multiple input
-	// Layer is what layermask you want to collide with
-	// DO NOT BIT ADJUST IT DOES IT FOR YOU
+	// Input: Distance to look, Layer number to look for collision on
+	// Output: A list of raycasthit if hits happened
+	// DO NOT BIT ADJUST LAYERMASK IT DOES IT FOR YOU
 	public List<RaycastHit> GetMultipleTapHit(int dist = 100, int layer = 1)
     {
 #if MOBILE
@@ -301,8 +308,7 @@ public class InputManager : MonoBehaviour
         return null;
     }
 
-	// Get the Swipe data
-	// If you want to set the deltaPos to zero send TRUE
+	// Get the Swipe data at specific index
 	public SwipeData GetSwipeDataIndex(int index)
     {
 		SwipeData returnData = mSwipeData[index];
@@ -311,11 +317,9 @@ public class InputManager : MonoBehaviour
         return returnData;
     }
 
+	// Get all the swipe data
 	public SwipeData[] GetSwipeData()
 	{
-		//SwipeData[] returnData = new SwipeData[MAX_TAPS];
-		//Array.Copy(mSwipeData, returnData, MAX_TAPS);
-
 		int iter;
 #if DESKTOP
 		iter = 2;
