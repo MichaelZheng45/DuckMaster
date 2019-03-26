@@ -29,9 +29,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject duck;
 
-    //materials
-    [SerializeField] Material redMaterial;
-    [SerializeField] Material greenMaterial;
     //script systems
     obstacleTilingSystem tilingSys;
     PlayerAction playerActionSys;
@@ -40,13 +37,11 @@ public class GameManager : MonoBehaviour
     Transform playerTransform;
     Transform duckTransform;
 
-    //renderComponents
-    MeshRenderer highlighterRenderer;
-
 	//other Data
-	[SerializeField] float throwDistanceMax;
+	[SerializeField] float throwDistanceMax; //should be in another script to be honest
+
 	//lists
-	List<unfreindlyScript> unFriendlyList; // <<------ GOOOSE?!?!?!?
+	List<unfreindlyScript> unFriendlyList;
 
 	//bool checks
 	bool holdingDuck = false;
@@ -136,7 +131,7 @@ public class GameManager : MonoBehaviour
 		if(duckBehaviourSys.isRecallable())
 		{
 			List<Vector3> tilePath = tilingSys.getTilePathDuck(duckTransform.position, playerTransform.position,
-						 duckBehaviourSys.traverseData.traversePossibilities);
+						 duckBehaviourSys.traverseData.traversePossibilities,0); //zero is temp
 			if (tilePath.Count > 0)
 			{
 				//give to duck
