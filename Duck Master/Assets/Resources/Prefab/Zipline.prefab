@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3279339051572409998}
   - component: {fileID: 3279339051572409993}
   - component: {fileID: 3279339051572409992}
-  - component: {fileID: 3279339051572409996}
+  - component: {fileID: 1774927253347630607}
   m_Layer: 0
   m_Name: Zipline
   m_TagString: Untagged
@@ -93,7 +93,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3279339051572409996
+--- !u!114 &1774927253347630607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3279339051572409995}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee8a4bf03ad6a2e41b6f40b95237e07d, type: 3}
+  m_Script: {fileID: 11500000, guid: a6315e9ab9d46df44b669219b2239f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0.5
