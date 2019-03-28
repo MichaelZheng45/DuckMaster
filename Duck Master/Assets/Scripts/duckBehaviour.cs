@@ -117,7 +117,7 @@ public class duckBehaviour : MonoBehaviour
 			{
                 //check bait system for objects in line of sight
                 DuckRotationState rotation = mDuckRotation.GetRotationState();
-
+                Vector3 target = mBaitSystem.duckLOSBait(duckTransform.position, attractDistance, rotation);
 			}
 		}
 		frameCount+= Time.deltaTime;
