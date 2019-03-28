@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterWheel : MonoBehaviour
+public class WaterWheel : MonoBehaviour, LogicInput
 {
     bool active;
 

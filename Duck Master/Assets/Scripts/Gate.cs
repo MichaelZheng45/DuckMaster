@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gate : MonoBehaviour
+public class Gate : MonoBehaviour, LogicOutput
 {
     [SerializeField] bool active;
     [SerializeField] Material underTileMat;

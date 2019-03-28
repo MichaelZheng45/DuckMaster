@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PressurePlateScript : MonoBehaviour
+public class PressurePlateScript : MonoBehaviour, LogicInput
 {
     bool pressed;
     [SerializeField] Material pressedMat;
@@ -77,5 +77,10 @@ public class PressurePlateScript : MonoBehaviour
             pressed = false;
             rend.material = unpressedMat;
         }
+    }
+
+    public bool IsActive()
+    {
+        return pressed;
     }
 }
