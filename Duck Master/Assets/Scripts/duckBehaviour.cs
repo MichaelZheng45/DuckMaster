@@ -212,6 +212,7 @@ public class duckBehaviour : MonoBehaviour
 	void followPlayer()
     {
         //check if out of threshhold
+        print(duckTransform.position);
         if((duckTransform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
         {
             startFollowing = true;
