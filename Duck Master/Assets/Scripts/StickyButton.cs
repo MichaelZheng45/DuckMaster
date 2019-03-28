@@ -11,12 +11,13 @@ public class StickyButton : MonoBehaviour, LogicInput
     void Start()
     {
         GetComponent<Renderer>().material = unpressedMaterial;
+        active = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)

@@ -24,12 +24,20 @@ public class LogicController : MonoBehaviour
     [SerializeField] LogicMode mode = LogicMode.AND;
     LogicInput[] inputs;
     LogicOutput[] outputs;
+    bool activate;
+    bool lastChange;
 
     // Start is called before the first frame update
     void Start()
     {
         inputs = transform.GetComponentsInChildren<LogicInput>();
         outputs = transform.GetComponentsInChildren<LogicOutput>();
+
+        if (inputs == null)
+            print("ERROR: input is null");
+        if (outputs == null)
+            print("ERROR: outputs is null");
+
     }
 
     // Update is called once per frame
@@ -37,25 +45,22 @@ public class LogicController : MonoBehaviour
     {
         if (mode == LogicMode.AND)
         {
-            bool activate = true;
+            print("In and mode");
+            activate = true;
             foreach(LogicInput input in inputs)
-            {
                 if (!input.IsActive())
                     activate = false;
-            }
+
+            if (activate)
+                print("And mode activated");
+            else
+                print("And mode deactivated");
 			
-			if(activate)
-				print("And mode activated");
-			
-			foreach(LogicOutput output in outputs)
-			{
-				output.Activate(activate);
-			}
         }
 		
 		if (mode == LogicMode.OR)
 		{
-			bool activate = false;
+			activate = false;
 			foreach(LogicInput input in inputs)
 			{
 				if (input.IsActive())
@@ -64,20 +69,17 @@ public class LogicController : MonoBehaviour
 					break;
 				}
 			}
+
+            if (activate)
+                print("OR Mode activated");
+            else
+                print("Or mode deactivated");
 			
-			if (activate)
-				print("OR Mode activated");
-			
-			foreach(LogicOutput output in outputs)
-			{
-				output.Activate(activate);
-			}
 		}
 		
 		if (mode == LogicMode.NOT)
 		{
-			bool activate = true;
-			
+            activate = true;
 			foreach(LogicInput input in inputs)
 			{
 				if (input.IsActive())
@@ -86,14 +88,16 @@ public class LogicController : MonoBehaviour
 					break;
 				}
 			}
-			
-			if (!activate)
-				print("NOT mode activated");
-			
-			foreach(LogicOutput output in outputs)
-			{
-				output.Activate(activate);
-			}
+
+            if (!activate)
+                print("NOT mode activated");
+            else
+                print("Not mode deactivated");
 		}
+
+        //Final set
+        foreach (LogicOutput output in outputs)
+             output.Activate(activate);
+         
     }
 }
