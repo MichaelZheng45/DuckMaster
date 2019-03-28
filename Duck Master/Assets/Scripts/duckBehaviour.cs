@@ -11,7 +11,8 @@ public enum DuckStates
 	RETURN,
 	RUN,
 	INAIR,
-	TRAPPED
+	TRAPPED,
+	BAITED
 }
 
 public class duckBehaviour : MonoBehaviour
@@ -19,8 +20,10 @@ public class duckBehaviour : MonoBehaviour
 	public traversibleGround traverseData;
 
 	public DuckStates mDuckState;
+	public DuckStates GetDuckStates() { return mDuckState; }
 
 	//follow data
+	[Header("Follow Data")]
 	[SerializeField] bool startFollowing; //check to start following
 	[SerializeField] float followThreshold; //the range to start following
 	[SerializeField] float followVelocity; // velocity to follow
@@ -32,42 +35,60 @@ public class duckBehaviour : MonoBehaviour
 	int positionCount = 0;
 	Vector3 targetPoint;
 
+	[Header("Pathfinding Data")]
 	//pathfindin data
 	List<Vector3> tilePath;
 	int tilePathIndex;
-	[SerializeField] float pathApproachValue;
-	[SerializeField] float pathVelocity;
+	[SerializeField] float pathApproachValue; //distance to change to next node in path
+	[SerializeField] float pathVelocity; //velocity of path
 
+	[Header("Hold Data")]
 	//hold data
-	public float duckHeightAtHold;
+	[SerializeField] float duckHeightAtHold; //height for duck when being held
 
 	//throw data
+	[Header("Throw Data")]
 	Vector3 startingPos;
 	Vector3 targetPos;
-	[SerializeField] float startingVelocity;
+	[SerializeField] float startingVelocity; //self explanatory
 	[SerializeField] float gravity;
 	float maxAirTime;
 	float currentAirTime;
 	Vector3 initialVelocity;
 
 	//run data
-	[SerializeField] float fleeRange;
-	int runCheckPerFrame = 10;
-	int frameCount = 0;
+	[Header("Run Data")]
+	[SerializeField] float fleeRange; //range to start fleeing
 	Vector3 runTar;
 	float runToApproach = .3f;
-	[SerializeField]float runVelocity;
+	[SerializeField]float runVelocity; //run away speed
 
-	//Transform
+	//bait data
+	[Header("Bait Data")]
+	[SerializeField] GameObject baitSystemObject;
+	[SerializeField] float attractDistance = 3; //<--temp	
+	BaitSystem baitSystem;
+
+
+	[Header("Misc")]
+	[SerializeField] Transform playerTransform;
+	 BaitSystem mBaitSystem;
 	Transform duckTransform;
-    public Transform playerTransform;
-    // Start is called before the first frame update
-    void Start()
+
+	//frameCount
+	float runCheckPerFrame = .5f;
+	float frameCount = 0;
+
+	// Start is called before the first frame update
+	void Start()
     {
 		mDuckState = DuckStates.FOLLOW;
 		tilePath = new List<Vector3>();
         positionListData = new Queue<Vector3>();
+
+		baitSystem = baitSystemObject.GetComponent<BaitSystem>();
         duckTransform = gameObject.transform;
+	
     }
 
 	private void Update()
@@ -75,6 +96,7 @@ public class duckBehaviour : MonoBehaviour
 		//every or so frame check if duck is near unfreindlies
 		if(frameCount > runCheckPerFrame && mDuckState != DuckStates.RUN)
 		{
+			//flee from unfreindlies
 			runTar = GameManager.Instance.checkToRun(fleeRange);
 			frameCount = 0;
 
@@ -86,11 +108,15 @@ public class duckBehaviour : MonoBehaviour
 				}
 				mDuckState = DuckStates.RUN;
 				positionListData.Clear(); //clear all follow positions
+			}
+
+			//check for baits
+			if(mDuckState == DuckStates.RETURN || mDuckState == DuckStates.BAITED)
+			{
 
 			}
 		}
-		frameCount++;
-
+		frameCount+= Time.deltaTime;
 	}
 
 	void FixedUpdate()
@@ -226,7 +252,6 @@ public class duckBehaviour : MonoBehaviour
 			updateTimer();
         }
     }
-
 
 	//update timer to create a follow path
 	void updateTimer()

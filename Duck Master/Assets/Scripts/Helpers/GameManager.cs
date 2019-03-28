@@ -30,9 +30,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject duck;
 
-    //materials
-    [SerializeField] Material redMaterial;
-    [SerializeField] Material greenMaterial;
     //script systems
     obstacleTilingSystem tilingSys;
     PlayerAction playerActionSys;
@@ -42,13 +39,11 @@ public class GameManager : MonoBehaviour
     Transform playerTransform;
     Transform duckTransform;
 
-    //renderComponents
-    MeshRenderer highlighterRenderer;
+	//other Data
+	[SerializeField] float throwDistanceMax; //should be in another script to be honest
 
-    //other Data
-    [SerializeField] float throwDistanceMax;
-    //lists
-    List<unfreindlyScript> unFriendlyList; // <<------ GOOOSE?!?!?!?
+	//lists
+	List<unfreindlyScript> unFriendlyList;
 
     //bool checks
     bool holdingDuck = false;
@@ -135,17 +130,17 @@ public class GameManager : MonoBehaviour
     //create pathfinding to return duck back to the player
     void duckRecall()
     {
-        //do pathfinding
-        if (duckBehaviourSys.isRecallable())
-        {
-            List<Vector3> tilePath = tilingSys.getTilePathDuck(duckTransform.position, playerTransform.position,
-                         duckBehaviourSys.traverseData.traversePossibilities);
-            if (tilePath.Count > 0)
-            {
-                //give to duck
-                duckBehaviourSys.applyNewPath(tilePath);
-            }
-        }
+		//do pathfinding
+		if(duckBehaviourSys.isRecallable())
+		{
+			List<Vector3> tilePath = tilingSys.getTilePathDuck(duckTransform.position, playerTransform.position,
+						 duckBehaviourSys.traverseData.traversePossibilities,0); //zero is temp
+			if (tilePath.Count > 0)
+			{
+				//give to duck
+				duckBehaviourSys.applyNewPath(tilePath);
+			}
+		}
     }
 
     public Transform getPlayerTrans()

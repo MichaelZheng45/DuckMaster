@@ -18,6 +18,7 @@ public class PlayerAction : MonoBehaviour
 
     //component data
     Transform playerTransform;
+	BaitSystem mBaitSystem;
 
     //pathfinding data;
     public List<Vector3> tilePath;
@@ -25,12 +26,13 @@ public class PlayerAction : MonoBehaviour
     int tilePathIndex;
     public float approachValue;
 
-    //Will: need this for Altimeter stuff
-    //Vector3 currentTilePos;
+	//throw data
+	[SerializeField]float throwDistance = 4;
 
     void Start()
     {
         playerTransform = gameObject.transform;
+		mBaitSystem = gameObject.GetComponent<BaitSystem>();
         moving = false ;
         tilePath = new List<Vector3>();
     }
@@ -89,4 +91,19 @@ public class PlayerAction : MonoBehaviour
             GameManager.Instance.GetAltimeter().CheckAltitude(other.transform.position);
         }
     }
+
+	//only throw onto standard block tiles
+	public void throwBait(Vector3 target, BaitTypes type)
+	{
+		//check for distance
+		if ((gameObject.transform.position - target).magnitude <= throwDistance && mBaitSystem.checkBait(type))
+		{
+			//throw object
+			mBaitSystem.spawnBait(target, type);
+		}
+		else
+		{
+			//Ran out of bait
+		}
+	}
 }

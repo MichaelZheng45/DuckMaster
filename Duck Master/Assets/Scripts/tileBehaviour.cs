@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class tileBehaviour : MonoBehaviour
 {
-	[SerializeField] bool buttonActive;
 	[SerializeField] tileType tType;
 	[SerializeField] GameObject obj;
 
@@ -27,30 +26,26 @@ public class tileBehaviour : MonoBehaviour
         
     }
 
-	public void changedByButton(tileType newType)
+	public void gateChangeState()
 	{
-		tType = newType;
-		if(buttonActive)
+		if(tType == tileType.GateUp)
 		{
-			buttonActive = false;
-			if(tType == tileType.GateDown)
-			{
-				var mat = new Material[2];
-				mat[0] =gateMaterial[2];
-				mat[1] =gateMaterial[0];
-				objMeshRenderer.materials = mat;
-			}
+			tType = tileType.GateDown;
+
+			var mat = new Material[2];
+			mat[0] =gateMaterial[2];
+			mat[1] =gateMaterial[0];
+			objMeshRenderer.materials = mat;
+			
 		}
-		else
+		else 
 		{
-			buttonActive = true;
-			if (tType == tileType.GateUp)
-			{
-				var mat = new Material[2];
-				mat[0] = gateMaterial[2];
-				mat[1] = gateMaterial[1];
-				objMeshRenderer.materials = mat;
-			}
+			tType = tileType.GateUp;
+			
+			var mat = new Material[2];
+			mat[0] = gateMaterial[2];
+			mat[1] = gateMaterial[1];
+			objMeshRenderer.materials = mat;	
 		}
 	}
 }
