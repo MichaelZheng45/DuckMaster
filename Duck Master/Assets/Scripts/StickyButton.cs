@@ -2,34 +2,35 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StickyButton : MonoBehaviour
+public class StickyButton : MonoBehaviour, LogicInput
 {
     [SerializeField] Material unpressedMaterial;
     [SerializeField] Material pressedMaterial;
-    bool isActive;
+    bool active;
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<Renderer>().material = unpressedMaterial;
+        active = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isActive)
+        if (!active)
         {
-            isActive = true;
+            active = true;
             GetComponent<Renderer>().material = pressedMaterial;
         }
     }
 
-    public bool isPressed()
+    public bool IsActive()
     {
-        return isActive;
+        return active;
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Altimeter : MonoBehaviour
+public class Altimeter : MonoBehaviour, LogicInput
 {
     [SerializeField] int triggerHeight = 0;
     bool active;

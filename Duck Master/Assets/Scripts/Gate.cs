@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gate : MonoBehaviour
+public class Gate : MonoBehaviour, LogicOutput
 {
     [SerializeField] bool active;
     [SerializeField] Material underTileMat;
@@ -26,8 +26,6 @@ public class Gate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-            Activate(!active);
     }
 
     public void Activate(bool activate)

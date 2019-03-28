@@ -165,38 +165,42 @@ public class obstacleTilingSystem : MonoBehaviour
 			else
 			{
 				//iterate through all adjacents
-				for(int count = 0; count < 4; count++)
-				{
-					int adjNodeDirection = searchOrder[count];
-					tile adjTile = curNode.mConnections[adjNodeDirection];
+                if(!closedList.Contains(curNode))
+                {
+                    for (int count = 0; count < 4; count++)
+                    {
+                        int adjNodeDirection = searchOrder[count];
+                        tile adjTile = curNode.mConnections[adjNodeDirection];
 
-					//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
-					if (adjTile.heightVal <= curNode.heightVal && !closedList.Contains(adjTile) && curNode != adjTile && (adjTile.walkable))
-					{
-						adjTile.costSofar = curNode.costSofar + (adjTile.pos - curPos).magnitude;
-						adjTile.costWithHeurestics = adjTile.costSofar + (targetPos - adjTile.pos).magnitude;
-						adjTile.prevTile = curNode;
+                        //if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
+                        if (adjTile.heightVal <= curNode.heightVal && !closedList.Contains(adjTile) && curNode != adjTile && (adjTile.walkable))
+                        {
+                            adjTile.costSofar = curNode.costSofar + (adjTile.pos - curPos).magnitude;
+                            adjTile.costWithHeurestics = adjTile.costSofar + (targetPos - adjTile.pos).magnitude;
+                            adjTile.prevTile = curNode;
 
-						//place the node into a queue 
-						bool placed = false;
-						for (int i = 0; i < openListCount; i++)
-						{
-							if (openList[i].costWithHeurestics > adjTile.costWithHeurestics)
-							{
-								placed = true;
-								openList.Insert(i, adjTile);
-								openListCount++;
-								i = openListCount;
-							}
-						}
+                            //place the node into a queue 
+                            bool placed = false;
+                            for (int i = 0; i < openListCount; i++)
+                            {
+                                if (openList[i].costWithHeurestics > adjTile.costWithHeurestics)
+                                {
+                                    placed = true;
+                                    openList.Insert(i, adjTile);
+                                    openListCount++;
+                                    i = openListCount;
+                                }
+                            }
 
-						if (placed == false)
-						{
-							openList.Insert(openListCount, adjTile);
-							openListCount++;
-						}
-					}
-				}
+                            if (placed == false)
+                            {
+                                openList.Insert(openListCount, adjTile);
+                                openListCount++;
+                            }
+                        }
+                    }
+                }
+				
 
 				nodesProcessed++;
 				closedList.Add(curNode);
@@ -268,61 +272,63 @@ public class obstacleTilingSystem : MonoBehaviour
             //maybe a check if the nodes processed is too much then stop or something
             if (targetNode == curNode)
             {
-
 				foundToTile = true;
 			}
 			else
 			{
-				//iterate through all adjacents
-				for (int row = -1; row < 2; row++)
-				{
-					for (int col = -1; col < 2; col++)
-					{
-						if (col == 0 || row == 0)
-						{
-							//check tile information
-							int adjIndex = ((row + (int)curNode.index2.y) * tileCountX) + (col + (int)curNode.index2.x);
+                if (!closedList.Contains(curNode))
+                {
+                    //iterate through all adjacents
+                    for (int row = -1; row < 2; row++)
+                    {
+                        for (int col = -1; col < 2; col++)
+                        {
+                            if (col == 0 || row == 0)
+                            {
+                                //check tile information
+                                int adjIndex = ((row + (int)curNode.index2.y) * tileCountX) + (col + (int)curNode.index2.x);
 
-							//making sure that the index is within bounds of the "2d" array 
-							if (adjIndex < tileCountX * tileCountZ && curNode.index2.y + row < tileCountZ && curNode.index2.y + row >= 0
-								&& curNode.index2.x < tileCountX && curNode.index2.x >= 0)
-							{
-								tile adjTile = tileList[adjIndex];
-								tileType adjType = adjTile.tType;
+                                //making sure that the index is within bounds of the "2d" array 
+                                if (adjIndex < tileCountX * tileCountZ && curNode.index2.y + row < tileCountZ && curNode.index2.y + row >= 0
+                                    && curNode.index2.x < tileCountX && curNode.index2.x >= 0)
+                                {
+                                    tile adjTile = tileList[adjIndex];
+                                    tileType adjType = adjTile.tType;
 
-								//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
-								if (adjTile.heightVal == curNode.heightVal && travableTile[(int)adjType] && !closedList.Contains(adjTile) && curNode != adjTile)
-								{
-									adjTile.costSofar = curNode.costSofar + (adjTile.pos - curPos).magnitude;
-									Vector2 manhattanDis = (targetPos - adjTile.pos);
-									adjTile.costWithHeurestics = adjTile.costSofar + Mathf.Abs(manhattanDis.x) + Mathf.Abs(manhattanDis.y);
-									adjTile.prevTile = curNode;
+                                    //if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
+                                    if (adjTile.heightVal == curNode.heightVal && travableTile[(int)adjType] && !closedList.Contains(adjTile) && curNode != adjTile) //if it is in closed list, check if the cost is cheaper if so replace //if it is also in open list, find it and replace new data if it is smaller which means we don't need to insert another
+                                    {
+                                        adjTile.costSofar = curNode.costSofar + (adjTile.pos - curPos).magnitude;
+                                        Vector2 manhattanDis = (targetPos - adjTile.pos);
+                                        adjTile.costWithHeurestics = adjTile.costSofar + Mathf.Abs(manhattanDis.x) + Mathf.Abs(manhattanDis.y);
+                                        adjTile.prevTile = curNode;
 
-									//place the node into a queue 
-									bool placed = false;
-									for (int i = 0; i < openListCount; i++)
-									{
-										if (openList[i].costWithHeurestics > adjTile.costWithHeurestics)
-										{
-											placed = true;
-											openList.Insert(i, adjTile);
-											openListCount++;
-											i = openListCount;
-										}
-									}
+                                        //place the node into a queue 
+                                        bool placed = false;
+                                        for (int i = 0; i < openListCount; i++) 
+                                        {
+                                            if (openList[i].costWithHeurestics > adjTile.costWithHeurestics)
+                                            {
+                                                placed = true;
+                                                openList.Insert(i, adjTile);
+                                                openListCount++;
+                                                i = openListCount;
+                                            }
+                                        }
 
-									if (placed == false)
-									{
-										openList.Insert(openListCount, adjTile);
-										openListCount++;
-									}
-								}
-							}
-						}
-					}
-				}
-				nodesProcessed++;
-				closedList.Add(curNode);
+                                        if (placed == false)
+                                        {
+                                            openList.Insert(openListCount, adjTile);
+                                            openListCount++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    nodesProcessed++;
+                    closedList.Add(curNode);
+                }
 			}
 			openList.RemoveAt(0);
 			openListCount--;

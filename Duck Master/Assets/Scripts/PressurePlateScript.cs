@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PressurePlateScript : MonoBehaviour
+public class PressurePlateScript : MonoBehaviour, LogicInput
 {
     bool pressed;
     [SerializeField] Material pressedMat;
@@ -23,7 +23,6 @@ public class PressurePlateScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -36,7 +35,7 @@ public class PressurePlateScript : MonoBehaviour
             pressed = true;
             rend.material = pressedMat;
             duckCollider = other;
-            GameManager.Instance.buttonActivated();
+            //GameManager.Instance.buttonActivated();
         }
 
         //If Player enters and no duck
@@ -45,7 +44,7 @@ public class PressurePlateScript : MonoBehaviour
             pressed = true;
             playerCollider = other;
             rend.material = pressedMat;
-            GameManager.Instance.buttonActivated();
+            //GameManager.Instance.buttonActivated();
         }
 
         //If duck here, add player
@@ -77,5 +76,10 @@ public class PressurePlateScript : MonoBehaviour
             pressed = false;
             rend.material = unpressedMat;
         }
+    }
+
+    public bool IsActive()
+    {
+        return pressed;
     }
 }
