@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum WaterDirections
 {
+    NONE,
     UPRIGHT,
     UPLEFT,
     DOWNRIGHT,
@@ -105,5 +106,10 @@ public class Water : MonoBehaviour
             duck = null;
             duckbehavior = null;
         }
+    }
+
+    public WaterDirections GetWaterDirection()
+    {
+        return direction;
     }
 }
