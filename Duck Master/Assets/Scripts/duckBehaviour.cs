@@ -68,7 +68,9 @@ public class duckBehaviour : MonoBehaviour
 	[SerializeField] GameObject baitSystemObject;
 	[SerializeField] float attractDistance = 3; //<--temp	
 	BaitSystem baitSystem;
-
+    GameObject targetBait;
+    float duckBaitedVelocity = .1f;
+    float duckAtBaitDistance = .2f;
 
 	[Header("Misc")]
 	[SerializeField] Transform playerTransform;
@@ -117,7 +119,13 @@ public class duckBehaviour : MonoBehaviour
 			{
                 //check bait system for objects in line of sight
                 DuckRotationState rotation = mDuckRotation.GetRotationState();
+                GameObject target = mBaitSystem.duckLOSBait(duckTransform.position, attractDistance, rotation);
 
+                if(target != null)
+                {
+                    mDuckState = DuckStates.BAITED;
+                    targetBait = target;
+                }
 			}
 		}
 		frameCount+= Time.deltaTime;
@@ -174,6 +182,10 @@ public class duckBehaviour : MonoBehaviour
 			{
 				movePaths();
 			}
+            else if(mDuckState == DuckStates.BAITED)
+            {
+                
+            }
 
 			if (mDuckState == DuckStates.HELD)
 			{
@@ -301,6 +313,22 @@ public class duckBehaviour : MonoBehaviour
 		positionListData.Clear();
 		//place duck ontop of player 
 	}
+
+    void runToBait()
+    {
+        Vector3 direction = targetBait.transform.position - duckTransform.position;
+        duckTransform.position += direction.normalized * duckBaitedVelocity;
+
+        if(direction.magnitude < duckAtBaitDistance)
+        {
+            baitSystem.removeBait(targetBait);
+            targetBait = baitSystem.duckFindBait(duckTransform.position, attractDistance);
+            if(targetBait == null)
+            {
+                mDuckState = DuckStates.STILL;
+            }
+        }
+    }
 
 	public void throwDuck(Vector3 target)
 	{

@@ -106,6 +106,7 @@ public class obstacleTilingSystem : MonoBehaviour
     {
         CreateLevel();
     }
+
 	public List<Vector3> getTilePathDuck(Vector3 from, Vector3 to, List<bool> travableTile, int duckDirection)
 	{
 		//Create list data to keep track of

@@ -30,20 +30,72 @@ public class BaitSystem : MonoBehaviour
 		return false;
 	}
 
-    public Vector3 duckLOSBait(Vector3 duckPos, float attractRange, DuckRotationState rotation)
+    public GameObject duckLOSBait(Vector3 duckPos, float attractRange, DuckRotationState rotation)
     {
+        List<GameObject> processedBaits = new List<GameObject>();
         foreach(GameObject bait in placedBaits)
         {
             Vector3 baitPosition = bait.transform.position;
+            Vector3 forward = transform.TransformDirection(Vector3.forward);
 
+            if (Vector3.Dot(forward,(baitPosition - duckPos))> 0 && (baitPosition - duckPos).magnitude < attractRange)
+            {
+                //is within range find if anything is blocking in the way if nothing is or not the same verticality, put in list
+                processedBaits.Add(bait);
+            }
         }
-        return Vector3.zero;
+
+        if(processedBaits.Count > 0)
+        {
+            return getShortestBait(processedBaits, duckPos);
+        }
+        else
+        {
+            return null;
+        }
     }
 
-	public Vector3 duckFindBait(Vector3 pos, float attractRange)
+	public GameObject duckFindBait(Vector3 duckPos, float attractRange)
 	{
-		return Vector3.zero;
-	}
+        List<GameObject> processedBaits = new List<GameObject>();
+        foreach (GameObject bait in placedBaits)
+        {
+            Vector3 baitPosition = bait.transform.position;
+            if ((baitPosition - duckPos).magnitude < attractRange)
+            {
+                //is within range find if anything is blocking in the way if nothing is or not the same verticality, put in list
+                processedBaits.Add(bait);
+            }
+        }
+
+        if (processedBaits.Count > 0)
+        {
+            return getShortestBait(processedBaits, duckPos);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    GameObject getShortestBait(List<GameObject> baitList,Vector3 duckPos)
+    {
+        GameObject shortestBait = baitList[0];
+        baitList.Remove(shortestBait);
+        float distance = (shortestBait.transform.position - duckPos).magnitude;
+
+        foreach (GameObject bait in baitList)
+        {
+            float currentDistance = (bait.transform.position - duckPos).magnitude;
+            if (currentDistance < distance)
+            {
+                distance = currentDistance;
+                shortestBait = bait;
+            }
+        }
+
+        return shortestBait;
+    }
 
 	public void pickupNewBait(BaitTypes type)
 	{
