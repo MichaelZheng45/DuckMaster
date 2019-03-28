@@ -169,6 +169,12 @@ public class GameManager : MonoBehaviour
         return altimeterSys;
     }
 
+    //Will: For Running Water
+    public GameObject GetMainCamera()
+    {
+        return cameraMain;
+    }
+
     public Vector3 checkGeyser(Vector3 atPos, Vector3 fromPos)
     {
         tile atTile = tilingSys.getToTileByPosition(atPos);
