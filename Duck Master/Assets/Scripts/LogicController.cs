@@ -43,8 +43,57 @@ public class LogicController : MonoBehaviour
                 if (!input.IsActive())
                     activate = false;
             }
-
-
+			
+			if(activate)
+				print("And mode activated");
+			
+			foreach(LogicOutput output in outputs)
+			{
+				output.Activate(activate);
+			}
         }
+		
+		if (mode == LogicMode.OR)
+		{
+			bool activate = false;
+			foreach(LogicInput input in inputs)
+			{
+				if (input.IsActive())
+				{
+					activate = true;
+					break;
+				}
+			}
+			
+			if (activate)
+				print("OR Mode activated");
+			
+			foreach(LogicOutput output in outputs)
+			{
+				output.Activate(activate);
+			}
+		}
+		
+		if (mode == LogicMode.NOT)
+		{
+			bool activate = true;
+			
+			foreach(LogicInput input in inputs)
+			{
+				if (input.IsActive())
+				{
+					activate = false;
+					break;
+				}
+			}
+			
+			if (!activate)
+				print("NOT mode activated");
+			
+			foreach(LogicOutput output in outputs)
+			{
+				output.Activate(activate);
+			}
+		}
     }
 }
