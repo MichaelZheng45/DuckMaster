@@ -72,7 +72,8 @@ public class duckBehaviour : MonoBehaviour
 
 	[Header("Misc")]
 	[SerializeField] Transform playerTransform;
-	 BaitSystem mBaitSystem;
+	BaitSystem mBaitSystem;
+    DuckRotation mDuckRotation;
 	Transform duckTransform;
 
 	//frameCount
@@ -86,6 +87,7 @@ public class duckBehaviour : MonoBehaviour
 		tilePath = new List<Vector3>();
         positionListData = new Queue<Vector3>();
 
+        mDuckRotation = gameObject.GetComponent<DuckRotation>();
 		baitSystem = baitSystemObject.GetComponent<BaitSystem>();
         duckTransform = gameObject.transform;
 	
@@ -110,9 +112,11 @@ public class duckBehaviour : MonoBehaviour
 				positionListData.Clear(); //clear all follow positions
 			}
 
-			//check for baits
-			if(mDuckState == DuckStates.RETURN || mDuckState == DuckStates.BAITED)
+			//check for baits (line of sight)
+			if(mDuckState == DuckStates.RETURN)
 			{
+                //check bait system for objects in line of sight
+                DuckRotationState rotation = mDuckRotation.GetRotationState();
 
 			}
 		}

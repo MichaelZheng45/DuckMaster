@@ -30,6 +30,15 @@ public class BaitSystem : MonoBehaviour
 		return false;
 	}
 
+    public Vector3 duckLOSBait(Vector3 pos, float attractRange, DuckRotationState rotation)
+    {
+        foreach(GameObject bait in placedBaits)
+        {
+            Vector3 pos = bait.transform.position;
+        }
+        return Vector3.zero;
+    }
+
 	public Vector3 duckFindBait(Vector3 pos, float attractRange)
 	{
 		return Vector3.zero;
