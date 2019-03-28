@@ -13,7 +13,7 @@ public class BaitSystem : MonoBehaviour
 {
 	[Tooltip("Holds the data for the amount of baits")]
 	[SerializeField]List<int> baitAmount;
-	[SerializeField] List<GameObject> baitObjects;
+	[SerializeField] List<GameObject> baitObjects; //prefab list
 
 	List<GameObject> placedBaits;
 
@@ -30,11 +30,12 @@ public class BaitSystem : MonoBehaviour
 		return false;
 	}
 
-    public Vector3 duckLOSBait(Vector3 pos, float attractRange, DuckRotationState rotation)
+    public Vector3 duckLOSBait(Vector3 duckPos, float attractRange, DuckRotationState rotation)
     {
         foreach(GameObject bait in placedBaits)
         {
-            Vector3 pos = bait.transform.position;
+            Vector3 baitPosition = bait.transform.position;
+
         }
         return Vector3.zero;
     }

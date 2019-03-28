@@ -93,7 +93,7 @@ public class PlayerAction : MonoBehaviour
     }
 
 	//only throw onto standard block tiles
-	public void throwBait(Vector3 target, BaitTypes type)
+	public void throwBait(Vector3 target, BaitTypes type) //TO DO: LOOK AT TILE AND IF IT IS STANDARD TILE THROW IT
 	{
 		//check for distance
 		if ((gameObject.transform.position - target).magnitude <= throwDistance && mBaitSystem.checkBait(type))
