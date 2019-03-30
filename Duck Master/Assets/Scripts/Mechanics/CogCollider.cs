@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cogs : MonoBehaviour
+public class CogCollider : MonoBehaviour
 {
-    [SerializeField]int state = 0; 
-    int getState() { return state; }
     // Start is called before the first frame update
     void Start()
     {
