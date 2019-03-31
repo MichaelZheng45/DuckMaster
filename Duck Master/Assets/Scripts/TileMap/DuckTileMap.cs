@@ -78,4 +78,13 @@ public class DuckTileMap
     {
         return mGridMap[height].GetTile(x, y);
     }
+
+    void CreateConnections()
+    {
+        List<List<int>> heightMap = new List<List<int>>();
+        for(int i = mGridMap.Count - 1; i >= 0; i--)
+        {
+
+        }
+    }
 }
