@@ -6,17 +6,21 @@
 	{
 		mFromTile = null;
 		mToTile = null;
-		mCost = 255;
-	}
+        mDuckCost = 255;
+        mMasterCost = 255;
 
-	public Connection(DuckTile fromTile, DuckTile toTile, byte cost = MAX_COST)
+    }
+
+	public Connection(DuckTile fromTile, DuckTile toTile, byte duckCost = MAX_COST, byte masterCost = MAX_COST)
 	{
 		mFromTile = fromTile;
 		mToTile = toTile;
-		mCost = cost;
+        mDuckCost = duckCost;
+        mMasterCost = masterCost;
 	}
 
     public DuckTile mFromTile { get; set; }
     public DuckTile mToTile { get; set; }
-    public byte mCost { get; set; }
+    public byte mDuckCost { get; set; }
+    public byte mMasterCost { get; set; }
 }

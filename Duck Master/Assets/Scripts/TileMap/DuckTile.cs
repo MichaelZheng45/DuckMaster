@@ -9,7 +9,7 @@
         LEFT,
     }
     private const byte MAX_CONNECTIONS = 4;
-	Connection[] mConnections;// = new Connection[MAX_CONNECTIONS];
+    Connection[] mConnections;
 
 	public enum TileType
 	{
@@ -19,9 +19,9 @@
 		UnpassableMaster,
 		PassableBoth,
 	}
-	TileType mType;// = TileType.INVALID_TYPE;
+	TileType mType;
 
-	bool mBaitable;
+	bool mBaitable, mHeightChange;
 
 	// Default Constructor
 	public DuckTile()
@@ -33,7 +33,7 @@
 
 	// Sets to connections and type and baitable
 	// If connections is invalid it is set to a new instead
-	public DuckTile(Connection[] connections, TileType type, bool baitable)
+	public DuckTile(Connection[] connections, TileType type, bool baitable, bool heightChange)
 	{
 		if(connections.Length <= MAX_CONNECTIONS)
 		{
@@ -46,6 +46,13 @@
 		mType = type;
 		mBaitable = baitable;
 	}
+
+    public DuckTile(TileType type, bool baitable, bool heightChange)
+    {
+        mType = type;
+        mBaitable = baitable;
+        mHeightChange = heightChange;
+    }
 
 	// Set the specific direction connection
 	// Returns false if failed
@@ -97,27 +104,51 @@
 		return mConnections[index];
 	}
 
-	// Get direction connection cost
+	// Get direction duck connection cost
 	// Returns MAX_COST if fails
-    public byte GetCostDirection(ConnectionDirection direction)
+    public byte GetDuckCostDirection(ConnectionDirection direction)
     {
 		if (ConnectionDirection.INVALID_DIRECTION == direction)
 		{
 			return Connection.MAX_COST;
 		}
 
-		return mConnections[(int)direction].mCost;
+		return mConnections[(int)direction].mDuckCost;
 	}
 
-	// Get index connection cost
+	// Get index duck connection cost
 	// Returns MAX_COST if fails
-	public byte GetCostIndex(int index)
+	public byte GetDuckCostIndex(int index)
 	{
 		if (index < -1 || index > 4)
 		{
 			return Connection.MAX_COST;
 		}
 
-		return mConnections[index].mCost;
+		return mConnections[index].mDuckCost;
+	}
+
+    // Get direction master connection cost
+	// Returns MAX_COST if fails
+    public byte GetMasterCostDirection(ConnectionDirection direction)
+    {
+		if (ConnectionDirection.INVALID_DIRECTION == direction)
+		{
+			return Connection.MAX_COST;
+		}
+
+		return mConnections[(int)direction].mMasterCost;
+	}
+
+	// Get index master connection cost
+	// Returns MAX_COST if fails
+	public byte GetMasterCostIndex(int index)
+	{
+		if (index < -1 || index > 4)
+		{
+			return Connection.MAX_COST;
+		}
+
+		return mConnections[index].mMasterCost;
 	}
 }
