@@ -19,9 +19,12 @@
 		UnpassableMaster,
 		PassableBoth,
 	}
-	TileType mType;
+	public TileType mType { get; set; }
 
-	bool mBaitable, mHeightChange;
+	public bool mBaitable { get; set; }
+	public bool mHeightChange { get; set; }
+
+	public int mHeight { get; set; }
 
 	// Default Constructor
 	public DuckTile()
@@ -29,11 +32,13 @@
 		mConnections = new Connection[MAX_CONNECTIONS];
 		mType = TileType.INVALID_TYPE;
 		mBaitable = false;
+		mHeightChange = false;
+		mHeight = -1;
 	}
 
 	// Sets to connections and type and baitable
 	// If connections is invalid it is set to a new instead
-	public DuckTile(Connection[] connections, TileType type, bool baitable, bool heightChange)
+	public DuckTile(Connection[] connections, TileType type, bool baitable, bool heightChange, int height)
 	{
 		if(connections.Length <= MAX_CONNECTIONS)
 		{
@@ -45,13 +50,16 @@
 		}
 		mType = type;
 		mBaitable = baitable;
+		mHeight = height;
 	}
 
-    public DuckTile(TileType type, bool baitable, bool heightChange)
+    public DuckTile(TileType type, bool baitable, bool heightChange, int height)
     {
-        mType = type;
+		mConnections = new Connection[MAX_CONNECTIONS];
+		mType = type;
         mBaitable = baitable;
         mHeightChange = heightChange;
+		mHeight = height;
     }
 
 	// Set the specific direction connection
@@ -150,5 +158,15 @@
 		}
 
 		return mConnections[index].mMasterCost;
+	}
+
+	public bool GetDuckPassable()
+	{
+		return mType != TileType.UnpasssableDuck || mType != TileType.UnpassableBoth;
+	}
+
+	public bool GetMasterPassable()
+	{
+		return mType != TileType.UnpassableMaster || mType != TileType.UnpassableBoth;
 	}
 }
