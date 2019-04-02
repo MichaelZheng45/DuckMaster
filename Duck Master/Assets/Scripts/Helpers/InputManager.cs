@@ -117,7 +117,6 @@ public class InputManager : MonoBehaviour
 				}
 			}
 		}
-		Debug.Log(mRaycastHits[0].collider);
 		lastMousePos = Input.mousePosition;
 
 #elif MOBILE

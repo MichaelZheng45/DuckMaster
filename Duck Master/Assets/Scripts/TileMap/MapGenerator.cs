@@ -11,8 +11,6 @@ public class MapGenerator : MonoBehaviour
 	[SerializeField]
 	GameObject dampObject;
 
-	DuckTileMap tileMap = null;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -35,7 +33,7 @@ public class MapGenerator : MonoBehaviour
 
 		foreach (Transform child in levelFold.transform)
 		{
-			GameObject.Destroy(child.gameObject);
+			GameObject.DestroyImmediate(child.gameObject);
 		}
 
 		List<List<DuckTile.TileType>> typeGrid = new List<List<DuckTile.TileType>>();
@@ -105,6 +103,7 @@ public class MapGenerator : MonoBehaviour
 			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, i));
 		}
 
-		tileMap = new DuckTileMap(tileGrids);
+		TileMapScriptableObject temp = Resources.Load("scriptableObjects/TileMapHolder") as TileMapScriptableObject;
+		temp.tileMap = new DuckTileMap(tileGrids);
 	}
 }
