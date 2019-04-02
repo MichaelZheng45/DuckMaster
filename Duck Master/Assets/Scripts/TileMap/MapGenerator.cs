@@ -45,7 +45,7 @@ public class MapGenerator : MonoBehaviour
 		List<List<bool>> heightChangeGrid = new List<List<bool>>();
 		List<bool> heightChangeList;
 		List<DuckTileGrid> tileGrids = new List<DuckTileGrid>();
-		GameObject tileObj;
+		GameObject tileObj = null;
 
 		for (int i = 0; i < verticalLevels; ++i)
 		{
@@ -64,7 +64,7 @@ public class MapGenerator : MonoBehaviour
 					{
 						// TO DO: center positions, fix instantiation ways
 						string currentBlock = listGridSelStrings[i][index];
-						Vector2 pos = new Vector2(height * j, k);
+						Vector3 pos = new Vector3(j, 0, k);
 
 						// string[] blockTypes = { "Ground", "Water", "Damp", "None" };
 						if (currentBlock == blockTypes[0] || currentBlock == blockTypes[2])
@@ -93,6 +93,7 @@ public class MapGenerator : MonoBehaviour
 							// it's none/null aka null
 							typeList.Add(DuckTile.TileType.INVALID_TYPE);
 						}
+						tileObj.transform.parent = levelFold.transform;
 						baitableList.Add(false);
 						heightChangeList.Add(false);
 					}
