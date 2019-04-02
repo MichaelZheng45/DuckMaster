@@ -16099,6 +16099,7 @@ GameObject:
   - component: {fileID: 1050653461}
   - component: {fileID: 1050653460}
   - component: {fileID: 1050653462}
+  - component: {fileID: 1050653463}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -16121,6 +16122,7 @@ MonoBehaviour:
   cameraMain: {fileID: 534669902}
   highlighter: {fileID: 670656595}
   tileMap: {fileID: 568412048}
+  altimeter: {fileID: 0}
   player: {fileID: 1625430204}
   duck: {fileID: 624687236}
   redMaterial: {fileID: 2100000, guid: 5376129e063625a4aa0b114a0c2711fc, type: 2}
@@ -16153,6 +16155,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swipeTolerance: 50
+--- !u!114 &1050653463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1050653459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e428b2ccc9de0e43a634fa2e5511651, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1052124757
 GameObject:
   m_ObjectHideFlags: 0
@@ -21433,7 +21447,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1344664126}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.4140172, y: -3.5136342, z: -6.581656}
+  m_LocalPosition: {x: 3.44, y: -3.5136342, z: -6.581656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1278489602}
