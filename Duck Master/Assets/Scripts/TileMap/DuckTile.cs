@@ -26,6 +26,12 @@
 
 	public int mHeight { get; set; }
 
+	public float mCostSoFar { get; set; }
+	public float mHeuristicCostSoFar { get; set; }
+
+	//back pointer to retrace for path
+	public DuckTile mPreviousTile { get; set; }
+
 	// Default Constructor
 	public DuckTile()
 	{

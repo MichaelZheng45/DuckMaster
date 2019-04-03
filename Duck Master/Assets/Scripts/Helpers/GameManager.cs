@@ -23,7 +23,6 @@ public class GameManager : MonoBehaviour
     //systems objects
     [SerializeField] GameObject cameraMain;
     [SerializeField] GameObject highlighter;
-    //[SerializeField] GameObject tileMap;
     [SerializeField] GameObject altimeter;
 
     //playable objects
@@ -31,10 +30,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject duck;
 
     //script systems
-    obstacleTilingSystem tilingSys;
     PlayerAction playerActionSys;
     duckBehaviour duckBehaviourSys;
     Altimeter altimeterSys;
+	
     //transforms
     Transform playerTransform;
     Transform duckTransform;
@@ -56,7 +55,6 @@ public class GameManager : MonoBehaviour
 	void Start()
     {
         unFriendlyList = new List<unfreindlyScript>();
-        //tilingSys = tileMap.GetComponent<obstacleTilingSystem>();
         playerActionSys = player.GetComponent<PlayerAction>();
         duckBehaviourSys = duck.GetComponent<duckBehaviour>();
         altimeterSys = altimeter.GetComponent<Altimeter>();
@@ -79,8 +77,6 @@ public class GameManager : MonoBehaviour
 
     public void mouseHitOnTile(RaycastHit hit, bool rightClick)
     {
-        tilingSys.checkToTile(hit, highlighter);
-
         //temporary clicking movement
         if (rightClick)
         {
@@ -233,10 +229,10 @@ public class GameManager : MonoBehaviour
                     for (int col = -1; col < 2; col++)
                     {
                         tile adjTile = tilingSys.getTilebyIndex((int)atTile.index2.x + col, (int)atTile.index2.y + row);
-                        if (duckBehaviourSys.traverseData.traversePossibilities[(int)adjTile.tType] && adjTile.walkable && !(col == 0 && row == 0))
-                        {
-                            return adjTile.pos + new Vector3(0, 1, 0);
-                        }
+                     //   if (duckBehaviourSys.traverseData.traversePossibilities[(int)adjTile.tType] && adjTile.walkable && !(col == 0 && row == 0))
+                     //   {
+                     //       return adjTile.pos + new Vector3(0, 1, 0);
+                     //   }
                     }
                 }
                 return playerTransform.position;

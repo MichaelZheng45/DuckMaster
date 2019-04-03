@@ -17,8 +17,6 @@ public enum DuckStates
 
 public class duckBehaviour : MonoBehaviour
 {
-	public traversibleGround traverseData;
-
 	public DuckStates mDuckState;
 	public DuckStates GetDuckStates() { return mDuckState; }
 
