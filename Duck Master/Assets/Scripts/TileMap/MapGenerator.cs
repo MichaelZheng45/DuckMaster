@@ -62,7 +62,7 @@ public class MapGenerator : MonoBehaviour
 					{
 						// TO DO: center positions, fix instantiation ways
 						string currentBlock = listGridSelStrings[i][index];
-						Vector3 pos = new Vector3(j, 0, k);
+						Vector3 pos = new Vector3(j, i, k);
 
 						// string[] blockTypes = { "Ground", "Water", "Damp", "None" };
 						if (currentBlock == blockTypes[0] || currentBlock == blockTypes[2])
