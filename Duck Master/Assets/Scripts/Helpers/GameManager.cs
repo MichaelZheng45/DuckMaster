@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     //systems objects
     [SerializeField] GameObject cameraMain;
     [SerializeField] GameObject highlighter;
-    [SerializeField] GameObject tileMap;
+    //[SerializeField] GameObject tileMap;
     [SerializeField] GameObject altimeter;
 
     //playable objects
@@ -48,16 +48,22 @@ public class GameManager : MonoBehaviour
     //bool checks
     bool holdingDuck = false;
 
-    // Start is called before the first frame update
-    void Start()
+	[SerializeField]
+	TileMapScriptableObject tileMapScriptableObject = null;
+	public DuckTileMap tileMap { get; set; }
+
+	// Start is called before the first frame update
+	void Start()
     {
         unFriendlyList = new List<unfreindlyScript>();
-        tilingSys = tileMap.GetComponent<obstacleTilingSystem>();
+        //tilingSys = tileMap.GetComponent<obstacleTilingSystem>();
         playerActionSys = player.GetComponent<PlayerAction>();
         duckBehaviourSys = duck.GetComponent<duckBehaviour>();
         altimeterSys = altimeter.GetComponent<Altimeter>();
         playerTransform = player.transform;
         duckTransform = duck.transform;
+
+		tileMap = tileMapScriptableObject.tileMap;
     }
 
     // Update is called once per frame

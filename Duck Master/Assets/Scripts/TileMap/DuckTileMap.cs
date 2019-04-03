@@ -154,8 +154,6 @@ public class DuckTileMap
 				}
 			}
 		}
-
-		Debug.Log(mHeightMap);
     }
 
 	void CreateConnections()
@@ -205,6 +203,5 @@ public class DuckTileMap
 				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, new Connection(bottomConnection.mToTile, bottomConnection.mFromTile, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
 			}
 		}
-		Debug.Log("Connection");
 	}
 }
