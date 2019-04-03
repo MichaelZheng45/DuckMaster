@@ -23,18 +23,17 @@ public class GameManager : MonoBehaviour
     //systems objects
     [SerializeField] GameObject cameraMain;
     [SerializeField] GameObject highlighter;
-    //[SerializeField] GameObject tileMap;
     [SerializeField] GameObject altimeter;
 
     //playable objects
     [SerializeField] GameObject player;
     [SerializeField] GameObject duck;
 
-    //script systems
-    obstacleTilingSystem tilingSys;
+	//script systems
     PlayerAction playerActionSys;
     duckBehaviour duckBehaviourSys;
     Altimeter altimeterSys;
+	
     //transforms
     Transform playerTransform;
     Transform duckTransform;
@@ -43,7 +42,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] float throwDistanceMax; //should be in another script to be honest
 
 	//lists
-	List<unfreindlyScript> unFriendlyList;
+	List<unfreindlyScript> unFriendlyList; //TO DO: find a way to populate this list with unfriendlies for each level
 
     //bool checks
     bool holdingDuck = false;
@@ -56,7 +55,6 @@ public class GameManager : MonoBehaviour
 	void Start()
     {
         unFriendlyList = new List<unfreindlyScript>();
-        //tilingSys = tileMap.GetComponent<obstacleTilingSystem>();
         playerActionSys = player.GetComponent<PlayerAction>();
         duckBehaviourSys = duck.GetComponent<duckBehaviour>();
         altimeterSys = altimeter.GetComponent<Altimeter>();
@@ -79,13 +77,10 @@ public class GameManager : MonoBehaviour
 
     public void mouseHitOnTile(RaycastHit hit, bool rightClick)
     {
-        tilingSys.checkToTile(hit, highlighter);
-
         //temporary clicking movement
         if (rightClick)
         {
-            List<Vector3> tilePath = tilingSys.getTilePathPlayer(playerTransform.position, hit.transform.position,
-                playerActionSys.getTraverseData().traversePossibilities);
+            List<Vector3> tilePath = Pathfinder.getTilePathPlayer(playerTransform.position, hit.transform.position,tileMap);
             if (tilePath.Count > 0)
             {
                 playerActionSys.applyNewPath(tilePath);
@@ -114,23 +109,19 @@ public class GameManager : MonoBehaviour
         int unthrowMask = 1 << 11;
         RaycastHit athit;
         Vector3 dir = hit.point - duckTransform.position;
+		//check if anything is in the way (need to be changed)
         if (!Physics.Raycast(duckTransform.position, dir.normalized, out athit, dir.magnitude, unthrowMask) && dir.magnitude < throwDistanceMax)
         {
-            tile atTile = tilingSys.getToTile(hit);
+            DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.z));
 
-            //check if throwable
-            if (duckBehaviourSys.traverseData.traversePossibilities[(int)atTile.tType] && atTile.walkable)
+			//check if throwable
+			if (atTile.mType == DuckTile.TileType.PassableBoth || atTile.mType == DuckTile.TileType.UnpassableMaster)
             {
                 //throw duck
                 playerActionSys.isHoldingDuck = false;
-                duckBehaviourSys.throwDuck(atTile.pos);
+                duckBehaviourSys.throwDuck(atTile.mPosition);
             }
         }
-    }
-
-    public void highLightOnOff(bool on)
-    {
-
     }
 
     //create pathfinding to return duck back to the player
@@ -139,8 +130,8 @@ public class GameManager : MonoBehaviour
 		//do pathfinding
 		if(duckBehaviourSys.isRecallable())
 		{
-			List<Vector3> tilePath = tilingSys.getTilePathDuck(duckTransform.position, playerTransform.position,
-						 duckBehaviourSys.traverseData.traversePossibilities,0); //zero is temp
+			List<Vector3> tilePath = Pathfinder.getTilePathDuck(duckTransform.position, playerTransform.position, tileMap,
+																 (int)duck.GetComponent<DuckRotation>().currentRotation);
 			if (tilePath.Count > 0)
 			{
 				//give to duck
@@ -159,12 +150,6 @@ public class GameManager : MonoBehaviour
         return duckTransform;
     }
 
-    //Will: Used for altimeter
-    public obstacleTilingSystem GetTilingSystem()
-    {
-        return tilingSys;
-    }
-
     public Altimeter GetAltimeter()
     {
         return altimeterSys;
@@ -178,8 +163,9 @@ public class GameManager : MonoBehaviour
 
     public Vector3 checkGeyser(Vector3 atPos, Vector3 fromPos)
     {
-        tile atTile = tilingSys.getToTileByPosition(atPos);
-        float startingRange = .8f;
+		DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(atPos.x), Mathf.FloorToInt(atPos.z));
+		float startingRange = .8f;
+		/*
         if (atTile.tType == tileType.Geyser)
         {
             //calculate a new trajectory
@@ -206,15 +192,11 @@ public class GameManager : MonoBehaviour
                     return Vector3.zero;
                 }
             }
+			
         }
-
+		*/
         //is not a geyser
         return Vector3.zero;
-    }
-
-    public void buttonActivated()
-    {
-        tilingSys.changeAllFromButtons();
     }
 
     public Vector3 checkToRun(float range)
@@ -225,18 +207,18 @@ public class GameManager : MonoBehaviour
             if (dist.magnitude < range)
             {
                 playerActionSys.isHoldingDuck = false;
-                //find a tile to move to
-                tile atTile = tilingSys.getToTileByPosition(duckTransform.position);
+				//find a tile to move to
+				DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(duckTransform.position.x), Mathf.FloorToInt(duckTransform.position.z));
 
-                for (int row = -1; row < 2; row++)
+				for (int row = -1; row < 2; row++)
                 {
                     for (int col = -1; col < 2; col++)
                     {
-                        tile adjTile = tilingSys.getTilebyIndex((int)atTile.index2.x + col, (int)atTile.index2.y + row);
-                        if (duckBehaviourSys.traverseData.traversePossibilities[(int)adjTile.tType] && adjTile.walkable && !(col == 0 && row == 0))
-                        {
-                            return adjTile.pos + new Vector3(0, 1, 0);
-                        }
+                       // tile adjTile = tilingSys.getTilebyIndex((int)atTile.index2.x + col, (int)atTile.index2.y + row);
+                     //   if (duckBehaviourSys.traverseData.traversePossibilities[(int)adjTile.tType] && adjTile.walkable && !(col == 0 && row == 0))
+                     //   {
+                     //       return adjTile.pos + new Vector3(0, 1, 0);
+                     //   }
                     }
                 }
                 return playerTransform.position;
@@ -246,13 +228,14 @@ public class GameManager : MonoBehaviour
         return Vector3.zero;
     }
 
-    public void addUnFriendly(unfreindlyScript newUnfreindly)
-    {
-        unFriendlyList.Add(newUnfreindly);
-    }
+	public void addUnFriendly(unfreindlyScript newUnfreindly)
+	{
+		unFriendlyList.Add(newUnfreindly);
+	}
 
-    public void markUnfreindlies(ref List<tile> unTouchable, Vector3 pos, int range)
-    {
-        unTouchable = tilingSys.turnWalkable(unTouchable, pos, range);
-    }
+	
+	public void markUnfreindlies(ref List<DuckTile> previousAOE, Vector3 pos, int range)
+	{
+		//turn all of those back to the
+	}
 }

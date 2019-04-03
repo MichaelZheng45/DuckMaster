@@ -12,8 +12,7 @@ public enum DuckRotationState
 
 public class DuckRotation : MonoBehaviour
 {
-	[SerializeField]DuckRotationState currentRotation;
-	public DuckRotationState GetRotationState() { return currentRotation; }
+	public DuckRotationState currentRotation { get; set; }
 
 	[Tooltip("A number to fudge the rotation to the base rotation (top)")]
 	[SerializeField] int rotationFactor;

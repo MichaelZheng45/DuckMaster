@@ -49,7 +49,7 @@ public class TestScript : MonoBehaviour
 		DuckTileGrid grid2 = new DuckTileGrid(tileType, baitable, change);
 
 		DuckTileMap map = new DuckTileMap(new List<DuckTileGrid>() { grid, grid2 });
-		*/
+		
 
 		List<List<DuckTile.TileType>> tileTypes = new List<List<DuckTile.TileType>>() {
 			new List<DuckTile.TileType>() { DuckTile.TileType.PassableBoth,  DuckTile.TileType.PassableBoth,  DuckTile.TileType.PassableBoth },
@@ -96,6 +96,7 @@ public class TestScript : MonoBehaviour
 		DuckTileGrid grid2 = new DuckTileGrid(tileTypes, baitable, heightChange, 1);
 
 		DuckTileMap map = new DuckTileMap(new List<DuckTileGrid>() { grid1, grid2 });
+	*/
 	}
 
 	// Update is called once per frame

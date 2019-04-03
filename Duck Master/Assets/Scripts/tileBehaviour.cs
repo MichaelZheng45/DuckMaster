@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class tileBehaviour : MonoBehaviour
 {
-	[SerializeField] tileType tType;
+	/*
 	[SerializeField] GameObject obj;
 
 	[SerializeField] List<Material> gateMaterial;
@@ -48,4 +48,5 @@ public class tileBehaviour : MonoBehaviour
 			objMeshRenderer.materials = mat;	
 		}
 	}
+	*/
 }
