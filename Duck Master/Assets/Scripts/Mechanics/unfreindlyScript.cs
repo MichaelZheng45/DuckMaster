@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class unfreindlyScript : MonoBehaviour
 {
-	List<tile> untouchables;
+	List<DuckTile> untouchables;
 	[SerializeField] int range;
 
 	public Transform unitTransform;
@@ -12,7 +12,7 @@ public class unfreindlyScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		untouchables = new List<tile>();
+		untouchables = new List<DuckTile>();
 		unitTransform = gameObject.transform;
 		GameManager.Instance.addUnFriendly(this);
 		GameManager.Instance.markUnfreindlies(ref untouchables, unitTransform.position, range);
@@ -25,4 +25,9 @@ public class unfreindlyScript : MonoBehaviour
     }
 
 	//if ever moving then add more code
+	public void scareDuckMoved(Vector3 newPosition)
+	{
+		//untouchables passed by reference
+		GameManager.Instance.markUnfreindlies(ref untouchables, newPosition, range);
+	}
 }

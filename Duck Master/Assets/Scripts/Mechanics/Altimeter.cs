@@ -19,11 +19,11 @@ public class Altimeter : MonoBehaviour, LogicInput
 
     public void CheckAltitude(Vector3 pos)
     {
-        tile current = GameManager.Instance.GetTilingSystem().getToTileByPosition(pos);
+		DuckTile current = GameManager.Instance.tileMap.mHeightMap.GetTile(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.z));
 
         if (current != null)
         {
-            if (current.heightVal == triggerHeight)
+            if (current.mHeight == triggerHeight)
             {
                 print("Altimeter activated!");
                 active = true;

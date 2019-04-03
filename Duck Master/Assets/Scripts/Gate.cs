@@ -11,7 +11,6 @@ public class Gate : MonoBehaviour, LogicOutput
     GameObject tileObj;
     Transform objTransform;
     MeshRenderer objMeshRenderer;
-    tile theTile;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,26 +30,23 @@ public class Gate : MonoBehaviour, LogicOutput
     public void Activate(bool activate)
     {
         active = activate;
-        if (active)
+		var mat = new Material[2];
+		if (active)
         {
-            if (theTile != null)
-            {
-                print("Opening gate");
-                theTile.tType = tileType.GateDown;
-            }
-            var mat = new Material[2];
+
+            
+            print("Opening gate");
+			GameManager.Instance.tileMap.mHeightMap.GetTile(Mathf.FloorToInt(objTransform.position.x), Mathf.FloorToInt(objTransform.position.z)).mType = DuckTile.TileType.PassableBoth; 
+            
+
             mat[0] = gateMaterial[2];
             mat[1] = gateMaterial[0];
             objMeshRenderer.materials = mat;
         }
         else
         {
-            if (theTile != null)
-            {
-                print("Closing Gate");
-                theTile.tType = tileType.GateUp;
-            }
-            var mat = new Material[2];
+            print("Closing Gate");
+			GameManager.Instance.tileMap.mHeightMap.GetTile(Mathf.FloorToInt(objTransform.position.x), Mathf.FloorToInt(objTransform.position.z)).mType = DuckTile.TileType.UnpassableBoth;
             mat[0] = gateMaterial[2];
             mat[1] = gateMaterial[1];
             objMeshRenderer.materials = mat;
@@ -64,6 +60,7 @@ public class Gate : MonoBehaviour, LogicOutput
 
     private void OnTriggerEnter(Collider other)
     {
+		/*
         if (other.gameObject.name == "ground(Clone)")
         {
             other.gameObject.GetComponent<Renderer>().material = underTileMat; 
@@ -71,6 +68,6 @@ public class Gate : MonoBehaviour, LogicOutput
             tileObj = other.gameObject;
             theTile = GameManager.Instance.GetTilingSystem().getToTileByPosition(other.gameObject.transform.position);
             theTile.tType = tileType.GateUp;
-        }
+        } */
     }
 }

@@ -40,7 +40,7 @@ public class buttonScript : MonoBehaviour
 		{
 			pressed = true;
 			renderer.material = pressedMat;
-			GameManager.Instance.buttonActivated();
+			//GameManager.Instance.buttonActivated();
 		}
 	}
 }

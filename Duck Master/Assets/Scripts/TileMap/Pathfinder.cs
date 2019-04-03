@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pathfinder
 {
-	public List<Vector3> getTilePathDuck(Vector3 from, Vector3 to, DuckTileMap tileMap, int duckDirection)
+	public static List<Vector3> getTilePathDuck(Vector3 from, Vector3 to, DuckTileMap tileMap, int duckDirection)
 	{
 		//Create list data to keep track of
 		List<DuckTile> openList = new List<DuckTile>();
@@ -51,7 +51,7 @@ public class Pathfinder
 		while (loop && openListCount > 0 && !foundToTile) //&& if node is not found, count should be fine but in case
 		{
 			DuckTile curNode = openList[0];
-			Vector3 curPos = curNode.pos;
+			Vector3 curPos = curNode.mPosition;
 
 			//to create the index is i = (row * Colsize) + column where col is x
 			//maybe a check if the nodes processed is too much then stop or something
@@ -75,7 +75,7 @@ public class Pathfinder
 						{
 							adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mDuckCost;
 						
-							Vector2 manhattanDis = (targetPos - adjTile.pos);		
+							Vector2 manhattanDis = (targetPos - adjTile.mPosition);		
 							adjTile.mHeuristicCostSoFar = adjTile.mCostSoFar + Mathf.Abs(manhattanDis.x) + Mathf.Abs(manhattanDis.y);
 							adjTile.mPreviousTile = curNode;
 
@@ -111,14 +111,14 @@ public class Pathfinder
 
 		if (foundToTile)
 		{
-			path.Add(targetNode.pos + new Vector3(0, 1, 0));
+			path.Add(targetNode.mPosition + new Vector3(0, 1, 0));
 			bool finishPath = false;
 			DuckTile curTile = targetNode;
 
 			while (!finishPath)
 			{
 				curTile = curTile.mPreviousTile;
-				path.Add(curTile.pos + new Vector3(0, 1, 0));
+				path.Add(curTile.mPosition + new Vector3(0, 1, 0));
 				if (curTile == firstNode)
 				{
 					finishPath = true;
@@ -129,7 +129,7 @@ public class Pathfinder
 		return path;
 	}
 
-	public List<Vector3> getTilePathPlayer(Vector3 from, Vector3 to, DuckTileMap tileMap)
+	public static List<Vector3> getTilePathPlayer(Vector3 from, Vector3 to, DuckTileMap tileMap)
 	{
 		//Create list data to keep track of
 		List<DuckTile> openList = new List<DuckTile>();
@@ -166,7 +166,7 @@ public class Pathfinder
 		while (loop && openListCount > 0 && !foundToTile) //&& if node is not found, count should be fine but in case
 		{
 			DuckTile curNode = openList[0];
-			Vector3 curPos = curNode.pos;
+			Vector3 curPos = curNode.mPosition;
 
 			//to create the index is i = (row * Colsize) + column where col is x
 			//maybe a check if the nodes processed is too much then stop or something
@@ -189,7 +189,7 @@ public class Pathfinder
 						{
 							adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mDuckCost;
 
-							Vector2 manhattanDis = (targetPos - adjTile.pos);
+							Vector2 manhattanDis = (targetPos - adjTile.mPosition);
 							adjTile.mHeuristicCostSoFar = adjTile.mCostSoFar + Mathf.Abs(manhattanDis.x) + Mathf.Abs(manhattanDis.y);
 							adjTile.mPreviousTile = curNode;
 
@@ -224,14 +224,14 @@ public class Pathfinder
 
 		if (foundToTile)
 		{
-			path.Add(targetNode.pos + new Vector3(0, 1, 0));
+			path.Add(targetNode.mPosition + new Vector3(0, 1, 0));
 			bool finishPath = false;
 			DuckTile curTile = targetNode;
 
 			while (!finishPath)
 			{
 				curTile = curTile.mPreviousTile;
-				path.Add(curTile.pos + new Vector3(0, 1, 0));
+				path.Add(curTile.mPosition + new Vector3(0, 1, 0));
 				if (curTile == firstNode)
 				{
 					finishPath = true;
