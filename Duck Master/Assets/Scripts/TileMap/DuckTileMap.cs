@@ -11,6 +11,7 @@ public class DuckTileGrid
         mGrid = new List<List<DuckTile>>();
     }
 
+	// Don't Use Please, Won't work
     public DuckTileGrid(int x, int y)
     {
         mGrid = new List<List<DuckTile>>();
@@ -28,7 +29,7 @@ public class DuckTileGrid
     }
 
     // Height change is for the fact that a tile might be walkable above but not walkable from below
-    public DuckTileGrid(List<List<DuckTile.TileType>> typeGrid, List<List<bool>> baitableGrid, List<List<bool>> heightChangeGrid, int height)
+    public DuckTileGrid(List<List<DuckTile.TileType>> typeGrid, List<List<bool>> baitableGrid, List<List<bool>> heightChangeGrid, List<List<Vector3>> positionGrid, int height)
     {
         mGrid = new List<List<DuckTile>>();
         List<DuckTile> tempList;
@@ -38,19 +39,12 @@ public class DuckTileGrid
             for (int k = 0; k < typeGrid[j].Count; ++k)
             {
                 // j is y, k is x
-                tempList.Add(new DuckTile(typeGrid[j][k], baitableGrid[j][k], heightChangeGrid[j][k], height));
+                tempList.Add(new DuckTile(typeGrid[j][k], baitableGrid[j][k], heightChangeGrid[j][k], positionGrid[j][k], height));
                 //Debug.Log("X: " + k + " Y: " + j + "\nType: " + typeGrid[j][k] + "\nBaitable: " + baitableGrid[j][k] + "\nHeight Change: " + heightChangeGrid[j][k]);
             }
             mGrid.Add(tempList);
         }
     }
-
-	//public List<DuckTile> GetRow(int y)
-	//{
-	//	if (y > -1 && y < mGrid.Count)
-	//		return mGrid[y];
-	//	return null;
-	//}
 
     public DuckTile GetTile(int x, int y)
     {
@@ -101,6 +95,7 @@ public class DuckTileMap
 		mHeightMap = new DuckTileGrid();
     }
 
+	// Don't Use Please, won't work
     public DuckTileMap(int x, int y, int height)
     {
         mGridMap = new List<DuckTileGrid>();

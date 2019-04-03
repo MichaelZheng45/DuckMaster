@@ -43,6 +43,9 @@ public class MapGenerator : MonoBehaviour
 		List<List<bool>> heightChangeGrid = new List<List<bool>>();
 		List<bool> heightChangeList;
 		List<DuckTileGrid> tileGrids = new List<DuckTileGrid>();
+		List<Vector3> positionsList;
+		List<List<Vector3>> positionGrid = new List<List<Vector3>>();
+
 		GameObject tileObj = null;
 
 		for (int i = 0; i < verticalLevels; ++i)
@@ -55,6 +58,7 @@ public class MapGenerator : MonoBehaviour
 				typeList = new List<DuckTile.TileType>();
 				baitableList = new List<bool>();
 				heightChangeList = new List<bool>();
+				positionsList = new List<Vector3>();
 				for (int k = 0; k < width; ++k)
 				{
 					int index = height * j + k;
@@ -64,21 +68,12 @@ public class MapGenerator : MonoBehaviour
 						string currentBlock = listGridSelStrings[i][index];
 						Vector3 pos = new Vector3(j, i, k);
 
-						// string[] blockTypes = { "Ground", "Water", "Damp", "None" };
-						if (currentBlock == blockTypes[0] || currentBlock == blockTypes[2])
+						// string[] blockTypes = { "Ground", "Water", "None" };
+						if (currentBlock == blockTypes[0])
 						{
 							// passable both
 							typeList.Add(DuckTile.TileType.PassableBoth);
-
-							// TO DO CHANGE ME PLEASE?
-							if(currentBlock == blockTypes[0])
-							{
-								tileObj = Instantiate(groundObject, pos, Quaternion.identity);
-							}
-							else
-							{
-								tileObj = Instantiate(dampObject, pos, Quaternion.identity);
-							}
+							tileObj = Instantiate(groundObject, pos, Quaternion.identity);
 						}
 						else if (currentBlock == blockTypes[1])
 						{
@@ -94,13 +89,15 @@ public class MapGenerator : MonoBehaviour
 						tileObj.transform.parent = levelFold.transform;
 						baitableList.Add(false);
 						heightChangeList.Add(false);
+						positionsList.Add(pos);
 					}
 				}
 				typeGrid.Add(typeList);
 				baitableGrid.Add(baitableList);
 				heightChangeGrid.Add(heightChangeList);
+				positionGrid.Add(positionsList);
 			}
-			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, i));
+			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, positionGrid, i));
 		}
 
 		TileMapScriptableObject temp = Resources.Load("scriptableObjects/TileMapHolder") as TileMapScriptableObject;
