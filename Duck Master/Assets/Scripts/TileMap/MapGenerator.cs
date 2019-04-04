@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -22,7 +22,7 @@ public class MapGenerator : MonoBehaviour
         
     }
 
-	public void GenerateMap(int verticalLevels, List<string[]> listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths)
+	public void GenerateMap(int verticalLevels, List<string[]> listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths, string scriptableObjectName)
 	{
 		GameObject levelFold = GameObject.Find("LevelFolder");
 		if(levelFold == null)

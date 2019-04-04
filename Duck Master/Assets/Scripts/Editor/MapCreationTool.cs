@@ -23,6 +23,8 @@ public class MapCreationTool : EditorWindow
 
 	bool toggleSelector = false;
 
+	string scriptableObjectName = "";
+
 	[MenuItem("Window/Level Generator")]
 	static void Init()
 	{
@@ -121,9 +123,12 @@ public class MapCreationTool : EditorWindow
 				}
 			}
 
+			GUILayout.Label("Level Name");
+			scriptableObjectName = GUILayout.TextField(scriptableObjectName);
+
 			if (GUILayout.Button("Create Level"))
 			{
-				GameObject.Find("GameManager").GetComponent<MapGenerator>().GenerateMap(verticalLevels, listGridSelStrings, blockTypes, currentLevelHeights, currentLevelWidths);
+				GameObject.Find("GameManager").GetComponent<MapGenerator>().GenerateMap(verticalLevels, listGridSelStrings, blockTypes, currentLevelHeights, currentLevelWidths, "Assets/Resources/scriptableObjects/" + scriptableObjectName);
 			}
 		}
 		// TO DO: Add the option to grab a ton of tiles with right click
