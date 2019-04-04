@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -8,8 +9,6 @@ public class MapGenerator : MonoBehaviour
 	GameObject groundObject;
 	[SerializeField]
 	GameObject waterObject;
-	[SerializeField]
-	GameObject dampObject;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +42,9 @@ public class MapGenerator : MonoBehaviour
 		List<List<bool>> heightChangeGrid = new List<List<bool>>();
 		List<bool> heightChangeList;
 		List<DuckTileGrid> tileGrids = new List<DuckTileGrid>();
+		List<Vector3> positionsList;
+		List<List<Vector3>> positionGrid = new List<List<Vector3>>();
+
 		GameObject tileObj = null;
 
 		for (int i = 0; i < verticalLevels; ++i)
@@ -55,6 +57,7 @@ public class MapGenerator : MonoBehaviour
 				typeList = new List<DuckTile.TileType>();
 				baitableList = new List<bool>();
 				heightChangeList = new List<bool>();
+				positionsList = new List<Vector3>();
 				for (int k = 0; k < width; ++k)
 				{
 					int index = height * j + k;
@@ -62,23 +65,14 @@ public class MapGenerator : MonoBehaviour
 					{
 						// TO DO: center positions, fix instantiation ways
 						string currentBlock = listGridSelStrings[i][index];
-						Vector3 pos = new Vector3(j, 0, k);
+						Vector3 pos = new Vector3(j, i, k);
 
-						// string[] blockTypes = { "Ground", "Water", "Damp", "None" };
-						if (currentBlock == blockTypes[0] || currentBlock == blockTypes[2])
+						// string[] blockTypes = { "Ground", "Water", "None" };
+						if (currentBlock == blockTypes[0])
 						{
 							// passable both
 							typeList.Add(DuckTile.TileType.PassableBoth);
-
-							// TO DO CHANGE ME PLEASE?
-							if(currentBlock == blockTypes[0])
-							{
-								tileObj = Instantiate(groundObject, pos, Quaternion.identity);
-							}
-							else
-							{
-								tileObj = Instantiate(dampObject, pos, Quaternion.identity);
-							}
+							tileObj = Instantiate(groundObject, pos, Quaternion.identity);
 						}
 						else if (currentBlock == blockTypes[1])
 						{
@@ -94,16 +88,24 @@ public class MapGenerator : MonoBehaviour
 						tileObj.transform.parent = levelFold.transform;
 						baitableList.Add(false);
 						heightChangeList.Add(false);
+						positionsList.Add(pos);
 					}
 				}
 				typeGrid.Add(typeList);
 				baitableGrid.Add(baitableList);
 				heightChangeGrid.Add(heightChangeList);
+				positionGrid.Add(positionsList);
 			}
-			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, i));
+			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, positionGrid, i));
 		}
 
-		TileMapScriptableObject temp = Resources.Load("scriptableObjects/TileMapHolder") as TileMapScriptableObject;
-		temp.tileMap = new DuckTileMap(tileGrids);
+		//TileMapScriptableObject temp = AssetDatabase.LoadAssetAtPath("Assets/Resources/scriptableObjects/TileMapHolder", Object) as TileMapScriptableObject;
+		TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+		AssetDatabase.CreateAsset(scriptableObject, "Assets/Resources/scriptableObjects/TileMapHolder.asset");
+		scriptableObject.tileMap = new DuckTileMap(tileGrids);
+		Debug.Log(scriptableObject.tileMap);
+		EditorUtility.SetDirty(scriptableObject);
+		AssetDatabase.SaveAssets();
+		AssetDatabase.Refresh();
 	}
 }

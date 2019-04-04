@@ -18,7 +18,7 @@ public class MapCreationTool : EditorWindow
 	int gridSel;
 	List<string[]> listGridSelStrings;
 
-	string[] blockTypes = { "Ground", "Water", "Damp", "None" };
+	string[] blockTypes = { "Ground", "Water", "None" };
 	int blockSelection;
 
 	bool toggleSelector = false;

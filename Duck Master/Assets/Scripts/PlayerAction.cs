@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class PlayerAction : MonoBehaviour
 {
-	//list out the ability to do things
-	[SerializeField]
-	private traversibleGround traverseData;
-
 	//all conditions and possible ones
 	public bool canMove;
 	public bool canPickUp;
@@ -63,11 +59,6 @@ public class PlayerAction : MonoBehaviour
             moving = false;
         }
     }
-
-	public traversibleGround getTraverseData()
-	{
-		return traverseData;
-	}
 
     public void applyNewPath(List<Vector3> newPath)
     {

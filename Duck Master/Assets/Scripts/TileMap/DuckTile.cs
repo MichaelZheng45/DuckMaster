@@ -1,4 +1,7 @@
-﻿public class DuckTile
+﻿using UnityEngine;
+
+[System.Serializable]
+public class DuckTile
 {
     public enum ConnectionDirection
     {
@@ -8,8 +11,10 @@
         DOWN,
         LEFT,
     }
+	[SerializeField]
     private const byte MAX_CONNECTIONS = 4;
-    Connection[] mConnections;
+	[SerializeField]
+	Connection[] mConnections;
 
 	public enum TileType
 	{
@@ -26,6 +31,14 @@
 
 	public int mHeight { get; set; }
 
+	public float mCostSoFar { get; set; }
+	public float mHeuristicCostSoFar { get; set; }
+
+	//back pointer to retrace for path
+	public DuckTile mPreviousTile { get; set; }
+
+	public Vector3 mPosition { get; set; }
+
 	// Default Constructor
 	public DuckTile()
 	{
@@ -34,11 +47,12 @@
 		mBaitable = false;
 		mHeightChange = false;
 		mHeight = -1;
+		mPosition = Vector3.zero;
 	}
 
 	// Sets to connections and type and baitable
 	// If connections is invalid it is set to a new instead
-	public DuckTile(Connection[] connections, TileType type, bool baitable, bool heightChange, int height)
+	public DuckTile(Connection[] connections, TileType type, bool baitable, bool heightChange, Vector3 position, int height)
 	{
 		if(connections.Length <= MAX_CONNECTIONS)
 		{
@@ -51,15 +65,17 @@
 		mType = type;
 		mBaitable = baitable;
 		mHeight = height;
+		mPosition = position;
 	}
 
-    public DuckTile(TileType type, bool baitable, bool heightChange, int height)
+    public DuckTile(TileType type, bool baitable, bool heightChange, Vector3 position, int height)
     {
 		mConnections = new Connection[MAX_CONNECTIONS];
 		mType = type;
         mBaitable = baitable;
         mHeightChange = heightChange;
 		mHeight = height;
+		mPosition = position;
     }
 
 	// Set the specific direction connection

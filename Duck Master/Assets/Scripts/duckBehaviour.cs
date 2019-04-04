@@ -17,8 +17,6 @@ public enum DuckStates
 
 public class duckBehaviour : MonoBehaviour
 {
-	public traversibleGround traverseData;
-
 	public DuckStates mDuckState;
 	public DuckStates GetDuckStates() { return mDuckState; }
 
@@ -117,8 +115,8 @@ public class duckBehaviour : MonoBehaviour
 			//check for baits (line of sight)
 			if(mDuckState == DuckStates.RETURN)
 			{
-                //check bait system for objects in line of sight
-                DuckRotationState rotation = mDuckRotation.GetRotationState();
+				//check bait system for objects in line of sight
+				DuckRotationState rotation = mDuckRotation.currentRotation;
                 GameObject target = mBaitSystem.duckLOSBait(duckTransform.position, attractDistance, rotation);
 
                 if(target != null)
