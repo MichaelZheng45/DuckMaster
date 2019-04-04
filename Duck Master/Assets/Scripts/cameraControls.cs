@@ -21,6 +21,7 @@ public class cameraControls : MonoBehaviour
 	//right click to move around
 	void Update()
 	{
+		/*
         holdinDuck = GameManager.Instance.checkIsHoldingDuck();
 		if(Input.GetMouseButtonDown(0))
 		{
@@ -62,6 +63,7 @@ public class cameraControls : MonoBehaviour
 			mouseRightClick = false;
 		}
 		mouseHover();
+		*/
 	}
 
 	private void FixedUpdate()
@@ -80,7 +82,7 @@ public class cameraControls : MonoBehaviour
             //highlight area
             //if there is a click  right tell game manager and bool that is hovering over tiles.
             //if the player is holding
-            GameManager.Instance.mouseHitOnTile(hit, mouseRightClick);
+            GameManager.Instance.movePlayerTo(hit, mouseRightClick);
 		}	
 	}
 

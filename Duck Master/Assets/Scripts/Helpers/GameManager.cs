@@ -75,21 +75,16 @@ public class GameManager : MonoBehaviour
         return playerActionSys.isHoldingDuck;
     }
 
-    public void mouseHitOnTile(RaycastHit hit, bool rightClick)
+    public void movePlayerTo(Vector3 targetPosition, bool rightClick)
     {
-        //temporary clicking movement
-        if (rightClick)
+        List<Vector3> tilePath = Pathfinder.getTilePathPlayer(playerTransform.position, targetPosition,tileMap);
+        if (tilePath.Count > 0)
         {
-            List<Vector3> tilePath = Pathfinder.getTilePathPlayer(playerTransform.position, hit.transform.position,tileMap);
-            if (tilePath.Count > 0)
-            {
-                playerActionSys.applyNewPath(tilePath);
-            }
+            playerActionSys.applyNewPath(tilePath);
         }
-
     }
 
-    public void clickOnDuck()
+    public void pickUpDuck()
     {
         //check if the duck is nearby, if not nothing happens
         if ((duckTransform.position - playerTransform.position).magnitude < 1.5 && duckBehaviourSys.mDuckState != DuckStates.HELD)
@@ -97,11 +92,12 @@ public class GameManager : MonoBehaviour
             playerActionSys.isHoldingDuck = true;
             duckBehaviourSys.pickUpDuck();
         }
-        else
-        {
-            duckRecall(); //if the duck is too far away recall it
-        }
     }
+
+	public void recallDuck()
+	{
+		duckRecall();
+	}
 
     public void throwDuck(RaycastHit hit)
     {
