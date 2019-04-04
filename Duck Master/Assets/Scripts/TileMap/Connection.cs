@@ -3,7 +3,7 @@
 [System.Serializable]
 public class Connection
 {
-	public const byte MAX_COST = 255;
+	//public byte MAX_COST = 255;
 
 	public Connection()
 	{
@@ -11,10 +11,9 @@ public class Connection
 		mToTile = null;
         mDuckCost = 255;
         mMasterCost = 255;
-
     }
 
-	public Connection(DuckTile fromTile, DuckTile toTile, byte duckCost = MAX_COST, byte masterCost = MAX_COST)
+	public Connection(DuckTile fromTile, DuckTile toTile, byte duckCost, byte masterCost)
 	{
 		mFromTile = fromTile;
 		mToTile = toTile;

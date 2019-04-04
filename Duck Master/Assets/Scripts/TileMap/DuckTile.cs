@@ -3,6 +3,7 @@
 [System.Serializable]
 public class DuckTile
 {
+    [SerializeField]
     public enum ConnectionDirection
     {
         INVALID_DIRECTION = -1,
@@ -12,10 +13,11 @@ public class DuckTile
         LEFT,
     }
 	[SerializeField]
-    private const byte MAX_CONNECTIONS = 4;
+    private byte MAX_CONNECTIONS = 4;
 	[SerializeField]
 	Connection[] mConnections;
 
+    [SerializeField]
 	public enum TileType
 	{
 		INVALID_TYPE = -1,
@@ -134,7 +136,7 @@ public class DuckTile
     {
 		if (ConnectionDirection.INVALID_DIRECTION == direction)
 		{
-			return Connection.MAX_COST;
+			return 255;
 		}
 
 		return mConnections[(int)direction].mDuckCost;
@@ -146,7 +148,7 @@ public class DuckTile
 	{
 		if (index < -1 || index > 4)
 		{
-			return Connection.MAX_COST;
+			return 255;
 		}
 
 		return mConnections[index].mDuckCost;
@@ -158,7 +160,7 @@ public class DuckTile
     {
 		if (ConnectionDirection.INVALID_DIRECTION == direction)
 		{
-			return Connection.MAX_COST;
+			return 255;
 		}
 
 		return mConnections[(int)direction].mMasterCost;
@@ -170,7 +172,7 @@ public class DuckTile
 	{
 		if (index < -1 || index > 4)
 		{
-			return Connection.MAX_COST;
+			return 255;
 		}
 
 		return mConnections[index].mMasterCost;
