@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -22,7 +22,7 @@ public class MapGenerator : MonoBehaviour
         
     }
 
-	public void GenerateMap(int verticalLevels, List<string[]> listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths)
+	public void GenerateMap(int verticalLevels, List<string[]> listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths, string scriptableObjectName)
 	{
 		GameObject levelFold = GameObject.Find("LevelFolder");
 		if(levelFold == null)
@@ -99,6 +99,15 @@ public class MapGenerator : MonoBehaviour
 			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, positionGrid, i));
 		}
 
+		TileMapScriptableObject temp = Resources.Load(scriptableObjectName) as TileMapScriptableObject;
+		if(temp == null)
+		{
+			temp = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+
+			AssetDatabase.CreateAsset(temp, scriptableObjectName+".asset");
+			AssetDatabase.SaveAssets();
+		}
+		temp.tileMap = new DuckTileMap(tileGrids);
 		//TileMapScriptableObject temp = AssetDatabase.LoadAssetAtPath("Assets/Resources/scriptableObjects/TileMapHolder", Object) as TileMapScriptableObject;
 		TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
 		AssetDatabase.CreateAsset(scriptableObject, "Assets/Resources/scriptableObjects/TileMapHolder.asset");
