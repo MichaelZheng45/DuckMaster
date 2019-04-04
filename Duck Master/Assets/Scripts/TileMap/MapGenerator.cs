@@ -99,22 +99,31 @@ public class MapGenerator : MonoBehaviour
 			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, positionGrid, i));
 		}
 
-		TileMapScriptableObject temp = Resources.Load(scriptableObjectName) as TileMapScriptableObject;
-		if(temp == null)
-		{
-			temp = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+        //TileMapScriptableObject temp = Resources.Load(scriptableObjectName) as TileMapScriptableObject;
+        //if(temp == null)
+        //{
+        //	temp = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+        //
+        //	AssetDatabase.CreateAsset(temp, scriptableObjectName+".asset");
+        //	AssetDatabase.SaveAssets();
+        //}
+        //temp.tileMap = new DuckTileMap(tileGrids);
 
-			AssetDatabase.CreateAsset(temp, scriptableObjectName+".asset");
-			AssetDatabase.SaveAssets();
-		}
-		temp.tileMap = new DuckTileMap(tileGrids);
-		//TileMapScriptableObject temp = AssetDatabase.LoadAssetAtPath("Assets/Resources/scriptableObjects/TileMapHolder", Object) as TileMapScriptableObject;
-		TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
-		AssetDatabase.CreateAsset(scriptableObject, "Assets/Resources/scriptableObjects/TileMapHolder.asset");
-		scriptableObject.tileMap = new DuckTileMap(tileGrids);
-		Debug.Log(scriptableObject.tileMap);
-		EditorUtility.SetDirty(scriptableObject);
-		AssetDatabase.SaveAssets();
-		AssetDatabase.Refresh();
+        TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+        string assetString = "Assets/Resources/scriptableObjects/" + scriptableObjectName + ".asset";
+        AssetDatabase.CreateAsset(scriptableObject, assetString);
+        scriptableObject.tileMap = new DuckTileMap(tileGrids);
+        Debug.Log(scriptableObject.tileMap);
+        EditorUtility.SetDirty(scriptableObject);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+
+        //TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+		//AssetDatabase.CreateAsset(scriptableObject, "Assets/Resources/scriptableObjects/TileMapHolder.asset");
+		//scriptableObject.tileMap = new DuckTileMap(tileGrids);
+		//Debug.Log(scriptableObject.tileMap);
+		//EditorUtility.SetDirty(scriptableObject);
+		//AssetDatabase.SaveAssets();
+		//AssetDatabase.Refresh();
 	}
 }
