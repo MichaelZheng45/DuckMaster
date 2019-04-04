@@ -82,7 +82,7 @@ public class cameraControls : MonoBehaviour
             //highlight area
             //if there is a click  right tell game manager and bool that is hovering over tiles.
             //if the player is holding
-            GameManager.Instance.movePlayerTo(hit, mouseRightClick);
+          //  GameManager.Instance.movePlayerTo(hit, mouseRightClick);
 		}	
 	}
 

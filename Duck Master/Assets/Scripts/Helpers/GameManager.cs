@@ -67,8 +67,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
-    }
+		DuckTile atTile = tileMap.mHeightMap.GetTile(0,0);
+	}
 
     public bool checkIsHoldingDuck()
     {
