@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterWheel : MonoBehaviour, LogicInput
+public class WaterWheel : LogicInput
 {
     bool active;
 
@@ -42,7 +42,7 @@ public class WaterWheel : MonoBehaviour, LogicInput
         }
     }
 
-    public bool IsActive()
+    public override bool IsActive()
     {
         return active;
     }

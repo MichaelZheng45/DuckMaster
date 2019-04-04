@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface LogicInput
+public abstract class LogicInput : MonoBehaviour
 {
-    bool IsActive();
+    public abstract bool IsActive();
+    List<LogicOutput> outputlist;
 }
 
-public interface LogicOutput
+public abstract class LogicOutput : MonoBehaviour
 {
-    void Activate(bool active);
+    public abstract void Activate(bool active);
+    public List<LogicInput> AND_List;
+    public List<LogicInput> OR_List;
+    public List<LogicInput> NOT_list;
 }
 
 public enum LogicMode

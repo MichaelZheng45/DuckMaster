@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StickyButton : MonoBehaviour, LogicInput
+public class StickyButton : LogicInput
 {
     [SerializeField] Material unpressedMaterial;
     [SerializeField] Material pressedMaterial;
@@ -29,7 +29,7 @@ public class StickyButton : MonoBehaviour, LogicInput
         }
     }
 
-    public bool IsActive()
+    public override bool IsActive()
     {
         return active;
     }

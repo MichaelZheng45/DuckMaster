@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class buttonScript : MonoBehaviour
+public class buttonScript : LogicInput
 {
 	bool pressed = false;
 	[SerializeField]float waitPeriod;
@@ -43,4 +43,9 @@ public class buttonScript : MonoBehaviour
 			//GameManager.Instance.buttonActivated();
 		}
 	}
+
+    public override bool IsActive()
+    {
+        return pressed;
+    }
 }
