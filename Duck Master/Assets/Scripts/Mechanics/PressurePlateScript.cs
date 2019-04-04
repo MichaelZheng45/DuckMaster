@@ -23,6 +23,12 @@ public class PressurePlateScript : LogicInput
     // Update is called once per frame
     void Update()
     {
+        //Debug
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    print("changing pressure plate states");
+        //    pressed = true;
+        //}
     }
 
     private void OnTriggerEnter(Collider other)

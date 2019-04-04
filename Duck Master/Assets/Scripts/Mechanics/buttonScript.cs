@@ -21,6 +21,13 @@ public class buttonScript : LogicInput
     // Update is called once per frame
     void Update()
     {
+        //Debug
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    print("button state changed");
+        //    pressed = !pressed;
+        //}
+
         if(pressed)
 		{
 			timer += Time.deltaTime;

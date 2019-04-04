@@ -5,7 +5,6 @@ using UnityEngine;
 public class WaterWheel : LogicInput
 {
     bool active;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +15,12 @@ public class WaterWheel : LogicInput
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    print("changing water wheel states");
+        //    active = !active;
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
