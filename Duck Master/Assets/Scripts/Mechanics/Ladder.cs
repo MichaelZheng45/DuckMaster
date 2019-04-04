@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ladder : MonoBehaviour
+public class Ladder : LogicOutput
 {
     [SerializeField] float moveSpeed = 0.5f;
     [SerializeField] bool isActive = true;
@@ -40,8 +40,10 @@ public class Ladder : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
+        base.Update();
+
         if (isPlayerUsing)
         {
             if (!action.CheckMoving())
@@ -89,6 +91,11 @@ public class Ladder : MonoBehaviour
     public bool GetUsing()
     {
         return isPlayerUsing;
+    }
+
+    public override void Activate(bool active)
+    {
+        SetLadder(active);
     }
 
     public void SetLadder(bool active)

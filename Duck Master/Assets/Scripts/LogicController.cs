@@ -2,18 +2,83 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface LogicInput
+public class LogicInput : MonoBehaviour
 {
-    bool IsActive();
+    public virtual bool IsActive() { return false; }
+    [SerializeField] List<LogicOutput> outputlist;
 }
 
-public interface LogicOutput
+public class LogicOutput : MonoBehaviour
 {
-    void Activate(bool active);
+    public virtual void Activate(bool active) { }
+    [SerializeField] List<LogicInput> AND_List;
+    [SerializeField] List<LogicInput> OR_List;
+    [SerializeField] List<LogicInput> NOT_list;
+
+    //Something tells me this is insanely over-engineered, and/or unnecessary but oh well.
+    public void Update()
+    {
+        print("Logic output update called");
+
+        bool and = false, or = false, not = false;
+
+        //AND
+        if (AND_List.Count > 0)
+        {
+            and = true;
+
+            foreach (LogicInput input in AND_List)
+                if (!input.IsActive())
+                {
+                    and = false;
+                    break;
+                }
+
+            if (and)
+                print("AND firing");
+        }
+
+
+        //OR
+        if (OR_List.Count > 0)
+        {
+            or = false;
+
+            foreach (LogicInput input in OR_List)
+                if (input.IsActive())
+                    or = true;
+
+            if (or)
+                print("OR firing");
+
+        }
+
+        //NOT
+        if (NOT_list.Count > 0)
+        {
+            not = true;
+
+            foreach (LogicInput input in NOT_list)
+            {
+                if (input.IsActive())
+                {
+                    not = false;
+                    break;
+                }
+
+            }
+            if (not)
+                print("NOT firing");
+        }
+
+        Activate(and || or || not);
+    }
+
 }
 
 public enum LogicMode
 {
+    NONE,
     AND,
     OR,
     NOT

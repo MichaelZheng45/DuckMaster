@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class buttonScript : MonoBehaviour
+public class buttonScript : LogicInput
 {
 	bool pressed = false;
 	[SerializeField]float waitPeriod;
@@ -21,6 +21,13 @@ public class buttonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+        //    print("button state changed");
+        //    pressed = !pressed;
+        //}
+
         if(pressed)
 		{
 			timer += Time.deltaTime;
@@ -43,4 +50,9 @@ public class buttonScript : MonoBehaviour
 			//GameManager.Instance.buttonActivated();
 		}
 	}
+
+    public override bool IsActive()
+    {
+        return pressed;
+    }
 }

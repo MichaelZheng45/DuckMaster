@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterWheel : MonoBehaviour, LogicInput
+public class WaterWheel : LogicInput
 {
     bool active;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +15,12 @@ public class WaterWheel : MonoBehaviour, LogicInput
     // Update is called once per frame
     void Update()
     {
-        
+        //Debug
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    print("changing water wheel states");
+        //    active = !active;
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,7 +46,7 @@ public class WaterWheel : MonoBehaviour, LogicInput
         }
     }
 
-    public bool IsActive()
+    public override bool IsActive()
     {
         return active;
     }
