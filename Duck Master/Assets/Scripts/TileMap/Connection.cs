@@ -1,4 +1,7 @@
-﻿public class Connection
+﻿using UnityEngine;
+
+[System.Serializable]
+public class Connection
 {
 	public const byte MAX_COST = 255;
 

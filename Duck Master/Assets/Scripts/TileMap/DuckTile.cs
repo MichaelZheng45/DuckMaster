@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+
+[System.Serializable]
 public class DuckTile
 {
     public enum ConnectionDirection
@@ -9,8 +11,10 @@ public class DuckTile
         DOWN,
         LEFT,
     }
+	[SerializeField]
     private const byte MAX_CONNECTIONS = 4;
-    Connection[] mConnections;
+	[SerializeField]
+	Connection[] mConnections;
 
 	public enum TileType
 	{

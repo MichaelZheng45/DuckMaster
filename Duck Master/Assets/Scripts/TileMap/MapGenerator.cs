@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -8,8 +9,6 @@ public class MapGenerator : MonoBehaviour
 	GameObject groundObject;
 	[SerializeField]
 	GameObject waterObject;
-	[SerializeField]
-	GameObject dampObject;
 
     // Start is called before the first frame update
     void Start()
@@ -100,7 +99,13 @@ public class MapGenerator : MonoBehaviour
 			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, positionGrid, i));
 		}
 
-		TileMapScriptableObject temp = Resources.Load("scriptableObjects/TileMapHolder") as TileMapScriptableObject;
-		temp.tileMap = new DuckTileMap(tileGrids);
+		//TileMapScriptableObject temp = AssetDatabase.LoadAssetAtPath("Assets/Resources/scriptableObjects/TileMapHolder", Object) as TileMapScriptableObject;
+		TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+		AssetDatabase.CreateAsset(scriptableObject, "Assets/Resources/scriptableObjects/TileMapHolder.asset");
+		scriptableObject.tileMap = new DuckTileMap(tileGrids);
+		Debug.Log(scriptableObject.tileMap);
+		EditorUtility.SetDirty(scriptableObject);
+		AssetDatabase.SaveAssets();
+		AssetDatabase.Refresh();
 	}
 }
