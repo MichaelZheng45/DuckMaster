@@ -187,7 +187,7 @@ public class Pathfinder
 						if (adjTile.mHeight <= curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
 							 && (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck))
 						{
-							adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mDuckCost;
+							adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mMasterCost;
 
 							Vector2 manhattanDis = (targetPos - adjTile.mPosition);
 							adjTile.mHeuristicCostSoFar = adjTile.mCostSoFar + Mathf.Abs(manhattanDis.x) + Mathf.Abs(manhattanDis.y);
