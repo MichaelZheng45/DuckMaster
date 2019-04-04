@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gate : MonoBehaviour, LogicOutput
+public class Gate : LogicOutput
 {
     [SerializeField] bool active;
     [SerializeField] Material underTileMat;
@@ -23,11 +23,12 @@ public class Gate : MonoBehaviour, LogicOutput
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
+        base.Update();
     }
 
-    public void Activate(bool activate)
+    public override void Activate(bool activate)
     {
         active = activate;
 		var mat = new Material[2];

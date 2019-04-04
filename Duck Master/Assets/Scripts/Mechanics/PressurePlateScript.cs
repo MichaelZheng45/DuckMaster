@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PressurePlateScript : MonoBehaviour, LogicInput
+public class PressurePlateScript : LogicInput
 {
     bool pressed;
     [SerializeField] Material pressedMat;
@@ -23,6 +23,12 @@ public class PressurePlateScript : MonoBehaviour, LogicInput
     // Update is called once per frame
     void Update()
     {
+        //Debug
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    print("changing pressure plate states");
+        //    pressed = true;
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -78,7 +84,7 @@ public class PressurePlateScript : MonoBehaviour, LogicInput
         }
     }
 
-    public bool IsActive()
+    public override bool IsActive()
     {
         return pressed;
     }

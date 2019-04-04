@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StickyButton : MonoBehaviour, LogicInput
+public class StickyButton : LogicInput
 {
     [SerializeField] Material unpressedMaterial;
     [SerializeField] Material pressedMaterial;
@@ -17,7 +17,12 @@ public class StickyButton : MonoBehaviour, LogicInput
     // Update is called once per frame
     void Update()
     {
-
+        //Debug
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    print("changing sticky buttons states");
+        //    active = !active;
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -29,7 +34,7 @@ public class StickyButton : MonoBehaviour, LogicInput
         }
     }
 
-    public bool IsActive()
+    public override bool IsActive()
     {
         return active;
     }

@@ -32,7 +32,7 @@ public class cogs : MonoBehaviour
 	//+ means clockwise, - means counterclockwise
 	public void updateInput(int rotateDirection)
 	{
-		if(disableTurn = false)
+		if(disableTurn == false)
 		{
 			disableTurn = true;
 			disableCounter = 0;
