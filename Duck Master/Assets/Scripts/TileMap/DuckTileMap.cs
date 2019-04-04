@@ -12,7 +12,6 @@ public class DuckList
 	}
 }
 
-
 [System.Serializable]
 public class DuckTileGrid
 {
@@ -177,8 +176,8 @@ public class DuckTileMap
 				currentTile = mHeightMap.GetTile(k, j);
 				rightTile = mHeightMap.GetTile(k + 1, j);
 				bottomTile = mHeightMap.GetTile(k, j + 1);
-				rightConnection = new Connection(currentTile, rightTile);
-				bottomConnection = new Connection(currentTile, bottomTile);
+				rightConnection = new Connection(currentTile, rightTile, 255, 255);
+				bottomConnection = new Connection(currentTile, bottomTile, 255, 255);
 
 				if (currentTile.mHeight == rightTile.mHeight || (currentTile.mHeight != rightTile.mHeight && currentTile.mHeightChange && rightTile.mHeightChange))
 				{
