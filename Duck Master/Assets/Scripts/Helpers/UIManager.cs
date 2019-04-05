@@ -40,14 +40,33 @@ public class UIManager : MonoBehaviour
             throwButton.SetActive(true);
         else
             throwButton.SetActive(false);
-        
+
+        InputManager manager = GameManager.Instance.GetComponent<InputManager>();
+
         if (throwToggle)
         {
             //if tap on tile throw
-        }
-        else
-        {
-            //path find call
+            if (manager != null)
+            {
+                print("Input manager is not null (UI)");
+                List<RaycastHit> hitList = manager.GetInput();
+
+                foreach (RaycastHit hit in hitList)
+                {
+                    if (hit.collider != null)
+                    {
+                        print("hit gameObject name: " + hit.collider.gameObject.name);
+
+                        if (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(Clone)")
+                            GameManager.Instance.throwDuck(hit);
+                    }
+
+                }
+            }
+            else
+            {
+                //path find call
+            }
         }
 
     }
