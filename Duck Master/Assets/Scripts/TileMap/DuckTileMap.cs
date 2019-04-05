@@ -62,8 +62,6 @@ public class DuckTileGrid
     {
         if ((x > -1 && y > -1 && mGrid.Count > y && mGrid[y].mList.Count > x))
         {
-            Debug.Log("Y: " + mGrid.Count + " " + y);
-            Debug.Log("X: " + mGrid[y].mList.Count + " " + x);
             return mGrid[y].mList[x];
         }
         return null;
@@ -180,8 +178,11 @@ public class DuckTileMap
 				currentTile = mHeightMap.GetTile(k, j);
 				rightTile = mHeightMap.GetTile(k + 1, j);
 				bottomTile = mHeightMap.GetTile(k, j + 1);
-				rightConnection = new Connection(currentTile, rightTile, 255, 255);
-				bottomConnection = new Connection(currentTile, bottomTile, 255, 255);
+				Vector3 currentTileIndex = new Vector3(k, j, currentTile.mHeight);
+				Vector3 rightTileIndex = new Vector3(k, j, rightTile.mHeight);
+				Vector3 bottomTileIndex = new Vector3(k, j, bottomTile.mHeight);
+				rightConnection = new Connection(currentTileIndex, rightTileIndex, 255, 255);
+				bottomConnection = new Connection(currentTileIndex, bottomTileIndex, 255, 255);
 
 				if (currentTile.mHeight == rightTile.mHeight || (currentTile.mHeight != rightTile.mHeight && currentTile.mHeightChange && rightTile.mHeightChange))
 				{
@@ -211,8 +212,8 @@ public class DuckTileMap
 				}
 				currentTile.SetConnectionDirection(DuckTile.ConnectionDirection.RIGHT, rightConnection);
 				currentTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, bottomConnection);
-				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.LEFT, new Connection(rightConnection.mToTile, rightConnection.mFromTile, rightConnection.mDuckCost, rightConnection.mMasterCost));
-				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, new Connection(bottomConnection.mToTile, bottomConnection.mFromTile, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
+				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.LEFT, new Connection(rightConnection.mToIndex, rightConnection.mFromIndex, rightConnection.mDuckCost, rightConnection.mMasterCost));
+				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, new Connection(bottomConnection.mToIndex, bottomConnection.mFromIndex, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
 			}
 		}
 	}
