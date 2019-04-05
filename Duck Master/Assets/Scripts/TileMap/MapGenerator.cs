@@ -1,6 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -8,8 +9,6 @@ public class MapGenerator : MonoBehaviour
 	GameObject groundObject;
 	[SerializeField]
 	GameObject waterObject;
-	[SerializeField]
-	GameObject dampObject;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +22,7 @@ public class MapGenerator : MonoBehaviour
         
     }
 
-	public void GenerateMap(int verticalLevels, List<string[]> listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths)
+	public void GenerateMap(int verticalLevels, List<string[]> listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths, string scriptableObjectName)
 	{
 		GameObject levelFold = GameObject.Find("LevelFolder");
 		if(levelFold == null)
@@ -36,15 +35,16 @@ public class MapGenerator : MonoBehaviour
 			GameObject.DestroyImmediate(child.gameObject);
 		}
 
-		List<List<DuckTile.TileType>> typeGrid = new List<List<DuckTile.TileType>>();
+		List<List<DuckTile.TileType>> typeGrid;
 		List<DuckTile.TileType> typeList;
-		List<List<bool>> baitableGrid = new List<List<bool>>();
+		List<List<bool>> baitableGrid;
 		List<bool> baitableList;
-		List<List<bool>> heightChangeGrid = new List<List<bool>>();
+		List<List<bool>> heightChangeGrid;
 		List<bool> heightChangeList;
-		List<DuckTileGrid> tileGrids = new List<DuckTileGrid>();
 		List<Vector3> positionsList;
-		List<List<Vector3>> positionGrid = new List<List<Vector3>>();
+		List<List<Vector3>> positionGrid;
+
+		List<DuckTileGrid> tileGrids = new List<DuckTileGrid>();
 
 		GameObject tileObj = null;
 
@@ -53,6 +53,11 @@ public class MapGenerator : MonoBehaviour
 			// current height is i
 			int height = levelHeights[i];
 			int width = levelWidths[i];
+			typeGrid = new List<List<DuckTile.TileType>>();
+			baitableGrid = new List<List<bool>>();
+			heightChangeGrid = new List<List<bool>>();
+			positionGrid = new List<List<Vector3>>();
+
 			for (int j = 0; j < height; ++j)
 			{
 				typeList = new List<DuckTile.TileType>();
@@ -100,7 +105,31 @@ public class MapGenerator : MonoBehaviour
 			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, positionGrid, i));
 		}
 
-		TileMapScriptableObject temp = Resources.Load("scriptableObjects/TileMapHolder") as TileMapScriptableObject;
-		temp.tileMap = new DuckTileMap(tileGrids);
+        //TileMapScriptableObject temp = Resources.Load(scriptableObjectName) as TileMapScriptableObject;
+        //if(temp == null)
+        //{
+        //	temp = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+        //
+        //	AssetDatabase.CreateAsset(temp, scriptableObjectName+".asset");
+        //	AssetDatabase.SaveAssets();
+        //}
+        //temp.tileMap = new DuckTileMap(tileGrids);
+
+        TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+        string assetString = "Assets/Resources/scriptableObjects/" + scriptableObjectName + ".asset";
+        AssetDatabase.CreateAsset(scriptableObject, assetString);
+        scriptableObject.tileMap = new DuckTileMap(tileGrids);
+        Debug.Log(scriptableObject.tileMap);
+        EditorUtility.SetDirty(scriptableObject);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+
+        //TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+		//AssetDatabase.CreateAsset(scriptableObject, "Assets/Resources/scriptableObjects/TileMapHolder.asset");
+		//scriptableObject.tileMap = new DuckTileMap(tileGrids);
+		//Debug.Log(scriptableObject.tileMap);
+		//EditorUtility.SetDirty(scriptableObject);
+		//AssetDatabase.SaveAssets();
+		//AssetDatabase.Refresh();
 	}
 }

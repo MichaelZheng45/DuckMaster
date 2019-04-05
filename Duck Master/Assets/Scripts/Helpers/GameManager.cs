@@ -57,17 +57,19 @@ public class GameManager : MonoBehaviour
         unFriendlyList = new List<unfreindlyScript>();
         playerActionSys = player.GetComponent<PlayerAction>();
         duckBehaviourSys = duck.GetComponent<duckBehaviour>();
-        altimeterSys = altimeter.GetComponent<Altimeter>();
+        altimeterSys = null;// altimeter.GetComponent<Altimeter>();
         playerTransform = player.transform;
         duckTransform = duck.transform;
 
 		tileMap = tileMapScriptableObject.tileMap;
+        Debug.Log(tileMap);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
 		DuckTile atTile = tileMap.mHeightMap.GetTile(0,0);
+        Debug.Log(atTile);
 	}
 
     public bool checkIsHoldingDuck()
