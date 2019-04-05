@@ -60,7 +60,7 @@ public class DuckTileGrid
 
     public DuckTile GetTile(int x, int y)
     {
-        if ((x > -1 && y > -1 && mGrid.Count <= y && mGrid[y].mList.Count <= x))
+        if ((x > -1 && y > -1 && mGrid.Count > y && mGrid[y].mList.Count > x))
         {
             Debug.Log("Y: " + mGrid.Count + " " + y);
             Debug.Log("X: " + mGrid[y].mList.Count + " " + x);

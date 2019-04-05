@@ -35,15 +35,16 @@ public class MapGenerator : MonoBehaviour
 			GameObject.DestroyImmediate(child.gameObject);
 		}
 
-		List<List<DuckTile.TileType>> typeGrid = new List<List<DuckTile.TileType>>();
+		List<List<DuckTile.TileType>> typeGrid;
 		List<DuckTile.TileType> typeList;
-		List<List<bool>> baitableGrid = new List<List<bool>>();
+		List<List<bool>> baitableGrid;
 		List<bool> baitableList;
-		List<List<bool>> heightChangeGrid = new List<List<bool>>();
+		List<List<bool>> heightChangeGrid;
 		List<bool> heightChangeList;
-		List<DuckTileGrid> tileGrids = new List<DuckTileGrid>();
 		List<Vector3> positionsList;
-		List<List<Vector3>> positionGrid = new List<List<Vector3>>();
+		List<List<Vector3>> positionGrid;
+
+		List<DuckTileGrid> tileGrids = new List<DuckTileGrid>();
 
 		GameObject tileObj = null;
 
@@ -52,6 +53,11 @@ public class MapGenerator : MonoBehaviour
 			// current height is i
 			int height = levelHeights[i];
 			int width = levelWidths[i];
+			typeGrid = new List<List<DuckTile.TileType>>();
+			baitableGrid = new List<List<bool>>();
+			heightChangeGrid = new List<List<bool>>();
+			positionGrid = new List<List<Vector3>>();
+
 			for (int j = 0; j < height; ++j)
 			{
 				typeList = new List<DuckTile.TileType>();
