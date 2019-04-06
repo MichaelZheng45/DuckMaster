@@ -112,13 +112,16 @@ public class GameManager : MonoBehaviour
         int unthrowMask = 1 << 11;
         RaycastHit athit;
         Vector3 dir = hit.point - duckTransform.position;
+        Vector3 pos = hit.collider.gameObject.transform.position;
 		//check if anything is in the way (need to be changed)
         if (!Physics.Raycast(duckTransform.position, dir.normalized, out athit, dir.magnitude, unthrowMask) && dir.magnitude < throwDistanceMax)
         {
-            DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(hit.point.x), Mathf.FloorToInt(hit.point.z));
+            //DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(hit.point.z), Mathf.FloorToInt(hit.point.x));
+            //DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(pos.z), Mathf.FloorToInt(pos.x));
+            DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.z));
 
-			//check if throwable
-			if (atTile.mType == DuckTile.TileType.PassableBoth || atTile.mType == DuckTile.TileType.UnpassableMaster)
+            //check if throwable
+            if (atTile.mType == DuckTile.TileType.PassableBoth || atTile.mType == DuckTile.TileType.UnpassableMaster)
             {
                 //throw duck
                 playerActionSys.isHoldingDuck = false;

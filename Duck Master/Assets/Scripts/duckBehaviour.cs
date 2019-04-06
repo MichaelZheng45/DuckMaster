@@ -95,6 +95,9 @@ public class duckBehaviour : MonoBehaviour
 
 	private void Update()
 	{
+        //if (duckTransform == null)
+        //    print("Duck transform is NULL - duckbehavior");
+
 		//every or so frame check if duck is near unfreindlies
 		if(frameCount > runCheckPerFrame && mDuckState != DuckStates.RUN)
 		{
@@ -117,9 +120,10 @@ public class duckBehaviour : MonoBehaviour
 			{
 				//check bait system for objects in line of sight
 				DuckRotationState rotation = mDuckRotation.currentRotation;
-                GameObject target = mBaitSystem.duckLOSBait(duckTransform.position, attractDistance, rotation);
+                //GameObject target = mBaitSystem.duckLOSBait(duckTransform.position, attractDistance, rotation);
+                GameObject target = mBaitSystem.duckLOSBait(transform.position, attractDistance, rotation);
 
-                if(target != null)
+                if (target != null)
                 {
                     mDuckState = DuckStates.BAITED;
                     targetBait = target;
@@ -134,15 +138,17 @@ public class duckBehaviour : MonoBehaviour
 		
 		if (mDuckState == DuckStates.RUN) //run away ducko! The unfriendlies
 		{
-			Vector3 dir = (runTar - duckTransform.position);
-			if (dir.magnitude < runToApproach)
+            //Vector3 dir = (runTar - duckTransform.position);
+            Vector3 dir = (runTar - transform.position);
+            if (dir.magnitude < runToApproach)
 			{
 				mDuckState = DuckStates.STILL;
 			}
 			else
 			{
-				duckTransform.position += dir.normalized * runVelocity;
-			}
+                //duckTransform.position += dir.normalized * runVelocity;
+                transform.position += dir.normalized * runVelocity;
+            }
 		}
 		else if (mDuckState == DuckStates.INAIR)
 		{
@@ -152,8 +158,9 @@ public class duckBehaviour : MonoBehaviour
 				float xPos = startingPos.x + (initialVelocity.x * currentAirTime);
 				float yPos = startingPos.y + (initialVelocity.y * currentAirTime) - ((gravity * currentAirTime * currentAirTime) / 2);
 				float zPos = startingPos.z + (initialVelocity.z * currentAirTime);
-				duckTransform.position = new Vector3(xPos, yPos, zPos);
-			}
+                //duckTransform.position = new Vector3(xPos, yPos, zPos);
+                transform.position = new Vector3(xPos, yPos, zPos);
+            }
 			else
 			{
 				mDuckState = DuckStates.STILL;
@@ -187,20 +194,25 @@ public class duckBehaviour : MonoBehaviour
 
 			if (mDuckState == DuckStates.HELD)
 			{
-				duckTransform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
-			}
+                //print("Player position duck: " + playerTransform.position.ToString());
+                //print("duck position duck beh " + duckTransform.position.ToString());
+                //duckTransform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
+                transform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
+            }
 		}
 	}
 
 	//move through the given path
 	void movePaths()
 	{
-		Vector3 direction = (tilePath[tilePathIndex] - duckTransform.position);
-		
-		duckTransform.position += direction.normalized * pathVelocity;
+        //Vector3 direction = (tilePath[tilePathIndex] - duckTransform.position);
+        Vector3 direction = (tilePath[tilePathIndex] - transform.position);
 
-		//approaches the next tile, update new target tile to move to
-		if (direction.magnitude < pathApproachValue)
+        //duckTransform.position += direction.normalized * pathVelocity;
+        transform.position += direction.normalized * pathVelocity;
+
+        //approaches the next tile, update new target tile to move to
+        if (direction.magnitude < pathApproachValue)
 		{
 			tilePathIndex--;
 		}
@@ -222,13 +234,15 @@ public class duckBehaviour : MonoBehaviour
 	void followPlayer()
     {
         //check if out of threshold
-        if((duckTransform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
+        //if((duckTransform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
+        if ((transform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
         {
             startFollowing = true;
             addnewPos();
    
         }
-        else if((duckTransform.position - playerTransform.position).magnitude < followThreshold)
+        //else if((duckTransform.position - playerTransform.position).magnitude < followThreshold)
+        else if ((transform.position - playerTransform.position).magnitude < followThreshold)
         {
             //reset data
             targetPoint = Vector3.zero;
@@ -253,11 +267,13 @@ public class duckBehaviour : MonoBehaviour
             }
 
             //find direction and follow
-            Vector3 dir = targetPoint - duckTransform.position;
-            duckTransform.position += dir.normalized * followVelocity;        
+            //Vector3 dir = targetPoint - duckTransform.position;
+            Vector3 dir = targetPoint - transform.position;
+            //duckTransform.position += dir.normalized * followVelocity;        
+            transform.position += dir.normalized * followVelocity;
 
             //check if approaching distance
-            if(dir.magnitude < toPointDistance)
+            if (dir.magnitude < toPointDistance)
             {
                 targetPoint = Vector3.zero;
                 positionCount--;
@@ -314,13 +330,15 @@ public class duckBehaviour : MonoBehaviour
     void runToBait()
     {
         Vector3 direction = targetBait.transform.position - duckTransform.position;
-        duckTransform.position += direction.normalized * duckBaitedVelocity;
+        //duckTransform.position += direction.normalized * duckBaitedVelocity;
+        transform.position += direction.normalized * duckBaitedVelocity;
 
-        if(direction.magnitude < duckAtBaitDistance)
+        if (direction.magnitude < duckAtBaitDistance)
         {
             baitSystem.removeBait(targetBait);
-            targetBait = baitSystem.duckFindBait(duckTransform.position, attractDistance);
-            if(targetBait == null)
+            //targetBait = baitSystem.duckFindBait(duckTransform.position, attractDistance);
+            targetBait = baitSystem.duckFindBait(transform.position, attractDistance);
+            if (targetBait == null)
             {
                 mDuckState = DuckStates.STILL;
             }
@@ -331,7 +349,8 @@ public class duckBehaviour : MonoBehaviour
 	{
 		mDuckState = DuckStates.INAIR;
 
-		startingPos = duckTransform.position;
+        //startingPos = duckTransform.position;
+        startingPos = transform.position;
 		targetPos = target;
 
 		Vector3 dir = new Vector3(targetPos.x - startingPos.x, 0, targetPos.z - startingPos.z);

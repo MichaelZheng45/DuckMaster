@@ -79,7 +79,7 @@ public class PlayerAction : MonoBehaviour
         //Should probably switch over to a tag system maybe, but this will do for now
         if (other.gameObject.name == "ground(Clone)")
         {
-            GameManager.Instance.GetAltimeter().CheckAltitude(other.transform.position);
+            //GameManager.Instance.GetAltimeter().CheckAltitude(other.transform.position);
         }
     }
 
