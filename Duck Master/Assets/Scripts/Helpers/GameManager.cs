@@ -111,7 +111,8 @@ public class GameManager : MonoBehaviour
         int unthrowMask = 1 << 11;
         RaycastHit athit;
         Vector3 dir = hit.point - duckTransform.position;
-		//check if anything is in the way (need to be changed)
+        Vector3 pos = hit.collider.gameObject.transform.position;
+        //check if anything is in the way (need to be changed)
         if (!Physics.Raycast(duckTransform.position, dir.normalized, out athit, dir.magnitude, unthrowMask) && dir.magnitude < throwDistanceMax)
         {
 			DuckTile atTile = getTileFromPosition(hit.point);
