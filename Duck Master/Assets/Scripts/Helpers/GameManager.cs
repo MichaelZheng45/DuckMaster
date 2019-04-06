@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         unFriendlyList = new List<unfreindlyScript>();
         playerActionSys = player.GetComponent<PlayerAction>();
         duckBehaviourSys = duck.GetComponent<duckBehaviour>();
-        altimeterSys =  altimeter.GetComponent<Altimeter>();
+        altimeterSys = null;
         playerTransform = player.transform;
         duckTransform = duck.transform;
 
@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 						tileMapScriptableObject.levelHeights,
 						tileMapScriptableObject.levelWidths);
 
-		movePlayerTo(new Vector3(0, 0, 4));
+	//	movePlayerTo(new Vector3(0, 0, 4));
     }
 
     // Update is called once per frame
@@ -100,10 +100,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-	public void recallDuck()
-	{
-		duckRecall();
-	}
 
     public void throwDuck(RaycastHit hit)
     {
@@ -128,7 +124,7 @@ public class GameManager : MonoBehaviour
     }
 
     //create pathfinding to return duck back to the player
-    void duckRecall()
+    public void duckRecall()
     {
 		//do pathfinding
 		if(duckBehaviourSys.isRecallable())

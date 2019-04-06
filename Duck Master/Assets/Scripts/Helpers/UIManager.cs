@@ -105,16 +105,19 @@ public class UIManager : MonoBehaviour
                     {
                         if (hit.collider.gameObject.name == "ground(Clone)")
                         {
+                            print("hit ground");
                             Vector3 pos = hit.collider.gameObject.transform.position;
-                            
-                            DuckTile tile = GameManager.Instance.tileMap.mHeightMap.GetTile(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.z));
+
+                            GameManager.Instance.movePlayerTo(pos);
+                            /*
+                            DuckTile tile = GameManager.Instance.getTileFromPosition(pos);
                             
                             if (tile != null)
                             {
                                 print("Received tile pos is " + tile.mPosition.ToString());
-                                GameManager.Instance.movePlayerTo(tile.mPosition, true);
+                                GameManager.Instance.movePlayerTo(tile.mPosition);
                             }
-                                
+                            */
                         }
                     }
 
@@ -138,7 +141,7 @@ public class UIManager : MonoBehaviour
         }
 
         if (primaryButtonText.text == WHISTLE)
-            GameManager.Instance.recallDuck();
+            GameManager.Instance.duckRecall();
 
     }
 }
