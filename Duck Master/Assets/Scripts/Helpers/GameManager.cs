@@ -112,10 +112,11 @@ public class GameManager : MonoBehaviour
         if (!Physics.Raycast(duckTransform.position, dir.normalized, out athit, dir.magnitude, unthrowMask) && dir.magnitude < throwDistanceMax)
         {
 			DuckTile atTile = getTileFromPosition(pos);
-
+            Debug.Log(atTile.mType);
             //check if throwable
-            if (atTile.mType == DuckTile.TileType.PassableBoth || atTile.mType == DuckTile.TileType.UnpassableMaster)
+            if (atTile.mType == DuckTile.TileType.INVALID_TYPE || atTile.mType == DuckTile.TileType.UnpassableMaster)
             {
+               
                 //throw duck
                 playerActionSys.isHoldingDuck = false;
                 duckBehaviourSys.throwDuck(atTile.mPosition);
