@@ -18,7 +18,7 @@ public class Pathfinder
 		Vector3 targetPos = to;
 
 		//Get the first node
-		DuckTile firstNode = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(from.x),Mathf.FloorToInt(from.z));
+		DuckTile firstNode = GameManager.Instance.getTileFromPosition(from);
 		firstNode.mCostSoFar = 0;
 		firstNode.mHeuristicCostSoFar = (targetPos - startingPos).magnitude;
 
@@ -27,7 +27,7 @@ public class Pathfinder
 		openListCount++;
 
 		//getTargetNode
-		DuckTile targetNode = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(to.x), Mathf.FloorToInt(to.z));
+		DuckTile targetNode = GameManager.Instance.getTileFromPosition(to);
 		if (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck || targetNode == firstNode)
 		{
 			return path;
@@ -68,40 +68,44 @@ public class Pathfinder
 					{
 						int adjNodeDirection = searchOrder[count];
 						Connection adjConnection = curNode.GetConnectionDirection((DuckTile.ConnectionDirection)adjNodeDirection);
-						Vector3 adjIndex = adjConnection.mToIndex;
-						DuckTile adjTile = tileMap.GetTile((int)adjIndex.x, (int)adjIndex.y, (int)adjIndex.z);
-						//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
-						if (adjTile.mHeight <= curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
-							 &&(targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck))
+
+						if (adjConnection != null)
 						{
-							adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mDuckCost;
-						
-							Vector2 manhattanDis = (targetPos - adjTile.mPosition);		
-							adjTile.mHeuristicCostSoFar = adjTile.mCostSoFar + Mathf.Abs(manhattanDis.x) + Mathf.Abs(manhattanDis.y);
-							adjTile.mPreviousTile = curNode;
+							Vector3 adjIndex = adjConnection.mToIndex;
+							DuckTile adjTile = tileMap.GetTile((int)adjIndex.x, (int)adjIndex.y, (int)adjIndex.z);
 
-							//place the node into a queue 
-							bool placed = false;
-							for (int i = 0; i < openListCount; i++)
+							//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
+							if (adjTile.mHeight <= curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
+								 && (adjTile.mType == DuckTile.TileType.PassableBoth || adjTile.mType == DuckTile.TileType.UnpassableMaster))
 							{
-								if (openList[i].mHeuristicCostSoFar > adjTile.mHeuristicCostSoFar)
+								adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mDuckCost;
+
+								Vector2 manhattanDis = (targetPos - adjTile.mPosition);
+								adjTile.mHeuristicCostSoFar = adjTile.mCostSoFar + Mathf.Abs(manhattanDis.x) + Mathf.Abs(manhattanDis.y);
+								adjTile.mPreviousTile = curNode;
+
+								//place the node into a queue 
+								bool placed = false;
+								for (int i = 0; i < openListCount; i++)
 								{
-									placed = true;
-									openList.Insert(i, adjTile);
-									openListCount++;
-									i = openListCount;
+									if (openList[i].mHeuristicCostSoFar > adjTile.mHeuristicCostSoFar)
+									{
+										placed = true;
+										openList.Insert(i, adjTile);
+										openListCount++;
+										i = openListCount;
+									}
 								}
-							}
 
-							if (placed == false)
-							{
-								openList.Insert(openListCount, adjTile);
-								openListCount++;
+								if (placed == false)
+								{
+									openList.Insert(openListCount, adjTile);
+									openListCount++;
+								}
 							}
 						}
 					}
 				}
-
 
 				nodesProcessed++;
 				closedList.Add(curNode);
@@ -144,7 +148,7 @@ public class Pathfinder
 		Vector3 targetPos = to;
 
 		//Get the first node
-		DuckTile firstNode = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(from.x), Mathf.FloorToInt(from.z));
+		DuckTile firstNode = GameManager.Instance.getTileFromPosition(from);
 		firstNode.mCostSoFar = 0;
 		firstNode.mHeuristicCostSoFar = (targetPos - startingPos).magnitude;
 
@@ -153,8 +157,8 @@ public class Pathfinder
 		openListCount++;
 
 		//getTargetNode
-		DuckTile targetNode = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(to.x), Mathf.FloorToInt(to.z));
-		if (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck || targetNode == firstNode)
+		DuckTile targetNode = GameManager.Instance.getTileFromPosition(to);
+		if (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpassableMaster || targetNode == firstNode)
 		{
 			return path;
 		}
@@ -169,10 +173,10 @@ public class Pathfinder
 			DuckTile curNode = openList[0];
 			Vector3 curPos = curNode.mPosition;
 
-			//to create the index is i = (row * Colsize) + column where col is x
-			//maybe a check if the nodes processed is too much then stop or something
-			if (targetNode == curNode)
-			{
+            //to create the index is i = (row * Colsize) + column where col is x
+            //maybe a check if the nodes processed is too much then stop or something
+            if (targetNode == curNode)
+            {
 				foundToTile = true;
 			}
 			else
@@ -183,37 +187,41 @@ public class Pathfinder
 					{
 						int adjNodeDirection = count;
 						Connection adjConnection = curNode.GetConnectionDirection((DuckTile.ConnectionDirection)adjNodeDirection);
-						Vector3 adjIndex = adjConnection.mToIndex;
-						DuckTile adjTile = tileMap.GetTile((int)adjIndex.x, (int)adjIndex.y, (int)adjIndex.z);
-						//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
-						if (adjTile.mHeight <= curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
-							 && (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck))
+						if(adjConnection != null)
 						{
-							adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mMasterCost;
-
-							Vector2 manhattanDis = (targetPos - adjTile.mPosition);
-							adjTile.mHeuristicCostSoFar = adjTile.mCostSoFar + Mathf.Abs(manhattanDis.x) + Mathf.Abs(manhattanDis.y);
-							adjTile.mPreviousTile = curNode;
-
-							//place the node into a queue 
-							bool placed = false;
-							for (int i = 0; i < openListCount; i++)
+							Vector3 adjIndex = adjConnection.mToIndex;
+							DuckTile adjTile = tileMap.GetTile((int)adjIndex.x, (int)adjIndex.y, (int)adjIndex.z);
+							//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
+							if (adjTile.mHeight <= curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
+								 && (adjTile.mType == DuckTile.TileType.PassableBoth || adjTile.mType == DuckTile.TileType.UnpasssableDuck))
 							{
-								if (openList[i].mHeuristicCostSoFar > adjTile.mHeuristicCostSoFar)
+								adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mMasterCost;
+
+								Vector2 manhattanDis = (targetPos - adjTile.mPosition);
+								adjTile.mHeuristicCostSoFar = adjTile.mCostSoFar + Mathf.Abs(manhattanDis.x) + Mathf.Abs(manhattanDis.y);
+								adjTile.mPreviousTile = curNode;
+
+								//place the node into a queue 
+								bool placed = false;
+								for (int i = 0; i < openListCount; i++)
 								{
-									placed = true;
-									openList.Insert(i, adjTile);
+									if (openList[i].mHeuristicCostSoFar > adjTile.mHeuristicCostSoFar)
+									{
+										placed = true;
+										openList.Insert(i, adjTile);
+										openListCount++;
+										i = openListCount;
+									}
+								}
+
+								if (placed == false)
+								{
+									openList.Insert(openListCount, adjTile);
 									openListCount++;
-									i = openListCount;
 								}
 							}
-
-							if (placed == false)
-							{
-								openList.Insert(openListCount, adjTile);
-								openListCount++;
-							}
 						}
+						
 					}
 
 					nodesProcessed++;
@@ -234,7 +242,8 @@ public class Pathfinder
 			{
 				curTile = curTile.mPreviousTile;
 				path.Add(curTile.mPosition + new Vector3(0, 1, 0));
-				if (curTile == firstNode)
+
+                if (curTile == firstNode)
 				{
 					finishPath = true;
 				}

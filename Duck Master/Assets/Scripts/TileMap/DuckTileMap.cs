@@ -179,8 +179,8 @@ public class DuckTileMap
 				rightTile = mHeightMap.GetTile(k + 1, j);
 				bottomTile = mHeightMap.GetTile(k, j + 1);
 				Vector3 currentTileIndex = new Vector3(k, j, currentTile.mHeight);
-				Vector3 rightTileIndex = new Vector3(k, j, rightTile.mHeight);
-				Vector3 bottomTileIndex = new Vector3(k, j, bottomTile.mHeight);
+				Vector3 rightTileIndex = new Vector3(k + 1, j, rightTile.mHeight);
+				Vector3 bottomTileIndex = new Vector3(k, j + 1, bottomTile.mHeight);
 				rightConnection = new Connection(currentTileIndex, rightTileIndex, 255, 255);
 				bottomConnection = new Connection(currentTileIndex, bottomTileIndex, 255, 255);
 
@@ -213,7 +213,7 @@ public class DuckTileMap
 				currentTile.SetConnectionDirection(DuckTile.ConnectionDirection.RIGHT, rightConnection);
 				currentTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, bottomConnection);
 				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.LEFT, new Connection(rightConnection.mToIndex, rightConnection.mFromIndex, rightConnection.mDuckCost, rightConnection.mMasterCost));
-				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, new Connection(bottomConnection.mToIndex, bottomConnection.mFromIndex, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
+				bottomTile.SetConnectionDirection(DuckTile.ConnectionDirection.UP, new Connection(bottomConnection.mToIndex, bottomConnection.mFromIndex, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
 			}
 		}
 	}

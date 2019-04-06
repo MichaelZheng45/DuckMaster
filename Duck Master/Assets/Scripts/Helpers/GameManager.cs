@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         unFriendlyList = new List<unfreindlyScript>();
         playerActionSys = player.GetComponent<PlayerAction>();
         duckBehaviourSys = duck.GetComponent<duckBehaviour>();
-        altimeterSys = null;// altimeter.GetComponent<Altimeter>();
+        altimeterSys =  altimeter.GetComponent<Altimeter>();
         playerTransform = player.transform;
         duckTransform = duck.transform;
 
@@ -67,14 +67,13 @@ public class GameManager : MonoBehaviour
 						tileMapScriptableObject.blockTypes,
 						tileMapScriptableObject.levelHeights,
 						tileMapScriptableObject.levelWidths);
-        Debug.Log(tileMap);
+
+		movePlayerTo(new Vector3(0, 0, 4));
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-		DuckTile atTile = tileMap.mHeightMap.GetTile(0,0);
-        Debug.Log(atTile);
 	}
 
     public bool checkIsHoldingDuck()
@@ -82,7 +81,7 @@ public class GameManager : MonoBehaviour
         return playerActionSys.isHoldingDuck;
     }
 
-    public void movePlayerTo(Vector3 targetPosition, bool rightClick)
+    public void movePlayerTo(Vector3 targetPosition)
     {
         List<Vector3> tilePath = Pathfinder.getTilePathPlayer(playerTransform.position, targetPosition,tileMap);
         if (tilePath.Count > 0)
@@ -113,12 +112,10 @@ public class GameManager : MonoBehaviour
         RaycastHit athit;
         Vector3 dir = hit.point - duckTransform.position;
         Vector3 pos = hit.collider.gameObject.transform.position;
-		//check if anything is in the way (need to be changed)
+        //check if anything is in the way (need to be changed)
         if (!Physics.Raycast(duckTransform.position, dir.normalized, out athit, dir.magnitude, unthrowMask) && dir.magnitude < throwDistanceMax)
         {
-            //DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(hit.point.z), Mathf.FloorToInt(hit.point.x));
-            //DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(pos.z), Mathf.FloorToInt(pos.x));
-            DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(pos.x), Mathf.FloorToInt(pos.z));
+			DuckTile atTile = getTileFromPosition(pos);
 
             //check if throwable
             if (atTile.mType == DuckTile.TileType.PassableBoth || atTile.mType == DuckTile.TileType.UnpassableMaster)
@@ -169,7 +166,7 @@ public class GameManager : MonoBehaviour
 
     public Vector3 checkGeyser(Vector3 atPos, Vector3 fromPos)
     {
-		DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(atPos.x), Mathf.FloorToInt(atPos.z));
+		DuckTile atTile = getTileFromPosition(atPos);
 		float startingRange = .8f;
 		/*
         if (atTile.tType == tileType.Geyser)
@@ -214,7 +211,7 @@ public class GameManager : MonoBehaviour
             {
                 playerActionSys.isHoldingDuck = false;
 				//find a tile to move to
-				DuckTile atTile = tileMap.mHeightMap.GetTile(Mathf.FloorToInt(duckTransform.position.x), Mathf.FloorToInt(duckTransform.position.z));
+				DuckTile atTile = getTileFromPosition(duckTransform.position);
 
 				for (int row = -1; row < 2; row++)
                 {
@@ -236,7 +233,10 @@ public class GameManager : MonoBehaviour
 
 	public void addUnFriendly(unfreindlyScript newUnfreindly)
 	{
-		unFriendlyList.Add(newUnfreindly);
+		if(unFriendlyList != null)
+		{
+			unFriendlyList.Add(newUnfreindly);
+		}
 	}
 
 	
@@ -312,5 +312,10 @@ public class GameManager : MonoBehaviour
 			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, positionGrid, i));
 		}
 		tileMap = new DuckTileMap(tileGrids);
+	}
+
+	public DuckTile getTileFromPosition(Vector3 position)
+	{
+		return tileMap.mHeightMap.GetTile(Mathf.FloorToInt(position.z + .5f), Mathf.FloorToInt(position.x + .5f));
 	}
 }

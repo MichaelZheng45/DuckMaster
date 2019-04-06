@@ -4,41 +4,40 @@ using UnityEngine;
 
 public class PlayerAction : MonoBehaviour
 {
-	//all conditions and possible ones
-	public bool canMove;
-	public bool canPickUp;
-	public bool isHoldingDuck;
+    //all conditions and possible ones
+    public bool canMove;
+    public bool canPickUp;
+    public bool isHoldingDuck;
 
     //moving data
     [SerializeField] float mVelocity;
 
     //component data
     Transform playerTransform;
-	BaitSystem mBaitSystem;
+    BaitSystem mBaitSystem;
 
     //pathfinding data;
     public List<Vector3> tilePath;
-    bool moving;
+    bool moving = false;
     int tilePathIndex;
     public float approachValue;
 
-	//throw data
-	[SerializeField]float throwDistance = 4;
+    //throw data
+    [SerializeField] float throwDistance = 4;
 
     void Start()
     {
         playerTransform = gameObject.transform;
-		mBaitSystem = gameObject.GetComponent<BaitSystem>();
-        moving = false ;
-        tilePath = new List<Vector3>();
+        mBaitSystem = gameObject.GetComponent<BaitSystem>();
+        AnimationEventStuff.WalkingChange(moving);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(moving)
+        if (moving)
         {
-            movePaths(); 
+            movePaths();
         }
     }
 
@@ -49,14 +48,15 @@ public class PlayerAction : MonoBehaviour
 
         playerTransform.position += direction.normalized * mVelocity;
 
-        if(direction.magnitude < approachValue)
+        if (direction.magnitude < approachValue)
         {
             tilePathIndex--;
         }
 
-        if(tilePathIndex < 0)
+        if (tilePathIndex < 0)
         {
             moving = false;
+            AnimationEventStuff.WalkingChange(moving);
         }
     }
 
@@ -64,7 +64,8 @@ public class PlayerAction : MonoBehaviour
     {
         moving = true;
         tilePath = newPath;
-        tilePathIndex = tilePath.Count -1;
+        tilePathIndex = tilePath.Count - 1;
+        AnimationEventStuff.WalkingChange(moving);
     }
 
     //Will: need this for Zipline stuff
@@ -83,18 +84,18 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
-	//only throw onto standard block tiles
-	public void throwBait(Vector3 target, BaitTypes type) //TO DO: LOOK AT TILE AND IF IT IS STANDARD TILE THROW IT
-	{
-		//check for distance
-		if ((gameObject.transform.position - target).magnitude <= throwDistance && mBaitSystem.checkBait(type))
-		{
-			//throw object
-			mBaitSystem.spawnBait(target, type);
-		}
-		else
-		{
-			//Ran out of bait
-		}
-	}
+    //only throw onto standard block tiles
+    public void throwBait(Vector3 target, BaitTypes type) //TO DO: LOOK AT TILE AND IF IT IS STANDARD TILE THROW IT
+    {
+        //check for distance
+        if ((gameObject.transform.position - target).magnitude <= throwDistance && mBaitSystem.checkBait(type))
+        {
+            //throw object
+            mBaitSystem.spawnBait(target, type);
+        }
+        else
+        {
+            //Ran out of bait
+        }
+    }
 }

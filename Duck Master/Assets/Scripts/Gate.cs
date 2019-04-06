@@ -34,12 +34,9 @@ public class Gate : LogicOutput
 		var mat = new Material[2];
 		if (active)
         {
-
-            
             print("Opening gate");
-			GameManager.Instance.tileMap.mHeightMap.GetTile(Mathf.FloorToInt(objTransform.position.x), Mathf.FloorToInt(objTransform.position.z)).mType = DuckTile.TileType.PassableBoth; 
+			GameManager.Instance.getTileFromPosition(objTransform.position).mType = DuckTile.TileType.PassableBoth; 
             
-
             mat[0] = gateMaterial[2];
             mat[1] = gateMaterial[0];
             objMeshRenderer.materials = mat;
@@ -47,7 +44,7 @@ public class Gate : LogicOutput
         else
         {
             print("Closing Gate");
-			GameManager.Instance.tileMap.mHeightMap.GetTile(Mathf.FloorToInt(objTransform.position.x), Mathf.FloorToInt(objTransform.position.z)).mType = DuckTile.TileType.UnpassableBoth;
+			GameManager.Instance.getTileFromPosition(objTransform.position).mType = DuckTile.TileType.UnpassableBoth;
             mat[0] = gateMaterial[2];
             mat[1] = gateMaterial[1];
             objMeshRenderer.materials = mat;

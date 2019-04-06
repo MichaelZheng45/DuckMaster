@@ -90,7 +90,6 @@ public class duckBehaviour : MonoBehaviour
         mDuckRotation = gameObject.GetComponent<DuckRotation>();
 		baitSystem = baitSystemObject.GetComponent<BaitSystem>();
         duckTransform = gameObject.transform;
-	
     }
 
 	private void Update()
