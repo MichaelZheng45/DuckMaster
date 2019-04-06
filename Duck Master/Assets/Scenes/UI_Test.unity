@@ -4016,7 +4016,6 @@ GameObject:
   - component: {fileID: 252269366}
   - component: {fileID: 252269365}
   - component: {fileID: 252269364}
-  - component: {fileID: 252269363}
   m_Layer: 5
   m_Name: Throw Button
   m_TagString: Untagged
@@ -4024,22 +4023,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &252269363
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 252269362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e81dd7e4ba327a046b2639c47178b197, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  counter: 1
-  pickUpText: {fileID: 0}
-  throwText: {fileID: 0}
-  whistleText: {fileID: 0}
 --- !u!114 &252269364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4061,9 +4044,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -4143,14 +4126,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 0b2da4fa58185704cbf3377f3c97f72d, type: 3}
+  m_Texture: {fileID: 2800000, guid: 3f4a292345e0c854cb8c5f4edd034f0f, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
