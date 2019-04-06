@@ -19,7 +19,11 @@ public class Pathfinder
 
 		//Get the first node
 		DuckTile firstNode = GameManager.Instance.getTileFromPosition(from);
-		firstNode.mCostSoFar = 0;
+        if (firstNode == null)
+        {
+            return path;
+        }
+        firstNode.mCostSoFar = 0;
 		firstNode.mHeuristicCostSoFar = (targetPos - startingPos).magnitude;
 
 		//Add Node
@@ -149,6 +153,11 @@ public class Pathfinder
 
 		//Get the first node
 		DuckTile firstNode = GameManager.Instance.getTileFromPosition(from);
+        if(firstNode == null)
+        {
+            return path;
+        }
+
 		firstNode.mCostSoFar = 0;
 		firstNode.mHeuristicCostSoFar = (targetPos - startingPos).magnitude;
 
