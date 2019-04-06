@@ -12,3 +12,211 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e986345417ea142bcefb7830d86ef1, type: 3}
   m_Name: Level_3
   m_EditorClassIdentifier: 
+  verticalLevels: 2
+  listGridSelStrings:
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - None
+  - 
+  - 
+  - 
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  blockTypes:
+  - Ground
+  - Water
+  - None
+  levelHeights: 0a0000000a000000
+  levelWidths: 0a0000000a000000

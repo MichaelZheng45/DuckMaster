@@ -89,18 +89,17 @@ public class MapCreationTool : EditorWindow
 
 				if (lastVerticalLevels != verticalLevels || lastLevelHeights[levelSelection] != currentLevelHeights[levelSelection] || lastLevelWidths[levelSelection] != currentLevelWidths[levelSelection] || lastLevelSelection != levelSelection)
 				{
-					int totalWidth = 0, totalHeight = 0;
+					int totalSize = 0;
 					if (currentLevelWidths != null && currentLevelHeights != null)
 					{
 						for (int i = 0; i < verticalLevels; ++i)
 						{
-							totalWidth += currentLevelWidths[i];
-							totalHeight += currentLevelHeights[i];
+							totalSize += currentLevelWidths[i] * currentLevelHeights[i];
 						}
 					}
 
 					string[] oldList = listGridSelStrings;
-					listGridSelStrings = new string[verticalLevels * totalWidth * totalHeight];
+					listGridSelStrings = new string[totalSize];
 					if(oldList != null)
 					{
 						Array.Copy(oldList, listGridSelStrings, (oldList.Length > listGridSelStrings.Length) ? listGridSelStrings.Length : oldList.Length);
@@ -174,82 +173,43 @@ public class MapCreationTool : EditorWindow
 		{
 			GameObject.DestroyImmediate(child.gameObject);
 		}
-
-		List<List<DuckTile.TileType>> typeGrid;
-		List<DuckTile.TileType> typeList;
-		List<List<bool>> baitableGrid;
-		List<bool> baitableList;
-		List<List<bool>> heightChangeGrid;
-		List<bool> heightChangeList;
-		List<Vector3> positionsList;
-		List<List<Vector3>> positionGrid;
-
-		List<DuckTileGrid> tileGrids = new List<DuckTileGrid>();
-
 		GameObject tileObj = null;
+		int index = 0;
 
 		for (int i = 0; i < verticalLevels; ++i)
 		{
 			// current height is i
 			int height = levelHeights[i];
 			int width = levelWidths[i];
-			typeGrid = new List<List<DuckTile.TileType>>();
-			baitableGrid = new List<List<bool>>();
-			heightChangeGrid = new List<List<bool>>();
-			positionGrid = new List<List<Vector3>>();
 
 			for (int j = 0; j < height; ++j)
 			{
-				typeList = new List<DuckTile.TileType>();
-				baitableList = new List<bool>();
-				heightChangeList = new List<bool>();
-				positionsList = new List<Vector3>();
 				for (int k = 0; k < width; ++k)
 				{
-					int index = i * height * width + height * j + k;
-					if (index < height * width)
-					{
-						// TO DO: center positions, fix instantiation ways
-						string currentBlock = listGridSelStrings[index];
-						Vector3 pos = new Vector3(j, i, k);
+					string currentBlock = listGridSelStrings[index];
+					Vector3 pos = new Vector3(j, i, k);
 
-						// string[] blockTypes = { "Ground", "Water", "None" };
-						if (currentBlock == blockTypes[0])
-						{
-							// passable both
-							//typeList.Add(DuckTile.TileType.PassableBoth);
-							tileObj = Instantiate(groundObject, pos, Quaternion.identity);
-						}
-						else if (currentBlock == blockTypes[1])
-						{
-							// unpassable master
-							//typeList.Add(DuckTile.TileType.UnpassableMaster);
-							tileObj = Instantiate(waterObject, pos, Quaternion.identity);
-						}
-						else
-						{
-							// it's none/null aka null
-							//typeList.Add(DuckTile.TileType.INVALID_TYPE);
-						}
+					// string[] blockTypes = { "Ground", "Water", "None" };
+					if (currentBlock == blockTypes[0])
+					{
+						// passable both
+						tileObj = Instantiate(groundObject, pos, Quaternion.identity);
 						tileObj.transform.parent = levelFold.transform;
-						//baitableList.Add(false);
-						//heightChangeList.Add(false);
-						//positionsList.Add(pos);
 					}
+					else if (currentBlock == blockTypes[1])
+					{
+						// unpassable master
+						tileObj = Instantiate(waterObject, pos, Quaternion.identity);
+						tileObj.transform.parent = levelFold.transform;
+					}
+					index++;
 				}
-				//typeGrid.Add(typeList);
-				//baitableGrid.Add(baitableList);
-				//heightChangeGrid.Add(heightChangeList);
-				//positionGrid.Add(positionsList);
 			}
-			//tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, positionGrid, i));
 		}
 
 		TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
 		string assetString = "Assets/Resources/scriptableObjects/" + scriptableObjectName + ".asset";
 		AssetDatabase.CreateAsset(scriptableObject, assetString);
-		//scriptableObject.tileMap = new DuckTileMap(tileGrids);
-		//Debug.Log(scriptableObject.tileMap);
 		scriptableObject.verticalLevels = verticalLevels;
 		scriptableObject.listGridSelStrings = listGridSelStrings;
 		scriptableObject.blockTypes = blockTypes;
