@@ -29,7 +29,6 @@ public class PlayerAction : MonoBehaviour
     {
         playerTransform = gameObject.transform;
         mBaitSystem = gameObject.GetComponent<BaitSystem>();
-        AnimationEventStuff.WalkingChange(moving);
     }
 
     // Update is called once per frame
@@ -47,6 +46,7 @@ public class PlayerAction : MonoBehaviour
         Vector3 direction = (tilePath[tilePathIndex] - playerTransform.position);
 
         playerTransform.position += direction.normalized * mVelocity;
+        playerTransform.forward = Vector3.Lerp(playerTransform.forward, direction.normalized, 0.25f);
 
         if (direction.magnitude < approachValue)
         {
@@ -80,7 +80,7 @@ public class PlayerAction : MonoBehaviour
         //Should probably switch over to a tag system maybe, but this will do for now
         if (other.gameObject.name == "ground(Clone)")
         {
-            GameManager.Instance.GetAltimeter().CheckAltitude(other.transform.position);
+            //GameManager.Instance.GetAltimeter().CheckAltitude(other.transform.position);
         }
     }
 

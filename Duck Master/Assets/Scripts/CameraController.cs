@@ -21,12 +21,14 @@ public class CameraController : MonoBehaviour
 	InputManager.SwipeData[] swipeData;
 	int swipeCount;
 	Vector2 moveDirection;
+    Vector3 rotateAroundPos;
 
     // Start is called before the first frame update
     void Start()
     {
         inputManager = gameManager.GetComponent<InputManager>();
 		swipeData = InputManager.DefaultSwipeDataArray;
+        //rotateAroundPos = gameManager.GetComponent<GameManager>().tileMap.GetCenterPos();
     }
 
     // Update is called once per frame
@@ -35,19 +37,20 @@ public class CameraController : MonoBehaviour
 		swipeCount = inputManager.GetSwipeCount();
 		swipeData = inputManager.GetSwipeData();
 		moveDirection = swipeData[0].deltaPos;
+        rotateAroundPos = gameManager.GetComponent<GameManager>().tileMap.GetCenterPos();
 
-		// Change this to first and none of last
-		if (swipeCount == 1)
+        // Change this to first and none of last
+        if (swipeCount == 1)
 		{
-			moveDirection = Quaternion.Euler(0, 0, -(transform.rotation.eulerAngles.y)) * moveDirection * Time.deltaTime * cameraSpeed;
-			Vector3 tempPos = transform.position + new Vector3(-moveDirection.x, 0, -moveDirection.y);
-
-			// this has to change somehow? To a bounding box? Something for later on.
-			// TO DO: Center based on the level
-			if (tempPos.x >= lowerBounds.x && tempPos.x <= upperBounds.x && tempPos.z >= lowerBounds.y && tempPos.z <= upperBounds.y)
-			{
-				transform.position = tempPos;
-			}
+			//moveDirection = Quaternion.Euler(0, 0, -(transform.rotation.eulerAngles.y)) * moveDirection * Time.deltaTime * cameraSpeed;
+			//Vector3 tempPos = transform.position + new Vector3(-moveDirection.x, 0, -moveDirection.y);
+            //
+			//// this has to change somehow? To a bounding box? Something for later on.
+			//// TO DO: Center based on the level
+			//if (tempPos.x >= lowerBounds.x && tempPos.x <= upperBounds.x && tempPos.z >= lowerBounds.y && tempPos.z <= upperBounds.y)
+			//{
+			//	transform.position = tempPos;
+			//}
 		}
 		else if(swipeCount >= 2)
 		{
@@ -57,7 +60,7 @@ public class CameraController : MonoBehaviour
 			// TO DO: Make it center of map
 			float rotation = (swipeData[0].direction == InputManager.SwipeDirection.RIGHT || swipeData[0].direction == InputManager.SwipeDirection.LEFT) ?
 				cameraRotationSpeed * moveDirection.x * Time.deltaTime : cameraRotationSpeed * moveDirection.y * Time.deltaTime;
-			transform.RotateAround(Vector3.zero, Vector3.up, rotation);
+			transform.RotateAround(rotateAroundPos, Vector3.up, rotation);
 		}
     }
 }
