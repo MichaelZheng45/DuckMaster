@@ -217,4 +217,9 @@ public class DuckTileMap
 			}
 		}
 	}
+
+    public Vector3 GetCenterPos()
+    {
+        return mHeightMap.GetTile(mHeightMap.GetLength() / 2, mHeightMap.GetRowLength(mHeightMap.GetLength() / 2) / 2).mPosition;
+    }
 }
