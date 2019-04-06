@@ -213,7 +213,7 @@ public class DuckTileMap
 				currentTile.SetConnectionDirection(DuckTile.ConnectionDirection.RIGHT, rightConnection);
 				currentTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, bottomConnection);
 				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.LEFT, new Connection(rightConnection.mToIndex, rightConnection.mFromIndex, rightConnection.mDuckCost, rightConnection.mMasterCost));
-				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, new Connection(bottomConnection.mToIndex, bottomConnection.mFromIndex, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
+				bottomTile.SetConnectionDirection(DuckTile.ConnectionDirection.UP, new Connection(bottomConnection.mToIndex, bottomConnection.mFromIndex, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
 			}
 		}
 	}

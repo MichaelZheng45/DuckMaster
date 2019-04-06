@@ -18,7 +18,7 @@ public class PlayerAction : MonoBehaviour
 
     //pathfinding data;
     public List<Vector3> tilePath;
-    bool moving;
+    bool moving = false;
     int tilePathIndex;
     public float approachValue;
 
@@ -29,8 +29,6 @@ public class PlayerAction : MonoBehaviour
     {
         playerTransform = gameObject.transform;
         mBaitSystem = gameObject.GetComponent<BaitSystem>();
-        moving = false;
-        tilePath = new List<Vector3>();
         AnimationEventStuff.WalkingChange(moving);
     }
 

@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
 						tileMapScriptableObject.levelHeights,
 						tileMapScriptableObject.levelWidths);
 
-		movePlayerTo(new Vector3(4, 0, 0));
+		movePlayerTo(new Vector3(0, 0, 4));
     }
 
     // Update is called once per frame
@@ -316,6 +316,6 @@ public class GameManager : MonoBehaviour
 
 	public DuckTile getTileFromPosition(Vector3 position)
 	{
-		return tileMap.mHeightMap.GetTile(Mathf.FloorToInt(position.x + .5f), Mathf.FloorToInt(position.z + .5f));
+		return tileMap.mHeightMap.GetTile(Mathf.FloorToInt(position.z + .5f), Mathf.FloorToInt(position.x + .5f));
 	}
 }

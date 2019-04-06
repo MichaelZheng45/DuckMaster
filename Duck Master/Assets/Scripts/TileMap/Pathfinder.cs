@@ -76,7 +76,7 @@ public class Pathfinder
 
 							//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
 							if (adjTile.mHeight <= curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
-								 && (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck))
+								 && (adjTile.mType == DuckTile.TileType.PassableBoth || adjTile.mType == DuckTile.TileType.UnpassableMaster))
 							{
 								adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mDuckCost;
 
@@ -158,7 +158,7 @@ public class Pathfinder
 
 		//getTargetNode
 		DuckTile targetNode = GameManager.Instance.getTileFromPosition(to);
-		if (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck || targetNode == firstNode)
+		if (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpassableMaster || targetNode == firstNode)
 		{
 			return path;
 		}
@@ -173,10 +173,10 @@ public class Pathfinder
 			DuckTile curNode = openList[0];
 			Vector3 curPos = curNode.mPosition;
 
-			//to create the index is i = (row * Colsize) + column where col is x
-			//maybe a check if the nodes processed is too much then stop or something
-			if (targetNode == curNode)
-			{
+            //to create the index is i = (row * Colsize) + column where col is x
+            //maybe a check if the nodes processed is too much then stop or something
+            if (targetNode == curNode)
+            {
 				foundToTile = true;
 			}
 			else
@@ -190,11 +190,10 @@ public class Pathfinder
 						if(adjConnection != null)
 						{
 							Vector3 adjIndex = adjConnection.mToIndex;
-							Debug.Log(adjIndex);
 							DuckTile adjTile = tileMap.GetTile((int)adjIndex.x, (int)adjIndex.y, (int)adjIndex.z);
 							//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
 							if (adjTile.mHeight <= curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
-								 && (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck))
+								 && (adjTile.mType == DuckTile.TileType.PassableBoth || adjTile.mType == DuckTile.TileType.UnpasssableDuck))
 							{
 								adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mMasterCost;
 
@@ -243,7 +242,8 @@ public class Pathfinder
 			{
 				curTile = curTile.mPreviousTile;
 				path.Add(curTile.mPosition + new Vector3(0, 1, 0));
-				if (curTile == firstNode)
+
+                if (curTile == firstNode)
 				{
 					finishPath = true;
 				}
