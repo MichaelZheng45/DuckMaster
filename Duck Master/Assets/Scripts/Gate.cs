@@ -9,15 +9,17 @@ public class Gate : LogicOutput
     [SerializeField] GameObject obj;
     [SerializeField] List<Material> gateMaterial;
     GameObject tileObj;
-    Transform objTransform;
+    Transform gateTransform;
     MeshRenderer objMeshRenderer;
+    Vector3 tilePosition;
     // Start is called before the first frame update
     void Start()
     {
+        gateTransform = gameObject.transform;
         active = false;
         if (obj != null)
         {
-            objTransform = obj.transform;
+           
             objMeshRenderer = obj.GetComponent<MeshRenderer>();
         }
     }
@@ -35,19 +37,12 @@ public class Gate : LogicOutput
 		if (active)
         {
             print("Opening gate");
-			GameManager.Instance.getTileFromPosition(objTransform.position).mType = DuckTile.TileType.PassableBoth; 
-            
-            mat[0] = gateMaterial[2];
-            mat[1] = gateMaterial[0];
-            objMeshRenderer.materials = mat;
+			GameManager.Instance.getTileFromPosition(tilePosition).mType = DuckTile.TileType.PassableBoth;       
         }
         else
         {
-            print("Closing Gate");
-			GameManager.Instance.getTileFromPosition(objTransform.position).mType = DuckTile.TileType.UnpassableBoth;
-            mat[0] = gateMaterial[2];
-            mat[1] = gateMaterial[1];
-            objMeshRenderer.materials = mat;
+            //print(tilePosition.ToString());
+			GameManager.Instance.getTileFromPosition(tilePosition).mType = DuckTile.TileType.UnpassableBoth;
         }
     }
 
@@ -58,14 +53,12 @@ public class Gate : LogicOutput
 
     private void OnTriggerEnter(Collider other)
     {
-		/*
+		
         if (other.gameObject.name == "ground(Clone)")
         {
             other.gameObject.GetComponent<Renderer>().material = underTileMat; 
             print("colliding with ground tile");
-            tileObj = other.gameObject;
-            theTile = GameManager.Instance.GetTilingSystem().getToTileByPosition(other.gameObject.transform.position);
-            theTile.tType = tileType.GateUp;
-        } */
+            tilePosition = other.gameObject.transform.position;
+        } 
     }
 }

@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e986345417ea142bcefb7830d86ef1, type: 3}
+  m_Name: QA_TEST1
+  m_EditorClassIdentifier: 
+  verticalLevels: 1
+  listGridSelStrings:
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - None
+  - Ground
+  - None
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - None
+  - None
+  - Ground
+  - None
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - None
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - None
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - None
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - None
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - None
+  blockTypes:
+  - Ground
+  - Water
+  - None
+  levelHeights: 07000000
+  levelWidths: 08000000

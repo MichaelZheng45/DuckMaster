@@ -107,7 +107,7 @@ public class UIManager : MonoBehaviour
                         {
                             print("hit ground");
                             Vector3 pos = hit.collider.gameObject.transform.position;
-
+                            Debug.Log(pos);
                             GameManager.Instance.movePlayerTo(pos);
                             /*
                             DuckTile tile = GameManager.Instance.getTileFromPosition(pos);

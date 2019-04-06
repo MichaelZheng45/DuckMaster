@@ -18,7 +18,7 @@ public class LogicOutput : MonoBehaviour
     //Something tells me this is insanely over-engineered, and/or unnecessary but oh well.
     public void Update()
     {
-        print("Logic output update called");
+        //print("Logic output update called");
 
         bool and = false, or = false, not = false;
 
@@ -34,8 +34,8 @@ public class LogicOutput : MonoBehaviour
                     break;
                 }
 
-            if (and)
-                print("AND firing");
+            //if (and)
+            //    print("AND firing");
         }
 
 
@@ -48,8 +48,8 @@ public class LogicOutput : MonoBehaviour
                 if (input.IsActive())
                     or = true;
 
-            if (or)
-                print("OR firing");
+            //if (or)
+            //    print("OR firing");
 
         }
 
@@ -67,8 +67,8 @@ public class LogicOutput : MonoBehaviour
                 }
 
             }
-            if (not)
-                print("NOT firing");
+            //if (not)
+            //    print("NOT firing");
         }
 
         Activate(and || or || not);
