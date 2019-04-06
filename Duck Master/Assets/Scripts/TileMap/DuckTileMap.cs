@@ -2,19 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class DuckList
+{
+	public List<DuckTile> mList { get; set; }
+	public DuckList(List<DuckTile> list)
+	{
+		mList = list;
+	}
+}
+
+[System.Serializable]
 public class DuckTileGrid
 {
-    List<List<DuckTile>> mGrid;
+	[SerializeField]
+    List<DuckList> mGrid;
 
     public DuckTileGrid()
     {
-        mGrid = new List<List<DuckTile>>();
+        mGrid = new List<DuckList>();
     }
 
 	// Don't Use Please, Won't work
     public DuckTileGrid(int x, int y)
     {
-        mGrid = new List<List<DuckTile>>();
+        mGrid = new List<DuckList>();
         List<DuckTile> tempList;
         for (int j = 0; j < x; ++j)
         {
@@ -24,14 +36,14 @@ public class DuckTileGrid
                 tempList.Add(new DuckTile());
                 Debug.Log("X: " + k + " Y: " + j);
             }
-            mGrid.Add(tempList);
+            mGrid.Add(new DuckList(tempList));
         }
     }
 
     // Height change is for the fact that a tile might be walkable above but not walkable from below
     public DuckTileGrid(List<List<DuckTile.TileType>> typeGrid, List<List<bool>> baitableGrid, List<List<bool>> heightChangeGrid, List<List<Vector3>> positionGrid, int height)
     {
-        mGrid = new List<List<DuckTile>>();
+        mGrid = new List<DuckList>();
         List<DuckTile> tempList;
         for(int j = 0; j < typeGrid.Count; ++j)
         {
@@ -42,18 +54,20 @@ public class DuckTileGrid
                 tempList.Add(new DuckTile(typeGrid[j][k], baitableGrid[j][k], heightChangeGrid[j][k], positionGrid[j][k], height));
                 //Debug.Log("X: " + k + " Y: " + j + "\nType: " + typeGrid[j][k] + "\nBaitable: " + baitableGrid[j][k] + "\nHeight Change: " + heightChangeGrid[j][k]);
             }
-            mGrid.Add(tempList);
+            mGrid.Add(new DuckList(tempList));
         }
     }
 
     public DuckTile GetTile(int x, int y)
     {
-		if ((mGrid.Count < y && mGrid[y].Count < x && x > -1 && y > -1) || (mGrid[y][x].mType != DuckTile.TileType.INVALID_TYPE))
-			return mGrid[y][x];
+        if ((x > -1 && y > -1 && mGrid.Count > y && mGrid[y].mList.Count > x))
+        {
+            return mGrid[y].mList[x];
+        }
         return null;
     }
 
-	public List<List<DuckTile>> GetGrid()
+	public List<DuckList> GetGrid()
 	{
 		return mGrid;
 	}
@@ -66,7 +80,7 @@ public class DuckTileGrid
 	public int GetRowLength(int y)
 	{
 		if(y > -1 && y < mGrid.Count)
-			return mGrid[y].Count;
+			return mGrid[y].mList.Count;
 		return -1;
 	}
 
@@ -74,16 +88,17 @@ public class DuckTileGrid
 	{
 		if(y > -1 && y < mGrid.Count)
 		{
-			mGrid[y].Add(tile);
+			mGrid[y].mList.Add(tile);
 		}
 	}
 
 	public void AddRow(List<DuckTile> duckTiles)
 	{
-		mGrid.Add(duckTiles);
+		mGrid.Add(new DuckList(duckTiles));
 	}
 }
 
+[System.Serializable]
 public class DuckTileMap
 {
     public List<DuckTileGrid> mGridMap { get; set; }
@@ -133,7 +148,7 @@ public class DuckTileMap
 				{
 					if(j < mHeightMap.GetLength() && k < mHeightMap.GetRowLength(j) && (tempTile = grid.GetTile(k, j)) != null)
 					{
-						mHeightMap.GetGrid()[j][k] = tempTile;
+						mHeightMap.GetGrid()[j].mList[k] = tempTile;
 					}
 					else
 					{
@@ -163,8 +178,11 @@ public class DuckTileMap
 				currentTile = mHeightMap.GetTile(k, j);
 				rightTile = mHeightMap.GetTile(k + 1, j);
 				bottomTile = mHeightMap.GetTile(k, j + 1);
-				rightConnection = new Connection(currentTile, rightTile);
-				bottomConnection = new Connection(currentTile, bottomTile);
+				Vector3 currentTileIndex = new Vector3(k, j, currentTile.mHeight);
+				Vector3 rightTileIndex = new Vector3(k, j, rightTile.mHeight);
+				Vector3 bottomTileIndex = new Vector3(k, j, bottomTile.mHeight);
+				rightConnection = new Connection(currentTileIndex, rightTileIndex, 255, 255);
+				bottomConnection = new Connection(currentTileIndex, bottomTileIndex, 255, 255);
 
 				if (currentTile.mHeight == rightTile.mHeight || (currentTile.mHeight != rightTile.mHeight && currentTile.mHeightChange && rightTile.mHeightChange))
 				{
@@ -194,8 +212,8 @@ public class DuckTileMap
 				}
 				currentTile.SetConnectionDirection(DuckTile.ConnectionDirection.RIGHT, rightConnection);
 				currentTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, bottomConnection);
-				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.LEFT, new Connection(rightConnection.mToTile, rightConnection.mFromTile, rightConnection.mDuckCost, rightConnection.mMasterCost));
-				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, new Connection(bottomConnection.mToTile, bottomConnection.mFromTile, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
+				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.LEFT, new Connection(rightConnection.mToIndex, rightConnection.mFromIndex, rightConnection.mDuckCost, rightConnection.mMasterCost));
+				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, new Connection(bottomConnection.mToIndex, bottomConnection.mFromIndex, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
 			}
 		}
 	}

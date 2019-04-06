@@ -1,26 +1,30 @@
-﻿public class Connection
+﻿using UnityEngine;
+
+[System.Serializable]
+public class Connection
 {
-	public const byte MAX_COST = 255;
+	//public byte MAX_COST = 255;
 
 	public Connection()
 	{
-		mFromTile = null;
-		mToTile = null;
-        mDuckCost = 255;
-        mMasterCost = 255;
-
-    }
-
-	public Connection(DuckTile fromTile, DuckTile toTile, byte duckCost = MAX_COST, byte masterCost = MAX_COST)
-	{
-		mFromTile = fromTile;
-		mToTile = toTile;
-        mDuckCost = duckCost;
-        mMasterCost = masterCost;
+		mFromIndex = new Vector3(-1, -1, -1);
+		mToIndex = new Vector3(-1, -1, -1);
+		mDuckCost = 255;
+		mMasterCost = 255;
 	}
 
-    public DuckTile mFromTile { get; set; }
-    public DuckTile mToTile { get; set; }
+	public Connection(Vector3 fromIndex, Vector3 toIndex, byte duckCost, byte masterCost)
+	{
+		mFromIndex = fromIndex;
+		mToIndex = toIndex;
+		mDuckCost = duckCost;
+		mMasterCost = masterCost;
+	}
+
+	//public DuckTile mFromTile { get; set; }
+	//public DuckTile mToTile { get; set; }
+	public Vector3 mFromIndex { get; set; }
+	public Vector3 mToIndex { get; set; }
     public byte mDuckCost { get; set; }
     public byte mMasterCost { get; set; }
 }

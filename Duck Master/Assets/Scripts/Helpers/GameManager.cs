@@ -57,17 +57,24 @@ public class GameManager : MonoBehaviour
         unFriendlyList = new List<unfreindlyScript>();
         playerActionSys = player.GetComponent<PlayerAction>();
         duckBehaviourSys = duck.GetComponent<duckBehaviour>();
-        altimeterSys = altimeter.GetComponent<Altimeter>();
+        altimeterSys = null;// altimeter.GetComponent<Altimeter>();
         playerTransform = player.transform;
         duckTransform = duck.transform;
 
-		tileMap = tileMapScriptableObject.tileMap;
+		//tileMap = tileMapScriptableObject.tileMap;
+		GenerateTileMap(tileMapScriptableObject.verticalLevels,
+						tileMapScriptableObject.listGridSelStrings,
+						tileMapScriptableObject.blockTypes,
+						tileMapScriptableObject.levelHeights,
+						tileMapScriptableObject.levelWidths);
+        Debug.Log(tileMap);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
 		DuckTile atTile = tileMap.mHeightMap.GetTile(0,0);
+        Debug.Log(atTile);
 	}
 
     public bool checkIsHoldingDuck()
@@ -233,5 +240,74 @@ public class GameManager : MonoBehaviour
 	public void markUnfreindlies(ref List<DuckTile> previousAOE, Vector3 pos, int range)
 	{
 		//turn all of those back to the
+	}
+
+	private void GenerateTileMap(int verticalLevels, string[] listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths)
+	{
+		List<List<DuckTile.TileType>> typeGrid;
+		List<DuckTile.TileType> typeList;
+		List<List<bool>> baitableGrid;
+		List<bool> baitableList;
+		List<List<bool>> heightChangeGrid;
+		List<bool> heightChangeList;
+		List<Vector3> positionsList;
+		List<List<Vector3>> positionGrid;
+
+		List<DuckTileGrid> tileGrids = new List<DuckTileGrid>();
+
+		for (int i = 0; i < verticalLevels; ++i)
+		{
+			// current height is i
+			int height = levelHeights[i];
+			int width = levelWidths[i];
+			typeGrid = new List<List<DuckTile.TileType>>();
+			baitableGrid = new List<List<bool>>();
+			heightChangeGrid = new List<List<bool>>();
+			positionGrid = new List<List<Vector3>>();
+
+			for (int j = 0; j < height; ++j)
+			{
+				typeList = new List<DuckTile.TileType>();
+				baitableList = new List<bool>();
+				heightChangeList = new List<bool>();
+				positionsList = new List<Vector3>();
+				for (int k = 0; k < width; ++k)
+				{
+					int index = i * height * width + height * j + k;
+					if (index < height * width)
+					{
+						// TO DO: center positions, fix instantiation ways
+						string currentBlock = listGridSelStrings[index];
+						Vector3 pos = new Vector3(j, i, k);
+
+						// string[] blockTypes = { "Ground", "Water", "None" };
+						if (currentBlock == blockTypes[0])
+						{
+							// passable both
+							typeList.Add(DuckTile.TileType.PassableBoth);
+						}
+						else if (currentBlock == blockTypes[1])
+						{
+							// unpassable master
+							typeList.Add(DuckTile.TileType.UnpassableMaster);
+						}
+						else
+						{
+							// it's none/null aka null
+							typeList.Add(DuckTile.TileType.INVALID_TYPE);
+						}
+						baitableList.Add(false);
+						heightChangeList.Add(false);
+						positionsList.Add(pos);
+					}
+				}
+				typeGrid.Add(typeList);
+				baitableGrid.Add(baitableList);
+				heightChangeGrid.Add(heightChangeList);
+				positionGrid.Add(positionsList);
+			}
+			tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, positionGrid, i));
+		}
+		tileMap = new DuckTileMap(tileGrids);
 	}
 }

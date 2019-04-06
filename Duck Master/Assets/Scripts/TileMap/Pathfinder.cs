@@ -68,7 +68,8 @@ public class Pathfinder
 					{
 						int adjNodeDirection = searchOrder[count];
 						Connection adjConnection = curNode.GetConnectionDirection((DuckTile.ConnectionDirection)adjNodeDirection);
-						DuckTile adjTile = adjConnection.mToTile;
+						Vector3 adjIndex = adjConnection.mToIndex;
+						DuckTile adjTile = tileMap.GetTile((int)adjIndex.x, (int)adjIndex.y, (int)adjIndex.z);
 						//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
 						if (adjTile.mHeight <= curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
 							 &&(targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck))
@@ -182,7 +183,8 @@ public class Pathfinder
 					{
 						int adjNodeDirection = count;
 						Connection adjConnection = curNode.GetConnectionDirection((DuckTile.ConnectionDirection)adjNodeDirection);
-						DuckTile adjTile = adjConnection.mToTile;
+						Vector3 adjIndex = adjConnection.mToIndex;
+						DuckTile adjTile = tileMap.GetTile((int)adjIndex.x, (int)adjIndex.y, (int)adjIndex.z);
 						//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
 						if (adjTile.mHeight <= curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
 							 && (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck))
