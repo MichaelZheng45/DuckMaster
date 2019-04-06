@@ -14,5 +14,4 @@ public class AnimationEventStuff : MonoBehaviour
             onWalkingChange(newVal);
     }
 
-
 }

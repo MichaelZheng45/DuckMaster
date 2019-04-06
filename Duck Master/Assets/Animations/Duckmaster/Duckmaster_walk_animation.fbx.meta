@@ -1,0 +1,197 @@
+fileFormatVersion: 2
+guid: de42e82cb4ea9594e86a4a364e7a4b65
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Body_ctrl
+    100002: Bot_ctrl
+    100004: cluster1Handle
+    100006: cluster3Handle
+    100008: //RootNode
+    100010: group1
+    100012: L_toeTap_Pivot
+    100014: Left_ankle_IK_hndl
+    100016: Left_ankle_Pivot
+    100018: Left_arm_ctrl_IK
+    100020: Left_arm_IK_hndl
+    100022: Left_arm_PVC_ctrl
+    100024: Left_ball_IK_hndl
+    100026: Left_foot_ctrl
+    100028: Left_heelPeel_Pivot
+    100030: Left_leg_PVC_ctrl
+    100032: Left_leg_PVC_ctrl1
+    100034: Left_Swivel_Pivot
+    100036: Left_toe_IK_hndl
+    100038: Left_ToeTip_Pivot
+    100040: Master_ctrl
+    100042: mid
+    100044: Neck_ctrl
+    100046: nurbsCircle1
+    100048: pCube1
+    100050: Right_Ankle_IK_hdnl
+    100052: Right_Ankle_Pivot
+    100054: Right_arm_PVC_ctrl1
+    100056: Right_Ball_IK_Hndl
+    100058: Right_foot_ctrl
+    100060: Right_heelPeel_Pivot
+    100062: Right_Swivel_Pivot
+    100064: Right_Toe_IK_hndl
+    100066: Right_toeTap_Pivot
+    100068: Right_ToeTip_Pivot
+    100070: Top_ctrl
+    400000: Body_ctrl
+    400002: Bot_ctrl
+    400004: cluster1Handle
+    400006: cluster3Handle
+    400008: //RootNode
+    400010: group1
+    400012: L_toeTap_Pivot
+    400014: Left_ankle_IK_hndl
+    400016: Left_ankle_Pivot
+    400018: Left_arm_ctrl_IK
+    400020: Left_arm_IK_hndl
+    400022: Left_arm_PVC_ctrl
+    400024: Left_ball_IK_hndl
+    400026: Left_foot_ctrl
+    400028: Left_heelPeel_Pivot
+    400030: Left_leg_PVC_ctrl
+    400032: Left_leg_PVC_ctrl1
+    400034: Left_Swivel_Pivot
+    400036: Left_toe_IK_hndl
+    400038: Left_ToeTip_Pivot
+    400040: Master_ctrl
+    400042: mid
+    400044: Neck_ctrl
+    400046: nurbsCircle1
+    400048: pCube1
+    400050: Right_Ankle_IK_hdnl
+    400052: Right_Ankle_Pivot
+    400054: Right_arm_PVC_ctrl1
+    400056: Right_Ball_IK_Hndl
+    400058: Right_foot_ctrl
+    400060: Right_heelPeel_Pivot
+    400062: Right_Swivel_Pivot
+    400064: Right_Toe_IK_hndl
+    400066: Right_toeTap_Pivot
+    400068: Right_ToeTip_Pivot
+    400070: Top_ctrl
+    2100000: lambert1
+    2300000: pCube1
+    3300000: pCube1
+    4300000: pCube1
+    7400000: Take 001
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 20
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

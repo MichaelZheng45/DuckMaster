@@ -29,7 +29,6 @@ public class PlayerAction : MonoBehaviour
     {
         playerTransform = gameObject.transform;
         mBaitSystem = gameObject.GetComponent<BaitSystem>();
-        AnimationEventStuff.WalkingChange(moving);
     }
 
     // Update is called once per frame
@@ -47,6 +46,7 @@ public class PlayerAction : MonoBehaviour
         Vector3 direction = (tilePath[tilePathIndex] - playerTransform.position);
 
         playerTransform.position += direction.normalized * mVelocity;
+        playerTransform.forward = Vector3.Lerp(playerTransform.forward, direction.normalized, 0.25f);
 
         if (direction.magnitude < approachValue)
         {
