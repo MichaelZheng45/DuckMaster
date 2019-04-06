@@ -34,12 +34,9 @@ public class Gate : LogicOutput
 		var mat = new Material[2];
 		if (active)
         {
-
-            
             print("Opening gate");
 			GameManager.Instance.getTileFromPosition(objTransform.position).mType = DuckTile.TileType.PassableBoth; 
             
-
             mat[0] = gateMaterial[2];
             mat[1] = gateMaterial[0];
             objMeshRenderer.materials = mat;
