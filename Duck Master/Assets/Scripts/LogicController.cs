@@ -112,7 +112,7 @@ public class LogicController : MonoBehaviour
         {
             print("In and mode");
             activate = true;
-            foreach(LogicInput input in inputs)
+            foreach (LogicInput input in inputs)
                 if (!input.IsActive())
                     activate = false;
 
@@ -120,49 +120,49 @@ public class LogicController : MonoBehaviour
                 print("And mode activated");
             else
                 print("And mode deactivated");
-			
+
         }
-		
-		if (mode == LogicMode.OR)
-		{
-			activate = false;
-			foreach(LogicInput input in inputs)
-			{
-				if (input.IsActive())
-				{
-					activate = true;
-					break;
-				}
-			}
+
+        if (mode == LogicMode.OR)
+        {
+            activate = false;
+            foreach (LogicInput input in inputs)
+            {
+                if (input.IsActive())
+                {
+                    activate = true;
+                    break;
+                }
+            }
 
             if (activate)
                 print("OR Mode activated");
             else
                 print("Or mode deactivated");
-			
-		}
-		
-		if (mode == LogicMode.NOT)
-		{
+
+        }
+
+        if (mode == LogicMode.NOT)
+        {
             activate = true;
-			foreach(LogicInput input in inputs)
-			{
-				if (input.IsActive())
-				{
-					activate = false;
-					break;
-				}
-			}
+            foreach (LogicInput input in inputs)
+            {
+                if (input.IsActive())
+                {
+                    activate = false;
+                    break;
+                }
+            }
 
             if (!activate)
                 print("NOT mode activated");
             else
                 print("Not mode deactivated");
-		}
+        }
 
         //Final set
         foreach (LogicOutput output in outputs)
-             output.Activate(activate);
-         
+            output.Activate(activate);
+
     }
 }

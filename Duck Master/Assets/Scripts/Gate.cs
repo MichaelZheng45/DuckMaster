@@ -8,6 +8,7 @@ public class Gate : LogicOutput
     [SerializeField] Material underTileMat;
     [SerializeField] GameObject obj;
     [SerializeField] List<Material> gateMaterial;
+    [SerializeField] ParticleSystem[] portalEmissions;
     GameObject tileObj;
     Transform gateTransform;
     MeshRenderer objMeshRenderer;
@@ -19,7 +20,7 @@ public class Gate : LogicOutput
         active = false;
         if (obj != null)
         {
-           
+
             objMeshRenderer = obj.GetComponent<MeshRenderer>();
         }
     }
@@ -33,16 +34,27 @@ public class Gate : LogicOutput
     public override void Activate(bool activate)
     {
         active = activate;
-		var mat = new Material[2];
-		if (active)
+        var mat = new Material[2];
+
+        if (active)
         {
             print("Opening gate");
-			GameManager.Instance.getTileFromPosition(tilePosition).mType = DuckTile.TileType.PassableBoth;       
+            GameManager.Instance.getTileFromPosition(tilePosition).mType = DuckTile.TileType.PassableBoth;
+            if (!portalEmissions[0].isPlaying)
+            {
+                portalEmissions[0].Play();
+                portalEmissions[1].Play();
+            }
         }
         else
         {
             //print(tilePosition.ToString());
-			GameManager.Instance.getTileFromPosition(tilePosition).mType = DuckTile.TileType.UnpassableBoth;
+            GameManager.Instance.getTileFromPosition(tilePosition).mType = DuckTile.TileType.UnpassableBoth;
+            if (portalEmissions[0].isPlaying)
+            {
+                portalEmissions[0].Stop();
+                portalEmissions[1].Stop();
+            }
         }
     }
 
@@ -53,12 +65,12 @@ public class Gate : LogicOutput
 
     private void OnTriggerEnter(Collider other)
     {
-		
+
         if (other.gameObject.name == "ground(Clone)")
         {
-            other.gameObject.GetComponent<Renderer>().material = underTileMat; 
+            other.gameObject.GetComponent<Renderer>().material = underTileMat;
             print("colliding with ground tile");
             tilePosition = other.gameObject.transform.position;
-        } 
+        }
     }
 }
