@@ -1,22 +1,16 @@
 fileFormatVersion: 2
-guid: 315d4d34d9a7a1742961c9cd9271691d
+guid: a2c0300e5bf6b3540a1f9a443a0ae705
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Gate:pCube3
-    100004: pCylinder1
+    100002: StickyPlate:StickyPlate
     400000: //RootNode
-    400002: Gate:pCube3
-    400004: pCylinder1
-    2100000: Gate_pCube3Mat
-    2100002: pCylinder1Mat
-    2300000: Gate:pCube3
-    2300002: pCylinder1
-    3300000: Gate:pCube3
-    3300002: pCylinder1
-    4300000: Gate:pCube3
-    4300002: pCylinder1
+    400002: StickyPlate:StickyPlate
+    2100000: StickyPlate_StickyPlateMat
+    2300000: StickyPlate:StickyPlate
+    3300000: StickyPlate:StickyPlate
+    4300000: StickyPlate:StickyPlate
   externalObjects: {}
   materials:
     importMaterials: 1
