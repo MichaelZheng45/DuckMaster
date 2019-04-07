@@ -15,8 +15,8 @@ public class PressurePlateScript : LogicInput
     // Start is called before the first frame update
     void Start()
     {
-        rend = gameObject.GetComponent<MeshRenderer>();
-        rend.material = unpressedMat;
+        //rend = gameObject.GetComponent<MeshRenderer>();
+        //rend.material = unpressedMat;
         pressed = false;
     }
 
@@ -39,7 +39,7 @@ public class PressurePlateScript : LogicInput
         if (pressed == false && tag == "Duck" && playerCollider == null)
         {
             pressed = true;
-            rend.material = pressedMat;
+            //rend.material = pressedMat;
             duckCollider = other;
             //GameManager.Instance.buttonActivated();
         }
@@ -49,7 +49,7 @@ public class PressurePlateScript : LogicInput
         {
             pressed = true;
             playerCollider = other;
-            rend.material = pressedMat;
+            //rend.material = pressedMat;
             //GameManager.Instance.buttonActivated();
         }
 
@@ -80,7 +80,7 @@ public class PressurePlateScript : LogicInput
         if (playerCollider == null && duckCollider == null)
         {
             pressed = false;
-            rend.material = unpressedMat;
+            //rend.material = unpressedMat;
         }
     }
 

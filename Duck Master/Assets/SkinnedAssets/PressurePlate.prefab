@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 96029240087924340}
   - component: {fileID: 96029240084500054}
   - component: {fileID: 96029240085499030}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PressurePlate:StickyPlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 96029240087924342}
-  m_Layer: 0
+  - component: {fileID: 1077867101351507085}
+  - component: {fileID: 7197568140438104248}
+  m_Layer: 2
   m_Name: PressurePlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,3 +110,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1077867101351507085
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96029240087695958}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 13.884011, y: 5.0353947, z: 14.583713}
+  m_Center: {x: -9.315146, y: 2.0176978, z: -16.14516}
+--- !u!114 &7197568140438104248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96029240087695958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46fc6c4295901eb4eb096e9d200bf2e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pressedMat: {fileID: 2100000, guid: 32e08eaa5c974894bbcca4b8731b2241, type: 2}
+  unpressedMat: {fileID: 2100006, guid: eb46cb5392a99f94c8b9832b5d4c3f08, type: 3}

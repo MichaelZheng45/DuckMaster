@@ -10,7 +10,7 @@ public class StickyButton : LogicInput
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Renderer>().material = unpressedMaterial;
+        //GetComponent<Renderer>().material = unpressedMaterial;
         active = false;
     }
 
@@ -30,7 +30,7 @@ public class StickyButton : LogicInput
         if (!active)
         {
             active = true;
-            GetComponent<Renderer>().material = pressedMaterial;
+            //GetComponent<Renderer>().material = pressedMaterial;
         }
     }
 

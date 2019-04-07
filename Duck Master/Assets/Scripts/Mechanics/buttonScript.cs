@@ -8,14 +8,14 @@ public class buttonScript : LogicInput
 	[SerializeField]float waitPeriod;
 	float timer;
 
-	[SerializeField] Material pressedMat;
-	[SerializeField] Material unPressed;
+	//[SerializeField] Material pressedMat;
+	//[SerializeField] Material unPressed;
 
-	MeshRenderer renderer;
+	//MeshRenderer renderer;
     // Start is called before the first frame update
     void Start()
     {
-		renderer = gameObject.GetComponent<MeshRenderer>();        
+		//renderer = gameObject.GetComponent<MeshRenderer>();        
     }
 
     // Update is called once per frame
@@ -35,7 +35,7 @@ public class buttonScript : LogicInput
 			{
 				timer = 0;
 				pressed = false;
-				renderer.material = unPressed;
+				//renderer.material = unPressed;
 			}
 		}
     }
@@ -46,7 +46,7 @@ public class buttonScript : LogicInput
 		if (pressed == false &&(tag == "Duck" || tag == "Player"))
 		{
 			pressed = true;
-			renderer.material = pressedMat;
+			//renderer.material = pressedMat;
 			//GameManager.Instance.buttonActivated();
 		}
 	}

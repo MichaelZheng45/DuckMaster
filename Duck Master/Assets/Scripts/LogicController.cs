@@ -5,7 +5,7 @@ using UnityEngine;
 public class LogicInput : MonoBehaviour
 {
     public virtual bool IsActive() { return false; }
-    [SerializeField] List<LogicOutput> outputlist;
+    //[SerializeField] List<LogicOutput> outputlist;
 }
 
 public class LogicOutput : MonoBehaviour

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6271356803701663428}
   - component: {fileID: 6271356803702433510}
   - component: {fileID: 6271356803703432230}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Button:pSphere1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6271356803701663430}
-  m_Layer: 0
+  - component: {fileID: 4523177070225973113}
+  - component: {fileID: 8052581070723007412}
+  m_Layer: 2
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,3 +110,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4523177070225973113
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6271356803701439206}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 17.110617, y: 5.6190014, z: 16.808573}
+  m_Center: {x: -9.467899, y: 2.3095012, z: 0.9689614}
+--- !u!114 &8052581070723007412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6271356803701439206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd324137afd3e68428b2d32a7eae8619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitPeriod: 0
+  pressedMat: {fileID: 0}
+  unPressed: {fileID: 0}
