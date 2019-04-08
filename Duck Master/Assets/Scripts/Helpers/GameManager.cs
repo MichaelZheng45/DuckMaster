@@ -21,35 +21,43 @@ public class GameManager : MonoBehaviour
     }
 
     //systems objects
-    [SerializeField] GameObject cameraMain;
-    [SerializeField] GameObject highlighter;
-    [SerializeField] GameObject altimeter;
+    [SerializeField] 
+    private GameObject cameraMain;
+    [SerializeField] 
+    private GameObject highlighter;
+    [SerializeField]
+    private GameObject altimeter;
 
     //playable objects
-    [SerializeField] GameObject player;
-    [SerializeField] GameObject duck;
+    [SerializeField] 
+    private GameObject player;
+    [SerializeField]
+    private GameObject duck;
 
     //script systems
-    PlayerAction playerActionSys;
-    duckBehaviour duckBehaviourSys;
-    Altimeter altimeterSys;
+    private PlayerAction playerActionSys;
+    private duckBehaviour duckBehaviourSys;
+    private Altimeter altimeterSys;
 
     //transforms
-    Transform playerTransform;
-    Transform duckTransform;
+    private Transform playerTransform;
+    private Transform duckTransform;
 
     //other Data
-    [SerializeField] float throwDistanceMax; //should be in another script to be honest
+    [SerializeField]
+    //should be in another script to be honest
+    private float throwDistanceMax;
 
     //lists
-    List<unfreindlyScript> unFriendlyList; //TO DO: find a way to populate this list with unfriendlies for each level
+    //TO DO: find a way to populate this list with unfriendlies for each level
+    private List<unfreindlyScript> unFriendlyList; 
 
     //bool checks
-    bool holdingDuck = false;
+    private bool holdingDuck = false;
 
     [SerializeField]
-    TileMapScriptableObject tileMapScriptableObject = null;
-    public DuckTileMap tileMap { get; set; }
+    private TileMapScriptableObject mTileMapScriptableObject = null;
+    private DuckTileMap mTileMap;
 
     // Start is called before the first frame update
     void Start()
@@ -62,11 +70,11 @@ public class GameManager : MonoBehaviour
         duckTransform = duck.transform;
 
         //tileMap = tileMapScriptableObject.tileMap;
-        GenerateTileMap(tileMapScriptableObject.verticalLevels,
-                        tileMapScriptableObject.listGridSelStrings,
-                        tileMapScriptableObject.blockTypes,
-                        tileMapScriptableObject.levelHeights,
-                        tileMapScriptableObject.levelWidths);
+        GenerateTileMap(mTileMapScriptableObject.verticalLevels,
+                        mTileMapScriptableObject.listGridSelStrings,
+                        mTileMapScriptableObject.blockTypes,
+                        mTileMapScriptableObject.levelHeights,
+                        mTileMapScriptableObject.levelWidths);
 
 	//	movePlayerTo(new Vector3(0, 0, 4));
     }
@@ -83,7 +91,7 @@ public class GameManager : MonoBehaviour
 
     public void movePlayerTo(Vector3 targetPosition)
     {
-        List<Vector3> tilePath = Pathfinder.getTilePathPlayer(playerTransform.position, targetPosition, tileMap);
+        List<Vector3> tilePath = Pathfinder.getTilePathPlayer(playerTransform.position, targetPosition, mTileMap);
         if (tilePath.Count > 0)
         {
             playerActionSys.applyNewPath(tilePath);
@@ -111,7 +119,7 @@ public class GameManager : MonoBehaviour
         //check if anything is in the way (need to be changed)
         if (!Physics.Raycast(duckTransform.position, dir.normalized, out athit, dir.magnitude, unthrowMask) && dir.magnitude < throwDistanceMax)
         {
-			DuckTile atTile = getTileFromPosition(pos);
+			DuckTile atTile = mTileMap.getTileFromPosition(pos);
 
             //check if throwable
             if (atTile.mType == DuckTile.TileType.PassableBoth || atTile.mType == DuckTile.TileType.UnpassableMaster)
@@ -129,7 +137,7 @@ public class GameManager : MonoBehaviour
         //do pathfinding
         if (duckBehaviourSys.isRecallable())
         {
-            List<Vector3> tilePath = Pathfinder.getTilePathDuck(duckTransform.position, playerTransform.position, tileMap,
+            List<Vector3> tilePath = Pathfinder.getTilePathDuck(duckTransform.position, playerTransform.position, mTileMap,
                                                                  (int)duck.GetComponent<DuckRotation>().currentRotation);
             if (tilePath.Count > 0)
             {
@@ -160,10 +168,15 @@ public class GameManager : MonoBehaviour
         return cameraMain;
     }
 
+    public DuckTileMap GetTileMap()
+    {
+        return mTileMap;
+    }
+
     public Vector3 checkGeyser(Vector3 atPos, Vector3 fromPos)
     {
-        DuckTile atTile = getTileFromPosition(atPos);
-        float startingRange = .8f;
+        DuckTile atTile = mTileMap.getTileFromPosition(atPos);
+        //float startingRange = .8f;
         /*
         if (atTile.tType == tileType.Geyser)
         {
@@ -207,7 +220,7 @@ public class GameManager : MonoBehaviour
             {
                 playerActionSys.isHoldingDuck = false;
                 //find a tile to move to
-                DuckTile atTile = getTileFromPosition(duckTransform.position);
+                DuckTile atTile = mTileMap.getTileFromPosition(duckTransform.position);
 
                 for (int row = -1; row < 2; row++)
                 {
@@ -251,6 +264,7 @@ public class GameManager : MonoBehaviour
         List<bool> heightChangeList;
         List<Vector3> positionsList;
         List<List<Vector3>> positionGrid;
+        int index = 0;
 
         List<DuckTileGrid> tileGrids = new List<DuckTileGrid>();
 
@@ -272,33 +286,30 @@ public class GameManager : MonoBehaviour
                 positionsList = new List<Vector3>();
                 for (int k = 0; k < width; ++k)
                 {
-                    int index = i * height * width + height * j + k;
-                    if (index < height * width)
-                    {
-                        // TO DO: center positions, fix instantiation ways
-                        string currentBlock = listGridSelStrings[index];
-                        Vector3 pos = new Vector3(j, i, k);
+                    // TO DO: center positions, fix instantiation ways
+                    string currentBlock = listGridSelStrings[index];
+                    Vector3 pos = new Vector3(j, i, k);
 
-                        // string[] blockTypes = { "Ground", "Water", "None" };
-                        if (currentBlock == blockTypes[0])
-                        {
-                            // passable both
-                            typeList.Add(DuckTile.TileType.PassableBoth);
-                        }
-                        else if (currentBlock == blockTypes[1])
-                        {
-                            // unpassable master
-                            typeList.Add(DuckTile.TileType.UnpassableMaster);
-                        }
-                        else
-                        {
-                            // it's none/null aka null
-                            typeList.Add(DuckTile.TileType.INVALID_TYPE);
-                        }
-                        baitableList.Add(false);
-                        heightChangeList.Add(false);
-                        positionsList.Add(pos);
+                    // string[] blockTypes = { "Ground", "Water", "None" };
+                    if (currentBlock == blockTypes[0])
+                    {
+                        // passable both
+                        typeList.Add(DuckTile.TileType.PassableBoth);
                     }
+                    else if (currentBlock == blockTypes[1])
+                    {
+                        // unpassable master
+                        typeList.Add(DuckTile.TileType.UnpassableMaster);
+                    }
+                    else
+                    {
+                        // it's none/null aka null
+                        typeList.Add(DuckTile.TileType.INVALID_TYPE);
+                    }
+                    baitableList.Add(false);
+                    heightChangeList.Add(false);
+                    positionsList.Add(pos);
+                    index++;
                 }
                 typeGrid.Add(typeList);
                 baitableGrid.Add(baitableList);
@@ -307,11 +318,6 @@ public class GameManager : MonoBehaviour
             }
             tileGrids.Add(new DuckTileGrid(typeGrid, baitableGrid, heightChangeGrid, positionGrid, i));
         }
-        tileMap = new DuckTileMap(tileGrids);
-    }
-
-    public DuckTile getTileFromPosition(Vector3 position)
-    {
-        return tileMap.mHeightMap.GetTile(Mathf.FloorToInt(position.z + .5f), Mathf.FloorToInt(position.x + .5f));
+        mTileMap = new DuckTileMap(tileGrids);
     }
 }

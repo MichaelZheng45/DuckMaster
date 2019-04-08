@@ -136,6 +136,11 @@ public class DuckTileMap
         return mGridMap[height].GetTile(x, y);
     }
 
+    public DuckTile getTileFromPosition(Vector3 position)
+    {
+        return mHeightMap.GetTile(Mathf.FloorToInt(position.z + .5f), Mathf.FloorToInt(position.x + .5f));
+    }
+
     void CreateHeightMap()
     {
 		DuckTile tempTile;
@@ -146,9 +151,10 @@ public class DuckTileMap
 			{
 				for(int k = 0; k < grid.GetRowLength(j); ++k)
 				{
-					if(j < mHeightMap.GetLength() && k < mHeightMap.GetRowLength(j) && (tempTile = grid.GetTile(k, j)) != null)
+                    tempTile = grid.GetTile(k, j);
+					if(j < mHeightMap.GetLength() && k < mHeightMap.GetRowLength(j) && tempTile != null && tempTile.mType != DuckTile.TileType.INVALID_TYPE)
 					{
-						mHeightMap.GetGrid()[j].mList[k] = tempTile;
+                        mHeightMap.GetGrid()[j].mList[k] = tempTile;
 					}
 					else
 					{
@@ -156,7 +162,7 @@ public class DuckTileMap
 						{
 							mHeightMap.AddRow(new List<DuckTile>());
 						}
-						if(k >= mHeightMap.GetRowLength(j) && (tempTile = grid.GetTile(k, j)) != null)
+						if(k >= mHeightMap.GetRowLength(j) && tempTile != null)
 						{
 							mHeightMap.AddTile(j, tempTile);
 						}
@@ -169,22 +175,44 @@ public class DuckTileMap
 	void CreateConnections()
 	{
 		DuckTile currentTile, rightTile, bottomTile;
+		currentTile = rightTile = bottomTile = null;
 		Connection rightConnection, bottomConnection;
+		rightConnection = bottomConnection = null;
+		Vector3 rightTileIndex, bottomTileIndex;
+		rightTileIndex = bottomTileIndex = Vector3.positiveInfinity;
 		//bool rightHeightPassable = true, bottomHeightPassable;
-		for (int j = 0; j < mHeightMap.GetLength() - 1; ++j)
+		for (int j = 0; j < mHeightMap.GetLength(); ++j)
 		{
-			for (int k = 0; k < mHeightMap.GetRowLength(j) - 1; ++k)
+			for (int k = 0; k < mHeightMap.GetRowLength(j); ++k)
 			{
 				currentTile = mHeightMap.GetTile(k, j);
 				rightTile = mHeightMap.GetTile(k + 1, j);
 				bottomTile = mHeightMap.GetTile(k, j + 1);
 				Vector3 currentTileIndex = new Vector3(k, j, currentTile.mHeight);
-				Vector3 rightTileIndex = new Vector3(k + 1, j, rightTile.mHeight);
-				Vector3 bottomTileIndex = new Vector3(k, j + 1, bottomTile.mHeight);
-				rightConnection = new Connection(currentTileIndex, rightTileIndex, 255, 255);
-				bottomConnection = new Connection(currentTileIndex, bottomTileIndex, 255, 255);
 
-				if (currentTile.mHeight == rightTile.mHeight || (currentTile.mHeight != rightTile.mHeight && currentTile.mHeightChange && rightTile.mHeightChange))
+				if(rightTile != null)
+				{
+					rightTileIndex = new Vector3(k + 1, j, rightTile.mHeight);
+					rightConnection = new Connection(currentTileIndex, rightTileIndex, 255, 255);
+				}
+				else
+				{
+					rightTileIndex = Vector3.positiveInfinity;
+					rightConnection = null;
+				}
+				
+				if(bottomTile != null)
+				{
+					bottomTileIndex = new Vector3(k, j + 1, bottomTile.mHeight);
+					bottomConnection = new Connection(currentTileIndex, bottomTileIndex, 255, 255);
+				}
+				else
+				{
+					bottomTileIndex = Vector3.positiveInfinity;
+					bottomConnection = null;
+				}
+				
+				if (rightConnection != null && (currentTile.mHeight == rightTile.mHeight || (currentTile.mHeight != rightTile.mHeight && currentTile.mHeightChange && rightTile.mHeightChange)))
 				{
 					if (currentTile.GetDuckPassable() && rightTile.GetDuckPassable())
 					{
@@ -197,7 +225,7 @@ public class DuckTileMap
 						rightConnection.mMasterCost = 1;
 					}
 				}
-				if (currentTile.mHeight == bottomTile.mHeight || (currentTile.mHeight != bottomTile.mHeight && currentTile.mHeightChange && bottomTile.mHeightChange))
+				if (bottomConnection != null && (currentTile.mHeight == bottomTile.mHeight || (currentTile.mHeight != bottomTile.mHeight && currentTile.mHeightChange && bottomTile.mHeightChange)))
 				{
 					if (currentTile.GetDuckPassable() && bottomTile.GetDuckPassable())
 					{
@@ -210,10 +238,17 @@ public class DuckTileMap
 						bottomConnection.mMasterCost = 1;
 					}
 				}
+
 				currentTile.SetConnectionDirection(DuckTile.ConnectionDirection.RIGHT, rightConnection);
 				currentTile.SetConnectionDirection(DuckTile.ConnectionDirection.DOWN, bottomConnection);
-				rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.LEFT, new Connection(rightConnection.mToIndex, rightConnection.mFromIndex, rightConnection.mDuckCost, rightConnection.mMasterCost));
-				bottomTile.SetConnectionDirection(DuckTile.ConnectionDirection.UP, new Connection(bottomConnection.mToIndex, bottomConnection.mFromIndex, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
+				if(rightConnection != null)
+				{
+					rightTile.SetConnectionDirection(DuckTile.ConnectionDirection.LEFT, new Connection(rightConnection.mToIndex, rightConnection.mFromIndex, rightConnection.mDuckCost, rightConnection.mMasterCost));
+				}
+				if(bottomConnection != null)
+				{
+					bottomTile.SetConnectionDirection(DuckTile.ConnectionDirection.UP, new Connection(bottomConnection.mToIndex, bottomConnection.mFromIndex, bottomConnection.mDuckCost, bottomConnection.mMasterCost));
+				}
 			}
 		}
 	}

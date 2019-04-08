@@ -6,7 +6,8 @@ public class EndStateButton : MonoBehaviour
 {
 	// Start is called before the first frame update
 
-	[SerializeField] float duckDistanceReq;
+	[SerializeField]
+    private float duckDistanceReq;
 
     Transform thisTransform;
     void Start()

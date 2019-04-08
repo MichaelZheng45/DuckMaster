@@ -78,8 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AND_List: []
-  OR_List:
-  - {fileID: 0}
+  OR_List: []
   NOT_list: []
   active: 0
   underTileMat: {fileID: 2100000, guid: 6cae08893ac63a74dad9e7db5433138f, type: 2}
@@ -337,11 +336,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 147384346}
     m_Modifications:
-    - target: {fileID: 8801159315226114990, guid: 8ff0ab6e0dd511742af46a95ad1115f2,
-        type: 3}
-      propertyPath: m_Name
-      value: Gate
-      objectReference: {fileID: 0}
     - target: {fileID: 8801159315226077070, guid: 8ff0ab6e0dd511742af46a95ad1115f2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -411,6 +405,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8801159315226114990, guid: 8ff0ab6e0dd511742af46a95ad1115f2,
+        type: 3}
+      propertyPath: m_Name
+      value: Gate
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ff0ab6e0dd511742af46a95ad1115f2, type: 3}

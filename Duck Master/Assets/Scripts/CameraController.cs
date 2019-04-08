@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour
 		swipeCount = inputManager.GetSwipeCount();
 		swipeData = inputManager.GetSwipeData();
 		moveDirection = swipeData[0].deltaPos;
-        rotateAroundPos = gameManager.GetComponent<GameManager>().tileMap.GetCenterPos();
+        rotateAroundPos = gameManager.GetComponent<GameManager>().GetTileMap().GetCenterPos();
 
         // Change this to first and none of last
         if (swipeCount == 1)

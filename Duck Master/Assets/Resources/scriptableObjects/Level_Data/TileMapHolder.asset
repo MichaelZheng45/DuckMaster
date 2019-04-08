@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e986345417ea142bcefb7830d86ef1, type: 3}
   m_Name: TileMapHolder
   m_EditorClassIdentifier: 
+  verticalLevels: 0
+  listGridSelStrings: []
+  blockTypes: []
+  levelHeights: 
+  levelWidths: 
