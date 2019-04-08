@@ -11,9 +11,12 @@ public class LogicInput : MonoBehaviour
 public class LogicOutput : MonoBehaviour
 {
     public virtual void Activate(bool active) { }
-    [SerializeField] List<LogicInput> AND_List;
-    [SerializeField] List<LogicInput> OR_List;
-    [SerializeField] List<LogicInput> NOT_list;
+    [SerializeField] 
+    private List<LogicInput> AND_List;
+    [SerializeField] 
+    private List<LogicInput> OR_List;
+    [SerializeField]
+    private List<LogicInput> NOT_list;
 
     //Something tells me this is insanely over-engineered, and/or unnecessary but oh well.
     public void Update()
@@ -45,8 +48,12 @@ public class LogicOutput : MonoBehaviour
             or = false;
 
             foreach (LogicInput input in OR_List)
+            {
                 if (input.IsActive())
+                {
                     or = true;
+                }
+            }
 
             //if (or)
             //    print("OR firing");

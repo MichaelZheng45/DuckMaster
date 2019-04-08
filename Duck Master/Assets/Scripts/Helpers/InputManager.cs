@@ -23,17 +23,17 @@ public class InputManager : MonoBehaviour
 	Camera mainCamera;
 #if DESKTOP
 	// Keep track of it we have clicked, where we started the click, and if we recently let go
-    bool leftClick, rightClick;
-    Vector3 lastMousePos, lastLeftClickPos, lastRightClickPos;
-    Vector3 upLeftClick;
+    private bool leftClick, rightClick;
+    private Vector3 lastMousePos, lastLeftClickPos, lastRightClickPos;
+    private Vector3 upLeftClick;
 #elif MOBILE
 	// Keep track of the current touches and amount
-    Touch[] taps;
-    int tapCount = 0;
+    private Touch[] taps;
+    private int tapCount = 0;
 #endif
 	[Tooltip("Pixel Distance A Tap Becomes A Swipe")]
     [SerializeField]
-    int swipeTolerance = 25;
+    private int swipeTolerance = 25;
 	// Enums used for generic direction
     public enum SwipeDirection
     {
@@ -54,13 +54,13 @@ public class InputManager : MonoBehaviour
 
 	public const int MAX_TAPS = 5;
 	// Keeping track of swipes
-	SwipeData[] mSwipeData;
+	private SwipeData[] mSwipeData;
 
 	public static SwipeData[] DefaultSwipeDataArray = new SwipeData[MAX_TAPS];
 	public static SwipeData DefaultSwipeData = new SwipeData();
 
 	// Data for storing raycasts
-	List<RaycastHit> mRaycastHits;
+	private List<RaycastHit> mRaycastHits;
 
 	public static RaycastHit DefaultRaycastHit = new RaycastHit();
 

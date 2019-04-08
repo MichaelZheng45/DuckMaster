@@ -5,15 +5,18 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] GameObject primaryButton;
-    Text primaryButtonText;
-    Text throwButtonText;
-    [SerializeField] GameObject throwButton;
-    [SerializeField] double magnitude = 1.5;
-    bool throwToggle;
-    const string WHISTLE = "WHISTLE";
-    const string PICKUP = "PICK UP";
-    const string NONE = "   ";
+    [SerializeField]
+    private GameObject primaryButton;
+    private Text primaryButtonText;
+    private Text throwButtonText;
+    [SerializeField]
+    private GameObject throwButton;
+    [SerializeField]
+    private double magnitude = 1.5;
+    private bool throwToggle;
+    private const string WHISTLE = "WHISTLE";
+    private const string PICKUP = "PICK UP";
+    private const string NONE = "   ";
 
     // Start is called before the first frame update
     void Start()

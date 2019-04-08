@@ -18,7 +18,7 @@ public class Pathfinder
 		Vector3 targetPos = to;
 
 		//Get the first node
-		DuckTile firstNode = GameManager.Instance.getTileFromPosition(from);
+		DuckTile firstNode = GameManager.Instance.GetTileMap().getTileFromPosition(from);
         if (firstNode == null)
         {
             return path;
@@ -31,7 +31,7 @@ public class Pathfinder
 		openListCount++;
 
 		//getTargetNode
-		DuckTile targetNode = GameManager.Instance.getTileFromPosition(to);
+		DuckTile targetNode = GameManager.Instance.GetTileMap().getTileFromPosition(to);
 		if (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpasssableDuck || targetNode == firstNode)
 		{
 			return path;
@@ -152,7 +152,7 @@ public class Pathfinder
 		Vector3 targetPos = to;
 
 		//Get the first node
-		DuckTile firstNode = GameManager.Instance.getTileFromPosition(from);
+		DuckTile firstNode = GameManager.Instance.GetTileMap().getTileFromPosition(from);
         if(firstNode == null)
         {
             return path;
@@ -166,7 +166,7 @@ public class Pathfinder
 		openListCount++;
 
 		//getTargetNode
-		DuckTile targetNode = GameManager.Instance.getTileFromPosition(to);
+		DuckTile targetNode = GameManager.Instance.GetTileMap().getTileFromPosition(to);
 		if (targetNode.mType == DuckTile.TileType.UnpassableBoth || targetNode.mType == DuckTile.TileType.UnpassableMaster || targetNode == firstNode)
 		{
 			return path;

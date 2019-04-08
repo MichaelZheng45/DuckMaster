@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class Gate : LogicOutput
 {
-    [SerializeField] bool active;
-    [SerializeField] Material underTileMat;
-    [SerializeField] GameObject obj;
-    [SerializeField] List<Material> gateMaterial;
-    [SerializeField] ParticleSystem[] portalEmissions;
+    [SerializeField] 
+    private bool active;
+    [SerializeField] 
+    private Material underTileMat;
+    [SerializeField] 
+    private GameObject obj;
+    [SerializeField] 
+    private List<Material> gateMaterial;
+    [SerializeField]
+    private ParticleSystem[] portalEmissions;
     GameObject tileObj;
+
     Transform gateTransform;
     MeshRenderer objMeshRenderer;
     Vector3 tilePosition;
@@ -39,7 +45,7 @@ public class Gate : LogicOutput
         if (active)
         {
             print("Opening gate");
-            GameManager.Instance.getTileFromPosition(tilePosition).mType = DuckTile.TileType.PassableBoth;
+            GameManager.Instance.GetTileMap().getTileFromPosition(tilePosition).mType = DuckTile.TileType.PassableBoth;
             if (!portalEmissions[0].isPlaying)
             {
                 portalEmissions[0].Play();
@@ -49,7 +55,7 @@ public class Gate : LogicOutput
         else
         {
             //print(tilePosition.ToString());
-            GameManager.Instance.getTileFromPosition(tilePosition).mType = DuckTile.TileType.UnpassableBoth;
+            GameManager.Instance.GetTileMap().getTileFromPosition(tilePosition).mType = DuckTile.TileType.UnpassableBoth;
             if (portalEmissions[0].isPlaying)
             {
                 portalEmissions[0].Stop();

@@ -22,63 +22,95 @@ public class duckBehaviour : MonoBehaviour
 
 	//follow data
 	[Header("Follow Data")]
-	[SerializeField] bool startFollowing; //check to start following
-	[SerializeField] float followThreshold; //the range to start following
-	[SerializeField] float followVelocity; // velocity to follow
-	[SerializeField] float targetRadius; //circle size of the target point, so not a direct movement to target
-	[SerializeField] float toPointDistance; // the distance to then update new target
-	Queue<Vector3> positionListData; //list of the targets
-	[SerializeField] float updatePositionTime; //timer to create new target point path
-	float updateTimeCount = 0;
-	int positionCount = 0;
-	Vector3 targetPoint;
+
+    //check to start following
+    [SerializeField]
+    private bool startFollowing;
+    //the range to start following
+    [SerializeField]
+    private float followThreshold;
+    // velocity to follow
+    [SerializeField]
+    private float followVelocity;
+    //circle size of the target point, so not a direct movement to target
+    [SerializeField]
+    private float targetRadius;
+    // the distance to then update new target
+    [SerializeField]
+    private float toPointDistance;
+
+    //list of the targets
+    private Queue<Vector3> positionListData;
+
+    //timer to create new target point path
+    [SerializeField]
+    private float updatePositionTime; 
+    private float updateTimeCount = 0;
+	private int positionCount = 0;
+	private Vector3 targetPoint;
 
 	[Header("Pathfinding Data")]
-	//pathfindin data
-	List<Vector3> tilePath;
-	int tilePathIndex;
-	[SerializeField] float pathApproachValue; //distance to change to next node in path
-	[SerializeField] float pathVelocity; //velocity of path
+	//pathfinding data
+	private List<Vector3> tilePath;
+	private int tilePathIndex;
+	[SerializeField]
+    //distance to change to next node in path
+    private float pathApproachValue; 
+	[SerializeField]
+    //velocity of path
+    private float pathVelocity; 
 
 	[Header("Hold Data")]
 	//hold data
-	[SerializeField] float duckHeightAtHold; //height for duck when being held
+	[SerializeField]
+    //height for duck when being held
+    private float duckHeightAtHold;
 
 	//throw data
 	[Header("Throw Data")]
-	Vector3 startingPos;
-	Vector3 targetPos;
-	[SerializeField] float startingVelocity; //self explanatory
-	[SerializeField] float gravity;
-	float maxAirTime;
-	float currentAirTime;
-	Vector3 initialVelocity;
+	private Vector3 startingPos;
+	private Vector3 targetPos;
+	[SerializeField] 
+    private float startingVelocity;
+	[SerializeField]
+    private float gravity;
+	private float maxAirTime;
+	private float currentAirTime;
+	private Vector3 initialVelocity;
 
 	//run data
 	[Header("Run Data")]
-	[SerializeField] float fleeRange; //range to start fleeing
-	Vector3 runTar;
-	float runToApproach = .3f;
-	[SerializeField]float runVelocity; //run away speed
+	[SerializeField]
+    //range to start fleeing
+    private float fleeRange; 
+	private Vector3 runTar;
+	private float runToApproach = .3f;
+	[SerializeField]
+    //run away speed
+    private float runVelocity; 
 
-	//bait data
-	[Header("Bait Data")]
-	[SerializeField] GameObject baitSystemObject;
-	[SerializeField] float attractDistance = 3; //<--temp	
-	BaitSystem baitSystem;
-    GameObject targetBait;
-    float duckBaitedVelocity = .1f;
-    float duckAtBaitDistance = .2f;
+    //bait data
+    [Header("Bait Data")]
+	[SerializeField] 
+    private GameObject baitSystemObject;
+	[SerializeField]
+    private float attractDistance = 3;	
+
+	private BaitSystem baitSystem;
+    private GameObject targetBait;
+    private float duckBaitedVelocity = .1f;
+    private float duckAtBaitDistance = .2f;
 
 	[Header("Misc")]
-	[SerializeField] Transform playerTransform;
-	BaitSystem mBaitSystem;
-    DuckRotation mDuckRotation;
-	Transform duckTransform;
+	[SerializeField]
+    private Transform playerTransform;
+	private BaitSystem mBaitSystem;
+    private DuckRotation mDuckRotation;
+	private Transform duckTransform;
 
 	//frameCount
-	float runCheckPerFrame = .5f;
-	float frameCount = 0;
+	private float runCheckPerFrame = .5f;
+	private float frameCount = 0;
 
 	// Start is called before the first frame update
 	void Start()

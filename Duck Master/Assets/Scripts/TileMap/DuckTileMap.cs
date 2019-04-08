@@ -136,6 +136,11 @@ public class DuckTileMap
         return mGridMap[height].GetTile(x, y);
     }
 
+    public DuckTile getTileFromPosition(Vector3 position)
+    {
+        return mHeightMap.GetTile(Mathf.FloorToInt(position.z + .5f), Mathf.FloorToInt(position.x + .5f));
+    }
+
     void CreateHeightMap()
     {
 		DuckTile tempTile;
@@ -146,9 +151,10 @@ public class DuckTileMap
 			{
 				for(int k = 0; k < grid.GetRowLength(j); ++k)
 				{
-					if(j < mHeightMap.GetLength() && k < mHeightMap.GetRowLength(j) && (tempTile = grid.GetTile(k, j)) != null)
+                    tempTile = grid.GetTile(k, j);
+					if(j < mHeightMap.GetLength() && k < mHeightMap.GetRowLength(j) && tempTile != null && tempTile.mType != DuckTile.TileType.INVALID_TYPE)
 					{
-						mHeightMap.GetGrid()[j].mList[k] = tempTile;
+                        mHeightMap.GetGrid()[j].mList[k] = tempTile;
 					}
 					else
 					{
@@ -156,7 +162,7 @@ public class DuckTileMap
 						{
 							mHeightMap.AddRow(new List<DuckTile>());
 						}
-						if(k >= mHeightMap.GetRowLength(j) && (tempTile = grid.GetTile(k, j)) != null)
+						if(k >= mHeightMap.GetRowLength(j) && tempTile != null)
 						{
 							mHeightMap.AddTile(j, tempTile);
 						}
