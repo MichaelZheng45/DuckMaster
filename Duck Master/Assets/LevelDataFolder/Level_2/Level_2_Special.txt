@@ -1,2 +1,0 @@
-index: 0 posX: 4 posZ: 16 unfriendly
-index: 0 posX: 9 posZ: 11 unfriendly

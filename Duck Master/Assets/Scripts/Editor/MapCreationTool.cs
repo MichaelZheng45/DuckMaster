@@ -208,7 +208,7 @@ public class MapCreationTool : EditorWindow
 		}
 
 		TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
-		string assetString = "Assets/Resources/scriptableObjects/" + scriptableObjectName + ".asset";
+		string assetString = "Assets/Resources/scriptableObjects/Level_Data" + scriptableObjectName + ".asset";
 		AssetDatabase.CreateAsset(scriptableObject, assetString);
 		scriptableObject.verticalLevels = verticalLevels;
 		scriptableObject.listGridSelStrings = listGridSelStrings;
