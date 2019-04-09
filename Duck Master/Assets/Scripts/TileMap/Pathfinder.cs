@@ -177,15 +177,17 @@ public class Pathfinder
 
 		//condition when tile is found
 		bool foundToTile = false;
+		Debug.Log("Starting at " + firstNode.mPosition);
 		while (loop && openListCount > 0 && !foundToTile) //&& if node is not found, count should be fine but in case
 		{
 			DuckTile curNode = openList[0];
 			Vector3 curPos = curNode.mPosition;
-
-            //to create the index is i = (row * Colsize) + column where col is x
-            //maybe a check if the nodes processed is too much then stop or something
-            if (targetNode == curNode)
+			Debug.Log("Selecting Tile at: " + curNode.mPosition);
+			//to create the index is i = (row * Colsize) + column where col is x
+			//maybe a check if the nodes processed is too much then stop or something
+			if (targetNode == curNode)
             {
+				Debug.Log("Found Tile");
 				foundToTile = true;
 			}
 			else
@@ -196,14 +198,17 @@ public class Pathfinder
 					{
 						int adjNodeDirection = count;
 						Connection adjConnection = curNode.GetConnectionDirection((DuckTile.ConnectionDirection)adjNodeDirection);
+						Debug.Log("Connection: " + count);
 						if(adjConnection != null)
 						{
 							Vector3 adjIndex = adjConnection.mToIndex;
 							DuckTile adjTile = tileMap.GetTile((int)adjIndex.x, (int)adjIndex.y, (int)adjIndex.z);
+							Debug.Log("Looking at adjTile: " + count +  " at:" + adjTile.mPosition);
 							//if it is same height, cannot ignore walkable and the tile is not walkable, then it cannot travel to adj tile
-							if (adjTile.mHeight <= curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
+							if (adjTile.mHeight == curNode.mHeight && !closedList.Contains(adjTile) && curNode != adjTile
 								 && (adjTile.mType == DuckTile.TileType.PassableBoth || adjTile.mType == DuckTile.TileType.UnpasssableDuck))
 							{
+								Debug.Log("Add adjTile at: " + count);
 								adjTile.mCostSoFar = curNode.mCostSoFar + adjConnection.mMasterCost;
 
 								Vector2 manhattanDis = (targetPos - adjTile.mPosition);
@@ -228,6 +233,8 @@ public class Pathfinder
 									openList.Insert(openListCount, adjTile);
 									openListCount++;
 								}
+
+								Debug.Log("OpenList Count: " + openList.Count);
 							}
 						}
 						
@@ -237,10 +244,13 @@ public class Pathfinder
 					closedList.Add(curNode);
 				}
 			}
-			openList.RemoveAt(0);
+			Debug.Log("Removing Node");
+			openList.Remove(curNode);
 			openListCount--;
 		}
 
+		Debug.Log("OpenList Count: " + openList.Count);
+		Debug.Log( "ClosedListCount: " + closedList.Count);
 		if (foundToTile)
 		{
 			path.Add(targetNode.mPosition + new Vector3(0, 1, 0));
