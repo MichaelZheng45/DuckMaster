@@ -180,11 +180,11 @@ public class DuckTile
 
 	public bool GetDuckPassable()
 	{
-		return mType != TileType.UnpasssableDuck || mType != TileType.UnpassableBoth;
+		return mType != TileType.UnpasssableDuck && mType != TileType.UnpassableBoth && mType != TileType.INVALID_TYPE;
 	}
 
 	public bool GetMasterPassable()
 	{
-		return mType != TileType.UnpassableMaster || mType != TileType.UnpassableBoth;
+		return mType != TileType.UnpassableMaster && mType != TileType.UnpassableBoth  && mType != TileType.INVALID_TYPE;
 	}
 }
