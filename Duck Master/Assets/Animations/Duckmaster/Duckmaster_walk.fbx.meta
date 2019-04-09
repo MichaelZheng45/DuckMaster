@@ -196,7 +196,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.049412422
+        functionName: PlaySound
+        data: Duckmaster,Walking
+        objectReferenceParameter: {fileID: 7737685086803534096, guid: 6114d2551b02e504b907041e87631e85,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.55961645
+        functionName: PlaySound
+        data: Duckmaster,Walking
+        objectReferenceParameter: {fileID: 7737685086803534096, guid: 6114d2551b02e504b907041e87631e85,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
