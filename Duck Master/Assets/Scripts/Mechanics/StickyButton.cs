@@ -29,6 +29,7 @@ public class StickyButton : LogicInput
     {
         if (!active)
         {
+            transform.Find("ButtonParticle").GetComponent<ParticleSystem>().Play();
             active = true;
             //GetComponent<Renderer>().material = pressedMaterial;
         }
