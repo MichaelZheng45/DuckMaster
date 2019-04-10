@@ -85,7 +85,7 @@ public class UIManager : MonoBehaviour
                     {
                         if (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(Clone)")
                         {
-                            print("valid throw target");
+                            //print("valid throw target");
                             GameManager.Instance.throwDuck(hit);
                             throwToggle = false;
                             primaryButtonText.text = WHISTLE;
@@ -108,7 +108,7 @@ public class UIManager : MonoBehaviour
                     {
                         if (hit.collider.gameObject.name == "ground(Clone)")
                         {
-                            print("hit ground");
+                            //print("hit ground");
                             Vector3 pos = hit.collider.gameObject.transform.position;
                             //Debug.Log(pos);
                             GameManager.Instance.movePlayerTo(pos);
