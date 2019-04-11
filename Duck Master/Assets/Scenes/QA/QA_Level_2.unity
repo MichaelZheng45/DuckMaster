@@ -3934,7 +3934,8 @@ MonoBehaviour:
   player: {fileID: 57093252}
   duck: {fileID: 263347114}
   throwDistanceMax: 5
-  mTileMapScriptableObject: {fileID: 0}
+  mTileMapScriptableObject: {fileID: 11400000, guid: b4f1635dfc56f194eaff2cdf48259c31,
+    type: 2}
 --- !u!4 &1050653461
 Transform:
   m_ObjectHideFlags: 0

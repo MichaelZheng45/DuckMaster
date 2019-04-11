@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8622482360027443791}
   - component: {fileID: 2327841997149397613}
   - component: {fileID: 9117546873631783625}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sticky_Plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 6761482722807127439}
   - component: {fileID: 8618422420048331491}
   - component: {fileID: 2774028935779321275}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: StickyPlate:StickyPlate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,6 +187,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ButtonParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1606641879694761012, guid: be1d7477a1578d14186ee889be2a63e1,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1606641879694761013, guid: be1d7477a1578d14186ee889be2a63e1,
         type: 3}
