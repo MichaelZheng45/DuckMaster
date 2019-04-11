@@ -49,18 +49,20 @@ public class duckBehaviour : MonoBehaviour
 	private int positionCount = 0;
 	private Vector3 targetPoint;
 
-	[Header("Pathfinding Data")]
-	//pathfinding data
-	private List<Vector3> tilePath;
-	private int tilePathIndex;
+
+    [Header("Pathfinding Data")]
+    private int tilePathIndex;
 	[SerializeField]
     //distance to change to next node in path
     private float pathApproachValue; 
 	[SerializeField]
     //velocity of path
-    private float pathVelocity; 
+    private float pathVelocity;
+    //pathfinding data
+    private List<Vector3> tilePath;
 
-	[Header("Hold Data")]
+
+    [Header("Hold Data")]
 	//hold data
 	[SerializeField]
     //height for duck when being held
@@ -265,17 +267,19 @@ public class duckBehaviour : MonoBehaviour
 	void followPlayer()
     {
         //check if out of threshold
-        //if((duckTransform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
-        if ((transform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
+        if((duckTransform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
+        //if ((transform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
         {
             startFollowing = true;
             addnewPos();
    
         }
-        //else if((duckTransform.position - playerTransform.position).magnitude < followThreshold)
-        else if ((transform.position - playerTransform.position).magnitude < followThreshold)
+        // add a switch
+        else if((duckTransform.position - playerTransform.position).magnitude < followThreshold)
+        //else if ((transform.position - playerTransform.position).magnitude < followThreshold)
         {
             //reset data
+            //Debug.Log("Resetting");
             targetPoint = Vector3.zero;
             startFollowing = false;
             positionListData.Clear();
@@ -291,6 +295,7 @@ public class duckBehaviour : MonoBehaviour
                 //if there are none in the list, create new one
                if(positionCount == 0)
                {
+                    Debug.Log("Adding Pos Test 1");
                     addnewPos();
                }
                targetPoint = positionListData.Dequeue();
@@ -298,8 +303,9 @@ public class duckBehaviour : MonoBehaviour
             }
 
             //find direction and follow
-            //Vector3 dir = targetPoint - duckTransform.position;
-            Vector3 dir = targetPoint - transform.position;
+            
+            Vector3 dir = targetPoint - duckTransform.position;
+            //Vector3 dir = targetPoint - transform.position;
             //duckTransform.position += dir.normalized * followVelocity;        
             transform.position += dir.normalized * followVelocity;
 
@@ -320,6 +326,7 @@ public class duckBehaviour : MonoBehaviour
 		updateTimeCount += Time.deltaTime;
 		if (updateTimeCount > updatePositionTime)
 		{
+            Debug.Log("Adding Pos Test 2");
 			addnewPos();
 			updateTimeCount = 0;
 		}
@@ -361,8 +368,8 @@ public class duckBehaviour : MonoBehaviour
     void runToBait()
     {
         Vector3 direction = targetBait.transform.position - duckTransform.position;
-        //duckTransform.position += direction.normalized * duckBaitedVelocity;
-        transform.position += direction.normalized * duckBaitedVelocity;
+        duckTransform.position += direction.normalized * duckBaitedVelocity;
+       // transform.position += direction.normalized * duckBaitedVelocity;
 
         if (direction.magnitude < duckAtBaitDistance)
         {
@@ -380,8 +387,8 @@ public class duckBehaviour : MonoBehaviour
 	{
 		mDuckState = DuckStates.INAIR;
 
-        //startingPos = duckTransform.position;
-        startingPos = transform.position;
+        startingPos = duckTransform.position;
+        //startingPos = transform.position;
 		targetPos = target;
 
 		Vector3 dir = new Vector3(targetPos.x - startingPos.x, 0, targetPos.z - startingPos.z);
