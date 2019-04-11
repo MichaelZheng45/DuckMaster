@@ -9,7 +9,7 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
     SoundFile[] Sounds;
     GameObject SoundPlayer;
 
-    public void Awake()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         SoundPlayer = Resources.Load<GameObject>("Sounds/Soundplayer");
@@ -28,10 +28,15 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
         AnimationEventStuff.onThrow += StartThrow;
     }
 
-    private void OnDisable()
+    void Unload()
     {
         AnimationEventStuff.onDuckmasterWalkingChange -= ChangeWalk;
         AnimationEventStuff.onThrow -= StartThrow;
+    }
+
+    private void OnDisable()
+    {
+        Unload();
     }
 
     void ChangeWalk(bool newWalk)

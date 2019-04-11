@@ -24,11 +24,9 @@ public class TableOfContents : MonoBehaviour
         journalContainer = transform.GetChild(0).gameObject;
         topMid = journalContainer.transform.Find("TopMid");
         journalEntryPage = journalContainer.transform.Find("JournalPage").gameObject;
-        AddNewJournalEntry("Duck Alter");
-        AddNewJournalEntry("Duck Bath");
         CloseJournalEntry();
         CloseJournal();
-        
+
     }
 
     public void AddNewJournalEntry(string JournalToLoad)
@@ -38,7 +36,7 @@ public class TableOfContents : MonoBehaviour
 
     public void GoToJournalEntry(string _JournalEntryName)
     {
-        foreach(JournalEntryObject jeo in pagesCollected)
+        foreach (JournalEntryObject jeo in pagesCollected)
         {
             if (jeo.JournalEntryName == _JournalEntryName)
             {
@@ -54,13 +52,13 @@ public class TableOfContents : MonoBehaviour
 
     public void UpdateJournalEntries()
     {
-        foreach(JournalEntryObject jeo in pagesCollected)
+        foreach (JournalEntryObject jeo in pagesCollected)
         {
             bool exists = false;
 
-            foreach(TableOfContentsButton tocb in goToJournalButtons)
+            foreach (TableOfContentsButton tocb in goToJournalButtons)
             {
-                if(tocb.JournalEntryName == jeo.JournalEntryName)
+                if (tocb.JournalEntryName == jeo.JournalEntryName)
                 {
                     exists = true;
                 }
@@ -75,7 +73,7 @@ public class TableOfContents : MonoBehaviour
                     g.transform.position = topMid.position + new Vector3(0, -75, 0);
                 goToJournalButtons.Add(g.GetComponent<TableOfContentsButton>());
                 Debug.Log(jeo.JournalEntryName);
-                g.GetComponent<TableOfContentsButton>().UpdateText(this,jeo.JournalEntryName);
+                g.GetComponent<TableOfContentsButton>().UpdateText(this, jeo.JournalEntryName);
                 g.transform.SetAsFirstSibling();
             }
         }

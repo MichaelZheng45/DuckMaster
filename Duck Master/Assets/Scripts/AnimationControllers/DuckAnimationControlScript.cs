@@ -9,10 +9,10 @@ public class DuckAnimationControlScript : MonoBehaviour
     SoundFile[] Sounds;
     GameObject SoundPlayer;
 
-    public void Awake()
+    public void Start()
     {
-        animator = GetComponent<Animator>();
         SoundPlayer = Resources.Load<GameObject>("Sounds/Soundplayer");
+        animator = GetComponent<Animator>();
 
         Sounds = new SoundFile[] {
             //new SoundFile(Resources.Load<AudioClip>("Sounds/Duckmaster/GrassStep1"), new string[]{ "Duck", "Walking" }),
@@ -31,7 +31,7 @@ public class DuckAnimationControlScript : MonoBehaviour
     private void OnDisable()
     {
         AnimationEventStuff.onDuckWalkingChange -= ChangeWalk;
-        AnimationEventStuff.onThrow += StartThrow;
+        AnimationEventStuff.onThrow -= StartThrow;
     }
 
     void ChangeWalk(bool newWalk)

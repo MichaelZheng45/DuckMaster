@@ -13,7 +13,14 @@ public class AnimationEventStuff : MonoBehaviour
     public static event DuckmasterEventHandlerBool onDuckmasterWalkingChange;
     public static event DuckmasterEventHandlerBool onDuckWalkingChange;
     public static event GenericEventHandler onThrow;
+    public static event GenericEventHandler unloadScene;
 
+
+    public static void UnloadScene()
+    {
+        if (unloadScene != null)
+            unloadScene();
+    }
 
     public static void DuckmasterWalkingChange(bool newVal)
     {
