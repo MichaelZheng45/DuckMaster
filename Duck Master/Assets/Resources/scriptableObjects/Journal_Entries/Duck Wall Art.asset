@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e57e97b8e029458ed216f0f3814c8, type: 3}
+  m_Name: Duck Wall Art
+  m_EditorClassIdentifier: 
+  JournalEntryName: Duck Wall Art
+  JournalEntryText: "Holy duckling in heaven! Look at this! It\u2019s ancient duck
+    art! What is this place? I\u2019ve never seen anything like it! But this place
+    is clearly old, just look at the state these art walls are in. Wait, how old is
+    this Island Duck? Island Ducks can live for up to, like, a thousand and a half
+    years. So who knows how old this stuff is\u2026 Island Ducks always move around
+    freely, so it's very difficult to ever find your way over to other ducks. Only
+    just recently did people find ways to easily do so, those being the ways I\u2019ve
+    been using to get from Island to Island. It could have been centuries since anyone
+    has stood on top of this Island Duck\u2026 That\u2019s kind of sad. All that time
+    being alone? Well, this Island Duck probably hung out with other Island Ducks,
+    but still\u2026 WOW. I just took a closer look at the art on these walls! Would
+    you look at this! It\u2019s almost completely worn away, but I can still tell
+    how much time and effort went into every detail! It\u2026 It\u2019s beautiful!
+    This\u2026 This is a duck masterpiece! O.K., yeah, I DEFINITELY need to tell people
+    about this when I finish this trip."

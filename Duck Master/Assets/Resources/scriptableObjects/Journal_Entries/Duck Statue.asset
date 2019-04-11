@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e57e97b8e029458ed216f0f3814c8, type: 3}
+  m_Name: Duck Statue
+  m_EditorClassIdentifier: 
+  JournalEntryName: Duck Statue
+  JournalEntryText: "Hm. That is one huge Duck Statue. I\u2019d say it\u2019s probably
+    a 1/20th scale model of whatever Island Duck it was based on. If we actually made
+    a to-scale model of any fully grown Island Duck, we would probably have to make
+    it out of super light materials, and make it completely hollow, otherwise, well,
+    there is not a single Island Duck in existence that would willingly carry something
+    that unfathomably heavy. And I can\u2019t really blame them. We\u2019re pushing
+    the limit by having them carry skyscrapers on their backs, but at least those
+    are somewhat hollow. A to-scale, non-hollow Island Duck Statue would make those
+    skyscrapers feel like a feather in comparison.And Island Ducks naturally carry
+    hundreds feathers! So it would be like nothing to them! That\u2019s the analogy
+    I\u2019m trying to make."
