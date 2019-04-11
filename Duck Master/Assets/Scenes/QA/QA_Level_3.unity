@@ -1332,7 +1332,7 @@ PrefabInstance:
     - target: {fileID: 5000333932401860579, guid: 9d4146f439670284aa7f68cf7d6e66b9,
         type: 3}
       propertyPath: NarrativeToAdd
-      value: Duck Bath
+      value: Log Cabin
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d4146f439670284aa7f68cf7d6e66b9, type: 3}
@@ -6316,7 +6316,7 @@ PrefabInstance:
     - target: {fileID: 3864256940888289142, guid: 9f11e5b4021552d4583e0816b364a3de,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000049734925
+      value: 0.00006464737
       objectReference: {fileID: 0}
     - target: {fileID: 3864256940504938465, guid: 9f11e5b4021552d4583e0816b364a3de,
         type: 3}

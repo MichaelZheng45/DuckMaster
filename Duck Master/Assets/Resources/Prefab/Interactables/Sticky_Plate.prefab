@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5405873902460313963}
   - component: {fileID: 8622482360027443791}
   - component: {fileID: 2327841997149397613}
-  - component: {fileID: 9117546873631783625}
   m_Layer: 2
   m_Name: Sticky_Plate
   m_TagString: Untagged
@@ -26,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024619208376269549}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.84, y: 0.88, z: 4.37}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
@@ -46,8 +45,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4155678, y: 0.26527786, z: 0.39514542}
-  m_Center: {x: 1.2665646, y: 0.12683344, z: -1.2531264}
+  m_Size: {x: 0.5, y: 1, z: 0.5}
+  m_Center: {x: 1.2665646, y: 0.51, z: -1.2531264}
 --- !u!114 &2327841997149397613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,43 +61,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unpressedMaterial: {fileID: 2100000, guid: 8f56cbe4977ab5e48a3369fa6a156f90, type: 2}
   pressedMaterial: {fileID: 2100000, guid: 7ddc02e60403d464891d92d23dc5cafa, type: 2}
---- !u!23 &9117546873631783625
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1024619208376269549}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 70f60c70e2c74684291f212ee480995c, type: 3}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
 --- !u!1 &2297371262542717190
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,12 +227,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1606641879694761011, guid: be1d7477a1578d14186ee889be2a63e1,
         type: 3}
-      propertyPath: playOnAwake
+      propertyPath: looping
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1606641879694761011, guid: be1d7477a1578d14186ee889be2a63e1,
         type: 3}
-      propertyPath: looping
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -12,6 +12,8 @@ public class TableOfContents : MonoBehaviour
     public GameObject jornalEntryButton;
     public Text JournalText;
 
+    Animator flasher;
+
     Image JournalBackground;
 
     public List<TableOfContentsButton> goToJournalButtons = new List<TableOfContentsButton>();
@@ -23,6 +25,7 @@ public class TableOfContents : MonoBehaviour
         JournalBackground = GetComponent<Image>();
         journalContainer = transform.GetChild(0).gameObject;
         topMid = journalContainer.transform.Find("TopMid");
+        flasher = GameObject.Find("OpenJournal").GetComponent<Animator>();
         journalEntryPage = journalContainer.transform.Find("JournalPage").gameObject;
         CloseJournalEntry();
         CloseJournal();
@@ -32,6 +35,10 @@ public class TableOfContents : MonoBehaviour
     public void AddNewJournalEntry(string JournalToLoad)
     {
         pagesCollected.Add(Resources.Load<JournalEntryObject>("scriptableObjects/Journal_Entries/" + JournalToLoad));
+        flasher.SetTrigger("Flash");
+
+        if (!flasher.GetComponent<AudioSource>().isPlaying)
+            flasher.GetComponent<AudioSource>().Play();
     }
 
     public void GoToJournalEntry(string _JournalEntryName)

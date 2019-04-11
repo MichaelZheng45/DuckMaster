@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e57e97b8e029458ed216f0f3814c8, type: 3}
+  m_Name: Log Cabin
+  m_EditorClassIdentifier: 
+  JournalEntryName: Log Cabin
+  JournalEntryText: "My log cabin. I had that house built on the back of the first
+    Island Duck I ever properly met. I named her Fern, because that\u2019s the plant
+    I found her in. It was also the noise she made when she tried to attack me after
+    finding her. I have so many great memories with Fern, she\u2019s my precious baby
+    girl. I just can\u2019t comprehend why someone would abandon a baby island duck.
+    It sickens me, just to think about it! Do you know how hard it is for an infant
+    to defend for itself? It\u2019s would be decently difficult for it, like on the
+    harder end of medium difficulty! Babies can\u2019t even walk, do you expect them
+    to do something of upper medium difficulty?! I can\u2019t even do something that
+    hard!"

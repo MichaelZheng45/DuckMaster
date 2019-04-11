@@ -85,7 +85,7 @@ MonoBehaviour:
   updatePositionTime: 1
   pathApproachValue: 0.3
   pathVelocity: 0.05
-  duckHeightAtHold: 1.38
+  duckHeightAtHold: 0.5
   startingVelocity: 10
   gravity: 9.81
   fleeRange: 1.3
