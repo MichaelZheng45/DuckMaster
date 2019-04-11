@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8598171182586434351}
   - component: {fileID: 8598171182586434323}
   - component: {fileID: 8598171182586434322}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BUTTON
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,8 +106,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitPeriod: 1
-  pressedMat: {fileID: 2100000, guid: 7ddc02e60403d464891d92d23dc5cafa, type: 2}
-  unPressed: {fileID: 2100000, guid: 8f56cbe4977ab5e48a3369fa6a156f90, type: 2}
 --- !u!54 &8598171182586434322
 Rigidbody:
   m_ObjectHideFlags: 0
