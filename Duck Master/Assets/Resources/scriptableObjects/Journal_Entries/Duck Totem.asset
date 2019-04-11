@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e57e97b8e029458ed216f0f3814c8, type: 3}
+  m_Name: Duck Totem
+  m_EditorClassIdentifier: 
+  JournalEntryName: Duck Totem
+  JournalEntryText: "Ah. Duck Totems. I love these things. I\u2019ve never really
+    seen one in real life, but I have heard of them. So\u2026 You know, when I say
+    I \u201Clove them\u201D, I mean I love the concept of them. Well, not that I don\u2019t
+    also like the look of them, I just haven\u2019t seen any until this very moment.
+    Speaking of which, from what I remember, these totems are made by other duck masters.
+    They leave them on the backs of ducks who saved their life. So I guess the duck
+    I\u2019m standing on, saved someone at some point. That\u2019s cool. And the totem
+    also looks absolutely beautiful, I mean, this duck obviously made the correct
+    choice in saving whoever made this."
