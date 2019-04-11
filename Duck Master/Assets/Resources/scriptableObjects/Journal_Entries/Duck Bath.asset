@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e57e97b8e029458ed216f0f3814c8, type: 3}
+  m_Name: Duck Bath
+  m_EditorClassIdentifier: 
+  JournalEntryName: Duck Bath
+  JournalEntryText: "I\u2019ve always had my pet Island Ducks take baths in my own
+    bathtub. They only deserve the best, afterall. Bathtime was always fairly easy
+    with Fern, save for a few times she broke my fingers by biting them. She didn\u2019t
+    mean it though, she was just playing. Island ducks are just that strong. But her
+    baby is even easier to deal with. To get it to stay calm in the bathtub, all I
+    have to do is put my loudspeakers on full blast, and play heavy metal music. It
+    calms the little baby down instantly. It even falls asleep to it, sometimes."

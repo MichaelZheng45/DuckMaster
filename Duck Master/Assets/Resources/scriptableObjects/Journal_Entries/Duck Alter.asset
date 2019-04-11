@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e57e97b8e029458ed216f0f3814c8, type: 3}
+  m_Name: Duck Alter
+  m_EditorClassIdentifier: 
+  JournalEntryName: Duck Alter
+  JournalEntryText: "Ah, a Duck Altar. I\u2019ve heard a lot about these things. Apparently
+    they\u2019re more commonly found on the backs of much older Island Ducks, the
+    ones that are reaching 1,000 or older. They do look interesting. I\u2019m surprised
+    I never encountered any of these when I was going on my journey with my first
+    Island Duck. Well, I suppose I did live on a different Island Duck back then,
+    I was surrounded by different Island Ducks, and the Island Ducks don\u2019t just
+    stay stationary in the sky. Actually, having said all that, it really isn\u2019t
+    shocking that I never saw anything like this, back then. But would you look at
+    all this? I wish I knew more about these things, they sure do look amazing."

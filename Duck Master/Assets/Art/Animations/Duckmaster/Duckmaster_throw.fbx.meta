@@ -1,0 +1,227 @@
+fileFormatVersion: 2
+guid: ce6ed2683642b46419f1e601fb68100c
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Duckmaster_rig_v2:Body_ctrl1
+    100002: Duckmaster_rig_v2:Bot_ctrl1
+    100004: Duckmaster_rig_v2:cluster1Handle1
+    100006: Duckmaster_rig_v2:cluster3Handle1
+    100008: Duckmaster_rig_v2:Duckmaster
+    100010: Duckmaster_rig_v2:Duckmaster 1
+    100012: Duckmaster_rig_v2:Head_end1
+    100014: Duckmaster_rig_v2:L_toeTap_Pivot1
+    100016: Duckmaster_rig_v2:Left_ankle1
+    100018: Duckmaster_rig_v2:Left_ankle_IK_hndl1
+    100020: Duckmaster_rig_v2:Left_ankle_Pivot1
+    100022: Duckmaster_rig_v2:Left_arm_ctrl_IK1
+    100024: Duckmaster_rig_v2:Left_arm_IK1
+    100026: Duckmaster_rig_v2:Left_arm_IK_hndl1
+    100028: Duckmaster_rig_v2:Left_arm_PVC_ctrl1
+    100030: Duckmaster_rig_v2:Left_ball1
+    100032: Duckmaster_rig_v2:Left_ball_IK_hndl1
+    100034: Duckmaster_rig_v2:Left_foot_ctrl1
+    100036: Duckmaster_rig_v2:Left_forearm_IK1
+    100038: Duckmaster_rig_v2:Left_heelPeel_Pivot1
+    100040: Duckmaster_rig_v2:Left_knee1
+    100042: Duckmaster_rig_v2:Left_leg1
+    100044: Duckmaster_rig_v2:Left_leg_PVC_ctrl2
+    100046: Duckmaster_rig_v2:Left_leg_PVC_ctrl3
+    100048: Duckmaster_rig_v2:Left_Swivel_Pivot1
+    100050: Duckmaster_rig_v2:Left_toe_end1
+    100052: Duckmaster_rig_v2:Left_toe_IK_hndl1
+    100054: Duckmaster_rig_v2:Left_ToeTip_Pivot1
+    100056: Duckmaster_rig_v2:Left_wrist_IK1
+    100058: Duckmaster_rig_v2:Master_ctrl1
+    100060: Duckmaster_rig_v2:mid1
+    100062: Duckmaster_rig_v2:Neck_base1
+    100064: Duckmaster_rig_v2:Neck_ctrl1
+    100066: Duckmaster_rig_v2:Neck_mid1
+    100068: Duckmaster_rig_v2:nurbsCircle2
+    100070: Duckmaster_rig_v2:Right_ankle1
+    100072: Duckmaster_rig_v2:Right_Ankle_IK_hdnl1
+    100074: Duckmaster_rig_v2:Right_Ankle_Pivot1
+    100076: Duckmaster_rig_v2:Right_arm_IK1
+    100078: Duckmaster_rig_v2:Right_arm_PVC_ctrl2
+    100080: Duckmaster_rig_v2:Right_ball1
+    100082: Duckmaster_rig_v2:Right_Ball_IK_Hndl1
+    100084: Duckmaster_rig_v2:Right_foot_ctrl1
+    100086: Duckmaster_rig_v2:Right_forearm_IK1
+    100088: Duckmaster_rig_v2:Right_heelPeel_Pivot1
+    100090: Duckmaster_rig_v2:Right_knee1
+    100092: Duckmaster_rig_v2:Right_leg1
+    100094: Duckmaster_rig_v2:Right_Swivel_Pivot1
+    100096: Duckmaster_rig_v2:Right_toe_end1
+    100098: Duckmaster_rig_v2:Right_Toe_IK_hndl1
+    100100: Duckmaster_rig_v2:Right_toeTap_Pivot1
+    100102: Duckmaster_rig_v2:Right_ToeTip_Pivot1
+    100104: Duckmaster_rig_v2:Right_wrist_IK1
+    100106: Duckmaster_rig_v2:Spine_5
+    100108: Duckmaster_rig_v2:Spine_6
+    100110: Duckmaster_rig_v2:Spine_7
+    100112: Duckmaster_rig_v2:Spine_8
+    100114: Duckmaster_rig_v2:Spine_root1
+    100116: Duckmaster_rig_v2:Top_ctrl1
+    100118: //RootNode
+    100120: locator2
+    100122: Stick
+    400000: Duckmaster_rig_v2:Body_ctrl1
+    400002: Duckmaster_rig_v2:Bot_ctrl1
+    400004: Duckmaster_rig_v2:cluster1Handle1
+    400006: Duckmaster_rig_v2:cluster3Handle1
+    400008: Duckmaster_rig_v2:Duckmaster
+    400010: Duckmaster_rig_v2:Duckmaster 1
+    400012: Duckmaster_rig_v2:Head_end1
+    400014: Duckmaster_rig_v2:L_toeTap_Pivot1
+    400016: Duckmaster_rig_v2:Left_ankle1
+    400018: Duckmaster_rig_v2:Left_ankle_IK_hndl1
+    400020: Duckmaster_rig_v2:Left_ankle_Pivot1
+    400022: Duckmaster_rig_v2:Left_arm_ctrl_IK1
+    400024: Duckmaster_rig_v2:Left_arm_IK1
+    400026: Duckmaster_rig_v2:Left_arm_IK_hndl1
+    400028: Duckmaster_rig_v2:Left_arm_PVC_ctrl1
+    400030: Duckmaster_rig_v2:Left_ball1
+    400032: Duckmaster_rig_v2:Left_ball_IK_hndl1
+    400034: Duckmaster_rig_v2:Left_foot_ctrl1
+    400036: Duckmaster_rig_v2:Left_forearm_IK1
+    400038: Duckmaster_rig_v2:Left_heelPeel_Pivot1
+    400040: Duckmaster_rig_v2:Left_knee1
+    400042: Duckmaster_rig_v2:Left_leg1
+    400044: Duckmaster_rig_v2:Left_leg_PVC_ctrl2
+    400046: Duckmaster_rig_v2:Left_leg_PVC_ctrl3
+    400048: Duckmaster_rig_v2:Left_Swivel_Pivot1
+    400050: Duckmaster_rig_v2:Left_toe_end1
+    400052: Duckmaster_rig_v2:Left_toe_IK_hndl1
+    400054: Duckmaster_rig_v2:Left_ToeTip_Pivot1
+    400056: Duckmaster_rig_v2:Left_wrist_IK1
+    400058: Duckmaster_rig_v2:Master_ctrl1
+    400060: Duckmaster_rig_v2:mid1
+    400062: Duckmaster_rig_v2:Neck_base1
+    400064: Duckmaster_rig_v2:Neck_ctrl1
+    400066: Duckmaster_rig_v2:Neck_mid1
+    400068: Duckmaster_rig_v2:nurbsCircle2
+    400070: Duckmaster_rig_v2:Right_ankle1
+    400072: Duckmaster_rig_v2:Right_Ankle_IK_hdnl1
+    400074: Duckmaster_rig_v2:Right_Ankle_Pivot1
+    400076: Duckmaster_rig_v2:Right_arm_IK1
+    400078: Duckmaster_rig_v2:Right_arm_PVC_ctrl2
+    400080: Duckmaster_rig_v2:Right_ball1
+    400082: Duckmaster_rig_v2:Right_Ball_IK_Hndl1
+    400084: Duckmaster_rig_v2:Right_foot_ctrl1
+    400086: Duckmaster_rig_v2:Right_forearm_IK1
+    400088: Duckmaster_rig_v2:Right_heelPeel_Pivot1
+    400090: Duckmaster_rig_v2:Right_knee1
+    400092: Duckmaster_rig_v2:Right_leg1
+    400094: Duckmaster_rig_v2:Right_Swivel_Pivot1
+    400096: Duckmaster_rig_v2:Right_toe_end1
+    400098: Duckmaster_rig_v2:Right_Toe_IK_hndl1
+    400100: Duckmaster_rig_v2:Right_toeTap_Pivot1
+    400102: Duckmaster_rig_v2:Right_ToeTip_Pivot1
+    400104: Duckmaster_rig_v2:Right_wrist_IK1
+    400106: Duckmaster_rig_v2:Spine_5
+    400108: Duckmaster_rig_v2:Spine_6
+    400110: Duckmaster_rig_v2:Spine_7
+    400112: Duckmaster_rig_v2:Spine_8
+    400114: Duckmaster_rig_v2:Spine_root1
+    400116: Duckmaster_rig_v2:Top_ctrl1
+    400118: //RootNode
+    400120: locator2
+    400122: Stick
+    2100000: lambert1
+    2100002: Duckmaster_rig_v2_lambert2
+    2100004: Duckmaster_rig_v2_Duckbicep_defaultMat1
+    2100006: Duckmaster_rig_v2_DuckForearm_defaultMat1
+    2100008: Duckmaster_rig_v2_Duckcalf_defaultMat1
+    2300000: Stick
+    3300000: Stick
+    4300000: Stick
+    4300002: Duckmaster_rig_v2:Duckmaster
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Duckmaster_rig_v2:Duckmaster
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
