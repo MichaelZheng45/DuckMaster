@@ -4,10 +4,10 @@ using UnityEngine;
 
 public enum DuckRotationState
 {
-	TOP,
+    LEFT,
+    TOP,
 	RIGHT,
-	DOWN,
-	LEFT
+	DOWN
 };
 
 public class DuckRotation : MonoBehaviour
@@ -23,11 +23,26 @@ public class DuckRotation : MonoBehaviour
 		updateDuckRotation();
     }
 
-	public void rotateDuckToDirection(DuckRotationState direction)
+    public void rotateDuckToDirection(DuckRotationState direction)
 	{
 		currentRotation = direction;
 		updateDuckRotation();
 	}
+
+    public void rotateDuck(Vector3 dir)
+    {
+        float angle = (Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg);
+   
+        gameObject.transform.rotation = Quaternion.Euler(new Vector3(0,angle + rotationFactor,0));
+
+        //shifts the graph quadrant from a (+) to (x) and reduce range from 0 to 360. Finally divides it by 90 which will be a range from 0 to 3 when floored
+        angle = nfmod(angle + 45,360);
+ 
+        angle = Mathf.FloorToInt((angle) / 90);
+
+        //to compensate for the fact that left in connections starts at 0.
+        currentRotation = (DuckRotationState)(nfmod(angle + 1,4));
+    }
 
 	void updateDuckRotation()
 	{
@@ -49,4 +64,9 @@ public class DuckRotation : MonoBehaviour
 				break;
 		}
 	}
+
+    float nfmod(float a, float b)
+    {
+        return a - b * Mathf.Floor(a / b);
+    }
 }

@@ -17,8 +17,12 @@ public class BaitSystem : MonoBehaviour
 
 	List<GameObject> placedBaits;
 
-	//checks if that bait is available, returns true
-	public bool checkBait(BaitTypes type)
+    private void Start()
+    {
+        placedBaits = new List<GameObject>();
+    }
+    //checks if that bait is available, returns true
+    public bool checkBait(BaitTypes type)
 	{
 		int index = (int)type;
 		if (baitAmount[index] > 0)
@@ -33,6 +37,11 @@ public class BaitSystem : MonoBehaviour
     public GameObject duckLOSBait(Vector3 duckPos, float attractRange, DuckRotationState rotation)
     {
         List<GameObject> processedBaits = new List<GameObject>();
+        if(placedBaits.Count == 0)
+        {
+            return null;
+        }
+
         foreach(GameObject bait in placedBaits)
         {
             Vector3 baitPosition = bait.transform.position;
