@@ -636,6 +636,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 143255660}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &144790198 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7737685086244513339, guid: 6114d2551b02e504b907041e87631e85,
+    type: 3}
+  m_PrefabInstance: {fileID: 592662613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,9 +1914,9 @@ MonoBehaviour:
   gravity: 9.81
   fleeRange: 1.3
   runVelocity: 0.1
-  baitSystemObject: {fileID: 0}
+  baitSystemObject: {fileID: 144790198}
   attractDistance: 3
-  playerTransform: {fileID: 0}
+  playerTransform: {fileID: 1066495806}
 --- !u!135 &624687238
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2659,6 +2665,12 @@ MonoBehaviour:
 --- !u!1 &1066495802 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7737685086803534096, guid: 6114d2551b02e504b907041e87631e85,
+    type: 3}
+  m_PrefabInstance: {fileID: 592662613}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1066495806 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7737685086803534188, guid: 6114d2551b02e504b907041e87631e85,
     type: 3}
   m_PrefabInstance: {fileID: 592662613}
   m_PrefabAsset: {fileID: 0}
