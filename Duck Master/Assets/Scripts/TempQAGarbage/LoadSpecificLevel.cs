@@ -13,6 +13,11 @@ public class LoadSpecificLevel : MonoBehaviour
 
         }
     }
+
+    public void EndMySuffering()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
     // Start is called before the first frame update
     void Start()
     {
