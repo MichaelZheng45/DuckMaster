@@ -24,12 +24,14 @@ public class DuckAnimationControlScript : MonoBehaviour
 
     private void OnEnable()
     {
-        AnimationEventStuff.onWalkingChange += ChangeWalk;
+        AnimationEventStuff.onDuckWalkingChange += ChangeWalk;
+        AnimationEventStuff.onThrow += StartThrow;
     }
 
     private void OnDisable()
     {
-        AnimationEventStuff.onWalkingChange -= ChangeWalk;
+        AnimationEventStuff.onDuckWalkingChange -= ChangeWalk;
+        AnimationEventStuff.onThrow += StartThrow;
     }
 
     void ChangeWalk(bool newWalk)
@@ -37,9 +39,9 @@ public class DuckAnimationControlScript : MonoBehaviour
         animator.SetBool("Walking", newWalk);
     }
 
-    public void ChangeThrowstate(bool newThrowstate)
+    void StartThrow()
     {
-        animator.SetBool("Throwing", newThrowstate);
+        animator.SetTrigger("Throw");
     }
 
 

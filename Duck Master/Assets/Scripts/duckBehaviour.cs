@@ -4,24 +4,24 @@ using UnityEngine;
 
 public enum DuckStates
 {
-	INVALID = -1,
-	STILL,
-	FOLLOW,
-	HELD,
-	RETURN,
-	RUN,
-	INAIR,
-	TRAPPED,
-	BAITED
+    INVALID = -1,
+    STILL,
+    FOLLOW,
+    HELD,
+    RETURN,
+    RUN,
+    INAIR,
+    TRAPPED,
+    BAITED
 }
 
 public class duckBehaviour : MonoBehaviour
 {
-	public DuckStates mDuckState;
-	public DuckStates GetDuckStates() { return mDuckState; }
+    public DuckStates mDuckState;
+    public DuckStates GetDuckStates() { return mDuckState; }
 
-	//follow data
-	[Header("Follow Data")]
+    //follow data
+    [Header("Follow Data")]
 
     //check to start following
     [SerializeField]
@@ -44,18 +44,18 @@ public class duckBehaviour : MonoBehaviour
 
     //timer to create new target point path
     [SerializeField]
-    private float updatePositionTime; 
+    private float updatePositionTime;
     private float updateTimeCount = 0;
-	private int positionCount = 0;
-	private Vector3 targetPoint;
+    private int positionCount = 0;
+    private Vector3 targetPoint;
 
 
     [Header("Pathfinding Data")]
     private int tilePathIndex;
-	[SerializeField]
+    [SerializeField]
     //distance to change to next node in path
-    private float pathApproachValue; 
-	[SerializeField]
+    private float pathApproachValue;
+    [SerializeField]
     //velocity of path
     private float pathVelocity;
     //pathfinding data
@@ -63,252 +63,297 @@ public class duckBehaviour : MonoBehaviour
 
 
     [Header("Hold Data")]
-	//hold data
-	[SerializeField]
+    //hold data
+    [SerializeField]
     //height for duck when being held
     private float duckHeightAtHold;
 
-	//throw data
-	[Header("Throw Data")]
-	private Vector3 startingPos;
-	private Vector3 targetPos;
-	[SerializeField] 
+    //throw data
+    [Header("Throw Data")]
+    private Vector3 startingPos;
+    private Vector3 targetPos;
+    [SerializeField]
     private float startingVelocity;
-	[SerializeField]
+    [SerializeField]
     private float gravity;
-	private float maxAirTime;
-	private float currentAirTime;
-	private Vector3 initialVelocity;
+    private float maxAirTime;
+    private float currentAirTime;
+    private Vector3 initialVelocity;
 
-	//run data
-	[Header("Run Data")]
-	[SerializeField]
+    //run data
+    [Header("Run Data")]
+    [SerializeField]
     //range to start fleeing
-    private float fleeRange; 
-	private Vector3 runTar;
-	private float runToApproach = .3f;
-	[SerializeField]
+    private float fleeRange;
+    private Vector3 runTar;
+    private float runToApproach = .3f;
+    [SerializeField]
     //run away speed
-    private float runVelocity; 
+    private float runVelocity;
 
     //bait data
     [Header("Bait Data")]
-	[SerializeField] 
+    [SerializeField]
     private GameObject baitSystemObject;
-	[SerializeField]
-    private float attractDistance = 3;	
+    [SerializeField]
+    private float attractDistance = 3;
 
-	private BaitSystem baitSystem;
+    private BaitSystem baitSystem;
     private GameObject targetBait;
     private float duckBaitedVelocity = .1f;
     private float duckAtBaitDistance = .2f;
 
-	[Header("Misc")]
-	[SerializeField]
+    [Header("Misc")]
+    [SerializeField]
     private Transform playerTransform;
+    private BaitSystem mBaitSystem;
     private DuckRotation mDuckRotation;
-	private Transform duckTransform;
-	//frameCount
-	private float runCheckPerFrame = .5f;
-	private float frameCount = 0;
+    private Transform duckTransform;
 
-	// Start is called before the first frame update
-	void Start()
+    //frameCount
+    private float runCheckPerFrame = .5f;
+    private float frameCount = 0;
+
+    // Start is called before the first frame update
+    void Start()
     {
-		mDuckState = DuckStates.FOLLOW;
-		tilePath = new List<Vector3>();
+        ChangeDuckState(DuckStates.FOLLOW);
+        tilePath = new List<Vector3>();
         positionListData = new Queue<Vector3>();
 
         mDuckRotation = gameObject.GetComponent<DuckRotation>();
-		baitSystem = baitSystemObject.GetComponent<BaitSystem>();
+        baitSystem = baitSystemObject.GetComponent<BaitSystem>();
         duckTransform = gameObject.transform;
     }
 
-	private void Update()
-	{
+    private void Update()
+    {
         //if (duckTransform == null)
         //    print("Duck transform is NULL - duckbehavior");
 
-		//every or so frame check if duck is near unfreindlies
-		if(frameCount > runCheckPerFrame && mDuckState != DuckStates.RUN)
-		{
-			//flee from unfreindlies
-			runTar = GameManager.Instance.checkToRun(fleeRange);
-			frameCount = 0;
+        //every or so frame check if duck is near unfreindlies
+        if (frameCount > runCheckPerFrame && mDuckState != DuckStates.RUN)
+        {
+            //flee from unfreindlies
+            runTar = GameManager.Instance.checkToRun(fleeRange);
+            frameCount = 0;
 
-			if (runTar != Vector3.zero)
-			{
-				if (mDuckState == DuckStates.INAIR)
-				{
-					runTar = playerTransform.position;
-				}
-				mDuckState = DuckStates.RUN;
-				positionListData.Clear(); //clear all follow positions
-			}
+            if (runTar != Vector3.zero)
+            {
+                if (mDuckState == DuckStates.INAIR)
+                {
+                    runTar = playerTransform.position;
+                }
 
-			//check for baits (line of sight)
-			if(mDuckState == DuckStates.RETURN)
-			{
-				//check bait system for objects in line of sight
-				DuckRotationState rotation = mDuckRotation.currentRotation;
-           
-                GameObject target = baitSystem.duckLOSBait(duckTransform.position, attractDistance, rotation);
-                //GameObject target = mBaitSystem.duckLOSBait(transform.position, attractDistance, rotation);
+                ChangeDuckState(DuckStates.RUN);
+
+                positionListData.Clear(); //clear all follow positions
+            }
+
+            //check for baits (line of sight)
+            if (mDuckState == DuckStates.RETURN)
+            {
+                //check bait system for objects in line of sight
+                DuckRotationState rotation = mDuckRotation.currentRotation;
+                //GameObject target = mBaitSystem.duckLOSBait(duckTransform.position, attractDistance, rotation);
+                GameObject target = mBaitSystem.duckLOSBait(transform.position, attractDistance, rotation);
+
 
                 if (target != null)
                 {
-                    mDuckState = DuckStates.BAITED;
+                    ChangeDuckState(DuckStates.BAITED);
                     targetBait = target;
                 }
-			}
-		}
-		frameCount+= Time.deltaTime;
-	}
+            }
+        }
+        frameCount += Time.deltaTime;
+    }
 
-	void FixedUpdate()
-	{
-		
-		if (mDuckState == DuckStates.RUN) //run away ducko! The unfriendlies
-		{
+    void ChangeDuckState(DuckStates newDuckstate)
+    {
+        mDuckState = newDuckstate;
+        UpdateAnimationState();
+    }
+
+    void UpdateAnimationState()
+    {
+        switch (mDuckState)
+        {
+            case DuckStates.INAIR:
+                AnimationEventStuff.DuckmasterThrowing();
+                break;
+            case DuckStates.RUN:
+                AnimationEventStuff.DuckWalkingChange(true);
+                break;
+            case DuckStates.RETURN:
+                AnimationEventStuff.DuckWalkingChange(true);
+                break;
+            case DuckStates.STILL:
+                AnimationEventStuff.DuckWalkingChange(false);
+                break;
+            case DuckStates.HELD:
+                AnimationEventStuff.DuckWalkingChange(false);
+                break;
+
+            default:
+
+                break;
+
+        }
+    }
+
+    void FixedUpdate()
+    {
+
+        if (mDuckState == DuckStates.RUN) //run away ducko! The unfriendlies
+        {
             //Vector3 dir = (runTar - duckTransform.position);
             Vector3 dir = (runTar - transform.position);
             if (dir.magnitude < runToApproach)
-			{
-				mDuckState = DuckStates.STILL;
-			}
-			else
-			{
-                duckTransform.position += dir.normalized * runVelocity;
-                mDuckRotation.rotateDuck(dir.normalized);
-               // transform.position += dir.normalized * runVelocity;
-            }
-		}
-		else if (mDuckState == DuckStates.INAIR)
-		{
-			currentAirTime += Time.deltaTime;
-			if (currentAirTime < maxAirTime)
-			{
-				float xPos = startingPos.x + (initialVelocity.x * currentAirTime);
-				float yPos = startingPos.y + (initialVelocity.y * currentAirTime) - ((gravity * currentAirTime * currentAirTime) / 2);
-				float zPos = startingPos.z + (initialVelocity.z * currentAirTime);
-                duckTransform.position = new Vector3(xPos, yPos, zPos);
-                //transform.position = new Vector3(xPos, yPos, zPos);
-            }
-			else
-			{
-				mDuckState = DuckStates.STILL;
-				//check if landed on geyser
-				Vector3 target = GameManager.Instance.checkGeyser(targetPos, startingPos);
-				if (target != Vector3.zero)
-				{
-					throwDuck(target);
-				}
-			}
-		}
-		else
-		{
-			int tilePathCount = tilePath.Count;
-			if (mDuckState == DuckStates.FOLLOW) //follow
-			{
-				if (positionListData.Count == 0)
-				{
-					addnewPos();
-				}
-				followPlayer();
-			}
-			else if (mDuckState == DuckStates.RETURN && tilePathCount != 0) //recall
-			{
-				movePaths();
-			}
-            else if(mDuckState == DuckStates.BAITED)
             {
-                
+                ChangeDuckState(DuckStates.STILL);
+            }
+            else
+            {
+                //duckTransform.position += dir.normalized * runVelocity;
+                transform.position += dir.normalized * runVelocity;
+            }
+        }
+        else if (mDuckState == DuckStates.INAIR)
+        {
+            currentAirTime += Time.deltaTime;
+            if (currentAirTime < maxAirTime)
+            {
+                float xPos = startingPos.x + (initialVelocity.x * currentAirTime);
+                float yPos = startingPos.y + (initialVelocity.y * currentAirTime) - ((gravity * currentAirTime * currentAirTime) / 2);
+                float zPos = startingPos.z + (initialVelocity.z * currentAirTime);
+                //duckTransform.position = new Vector3(xPos, yPos, zPos);
+                transform.position = new Vector3(xPos, yPos, zPos);
+            }
+            else
+            {
+                ChangeDuckState(DuckStates.STILL);
+                //check if landed on geyser
+                Vector3 target = GameManager.Instance.checkGeyser(targetPos, startingPos);
+                if (target != Vector3.zero)
+                {
+                    throwDuck(target);
+                }
+            }
+        }
+        else
+        {
+            int tilePathCount = tilePath.Count;
+            if (mDuckState == DuckStates.FOLLOW) //follow
+            {
+                AnimationEventStuff.DuckWalkingChange(startFollowing);
+                if (positionListData.Count == 0)
+                {
+                    addnewPos();
+                }
+                followPlayer();
+            }
+            else if (mDuckState == DuckStates.RETURN && tilePathCount != 0) //recall
+            {
+                movePaths();
+            }
+            else if (mDuckState == DuckStates.BAITED)
+            {
+
             }
 
-			if (mDuckState == DuckStates.HELD)
-			{
+            if (mDuckState == DuckStates.HELD)
+            {
                 //print("Player position duck: " + playerTransform.position.ToString());
                 //print("duck position duck beh " + duckTransform.position.ToString());
                 //duckTransform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
                 transform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
-                transform.rotation = playerTransform.rotation;
             }
-		}
-        Debug.Log(mDuckState);
-	}
+        }
+    }
 
-	//move through the given path
-	void movePaths()
-	{
+    //move through the given path
+    void movePaths()
+    {
+        //Vector3 direction = (tilePath[tilePathIndex] - duckTransform.position);
+        Vector3 direction = (tilePath[tilePathIndex] - transform.position);
 
-        Vector3 direction = (tilePath[tilePathIndex] - duckTransform.position);
-        duckTransform.position += direction.normalized * pathVelocity;
+        //duckTransform.position += direction.normalized * pathVelocity;
+        transform.position += direction.normalized * pathVelocity;
+
+
         //approaches the next tile, update new target tile to move to
         if (direction.magnitude < pathApproachValue)
-		{
+        {
             tilePathIndex--;
-
-            if (tilePathIndex < 0)
-            {
-
-                tilePath.Clear();
-                mDuckState = DuckStates.FOLLOW;
-
-                //begin following
-                mDuckRotation.rotateDuck((targetPoint - duckTransform.position).normalized);
-                targetPoint = positionListData.Dequeue();
-            }
-
-            mDuckRotation.rotateDuck((tilePath[tilePathIndex] - duckTransform.position).normalized);
         }
 
-		//updateTimer for follow, this way it will move towards player from pathfinding
-		//then will have an already follow path to follow once follow takes over
-		updateTimer();
+        //updateTimer for follow, this way it will move towards player from pathfinding
+        //then will have an already follow path to follow once follow takes over
+        updateTimer();
+
+        if (tilePathIndex < 0)
+        {
+            tilePath.Clear();
+            ChangeDuckState(DuckStates.FOLLOW);
+
+            //begin following
+            targetPoint = positionListData.Dequeue();
+        }
     }
 
     void followPlayer()
     {
+        if ((duckTransform.position - playerTransform.position).magnitude > followThreshold)
+        {
+            AnimationEventStuff.DuckWalkingChange(true);
+        }
+        else
+        {
+            AnimationEventStuff.DuckWalkingChange(false);
+        }
         //check if out of threshold
-        if((duckTransform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
+        if ((duckTransform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
+        //if ((transform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
         {
             startFollowing = true;
             addnewPos();
-   
+
         }
         // add a switch
-        else if((duckTransform.position - playerTransform.position).magnitude < followThreshold)
+        else if ((duckTransform.position - playerTransform.position).magnitude < followThreshold)
+        //else if ((transform.position - playerTransform.position).magnitude < followThreshold)
         {
             //reset data
-            if(positionCount != 0)
-            {
-                targetPoint = Vector3.zero;
-                startFollowing = false;
-                positionListData.Clear();
-                updateTimeCount = 0;
-                positionCount = 0;
-            }
+            //Debug.Log("Resetting");
+            targetPoint = Vector3.zero;
+            startFollowing = false;
+            positionListData.Clear();
+            updateTimeCount = 0;
+            positionCount = 0;
         }
 
-        if(startFollowing)
+        if (startFollowing)
         {
             //check if the target is null, add new target
-            if(targetPoint == Vector3.zero)
+            if (targetPoint == Vector3.zero)
             {
                 //if there are none in the list, create new one
-               if(positionCount == 0)
-               {
+                if (positionCount == 0)
+                {
+                    Debug.Log("Adding Pos Test 1");
                     addnewPos();
-               }
-               targetPoint = positionListData.Dequeue();
-               mDuckRotation.rotateDuck((targetPoint - duckTransform.position).normalized);
-               positionCount--;
+                }
+                targetPoint = positionListData.Dequeue();
+                positionCount--;
             }
 
             //find direction and follow
-            
-            Vector3 dir = (targetPoint - duckTransform.position);
-            duckTransform.position += dir.normalized * followVelocity;
+
+            Vector3 dir = targetPoint - duckTransform.position;
+            //Vector3 dir = targetPoint - transform.position;
+            //duckTransform.position += dir.normalized * followVelocity;        
+            transform.position += dir.normalized * followVelocity;
 
             //check if approaching distance
             if (dir.magnitude < toPointDistance)
@@ -317,60 +362,60 @@ public class duckBehaviour : MonoBehaviour
                 positionCount--;
             }
 
-			updateTimer();
+            updateTimer();
         }
     }
 
-	//update timer to create a follow path
-	void updateTimer()
-	{
-		updateTimeCount += Time.deltaTime;
-		if (updateTimeCount > updatePositionTime)
-		{
+    //update timer to create a follow path
+    void updateTimer()
+    {
+        updateTimeCount += Time.deltaTime;
+        if (updateTimeCount > updatePositionTime)
+        {
             Debug.Log("Adding Pos Test 2");
-			addnewPos();
-			updateTimeCount = 0;
-		}
-	}
+            addnewPos();
+            updateTimeCount = 0;
+        }
+    }
 
-	//find new target position in the follow path
+    //find new target position in the follow path
     void addnewPos()
     {
-		Vector3 newPos = playerTransform.position;
+        Vector3 newPos = playerTransform.position;
         newPos += new Vector3(Random.Range(-targetRadius * 100, targetRadius * 100) / 100, 0, Random.Range(-targetRadius * 100, targetRadius * 100) / 100);
         positionListData.Enqueue(newPos);
         positionCount++;
     }
 
-	//send in the new path to be read and activate return
-	public void applyNewPath(List<Vector3> newPath)
-	{
-		mDuckState = DuckStates.RETURN;
-		tilePath = newPath;
-		tilePathIndex = tilePath.Count - 1;
-	}
+    //send in the new path to be read and activate return
+    public void applyNewPath(List<Vector3> newPath)
+    {
+        ChangeDuckState(DuckStates.RETURN);
+        tilePath = newPath;
+        tilePathIndex = tilePath.Count - 1;
+    }
 
-	public bool isRecallable()
-	{
-		if(mDuckState == DuckStates.STILL)
-		{
-			return true;
-		}
-		return false;
-	}
+    public bool isRecallable()
+    {
+        if (mDuckState == DuckStates.STILL)
+        {
+            return true;
+        }
+        return false;
+    }
 
-	public void pickUpDuck()
-	{
-		mDuckState = DuckStates.HELD;
-		positionListData.Clear();
-		//place duck ontop of player 
-	}
+    public void pickUpDuck()
+    {
+        ChangeDuckState(DuckStates.HELD);
+        positionListData.Clear();
+        //place duck ontop of player 
+    }
 
     void runToBait()
     {
         Vector3 direction = targetBait.transform.position - duckTransform.position;
         duckTransform.position += direction.normalized * duckBaitedVelocity;
-       // transform.position += direction.normalized * duckBaitedVelocity;
+        // transform.position += direction.normalized * duckBaitedVelocity;
 
         if (direction.magnitude < duckAtBaitDistance)
         {
@@ -379,32 +424,30 @@ public class duckBehaviour : MonoBehaviour
             targetBait = baitSystem.duckFindBait(transform.position, attractDistance);
             if (targetBait == null)
             {
-                mDuckState = DuckStates.STILL;
+                ChangeDuckState(DuckStates.STILL);
             }
         }
     }
 
-	public void throwDuck(Vector3 target)
-	{
-		mDuckState = DuckStates.INAIR;
+    public void throwDuck(Vector3 target)
+    {
+        ChangeDuckState(DuckStates.INAIR);
 
         startingPos = duckTransform.position;
         //startingPos = transform.position;
-		targetPos = target;
+        targetPos = target;
 
-		Vector3 dir = new Vector3(targetPos.x - startingPos.x, 0, targetPos.z - startingPos.z);
+        Vector3 dir = new Vector3(targetPos.x - startingPos.x, 0, targetPos.z - startingPos.z);
 
-        mDuckRotation.rotateDuck(dir.normalized);
+        float distance = dir.magnitude;
+        float heightDiff = targetPos.y - startingPos.y; //difference in height between two points
+        float theta = Mathf.Atan((Mathf.Pow(startingVelocity, 2) + Mathf.Sqrt(Mathf.Pow(startingVelocity, 4) + gravity * (gravity * distance * distance + (2 * heightDiff * Mathf.Pow(startingVelocity, 2))))) / (gravity * distance));
 
-		float distance = dir.magnitude;
-		float heightDiff = targetPos.y - startingPos.y; //difference in height between two points
-		float theta = Mathf.Atan((Mathf.Pow(startingVelocity, 2) + Mathf.Sqrt(Mathf.Pow(startingVelocity, 4) + gravity*(gravity*distance*distance + (2*heightDiff*Mathf.Pow(startingVelocity,2))))) / (gravity * distance));
+        heightDiff = startingPos.y - targetPos.y - 1; //initial height compared to the ground 0, which is tile position + 1
+        maxAirTime = (startingVelocity * Mathf.Sin(theta) + Mathf.Sqrt(Mathf.Pow(startingVelocity * Mathf.Sin(theta), 2) + 2 * gravity * heightDiff)) / gravity;
+        currentAirTime = 0;
 
-		heightDiff = startingPos.y - targetPos.y - 1; //initial height compared to the ground 0, which is tile position + 1
-		maxAirTime = (startingVelocity * Mathf.Sin(theta) + Mathf.Sqrt(Mathf.Pow(startingVelocity*Mathf.Sin(theta),2) + 2*gravity*heightDiff))/gravity;
-		currentAirTime = 0;
-
-		dir = dir.normalized * Mathf.Cos(theta);
-		initialVelocity = new Vector3(dir.x, Mathf.Sin(theta), dir.z) * startingVelocity;
-	}
+        dir = dir.normalized * Mathf.Cos(theta);
+        initialVelocity = new Vector3(dir.x, Mathf.Sin(theta), dir.z) * startingVelocity;
+    }
 }

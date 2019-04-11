@@ -78,13 +78,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mDuckState: 0
   startFollowing: 0
-  followThreshold: 0.6
-  followVelocity: 0.09
-  targetRadius: 1
-  toPointDistance: 1
+  followThreshold: 0.3
+  followVelocity: 0.0225
+  targetRadius: 0.4
+  toPointDistance: 0.5
   updatePositionTime: 1
-  pathApproachValue: 0.5
-  pathVelocity: 0.1
+  pathApproachValue: 0.3
+  pathVelocity: 0.05
   duckHeightAtHold: 1.38
   startingVelocity: 10
   gravity: 9.81

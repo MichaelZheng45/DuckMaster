@@ -56,7 +56,7 @@ public class PlayerAction : MonoBehaviour
         if (tilePathIndex < 0)
         {
             moving = false;
-            AnimationEventStuff.WalkingChange(moving);
+            AnimationEventStuff.DuckmasterWalkingChange(moving);
         }
     }
 
@@ -65,7 +65,7 @@ public class PlayerAction : MonoBehaviour
         moving = true;
         tilePath = newPath;
         tilePathIndex = tilePath.Count - 1;
-        AnimationEventStuff.WalkingChange(moving);
+        AnimationEventStuff.DuckmasterWalkingChange(moving);
     }
 
     //Will: need this for Zipline stuff

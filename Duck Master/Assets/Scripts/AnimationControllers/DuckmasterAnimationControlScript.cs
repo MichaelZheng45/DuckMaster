@@ -24,18 +24,24 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
 
     private void OnEnable()
     {
-        AnimationEventStuff.onWalkingChange += ChangeWalk;
+        AnimationEventStuff.onDuckmasterWalkingChange += ChangeWalk;
+        AnimationEventStuff.onThrow += StartThrow;
     }
 
     private void OnDisable()
     {
-        AnimationEventStuff.onWalkingChange -= ChangeWalk;
+        AnimationEventStuff.onDuckmasterWalkingChange -= ChangeWalk;
+        AnimationEventStuff.onThrow -= StartThrow;
     }
 
     void ChangeWalk(bool newWalk)
     {
         animator.SetBool("Walking", newWalk);
         Debug.Log(newWalk);
+    }
+    void StartThrow()
+    {
+        animator.SetTrigger("Throw");
     }
 
     public void PlaySound(AnimationEvent soundsToPlay)
