@@ -43,8 +43,8 @@ public class Pathfinder
 		List<int> searchOrder = new List<int>();
 		for (int i = duckDirection; i < duckDirection + 4; i++)
 		{
-			float direction = i % 4;
-			searchOrder.Add(i);
+            float direction = nfmod(i, 4);
+			searchOrder.Add((int)direction);
 		}
 
 		//conditions for other stuff like limiting the range etc.
@@ -114,7 +114,7 @@ public class Pathfinder
 				nodesProcessed++;
 				closedList.Add(curNode);
 			}
-			openList.RemoveAt(0);
+			openList.Remove(curNode);
 			openListCount--;
 		}
 
@@ -128,7 +128,10 @@ public class Pathfinder
 			{
 				curTile = curTile.mPreviousTile;
 				path.Add(curTile.mPosition + new Vector3(0, 1, 0));
-				if (curTile == firstNode)
+
+                Debug.Log(curTile.mPosition);
+
+                if (curTile == firstNode)
 				{
 					finishPath = true;
 				}
@@ -262,4 +265,9 @@ public class Pathfinder
 
 		return path;
 	}
+
+    static float nfmod(float a, float b)
+    {
+        return a - b * Mathf.Floor(a / b);
+    }
 }
