@@ -1,0 +1,170 @@
+fileFormatVersion: 2
+guid: aa5246e4c70ecc041bf41ffd7cacf82a
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Body_ctrl
+    100002: Duck_controls
+    100004: Duck_joints
+    100006: Duck_mesh_lowpoly
+    100008: //RootNode
+    100010: Foot_L_ctrl
+    100012: Foot_left
+    100014: Foot_R_ctrl
+    100016: Foot_right
+    100018: Head
+    100020: Main_Body
+    100022: Main_ctrl
+    100024: Mid_body
+    100026: Neck
+    100028: Neck_ctrl
+    100030: nurbsCircle13
+    100032: nurbsCircle14
+    100034: nurbsCircle15
+    100036: Tail
+    100038: Tail_end
+    100040: Tail_mid
+    100042: Wing_L_2
+    100044: Wing_L_2_ctrl
+    100046: Wing_L_3
+    100048: Wing_L_3_ctrl
+    100050: Wing_L_end
+    100052: Wing_L_end_ctrl
+    100054: Wing_left
+    100056: Wing_Left_ctrl
+    100058: Wing_R_2
+    100060: Wing_R_2_ctrl
+    100062: Wing_R_3
+    100064: Wing_R_3_ctrl
+    100066: Wing_R_end
+    100068: Wing_R_end_ctrl
+    100070: Wing_right
+    100072: Wing_Right_ctrl
+    400000: Body_ctrl
+    400002: Duck_controls
+    400004: Duck_joints
+    400006: Duck_mesh_lowpoly
+    400008: //RootNode
+    400010: Foot_L_ctrl
+    400012: Foot_left
+    400014: Foot_R_ctrl
+    400016: Foot_right
+    400018: Head
+    400020: Main_Body
+    400022: Main_ctrl
+    400024: Mid_body
+    400026: Neck
+    400028: Neck_ctrl
+    400030: nurbsCircle13
+    400032: nurbsCircle14
+    400034: nurbsCircle15
+    400036: Tail
+    400038: Tail_end
+    400040: Tail_mid
+    400042: Wing_L_2
+    400044: Wing_L_2_ctrl
+    400046: Wing_L_3
+    400048: Wing_L_3_ctrl
+    400050: Wing_L_end
+    400052: Wing_L_end_ctrl
+    400054: Wing_left
+    400056: Wing_Left_ctrl
+    400058: Wing_R_2
+    400060: Wing_R_2_ctrl
+    400062: Wing_R_3
+    400064: Wing_R_3_ctrl
+    400066: Wing_R_end
+    400068: Wing_R_end_ctrl
+    400070: Wing_right
+    400072: Wing_Right_ctrl
+    2100000: lambert1
+    4300000: Duck_mesh_lowpoly
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Duck_mesh_lowpoly
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
