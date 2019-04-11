@@ -2098,7 +2098,7 @@ MonoBehaviour:
   isHoldingDuck: 0
   mVelocity: 0.03
   tilePath: []
-  approachValue: 0.5
+  approachValue: 0.3
   throwDistance: 4
 --- !u!54 &7737685086803534190
 Rigidbody:
