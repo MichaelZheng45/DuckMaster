@@ -35,7 +35,7 @@ public class buttonScript : LogicInput
 			{
 				timer = 0;
 				pressed = false;
-				//renderer.material = unPressed;
+                CallChange();
 			}
 		}
     }
@@ -46,8 +46,7 @@ public class buttonScript : LogicInput
 		if (pressed == false &&(tag == "Duck" || tag == "Player"))
 		{
 			pressed = true;
-			//renderer.material = pressedMat;
-			//GameManager.Instance.buttonActivated();
+            CallChange();
 		}
 	}
 

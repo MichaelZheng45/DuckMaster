@@ -5,7 +5,12 @@ using UnityEngine;
 public class LogicInput : MonoBehaviour
 {
     public virtual bool IsActive() { return false; }
-    //[SerializeField] List<LogicOutput> outputlist;
+    public void CallChange()
+    {
+        foreach(LogicOutput output in outputList)
+            output.CheckState();
+    }
+    [SerializeField] List<LogicOutput> outputList;
 }
 
 public class LogicOutput : MonoBehaviour
@@ -21,8 +26,12 @@ public class LogicOutput : MonoBehaviour
     //Something tells me this is insanely over-engineered, and/or unnecessary but oh well.
     public void Update()
     {
-        //print("Logic output update called");
+        
+    }
 
+    public void CheckState()
+    {
+        //print("Calling Check State Logic");
         bool and = false, or = false, not = false;
 
         //AND
@@ -31,14 +40,11 @@ public class LogicOutput : MonoBehaviour
             and = true;
 
             foreach (LogicInput input in AND_List)
-                if (!input.IsActive())
-                {
-                    and = false;
-                    break;
-                }
-
-            //if (and)
-            //    print("AND firing");
+            if (!input.IsActive())
+            {
+                and = false;
+                break;
+            }
         }
 
 
@@ -54,10 +60,6 @@ public class LogicOutput : MonoBehaviour
                     or = true;
                 }
             }
-
-            //if (or)
-            //    print("OR firing");
-
         }
 
         //NOT
@@ -74,8 +76,6 @@ public class LogicOutput : MonoBehaviour
                 }
 
             }
-            //if (not)
-            //    print("NOT firing");
         }
 
         Activate(and || or || not);
