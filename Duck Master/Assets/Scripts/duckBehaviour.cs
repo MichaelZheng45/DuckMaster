@@ -23,6 +23,8 @@ public class duckBehaviour : MonoBehaviour
     //follow data
     [Header("Follow Data")]
 
+    //How high above should the duck be
+    private float aboveTileHeight = .5f;
     //check to start following
     [SerializeField]
     private bool startFollowing;
@@ -60,7 +62,6 @@ public class duckBehaviour : MonoBehaviour
     private float pathVelocity;
     //pathfinding data
     private List<Vector3> tilePath;
-
 
     [Header("Hold Data")]
     //hold data
@@ -106,7 +107,6 @@ public class duckBehaviour : MonoBehaviour
     [Header("Misc")]
     [SerializeField]
     private Transform playerTransform;
-    private BaitSystem mBaitSystem;
     private DuckRotation mDuckRotation;
     private Transform duckTransform;
 
@@ -144,6 +144,7 @@ public class duckBehaviour : MonoBehaviour
                 {
                     runTar = playerTransform.position;
                 }
+                mDuckRotation.rotateDuck(runTar-duckTransform.position);
 
                 ChangeDuckState(DuckStates.RUN);
 
@@ -156,7 +157,7 @@ public class duckBehaviour : MonoBehaviour
                 //check bait system for objects in line of sight
                 DuckRotationState rotation = mDuckRotation.currentRotation;
                 //GameObject target = mBaitSystem.duckLOSBait(duckTransform.position, attractDistance, rotation);
-                GameObject target = mBaitSystem.duckLOSBait(transform.position, attractDistance, rotation);
+                GameObject target = baitSystem.duckLOSBait(transform.position, attractDistance, rotation);
 
 
                 if (target != null)
@@ -207,16 +208,15 @@ public class duckBehaviour : MonoBehaviour
 
         if (mDuckState == DuckStates.RUN) //run away ducko! The unfriendlies
         {
-            //Vector3 dir = (runTar - duckTransform.position);
-            Vector3 dir = (runTar - transform.position);
+            Vector3 dir = (runTar - duckTransform.position);
             if (dir.magnitude < runToApproach)
             {
                 ChangeDuckState(DuckStates.STILL);
             }
             else
             {
-                //duckTransform.position += dir.normalized * runVelocity;
-                transform.position += dir.normalized * runVelocity;
+
+                duckTransform.position += dir.normalized * runVelocity;
             }
         }
         else if (mDuckState == DuckStates.INAIR)
@@ -268,6 +268,7 @@ public class duckBehaviour : MonoBehaviour
                 //print("duck position duck beh " + duckTransform.position.ToString());
                 //duckTransform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
                 transform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
+                transform.rotation = playerTransform.rotation;
             }
         }
     }
@@ -276,35 +277,41 @@ public class duckBehaviour : MonoBehaviour
     void movePaths()
     {
         //Vector3 direction = (tilePath[tilePathIndex] - duckTransform.position);
-        Vector3 direction = (tilePath[tilePathIndex] - transform.position);
-
-        //duckTransform.position += direction.normalized * pathVelocity;
-        transform.position += direction.normalized * pathVelocity;
+        Vector3 direction = (tilePath[tilePathIndex] + new Vector3(0,aboveTileHeight,0) - transform.position);
+       
+        duckTransform.position += direction.normalized * pathVelocity;
 
 
         //approaches the next tile, update new target tile to move to
         if (direction.magnitude < pathApproachValue)
         {
             tilePathIndex--;
+           
+            if (tilePathIndex < 0)
+            {
+                tilePath.Clear();
+                ChangeDuckState(DuckStates.FOLLOW);
+
+                //begin following
+                targetPoint = positionListData.Dequeue();
+            
+            }
+            else
+            {
+                mDuckRotation.rotateDuck((tilePath[tilePathIndex] - transform.position).normalized);
+            }
+
         }
 
         //updateTimer for follow, this way it will move towards player from pathfinding
         //then will have an already follow path to follow once follow takes over
         updateTimer();
-
-        if (tilePathIndex < 0)
-        {
-            tilePath.Clear();
-            ChangeDuckState(DuckStates.FOLLOW);
-
-            //begin following
-            targetPoint = positionListData.Dequeue();
-        }
     }
 
     void followPlayer()
     {
-        if ((duckTransform.position - playerTransform.position).magnitude > followThreshold)
+        float playerDistance = (new Vector2(duckTransform.position.x, duckTransform.position.z) - new Vector2(playerTransform.position.x, playerTransform.position.z)).magnitude;
+        if (playerDistance > followThreshold)
         {
             AnimationEventStuff.DuckWalkingChange(true);
         }
@@ -313,24 +320,24 @@ public class duckBehaviour : MonoBehaviour
             AnimationEventStuff.DuckWalkingChange(false);
         }
         //check if out of threshold
-        if ((duckTransform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
-        //if ((transform.position - playerTransform.position).magnitude > followThreshold && startFollowing == false)
+        if (playerDistance > followThreshold && startFollowing == false)
         {
             startFollowing = true;
             addnewPos();
 
         }
-        // add a switch
-        else if ((duckTransform.position - playerTransform.position).magnitude < followThreshold)
-        //else if ((transform.position - playerTransform.position).magnitude < followThreshold)
+        else if (playerDistance < followThreshold)
         {
-            //reset data
-            //Debug.Log("Resetting");
-            targetPoint = Vector3.zero;
-            startFollowing = false;
-            positionListData.Clear();
-            updateTimeCount = 0;
-            positionCount = 0;
+            if(positionCount != 0)
+            {
+                //reset data
+                //Debug.Log("Resetting");
+                targetPoint = Vector3.zero;
+                startFollowing = false;
+                positionListData.Clear();
+                updateTimeCount = 0;
+                positionCount = 0;
+            }
         }
 
         if (startFollowing)
@@ -345,15 +352,14 @@ public class duckBehaviour : MonoBehaviour
                     addnewPos();
                 }
                 targetPoint = positionListData.Dequeue();
+                mDuckRotation.rotateDuck((targetPoint - duckTransform.position).normalized);
                 positionCount--;
             }
 
             //find direction and follow
 
             Vector3 dir = targetPoint - duckTransform.position;
-            //Vector3 dir = targetPoint - transform.position;
-            //duckTransform.position += dir.normalized * followVelocity;        
-            transform.position += dir.normalized * followVelocity;
+            duckTransform.position += dir.normalized * followVelocity;        
 
             //check if approaching distance
             if (dir.magnitude < toPointDistance)
@@ -372,7 +378,6 @@ public class duckBehaviour : MonoBehaviour
         updateTimeCount += Time.deltaTime;
         if (updateTimeCount > updatePositionTime)
         {
-            Debug.Log("Adding Pos Test 2");
             addnewPos();
             updateTimeCount = 0;
         }
@@ -382,7 +387,7 @@ public class duckBehaviour : MonoBehaviour
     void addnewPos()
     {
         Vector3 newPos = playerTransform.position;
-        newPos += new Vector3(Random.Range(-targetRadius * 100, targetRadius * 100) / 100, 0, Random.Range(-targetRadius * 100, targetRadius * 100) / 100);
+        newPos += new Vector3(Random.Range(-targetRadius * 100, targetRadius * 100) / 100,-aboveTileHeight, Random.Range(-targetRadius * 100, targetRadius * 100) / 100);
         positionListData.Enqueue(newPos);
         positionCount++;
     }
@@ -393,6 +398,7 @@ public class duckBehaviour : MonoBehaviour
         ChangeDuckState(DuckStates.RETURN);
         tilePath = newPath;
         tilePathIndex = tilePath.Count - 1;
+        mDuckRotation.rotateDuck((tilePath[tilePathIndex] - transform.position).normalized);
     }
 
     public bool isRecallable()
@@ -447,7 +453,10 @@ public class duckBehaviour : MonoBehaviour
         maxAirTime = (startingVelocity * Mathf.Sin(theta) + Mathf.Sqrt(Mathf.Pow(startingVelocity * Mathf.Sin(theta), 2) + 2 * gravity * heightDiff)) / gravity;
         currentAirTime = 0;
 
+        mDuckRotation.rotateDuck(dir.normalized);
         dir = dir.normalized * Mathf.Cos(theta);
         initialVelocity = new Vector3(dir.x, Mathf.Sin(theta), dir.z) * startingVelocity;
+
+
     }
 }
