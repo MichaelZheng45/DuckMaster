@@ -71,16 +71,17 @@ public class duckBehaviour : MonoBehaviour
 
     //throw data
     [Header("Throw Data")]
-    private Vector3 startingPos;
-    private Vector3 targetPos;
-    [SerializeField]
-    private float startingVelocity;
-    [SerializeField]
-    private float gravity;
-    private float maxAirTime;
-    private float currentAirTime;
-    private Vector3 initialVelocity;
-
+    //fudge number to find totalTime
+    float throwTimeFudge = .2f;
+    float currentTime;
+    float totalTime;
+    float parabolaA;
+    float parabolaB;
+    float parabolaC;
+    float throwDistance;
+    Vector3 direction;
+    Vector3 startingPos;
+    Vector3 targetPos;
     //run data
     [Header("Run Data")]
     [SerializeField]
@@ -221,12 +222,13 @@ public class duckBehaviour : MonoBehaviour
         }
         else if (mDuckState == DuckStates.INAIR)
         {
-            currentAirTime += Time.deltaTime;
-            if (currentAirTime < maxAirTime)
+            currentTime += Time.deltaTime;
+            if (currentTime < totalTime)
             {
-                float xPos = startingPos.x + (initialVelocity.x * currentAirTime);
-                float yPos = startingPos.y + (initialVelocity.y * currentAirTime) - ((gravity * currentAirTime * currentAirTime) / 2);
-                float zPos = startingPos.z + (initialVelocity.z * currentAirTime);
+                float n = throwDistance * (currentTime / totalTime);
+                float xPos = startingPos.x + (direction.x * n);
+                float yPos = startingPos.y + parabolaA * Mathf.Pow(n, 2) + parabolaB * n + parabolaC;
+                float zPos = startingPos.z + (direction.z * n);
                 //duckTransform.position = new Vector3(xPos, yPos, zPos);
                 transform.position = new Vector3(xPos, yPos, zPos);
             }
@@ -438,25 +440,35 @@ public class duckBehaviour : MonoBehaviour
     public void throwDuck(Vector3 target)
     {
         ChangeDuckState(DuckStates.INAIR);
-
+        currentTime = 0;
+        Vector3 Difference = target + new Vector3(0,aboveTileHeight,0) - duckTransform.position;
+        throwDistance = Difference.magnitude;
+        direction =   new Vector3(Difference.x,0,Difference.z).normalized;
         startingPos = duckTransform.position;
-        //startingPos = transform.position;
         targetPos = target;
 
-        Vector3 dir = new Vector3(targetPos.x - startingPos.x, 0, targetPos.z - startingPos.z);
+        mDuckRotation.rotateDuck(direction.normalized);
+        playerTransform.transform.forward = direction.normalized;
+        totalTime = throwDistance * (throwTimeFudge);
 
-        float distance = dir.magnitude;
-        float heightDiff = targetPos.y - startingPos.y; //difference in height between two points
-        float theta = Mathf.Atan((Mathf.Pow(startingVelocity, 2) + Mathf.Sqrt(Mathf.Pow(startingVelocity, 4) + gravity * (gravity * distance * distance + (2 * heightDiff * Mathf.Pow(startingVelocity, 2))))) / (gravity * distance));
+        Vector2 initialPoint = Vector2.zero;
+        Vector2 finalPoint = new Vector2(throwDistance, Difference.y);
+        Vector2 midpoint = new Vector2(finalPoint.x / 2, finalPoint.x * .4f * (finalPoint.y + 1));
 
-        heightDiff = startingPos.y - targetPos.y - 1; //initial height compared to the ground 0, which is tile position + 1
-        maxAirTime = (startingVelocity * Mathf.Sin(theta) + Mathf.Sqrt(Mathf.Pow(startingVelocity * Mathf.Sin(theta), 2) + 2 * gravity * heightDiff)) / gravity;
-        currentAirTime = 0;
+        float A1 = -Mathf.Pow(initialPoint.x, 2) + Mathf.Pow(midpoint.x, 2);
+        float B1 = -initialPoint.x + midpoint.x;
+        float D1 = -initialPoint.y + midpoint.y;
 
-        mDuckRotation.rotateDuck(dir.normalized);
-        dir = dir.normalized * Mathf.Cos(theta);
-        initialVelocity = new Vector3(dir.x, Mathf.Sin(theta), dir.z) * startingVelocity;
+        float A2 = -Mathf.Pow(midpoint.x, 2) + Mathf.Pow(finalPoint.x, 2);
+        float B2 = -midpoint.x + finalPoint.x;
+        float D2 = -midpoint.y + finalPoint.y;
 
+        float BMultiplier = -(B2 / B1);
+        float A3 = (BMultiplier * A1) + A2;
+        float D3 = (BMultiplier * D1) + D2;
 
+        parabolaA = D3 / A3;
+        parabolaB = (D1 - (A1 * parabolaA))/B1;
+        parabolaC = initialPoint.y - parabolaA * Mathf.Pow(initialPoint.x, 2) - parabolaB * initialPoint.x;
     }
 }
