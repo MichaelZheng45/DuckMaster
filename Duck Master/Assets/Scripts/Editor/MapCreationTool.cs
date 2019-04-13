@@ -34,6 +34,10 @@ public class MapCreationTool : EditorWindow
 		window.Show();
 	}
 
+    /* TO DO: Fix copying issues
+                1: Doesn't scale down in size
+                2: Overwrites data
+     */
 	void OnGUI()
 	{
 		verticalLevels = EditorGUILayout.IntField("Max Number of Levels", verticalLevels);
@@ -89,7 +93,7 @@ public class MapCreationTool : EditorWindow
 
 				if (lastVerticalLevels != verticalLevels || lastLevelHeights[levelSelection] != currentLevelHeights[levelSelection] || lastLevelWidths[levelSelection] != currentLevelWidths[levelSelection] || lastLevelSelection != levelSelection)
 				{
-					int totalSize = 0;
+					int totalSize = 0, lastSize = 0;
 					if (currentLevelWidths != null && currentLevelHeights != null)
 					{
 						for (int i = 0; i < verticalLevels; ++i)
@@ -98,15 +102,25 @@ public class MapCreationTool : EditorWindow
 						}
 					}
 
-					string[] oldList = listGridSelStrings;
+                    if(lastLevelHeights != null && lastLevelWidths != null)
+                    {
+                        for(int i =0; i < lastVerticalLevels; ++i)
+                        {
+                            lastSize += lastLevelWidths[i] * lastLevelHeights[i];
+                        }
+                    }
+
+					string[] oldList = new string[lastSize];
+                    if (listGridSelStrings != null)
+                    {
+                        Array.Copy(listGridSelStrings, oldList, (oldList.Length > listGridSelStrings.Length) ? listGridSelStrings.Length : oldList.Length);
+                    }
+                    
 					listGridSelStrings = new string[totalSize];
-					if(oldList != null)
-					{
-						Array.Copy(oldList, listGridSelStrings, (oldList.Length > listGridSelStrings.Length) ? listGridSelStrings.Length : oldList.Length);
-					}
+				    Array.Copy(oldList, listGridSelStrings, (oldList.Length > listGridSelStrings.Length) ? listGridSelStrings.Length : oldList.Length);
 				}
 
-				height = currentLevelHeights[levelSelection];
+                height = currentLevelHeights[levelSelection];
 				width = currentLevelWidths[levelSelection];
 				lastHeight = lastLevelHeights[levelSelection];
 				lastWidth = lastLevelWidths[levelSelection];
@@ -114,26 +128,26 @@ public class MapCreationTool : EditorWindow
 				int lastStart = levelSelection * lastLength;
 				int currentStart = levelSelection * height * width;
 
-				if (lastLevelHeights[levelSelection] != height || lastLevelWidths[levelSelection] != width || lastLevelSelection != levelSelection)
-				{
-					Array.Copy(currentLevelWidths, lastLevelWidths, lastLevelWidths.Length);
-					Array.Copy(currentLevelHeights, lastLevelHeights, lastLevelHeights.Length);
-					// We need to copy a section of a 3d array to an array
-					string[] temp = new string[lastLength];
-					
-					// Copy from the start of the grid relative to the rest to the temp array
-					Array.Copy(listGridSelStrings, lastStart, temp, 0, lastLength);
-					gridSelStrings = new string[height * width];
-					Array.Copy(temp, gridSelStrings, (temp.Length > gridSelStrings.Length) ? gridSelStrings.Length : temp.Length);
-				}
+                if (lastHeight != height || lastWidth != width || lastLevelSelection != levelSelection)
+                {
+                    Array.Copy(currentLevelWidths, lastLevelWidths, lastLevelWidths.Length);
+                    Array.Copy(currentLevelHeights, lastLevelHeights, lastLevelHeights.Length);
+                    // We need to copy a section of a 3d array to an array
+                    string[] temp = new string[lastLength];
 
-				if(height > 0 && width > 0)
+                    // Copy from the start of the grid relative to the rest to the temp array
+                    Array.Copy(listGridSelStrings, lastStart, temp, 0, lastLength);
+                    gridSelStrings = new string[height * width];
+                    Array.Copy(temp, gridSelStrings, (temp.Length > gridSelStrings.Length) ? gridSelStrings.Length : temp.Length);
+                }
+
+                if (height > 0 && width > 0)
 				{
 					gridSel = GUILayout.SelectionGrid(gridSel, gridSelStrings, width);
 				}
 				
 
-				if (toggleSelector)
+				if (toggleSelector && gridSelStrings.Length > 0)
 				{
 					gridSelStrings[gridSel] = blockTypes[blockSelection];
 				}
