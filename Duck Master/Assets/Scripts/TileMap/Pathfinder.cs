@@ -120,14 +120,14 @@ public class Pathfinder
 
 		if (foundToTile)
 		{
-			path.Add(targetNode.mPosition + new Vector3(0, 1, 0));
+            path.Add(targetNode.mPosition);
 			bool finishPath = false;
 			DuckTile curTile = targetNode;
 
 			while (!finishPath)
 			{
 				curTile = curTile.mPreviousTile;
-				path.Add(curTile.mPosition + new Vector3(0, 1, 0));
+                path.Add(curTile.mPosition);
 
                 Debug.Log(curTile.mPosition);
 
