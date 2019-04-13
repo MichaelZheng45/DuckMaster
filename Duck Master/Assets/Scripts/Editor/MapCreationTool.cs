@@ -207,15 +207,19 @@ public class MapCreationTool : EditorWindow
 			}
 		}
 
-		TileMapScriptableObject scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
-		string assetString = "Assets/Resources/scriptableObjects/Level_Data/" + scriptableObjectName + ".asset";
-		AssetDatabase.CreateAsset(scriptableObject, assetString);
+        string assetString = "scriptableObjects/Level_Data/" + scriptableObjectName;// + ".asset";
+        TileMapScriptableObject scriptableObject = Resources.Load(assetString) as TileMapScriptableObject;
+        if(scriptableObject == null)
+        {
+            scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+            AssetDatabase.CreateAsset(scriptableObject, "Assets/Resources/" + assetString + ".asset");
+        }
+        
 		scriptableObject.verticalLevels = verticalLevels;
 		scriptableObject.listGridSelStrings = listGridSelStrings;
 		scriptableObject.blockTypes = blockTypes;
 		scriptableObject.levelHeights = levelHeights;
 		scriptableObject.levelWidths = levelWidths;
-		Debug.Log(verticalLevels);
 		EditorUtility.SetDirty(scriptableObject);
 		AssetDatabase.SaveAssets();
 		AssetDatabase.Refresh();

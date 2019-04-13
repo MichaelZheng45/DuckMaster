@@ -12,17 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e986345417ea142bcefb7830d86ef1, type: 3}
   m_Name: Alex_Test
   m_EditorClassIdentifier: 
-  verticalLevels: 2
+  verticalLevels: 1
   listGridSelStrings:
   - Ground
-  - Water
-  - Ground
-  - 
-  - Ground
-  - Ground
-  - Water
-  - Ground
-  - 
   - Ground
   - Ground
   - Ground
@@ -39,26 +31,9 @@ MonoBehaviour:
   - Ground
   - Ground
   - Ground
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Ground
+  - Ground
+  - Ground
   - Ground
   - Ground
   - Ground
@@ -68,5 +43,5 @@ MonoBehaviour:
   - Ground
   - Water
   - None
-  levelHeights: 0500000005000000
-  levelWidths: 0500000005000000
+  levelHeights: 05000000
+  levelWidths: 05000000
