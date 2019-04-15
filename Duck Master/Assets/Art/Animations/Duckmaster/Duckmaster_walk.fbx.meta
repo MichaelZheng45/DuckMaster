@@ -1,138 +1,132 @@
 fileFormatVersion: 2
-guid: 1b0e9d880e89be849b6f53862afa3eb6
+guid: 4fea00c9fc980004089881222aa93d93
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Duckmaster_Rig_v3:Duckmaster_rig_v2:Body_ctrl1
-    100002: Duckmaster_Rig_v3:Duckmaster_rig_v2:Bot_ctrl1
-    100004: Duckmaster_Rig_v3:Duckmaster_rig_v2:cluster1Handle1
-    100006: Duckmaster_Rig_v3:Duckmaster_rig_v2:cluster3Handle1
-    100008: Duckmaster_Rig_v3:Duckmaster_rig_v2:curve2
-    100010: Duckmaster_Rig_v3:Duckmaster_rig_v2:Duckmaster
-    100012: Duckmaster_Rig_v3:Duckmaster_rig_v2:Duckmaster 1
-    100014: Duckmaster_Rig_v3:Duckmaster_rig_v2:Head_end1
-    100016: Duckmaster_Rig_v3:Duckmaster_rig_v2:L_toeTap_Pivot1
-    100018: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ankle1
-    100020: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ankle_IK_hndl1
-    100022: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ankle_Pivot1
-    100024: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_arm_ctrl_IK1
-    100026: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_arm_IK1
-    100028: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_arm_IK_hndl1
-    100030: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_arm_PVC_ctrl1
-    100032: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ball1
-    100034: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ball_IK_hndl1
-    100036: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_foot_ctrl1
-    100038: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_forearm_IK1
-    100040: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_heelPeel_Pivot1
-    100042: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_knee1
-    100044: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_leg1
-    100046: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_leg_PVC_ctrl2
-    100048: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_leg_PVC_ctrl3
-    100050: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_Swivel_Pivot1
-    100052: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_toe_end1
-    100054: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_toe_IK_hndl1
-    100056: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ToeTip_Pivot1
-    100058: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_wrist_IK1
-    100060: Duckmaster_Rig_v3:Duckmaster_rig_v2:Master_ctrl1
-    100062: Duckmaster_Rig_v3:Duckmaster_rig_v2:mid1
-    100064: Duckmaster_Rig_v3:Duckmaster_rig_v2:Neck_base1
-    100066: Duckmaster_Rig_v3:Duckmaster_rig_v2:Neck_ctrl1
-    100068: Duckmaster_Rig_v3:Duckmaster_rig_v2:Neck_mid1
-    100070: Duckmaster_Rig_v3:Duckmaster_rig_v2:nurbsCircle2
-    100072: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_ankle1
-    100074: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_Ankle_IK_hdnl1
-    100076: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_Ankle_Pivot1
-    100078: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_arm_IK1
-    100080: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_arm_IK_hndl1
-    100082: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_arm_PVC_ctrl2
-    100084: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_ball1
-    100086: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_Ball_IK_Hndl1
-    100088: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_foot_ctrl1
-    100090: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_forearm_IK1
-    100092: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_heelPeel_Pivot1
-    100094: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_knee1
-    100096: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_leg1
-    100098: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_Swivel_Pivot1
-    100100: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_toe_end1
-    100102: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_Toe_IK_hndl1
-    100104: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_toeTap_Pivot1
-    100106: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_ToeTip_Pivot1
-    100108: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_wrist_IK1
-    100110: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_5
-    100112: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_6
-    100114: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_7
-    100116: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_8
-    100118: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_IK_hndl1
-    100120: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_root1
-    100122: Duckmaster_Rig_v3:Duckmaster_rig_v2:Top_ctrl1
-    100124: Duckmaster_Rig_v3:locator2
-    100126: //RootNode
-    100128: Stick
-    400000: Duckmaster_Rig_v3:Duckmaster_rig_v2:Body_ctrl1
-    400002: Duckmaster_Rig_v3:Duckmaster_rig_v2:Bot_ctrl1
-    400004: Duckmaster_Rig_v3:Duckmaster_rig_v2:cluster1Handle1
-    400006: Duckmaster_Rig_v3:Duckmaster_rig_v2:cluster3Handle1
-    400008: Duckmaster_Rig_v3:Duckmaster_rig_v2:curve2
-    400010: Duckmaster_Rig_v3:Duckmaster_rig_v2:Duckmaster
-    400012: Duckmaster_Rig_v3:Duckmaster_rig_v2:Duckmaster 1
-    400014: Duckmaster_Rig_v3:Duckmaster_rig_v2:Head_end1
-    400016: Duckmaster_Rig_v3:Duckmaster_rig_v2:L_toeTap_Pivot1
-    400018: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ankle1
-    400020: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ankle_IK_hndl1
-    400022: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ankle_Pivot1
-    400024: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_arm_ctrl_IK1
-    400026: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_arm_IK1
-    400028: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_arm_IK_hndl1
-    400030: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_arm_PVC_ctrl1
-    400032: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ball1
-    400034: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ball_IK_hndl1
-    400036: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_foot_ctrl1
-    400038: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_forearm_IK1
-    400040: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_heelPeel_Pivot1
-    400042: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_knee1
-    400044: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_leg1
-    400046: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_leg_PVC_ctrl2
-    400048: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_leg_PVC_ctrl3
-    400050: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_Swivel_Pivot1
-    400052: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_toe_end1
-    400054: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_toe_IK_hndl1
-    400056: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_ToeTip_Pivot1
-    400058: Duckmaster_Rig_v3:Duckmaster_rig_v2:Left_wrist_IK1
-    400060: Duckmaster_Rig_v3:Duckmaster_rig_v2:Master_ctrl1
-    400062: Duckmaster_Rig_v3:Duckmaster_rig_v2:mid1
-    400064: Duckmaster_Rig_v3:Duckmaster_rig_v2:Neck_base1
-    400066: Duckmaster_Rig_v3:Duckmaster_rig_v2:Neck_ctrl1
-    400068: Duckmaster_Rig_v3:Duckmaster_rig_v2:Neck_mid1
-    400070: Duckmaster_Rig_v3:Duckmaster_rig_v2:nurbsCircle2
-    400072: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_ankle1
-    400074: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_Ankle_IK_hdnl1
-    400076: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_Ankle_Pivot1
-    400078: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_arm_IK1
-    400080: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_arm_IK_hndl1
-    400082: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_arm_PVC_ctrl2
-    400084: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_ball1
-    400086: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_Ball_IK_Hndl1
-    400088: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_foot_ctrl1
-    400090: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_forearm_IK1
-    400092: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_heelPeel_Pivot1
-    400094: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_knee1
-    400096: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_leg1
-    400098: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_Swivel_Pivot1
-    400100: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_toe_end1
-    400102: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_Toe_IK_hndl1
-    400104: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_toeTap_Pivot1
-    400106: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_ToeTip_Pivot1
-    400108: Duckmaster_Rig_v3:Duckmaster_rig_v2:Right_wrist_IK1
-    400110: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_5
-    400112: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_6
-    400114: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_7
-    400116: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_8
-    400118: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_IK_hndl1
-    400120: Duckmaster_Rig_v3:Duckmaster_rig_v2:Spine_root1
-    400122: Duckmaster_Rig_v3:Duckmaster_rig_v2:Top_ctrl1
-    400124: Duckmaster_Rig_v3:locator2
-    400126: //RootNode
-    400128: Stick
+    100000: Body_ctrl1
+    100002: Bot_ctrl1
+    100004: cluster1Handle1
+    100006: cluster3Handle1
+    100008: Duckmaster
+    100010: Duckmaster 1
+    100012: //RootNode
+    100014: DuckSpine_7
+    100016: Head_end1
+    100018: L_toeTap_Pivot1
+    100020: Left_ankle1
+    100022: Left_ankle_IK_hndl1
+    100024: Left_ankle_Pivot1
+    100026: Left_arm_ctrl_IK1
+    100028: Left_arm_IK1
+    100030: Left_arm_IK_hndl1
+    100032: Left_arm_PVC_ctrl1
+    100034: Left_ball1
+    100036: Left_ball_IK_hndl1
+    100038: Left_foot_ctrl1
+    100040: Left_forearm_IK1
+    100042: Left_heelPeel_Pivot1
+    100044: Left_knee1
+    100046: Left_leg1
+    100048: Left_leg_PVC_ctrl2
+    100050: Left_leg_PVC_ctrl3
+    100052: Left_Swivel_Pivot1
+    100054: Left_toe_end1
+    100056: Left_toe_IK_hndl1
+    100058: Left_ToeTip_Pivot1
+    100060: Left_wrist_IK1
+    100062: locator2
+    100064: Master_ctrl1
+    100066: mid1
+    100068: Neck_base1
+    100070: Neck_ctrl1
+    100072: Neck_mid1
+    100074: nurbsCircle2
+    100076: Right_ankle1
+    100078: Right_Ankle_IK_hdnl1
+    100080: Right_Ankle_Pivot1
+    100082: Right_arm_IK1
+    100084: Right_arm_PVC_ctrl2
+    100086: Right_ball1
+    100088: Right_Ball_IK_Hndl1
+    100090: Right_foot_ctrl1
+    100092: Right_forearm_IK1
+    100094: Right_heelPeel_Pivot1
+    100096: Right_knee1
+    100098: Right_leg1
+    100100: Right_Swivel_Pivot1
+    100102: Right_toe_end1
+    100104: Right_Toe_IK_hndl1
+    100106: Right_toeTap_Pivot1
+    100108: Right_ToeTip_Pivot1
+    100110: Right_wrist_IK1
+    100112: Spine_5
+    100114: Spine_6
+    100116: Spine_8
+    100118: Spine_root1
+    100120: Stick
+    100122: Top_ctrl1
+    400000: Body_ctrl1
+    400002: Bot_ctrl1
+    400004: cluster1Handle1
+    400006: cluster3Handle1
+    400008: Duckmaster
+    400010: Duckmaster 1
+    400012: //RootNode
+    400014: DuckSpine_7
+    400016: Head_end1
+    400018: L_toeTap_Pivot1
+    400020: Left_ankle1
+    400022: Left_ankle_IK_hndl1
+    400024: Left_ankle_Pivot1
+    400026: Left_arm_ctrl_IK1
+    400028: Left_arm_IK1
+    400030: Left_arm_IK_hndl1
+    400032: Left_arm_PVC_ctrl1
+    400034: Left_ball1
+    400036: Left_ball_IK_hndl1
+    400038: Left_foot_ctrl1
+    400040: Left_forearm_IK1
+    400042: Left_heelPeel_Pivot1
+    400044: Left_knee1
+    400046: Left_leg1
+    400048: Left_leg_PVC_ctrl2
+    400050: Left_leg_PVC_ctrl3
+    400052: Left_Swivel_Pivot1
+    400054: Left_toe_end1
+    400056: Left_toe_IK_hndl1
+    400058: Left_ToeTip_Pivot1
+    400060: Left_wrist_IK1
+    400062: locator2
+    400064: Master_ctrl1
+    400066: mid1
+    400068: Neck_base1
+    400070: Neck_ctrl1
+    400072: Neck_mid1
+    400074: nurbsCircle2
+    400076: Right_ankle1
+    400078: Right_Ankle_IK_hdnl1
+    400080: Right_Ankle_Pivot1
+    400082: Right_arm_IK1
+    400084: Right_arm_PVC_ctrl2
+    400086: Right_ball1
+    400088: Right_Ball_IK_Hndl1
+    400090: Right_foot_ctrl1
+    400092: Right_forearm_IK1
+    400094: Right_heelPeel_Pivot1
+    400096: Right_knee1
+    400098: Right_leg1
+    400100: Right_Swivel_Pivot1
+    400102: Right_toe_end1
+    400104: Right_Toe_IK_hndl1
+    400106: Right_toeTap_Pivot1
+    400108: Right_ToeTip_Pivot1
+    400110: Right_wrist_IK1
+    400112: Spine_5
+    400114: Spine_6
+    400116: Spine_8
+    400118: Spine_root1
+    400120: Stick
+    400122: Top_ctrl1
     2100000: lambert1
     2100002: Duckmaster_Rig_v3_Duckmaster_rig_v2_lambert2
     2100004: Duckmaster_Rig_v3_Duckmaster_rig_v2_Duckbicep_defaultMat1
@@ -141,10 +135,10 @@ ModelImporter:
     2300000: Stick
     3300000: Stick
     4300000: Stick
-    4300002: Duckmaster_Rig_v3:Duckmaster_rig_v2:Duckmaster
+    4300002: Duckmaster
     7400000: Take 001
     9500000: //RootNode
-    13700000: Duckmaster_Rig_v3:Duckmaster_rig_v2:Duckmaster 1
+    13700000: Duckmaster 1
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -196,23 +190,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.049412422
-        functionName: PlaySound
-        data: Duckmaster,Walking
-        objectReferenceParameter: {fileID: 7737685086803534096, guid: 6114d2551b02e504b907041e87631e85,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.55961645
-        functionName: PlaySound
-        data: Duckmaster,Walking
-        objectReferenceParameter: {fileID: 7737685086803534096, guid: 6114d2551b02e504b907041e87631e85,
-          type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -268,7 +246,7 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: d8d4ee63883125747bd57058c2e6f22f,
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: c395de280fe5288439cb6f432c992d17,
     type: 3}
   animationType: 2
   humanoidOversampling: 1
