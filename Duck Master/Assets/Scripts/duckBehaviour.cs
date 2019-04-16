@@ -65,9 +65,8 @@ public class duckBehaviour : MonoBehaviour
 
     [Header("Hold Data")]
     //hold data
-    [SerializeField]
     //height for duck when being held
-    private float duckHeightAtHold;
+	[SerializeField] float duckHeightAtHold = .7f;
 
     //throw data
     [Header("Throw Data")]
@@ -222,26 +221,7 @@ public class duckBehaviour : MonoBehaviour
         }
         else if (mDuckState == DuckStates.INAIR)
         {
-            currentTime += Time.deltaTime;
-            if (currentTime < totalTime)
-            {
-                float n = throwDistance * (currentTime / totalTime);
-                float xPos = startingPos.x + (direction.x * n);
-                float yPos = startingPos.y + parabolaA * Mathf.Pow(n, 2) + parabolaB * n + parabolaC;
-                float zPos = startingPos.z + (direction.z * n);
-                //duckTransform.position = new Vector3(xPos, yPos, zPos);
-                transform.position = new Vector3(xPos, yPos, zPos);
-            }
-            else
-            {
-                ChangeDuckState(DuckStates.STILL);
-                //check if landed on geyser
-                Vector3 target = GameManager.Instance.checkGeyser(targetPos, startingPos);
-                if (target != Vector3.zero)
-                {
-                    throwDuck(target);
-                }
-            }
+			travelInAir();
         }
         else
         {
@@ -261,25 +241,62 @@ public class duckBehaviour : MonoBehaviour
             }
             else if (mDuckState == DuckStates.BAITED)
             {
-
+				interactBait();
             }
 
             if (mDuckState == DuckStates.HELD)
             {
-                //print("Player position duck: " + playerTransform.position.ToString());
-                //print("duck position duck beh " + duckTransform.position.ToString());
-                //duckTransform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
-                transform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
+                duckTransform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
                 transform.rotation = playerTransform.rotation;
             }
         }
     }
 
-    //move through the given path
-    void movePaths()
+	//flowing in air
+	private void travelInAir()
+	{
+		currentTime += Time.deltaTime;
+		if (currentTime < totalTime)
+		{
+			float n = throwDistance * (currentTime / totalTime);
+			float xPos = startingPos.x + (direction.x * n);
+			float yPos = startingPos.y + parabolaA * Mathf.Pow(n, 2) + parabolaB * n + parabolaC;
+			float zPos = startingPos.z + (direction.z * n);
+			//duckTransform.position = new Vector3(xPos, yPos, zPos);
+			transform.position = new Vector3(xPos, yPos, zPos);
+		}
+		else
+		{
+			ChangeDuckState(DuckStates.STILL);
+			//check if landed on geyser
+			Vector3 target = GameManager.Instance.checkGeyser(targetPos, startingPos);
+			if (target != Vector3.zero)
+			{
+				throwDuck(target);
+			}
+		}
+	}
+
+	//bait
+	private void interactBait()
+	{
+		//for attract bait if(targetbait.tag == "AttractBait")
+		Vector3 baitDirection = targetBait.transform.position - duckTransform.position;
+		duckTransform.position += baitDirection.normalized * duckBaitedVelocity;
+
+		if (duckAtBaitDistance > baitDirection.magnitude)
+		{
+			baitSystem.removeBait(targetBait);
+			targetBait = null;
+			mDuckState = DuckStates.STILL;
+		}
+	}
+	
+
+	//move through the given path
+	void movePaths()
     {
-        //Vector3 direction = (tilePath[tilePathIndex] - duckTransform.position);
-        Vector3 direction = (tilePath[tilePathIndex] + new Vector3(0,aboveTileHeight,0) - transform.position);
+        Vector3 direction = (tilePath[tilePathIndex] + new Vector3(0, aboveTileHeight, 0) - duckTransform.position);
        
         duckTransform.position += direction.normalized * pathVelocity;
 
