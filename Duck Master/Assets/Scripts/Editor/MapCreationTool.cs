@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class MapCreationTool : EditorWindow
 {
+	TileMapScriptableObject loadingScriptableObject;
+
 	int verticalLevels = 0, lastVerticalLevels;
 
 	string[] levelStringNums;
@@ -42,6 +44,16 @@ public class MapCreationTool : EditorWindow
      */
 	void OnGUI()
 	{
+		loadingScriptableObject = EditorGUILayout.ObjectField("Object to Load", loadingScriptableObject, typeof(UnityEngine.Object), false) as TileMapScriptableObject;
+
+		if(GUILayout.Button("Load Scriptable Object"))
+		{
+			if(loadingScriptableObject != null)
+			{
+				LoadScriptableObject();
+			}
+		}
+
 		GUILayout.Label("Layer Change / Selection");
 		verticalLevels = EditorGUILayout.IntField("Max Number of Layers", verticalLevels);
 		// make sure we have layers
@@ -273,10 +285,11 @@ public class MapCreationTool : EditorWindow
 			levelFold = new GameObject("LevelFolder");
 		}
 
-		foreach (Transform child in levelFold.transform)
+		for (int i = levelFold.transform.childCount; i > 0; --i)
 		{
-			GameObject.DestroyImmediate(child.gameObject);
+			DestroyImmediate(levelFold.transform.GetChild(0).gameObject);
 		}
+
 		GameObject tileObj = null;
 		int index = 0;
 
@@ -333,5 +346,38 @@ public class MapCreationTool : EditorWindow
 				listGridSelStrings[levelSelection][j][k] = blockTypes[selectionIndex];
 			}
 		}
+	}
+
+	void LoadScriptableObject()
+	{
+		verticalLevels = loadingScriptableObject.verticalLevels;
+		blockTypes = new List<string>(loadingScriptableObject.blockTypes).ToArray();
+
+		currentLevelHeights = new List<int>(loadingScriptableObject.levelHeights).ToArray();
+		currentLevelWidths = new List<int>(loadingScriptableObject.levelWidths).ToArray();
+		lastLevelHeights = new List<int>(loadingScriptableObject.levelHeights).ToArray();
+		lastLevelWidths = new List<int>(loadingScriptableObject.levelWidths).ToArray();
+
+		listGridSelStrings = new List<List<List<string>>>();
+
+		gridSelStrings = new string[currentLevelHeights[0] * currentLevelWidths[0]];
+
+		int index = 0;
+		for(int i = 0; i < verticalLevels; ++i)
+		{
+			listGridSelStrings.Add(new List<List<string>>());
+			for(int j = 0; j < currentLevelHeights[i]; ++j)
+			{
+				listGridSelStrings[i].Add(new List<string>());
+				for(int k = 0; k < currentLevelWidths[i]; ++k)
+				{
+					listGridSelStrings[i][j].Add(loadingScriptableObject.listGridSelStrings[index]);
+					index++;
+				}
+			}
+		}
+
+		// TO DO: change so this doesn't change the scriptable object
+		GenerateMap(verticalLevels, loadingScriptableObject.listGridSelStrings, blockTypes, currentLevelHeights, currentLevelWidths, loadingScriptableObject.name);
 	}
 }
