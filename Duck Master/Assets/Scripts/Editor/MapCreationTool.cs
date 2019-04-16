@@ -85,6 +85,8 @@ public class MapCreationTool : EditorWindow
 						listGridSelStrings.Add(new List<List<string>>());
 					}
 				}
+				if (levelSelection == verticalLevels)
+					levelSelection--;
 			}
 
 			// showing the level selection dropdown
@@ -102,6 +104,7 @@ public class MapCreationTool : EditorWindow
 					Array.Copy(lastLevelWidths, currentLevelWidths, (lastLevelWidths.Length > currentLevelWidths.Length) ? currentLevelWidths.Length : lastLevelWidths.Length);
 				}
 				lastLevelWidths = new int[verticalLevels];
+				Array.Copy(currentLevelWidths, lastLevelWidths, lastLevelWidths.Length);
 			}
 			// if the height are null create them, or if they're changed copy them
 			if (currentLevelHeights == null || verticalLevels != currentLevelHeights.Length)
@@ -112,6 +115,7 @@ public class MapCreationTool : EditorWindow
 					Array.Copy(lastLevelHeights, currentLevelHeights, (lastLevelHeights.Length > currentLevelHeights.Length) ? currentLevelHeights.Length : lastLevelHeights.Length);
 				}
 				lastLevelHeights = new int[verticalLevels];
+				Array.Copy(currentLevelHeights, lastLevelHeights, lastLevelHeights.Length);
 			}
 
 			GUILayout.Label("Block Selectors");
@@ -257,16 +261,16 @@ public class MapCreationTool : EditorWindow
 						}
 					}
 				}
-				GenerateMap(verticalLevels, tempString, blockTypes, currentLevelHeights, currentLevelWidths, scriptableObjectName);
+				GenerateMap(verticalLevels, tempString, blockTypes, currentLevelHeights, currentLevelWidths, scriptableObjectName, true);
 			}
 		}
 
-		if(Event.current.keyCode == KeyCode.Z && Event.current.type == EventType.KeyUp)
+		if(Event.current.keyCode == KeyCode.F1 && Event.current.type == EventType.KeyUp)
 		{
 			toggleSelector = !toggleSelector;
 			EditorWindow.focusedWindow.Repaint();
 		}
-		else if(Event.current.keyCode == KeyCode.X && Event.current.type == EventType.KeyUp)
+		else if(Event.current.keyCode == KeyCode.F2 && Event.current.type == EventType.KeyUp)
 		{
 			ChangeAll(blockSelectionIndex);
 			EditorWindow.focusedWindow.Repaint();
@@ -276,7 +280,7 @@ public class MapCreationTool : EditorWindow
 		lastLevelSelection = levelSelection;
 	}
 
-	void GenerateMap(int verticalLevels, string[] listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths, string scriptableObjectName)
+	void GenerateMap(int verticalLevels, string[] listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths, string scriptableObjectName = "", bool save = false)
 	{
 		GameObject groundObject = Resources.Load("Prefab/TilePack1/ground") as GameObject;
 		GameObject waterObject = Resources.Load("Prefab/TilePack1/water") as GameObject;
@@ -325,22 +329,25 @@ public class MapCreationTool : EditorWindow
 			}
 		}
 
-        string assetString = "scriptableObjects/Level_Data/" + scriptableObjectName;// + ".asset";
-        TileMapScriptableObject scriptableObject = Resources.Load(assetString) as TileMapScriptableObject;
-        if(scriptableObject == null)
-        {
-            scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
-            AssetDatabase.CreateAsset(scriptableObject, "Assets/Resources/" + assetString + ".asset");
-        }
-        
-		scriptableObject.verticalLevels = verticalLevels;
-		scriptableObject.listGridSelStrings = listGridSelStrings;
-		scriptableObject.blockTypes = blockTypes;
-		scriptableObject.levelHeights = levelHeights;
-		scriptableObject.levelWidths = levelWidths;
-		EditorUtility.SetDirty(scriptableObject);
-		AssetDatabase.SaveAssets();
-		AssetDatabase.Refresh();
+		if (save && scriptableObjectName != "")
+		{
+			string assetString = "scriptableObjects/Level_Data/" + scriptableObjectName;
+			TileMapScriptableObject scriptableObject = Resources.Load(assetString) as TileMapScriptableObject;
+			if (scriptableObject == null)
+			{
+				scriptableObject = ScriptableObject.CreateInstance<TileMapScriptableObject>();
+				AssetDatabase.CreateAsset(scriptableObject, "Assets/Resources/" + assetString + ".asset");
+			}
+
+			scriptableObject.verticalLevels = verticalLevels;
+			scriptableObject.listGridSelStrings = listGridSelStrings;
+			scriptableObject.blockTypes = blockTypes;
+			scriptableObject.levelHeights = levelHeights;
+			scriptableObject.levelWidths = levelWidths;
+			EditorUtility.SetDirty(scriptableObject);
+			AssetDatabase.SaveAssets();
+			AssetDatabase.Refresh();
+		}
 	}
 
 	void ChangeAll(int selectionIndex)
@@ -384,6 +391,6 @@ public class MapCreationTool : EditorWindow
 		}
 
 		// TO DO: change so this doesn't change the scriptable object
-		GenerateMap(verticalLevels, loadingScriptableObject.listGridSelStrings, blockTypes, currentLevelHeights, currentLevelWidths, loadingScriptableObject.name);
+		GenerateMap(verticalLevels, loadingScriptableObject.listGridSelStrings, blockTypes, currentLevelHeights, currentLevelWidths);
 	}
 }
