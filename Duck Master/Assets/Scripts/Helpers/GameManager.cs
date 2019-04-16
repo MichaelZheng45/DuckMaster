@@ -43,10 +43,14 @@ public class GameManager : MonoBehaviour
     private Transform playerTransform;
     private Transform duckTransform;
 
-    //other Data
+    //throw check data
     [SerializeField]
     //should be in another script to be honest
     private float throwDistanceMax;
+    bool isThrowing = false;
+    float timerThrowWait = .5f; //<--Lag Time to throw duck
+    float currentTimer;
+    Vector3 throwTilePosition;
 
     //lists
     //TO DO: find a way to populate this list with unfriendlies for each level
@@ -82,6 +86,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        throwDuckPrep();
     }
 
     public bool checkIsHoldingDuck()
@@ -108,8 +113,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void throwDuckPrep()
+    {
+        if(isThrowing)
+        {
+            currentTimer += Time.deltaTime;
+            if(currentTimer > timerThrowWait)
+            {
+                isThrowing = false;
+                currentTimer = 0;
+                duckBehaviourSys.throwDuck(throwTilePosition);
+            }
+        }
+    }
 
-    public void throwDuck(RaycastHit hit)
+    public void enableThrowDuck(RaycastHit hit)
     {
         //layer mask
         int unthrowMask = 1 << 11;
@@ -126,7 +144,10 @@ public class GameManager : MonoBehaviour
             {
                 //throw duck
                 playerActionSys.isHoldingDuck = false;
-                duckBehaviourSys.throwDuck(atTile.mPosition);
+                Vector3 Difference = atTile.mPosition - playerTransform.position;
+                playerTransform.transform.forward = new Vector3(Difference.x, 0, Difference.z).normalized;
+                isThrowing = true;
+                throwTilePosition = atTile.mPosition; 
             }
         }
     }

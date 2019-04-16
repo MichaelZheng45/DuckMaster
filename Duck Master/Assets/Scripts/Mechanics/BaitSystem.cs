@@ -6,7 +6,8 @@ public enum BaitTypes
 {
 	INVALID = -1,
 	ATTRACT,
-	REPEL
+	REPEL,
+    PEPPER
 }
 
 public class BaitSystem : MonoBehaviour
@@ -16,7 +17,8 @@ public class BaitSystem : MonoBehaviour
 	[SerializeField] List<GameObject> baitObjects; //prefab list
 
 	List<GameObject> placedBaits;
-	float heightAdd = .5f;
+	float heightAdd = 1f;
+
 
     private void Start()
     {
@@ -39,6 +41,37 @@ public class BaitSystem : MonoBehaviour
 		return false;
 	}
 
+    bool raycastToObject(Vector3 baitPosition, Vector3 duckPos)
+    {
+        //is within range find if anything is blocking in the way if nothing is or not the same verticality, put in list
+        DuckTileMap tileMap = GameManager.Instance.GetTileMap();
+        float interval = .33f;
+        int currentHeight = tileMap.getTileFromPosition(duckPos).mHeight;
+        Vector3 direction = baitPosition - duckPos;
+        
+
+        int processCount = 0;
+        bool endOfRay = false;
+        while (!endOfRay)
+        {
+            float length = interval * processCount;
+            if(length < direction.magnitude)
+            {
+                DuckTile tile = tileMap.getTileFromPosition(duckPos + (length * direction.normalized));
+                if(tile.mHeight != currentHeight || tile.mType == DuckTile.TileType.UnpassableBoth || tile.mType == DuckTile.TileType.UnpasssableDuck)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                endOfRay = true;
+            }
+            processCount++;
+        }
+        return true;
+    }
+
     public GameObject duckLOSBait(Vector3 duckPos, float attractRange, DuckRotationState rotation)
     {
         List<GameObject> processedBaits = new List<GameObject>();
@@ -52,10 +85,12 @@ public class BaitSystem : MonoBehaviour
             Vector3 baitPosition = bait.transform.position;
             Vector3 forward = transform.TransformDirection(Vector3.forward);
 
-            if (Vector3.Dot(forward,(baitPosition - duckPos))> 0 && (baitPosition - duckPos).magnitude < attractRange)
+            if (Vector3.Dot((baitPosition - duckPos), forward) > 0 && (baitPosition - duckPos).magnitude < attractRange)
             {
-                //is within range find if anything is blocking in the way if nothing is or not the same verticality, put in list
-                processedBaits.Add(bait);
+                if(raycastToObject(baitPosition,duckPos))
+                {
+                    processedBaits.Add(bait);
+                }
             }
         }
 
@@ -77,8 +112,10 @@ public class BaitSystem : MonoBehaviour
             Vector3 baitPosition = bait.transform.position;
             if ((baitPosition - duckPos).magnitude < attractRange)
             {
-                //is within range find if anything is blocking in the way if nothing is or not the same verticality, put in list
-                processedBaits.Add(bait);
+                if (raycastToObject(baitPosition, duckPos))
+                {
+                    processedBaits.Add(bait);
+                }
             }
         }
 
@@ -94,20 +131,26 @@ public class BaitSystem : MonoBehaviour
 
     GameObject getShortestBait(List<GameObject> baitList,Vector3 duckPos)
     {
-        GameObject shortestBait = baitList[0];
-        baitList.Remove(shortestBait);
-        float distance = (shortestBait.transform.position - duckPos).magnitude;
+        GameObject shortestBait = null;
+        float distance = 0;
 
         foreach (GameObject bait in baitList)
         {
             float currentDistance = (bait.transform.position - duckPos).magnitude;
-            if (currentDistance < distance)
+            if(shortestBait)
             {
-                distance = currentDistance;
+                if (currentDistance < distance)
+                {
+                    distance = currentDistance;
+                    shortestBait = bait;
+                }
+            }
+            else
+            {
                 shortestBait = bait;
             }
         }
-
+        distance = (shortestBait.transform.position - duckPos).magnitude;
         return shortestBait;
     }
 
