@@ -24,9 +24,9 @@ public class Gate : LogicOutput
     {
         gateTransform = gameObject.transform;
         active = false;
+       
         if (obj != null)
         {
-
             objMeshRenderer = obj.GetComponent<MeshRenderer>();
         }
     }
@@ -77,6 +77,7 @@ public class Gate : LogicOutput
             other.gameObject.GetComponent<Renderer>().material = underTileMat;
             print("colliding with ground tile");
             tilePosition = other.gameObject.transform.position;
+            Activate(active);
         }
     }
 }
