@@ -16,10 +16,15 @@ public class BaitSystem : MonoBehaviour
 	[SerializeField] List<GameObject> baitObjects; //prefab list
 
 	List<GameObject> placedBaits;
+	float heightAdd = .5f;
 
     private void Start()
     {
         placedBaits = new List<GameObject>();
+
+		//temp
+		spawnBait(new Vector3(4, 0, 3), BaitTypes.ATTRACT);
+		
     }
     //checks if that bait is available, returns true
     public bool checkBait(BaitTypes type)
@@ -114,12 +119,13 @@ public class BaitSystem : MonoBehaviour
 	public void removeBait(GameObject bait)
 	{
 		placedBaits.Remove(bait);
+		Destroy(bait);
 	}
 
 	public void spawnBait(Vector3 pos, BaitTypes type)
 	{
 		//spawn bait
-		GameObject newBait = Instantiate(baitObjects[(int)type], pos, gameObject.transform.rotation);
+		GameObject newBait = Instantiate(baitObjects[(int)type], pos + new Vector3(0,heightAdd,0), gameObject.transform.rotation);
 		placedBaits.Add(newBait);
 	}
 
