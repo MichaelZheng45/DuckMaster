@@ -44,6 +44,7 @@ public class MapCreationTool : EditorWindow
      */
 	void OnGUI()
 	{
+		GUILayout.Label("Load An Existing Tile Map");
 		loadingScriptableObject = EditorGUILayout.ObjectField("Object to Load", loadingScriptableObject, typeof(UnityEngine.Object), false) as TileMapScriptableObject;
 
 		if(GUILayout.Button("Load Scriptable Object"))
