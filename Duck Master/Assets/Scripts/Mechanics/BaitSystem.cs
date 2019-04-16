@@ -17,7 +17,7 @@ public class BaitSystem : MonoBehaviour
 	[SerializeField] List<GameObject> baitObjects; //prefab list
 
 	List<GameObject> placedBaits;
-	float heightAdd = 1f;
+	float heightAdd = .5f;
 
 
     private void Start()
@@ -48,7 +48,6 @@ public class BaitSystem : MonoBehaviour
         float interval = .33f;
         int currentHeight = tileMap.getTileFromPosition(duckPos).mHeight;
         Vector3 direction = baitPosition - duckPos;
-        
 
         int processCount = 0;
         bool endOfRay = false;
@@ -72,7 +71,7 @@ public class BaitSystem : MonoBehaviour
         return true;
     }
 
-    public GameObject duckLOSBait(Vector3 duckPos, float attractRange, DuckRotationState rotation)
+    public GameObject duckLOSBait(Vector3 forward,Vector3 duckPos, float attractRange)
     {
         List<GameObject> processedBaits = new List<GameObject>();
         if(placedBaits.Count == 0)
@@ -83,7 +82,6 @@ public class BaitSystem : MonoBehaviour
         foreach(GameObject bait in placedBaits)
         {
             Vector3 baitPosition = bait.transform.position;
-            Vector3 forward = transform.TransformDirection(Vector3.forward);
 
             if (Vector3.Dot((baitPosition - duckPos), forward) > 0 && (baitPosition - duckPos).magnitude < attractRange)
             {

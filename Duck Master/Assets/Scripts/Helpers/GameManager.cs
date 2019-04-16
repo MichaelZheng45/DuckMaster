@@ -43,21 +43,20 @@ public class GameManager : MonoBehaviour
     private Transform playerTransform;
     private Transform duckTransform;
 
-    //throw check data
+    //throw and recall check data
     [SerializeField]
     //should be in another script to be honest
     private float throwDistanceMax;
     bool isThrowing = false;
-    float timerThrowWait = .5f; //<--Lag Time to throw duck
+    bool isRecalling = false;
     float currentTimer;
     Vector3 throwTilePosition;
+    List<Vector3> duckTilePath;
 
     //lists
     //TO DO: find a way to populate this list with unfriendlies for each level
-    private List<unfreindlyScript> unFriendlyList; 
-
-    //bool checks
-    private bool holdingDuck = false;
+    private List<unfreindlyScript> unFriendlyList;
+    private List<GameObject> geyserList;
 
     [SerializeField]
     private TileMapScriptableObject mTileMapScriptableObject = null;
@@ -86,7 +85,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        throwDuckPrep();
+        masterPrep();
     }
 
     public bool checkIsHoldingDuck()
@@ -113,16 +112,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void throwDuckPrep()
+    float timerThrowWait = .5f; //<--Lag Time to throw duck
+    float timerRecallWait = .2f; //<---Lag Time to recall duck
+    void masterPrep()
     {
         if(isThrowing)
         {
+            //prep to throw 
             currentTimer += Time.deltaTime;
             if(currentTimer > timerThrowWait)
             {
+                //throw duck
                 isThrowing = false;
                 currentTimer = 0;
                 duckBehaviourSys.throwDuck(throwTilePosition);
+            }
+        }
+
+        if(isRecalling)
+        {
+            currentTimer += Time.deltaTime;
+            if(currentTimer > timerRecallWait)
+            {
+                //recall
+                isRecalling = false;
+                currentTimer = 0;
+
+                //give to duck
+                duckBehaviourSys.applyNewPath(duckTilePath);
             }
         }
     }
@@ -162,8 +179,8 @@ public class GameManager : MonoBehaviour
                                                                  (int)duck.GetComponent<DuckRotation>().currentRotation);
             if (tilePath.Count > 0)
             {
-                //give to duck
-                duckBehaviourSys.applyNewPath(tilePath);
+                duckTilePath = tilePath;
+                isRecalling = true;
             }
         }
     }
