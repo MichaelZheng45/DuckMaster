@@ -334,8 +334,12 @@ public class MapCreationTool : EditorWindow
 					string currentBlock = listGridSelStrings[index];
 					Vector3 pos = new Vector3(j, i, k);
 
-					tileObj = Instantiate(blockNameObjectPairs[currentBlock], pos, Quaternion.identity);
-					tileObj.transform.parent = levelFold.transform;
+					// if it's not a none tile
+					if (currentBlock != blockTypes[blockTypes.Length - 1])
+					{
+						tileObj = Instantiate(blockNameObjectPairs[currentBlock], pos, Quaternion.identity);
+						tileObj.transform.parent = levelFold.transform;
+					}
 
 					index++;
 				}
