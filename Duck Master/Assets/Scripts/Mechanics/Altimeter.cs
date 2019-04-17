@@ -5,7 +5,7 @@ using UnityEngine;
 public class Altimeter : LogicInput
 {
     [SerializeField] int triggerHeight = 0;
-    bool active;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -43,9 +43,9 @@ public class Altimeter : LogicInput
         //    print("current tile is null");
     }
 
-    public override bool IsActive()
-    {
-        return active;
-    }
+    //public override bool IsActive()
+    //{
+    //    return active;
+    //}
 }
 

@@ -15,8 +15,9 @@ public class Ladder : LogicOutput
 
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
 
         if (gameObject.name == "Ladder-Top")
         {
