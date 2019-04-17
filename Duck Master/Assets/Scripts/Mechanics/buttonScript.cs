@@ -45,13 +45,8 @@ public class buttonScript : LogicInput
 		string tag = other.gameObject.tag;
 		if (pressed == false &&(tag == "Duck" || tag == "Player"))
 		{
-			pressed = true;
+            active = true;
             CallChange();
 		}
 	}
-
-    public override bool IsActive()
-    {
-        return pressed;
-    }
 }

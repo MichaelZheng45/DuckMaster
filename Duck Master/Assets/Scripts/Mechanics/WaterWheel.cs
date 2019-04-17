@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaterWheel : LogicInput
 {
-    bool active;
+    //bool active;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,8 +46,8 @@ public class WaterWheel : LogicInput
         }
     }
 
-    public override bool IsActive()
-    {
-        return active;
-    }
+    //public override bool IsActive()
+    //{
+    //    return active;
+    //}
 }
