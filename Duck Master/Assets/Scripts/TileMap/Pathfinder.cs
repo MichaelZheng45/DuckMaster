@@ -129,8 +129,6 @@ public class Pathfinder
 				curTile = curTile.mPreviousTile;
                 path.Add(curTile.mPosition);
 
-                Debug.Log(curTile.mPosition);
-
                 if (curTile == firstNode)
 				{
 					finishPath = true;

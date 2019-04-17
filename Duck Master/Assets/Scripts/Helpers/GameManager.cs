@@ -55,8 +55,8 @@ public class GameManager : MonoBehaviour
 
     //lists
     //TO DO: find a way to populate this list with unfriendlies for each level
-    private List<unfreindlyScript> unFriendlyList;
-    private List<GameObject> geyserList;
+    private List<unfreindlyScript> unFriendlyList = null;
+    private List<GameObject> geyserList = null;
 
     [SerializeField]
     private TileMapScriptableObject mTileMapScriptableObject = null;
@@ -65,7 +65,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        unFriendlyList = new List<unfreindlyScript>();
+        if(unFriendlyList == null)
+        {
+            unFriendlyList = new List<unfreindlyScript>();
+        }
+        if(geyserList == null)
+        {
+            geyserList = new List<GameObject>();
+        }
+
+
         playerActionSys = player.GetComponent<PlayerAction>();
         duckBehaviourSys = duck.GetComponent<duckBehaviour>();
         altimeterSys = null;
@@ -206,6 +215,15 @@ public class GameManager : MonoBehaviour
         return cameraMain;
     }
 
+    public List<unfreindlyScript> getScareDuckList()
+    {
+        return unFriendlyList;
+    }
+
+    public List<GameObject> getGeyser()
+    {
+        return geyserList;
+    }
     public DuckTileMap GetTileMap()
     {
         return mTileMap;

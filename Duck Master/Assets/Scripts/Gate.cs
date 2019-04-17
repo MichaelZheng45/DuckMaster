@@ -19,6 +19,8 @@ public class Gate : LogicOutput
     Transform gateTransform;
     MeshRenderer objMeshRenderer;
     Vector3 tilePosition;
+
+    DuckTile.TileType originalType;
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +47,7 @@ public class Gate : LogicOutput
         if (active)
         {
             print("Opening gate");
-            GameManager.Instance.GetTileMap().getTileFromPosition(tilePosition).mType = DuckTile.TileType.PassableBoth;
+            GameManager.Instance.GetTileMap().getTileFromPosition(tilePosition).mType = originalType;
             if (!portalEmissions[0].isPlaying)
             {
                 portalEmissions[0].Play();
@@ -77,6 +79,7 @@ public class Gate : LogicOutput
             other.gameObject.GetComponent<Renderer>().material = underTileMat;
             print("colliding with ground tile");
             tilePosition = other.gameObject.transform.position;
+            originalType = GameManager.Instance.GetTileMap().getTileFromPosition(tilePosition).mType;
             Activate(active);
         }
     }
