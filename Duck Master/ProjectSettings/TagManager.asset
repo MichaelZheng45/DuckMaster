@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Duck
   - tree
+  - AttractBait
+  - Page
+  - PepperBait
+  - RepelBait
   layers:
   - Default
   - TransparentFX
