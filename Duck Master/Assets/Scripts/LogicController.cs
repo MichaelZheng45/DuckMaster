@@ -11,6 +11,11 @@ public class LogicInput : MonoBehaviour
             output.CheckState();
     }
     [SerializeField] List<LogicOutput> outputList;
+
+    public List<LogicOutput> GetOutputs()
+    {
+        return outputList;
+    }
 }
 
 public class LogicOutput : MonoBehaviour
@@ -21,7 +26,31 @@ public class LogicOutput : MonoBehaviour
     [SerializeField] 
     private List<LogicInput> OR_List;
     [SerializeField]
-    private List<LogicInput> NOT_list;
+    private List<LogicInput> NOT_List;
+
+
+    //Give all inputs a reference to the output object
+    public void Start()
+    {
+        if (AND_List.Count > 0)
+        {
+            foreach (LogicInput input in AND_List)
+                input.GetOutputs().Add(this);
+        }
+
+        if (OR_List.Count > 0)
+        {
+            foreach (LogicInput input in OR_List)
+                input.GetOutputs().Add(this);
+        }
+
+        if (NOT_List.Count > 0)
+        {
+            foreach (LogicInput input in NOT_List)
+                input.GetOutputs().Add(this);
+        }
+
+    }
 
     //Something tells me this is insanely over-engineered, and/or unnecessary but oh well.
     public void Update()
@@ -63,11 +92,11 @@ public class LogicOutput : MonoBehaviour
         }
 
         //NOT
-        if (NOT_list.Count > 0)
+        if (NOT_List.Count > 0)
         {
             not = true;
 
-            foreach (LogicInput input in NOT_list)
+            foreach (LogicInput input in NOT_List)
             {
                 if (input.IsActive())
                 {

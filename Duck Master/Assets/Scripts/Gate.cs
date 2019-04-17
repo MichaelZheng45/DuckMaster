@@ -20,8 +20,9 @@ public class Gate : LogicOutput
     MeshRenderer objMeshRenderer;
     Vector3 tilePosition;
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
         gateTransform = gameObject.transform;
         active = false;
        
