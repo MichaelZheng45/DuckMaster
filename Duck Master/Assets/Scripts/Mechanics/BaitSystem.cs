@@ -25,7 +25,7 @@ public class BaitSystem : MonoBehaviour
         placedBaits = new List<GameObject>();
 
 		//temp
-		spawnBait(new Vector3(4, 0, 3), BaitTypes.ATTRACT);
+		spawnBait(new Vector3(4, 0, 3), BaitTypes.REPEL);
 		
     }
     //checks if that bait is available, returns true
