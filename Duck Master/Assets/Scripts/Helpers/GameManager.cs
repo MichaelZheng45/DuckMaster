@@ -43,17 +43,20 @@ public class GameManager : MonoBehaviour
     private Transform playerTransform;
     private Transform duckTransform;
 
-    //other Data
+    //throw and recall check data
     [SerializeField]
     //should be in another script to be honest
     private float throwDistanceMax;
+    bool isThrowing = false;
+    bool isRecalling = false;
+    float currentTimer;
+    Vector3 throwTilePosition;
+    List<Vector3> duckTilePath;
 
     //lists
     //TO DO: find a way to populate this list with unfriendlies for each level
-    private List<unfreindlyScript> unFriendlyList; 
-
-    //bool checks
-    private bool holdingDuck = false;
+    private List<unfreindlyScript> unFriendlyList;
+    private List<GameObject> geyserList;
 
     [SerializeField]
     private TileMapScriptableObject mTileMapScriptableObject = null;
@@ -82,6 +85,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        masterPrep();
     }
 
     public bool checkIsHoldingDuck()
@@ -108,8 +112,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    float timerThrowWait = .5f; //<--Lag Time to throw duck
+    float timerRecallWait = .2f; //<---Lag Time to recall duck
+    void masterPrep()
+    {
+        if(isThrowing)
+        {
+            //prep to throw 
+            currentTimer += Time.deltaTime;
+            if(currentTimer > timerThrowWait)
+            {
+                //throw duck
+                isThrowing = false;
+                currentTimer = 0;
+                duckBehaviourSys.throwDuck(throwTilePosition);
+            }
+        }
 
-    public void throwDuck(RaycastHit hit)
+        if(isRecalling)
+        {
+            currentTimer += Time.deltaTime;
+            if(currentTimer > timerRecallWait)
+            {
+                //recall
+                isRecalling = false;
+                currentTimer = 0;
+
+                //give to duck
+                duckBehaviourSys.applyNewPath(duckTilePath);
+            }
+        }
+    }
+
+    public void enableThrowDuck(RaycastHit hit)
     {
         //layer mask
         int unthrowMask = 1 << 11;
@@ -126,7 +161,10 @@ public class GameManager : MonoBehaviour
             {
                 //throw duck
                 playerActionSys.isHoldingDuck = false;
-                duckBehaviourSys.throwDuck(atTile.mPosition);
+                Vector3 Difference = atTile.mPosition - playerTransform.position;
+                playerTransform.transform.forward = new Vector3(Difference.x, 0, Difference.z).normalized;
+                isThrowing = true;
+                throwTilePosition = atTile.mPosition; 
             }
         }
     }
@@ -141,8 +179,8 @@ public class GameManager : MonoBehaviour
                                                                  (int)duck.GetComponent<DuckRotation>().currentRotation);
             if (tilePath.Count > 0)
             {
-                //give to duck
-                duckBehaviourSys.applyNewPath(tilePath);
+                duckTilePath = tilePath;
+                isRecalling = true;
             }
         }
     }

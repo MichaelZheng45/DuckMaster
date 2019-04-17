@@ -69,4 +69,22 @@ public class DuckRotation : MonoBehaviour
     {
         return a - b * Mathf.Floor(a / b);
     }
+
+    public Vector3 findDirection()
+    {
+        switch (currentRotation)
+        {
+            case DuckRotationState.TOP:
+                return new Vector3(0,0,1);
+            case DuckRotationState.RIGHT:
+                return new Vector3(1, 0, 0);
+            case DuckRotationState.DOWN:
+                return new Vector3(0, 0, -1);
+            case DuckRotationState.LEFT:
+                return new Vector3(-1, 0, 0);
+            default:
+                break;
+        }
+        return Vector3.zero;
+    }
 }

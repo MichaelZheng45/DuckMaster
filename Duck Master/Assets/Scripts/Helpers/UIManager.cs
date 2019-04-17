@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour
                         if (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(Clone)")
                         {
                             //print("valid throw target");
-                            GameManager.Instance.throwDuck(hit);
+                            GameManager.Instance.enableThrowDuck(hit);
                             throwToggle = false;
                             primaryButtonText.text = WHISTLE;
                         }
