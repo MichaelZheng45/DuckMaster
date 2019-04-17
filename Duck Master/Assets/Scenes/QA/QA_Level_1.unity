@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -727,9 +727,21 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 147384343, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
+      propertyPath: Ordered_List.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 147384343, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
       propertyPath: OR_List.Array.data[0]
       value: 
       objectReference: {fileID: 2327841997149397613}
+    - target: {fileID: 147384343, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
+      propertyPath: Ordered_List.Array.data[0]
+      value: 
+      objectReference: {fileID: 2327841997149397613}
+    - target: {fileID: 147384343, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
+      propertyPath: Ordered_List.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 147384346, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.922
@@ -5608,6 +5620,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3864256940504938465, guid: 9f11e5b4021552d4583e0816b364a3de,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3864256941111889094, guid: 9f11e5b4021552d4583e0816b364a3de,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -5616,6 +5633,11 @@ PrefabInstance:
     - target: {fileID: 3864256941111889094, guid: 9f11e5b4021552d4583e0816b364a3de,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3864256941111889094, guid: 9f11e5b4021552d4583e0816b364a3de,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5705,6 +5727,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sticky_Plate
+      objectReference: {fileID: 0}
+    - target: {fileID: 1024619208376269549, guid: 84146b71d57b1a64694be3d0fb8110c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5405873902460313963, guid: 84146b71d57b1a64694be3d0fb8110c3,
         type: 3}

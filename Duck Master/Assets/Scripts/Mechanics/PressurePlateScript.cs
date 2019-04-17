@@ -36,7 +36,7 @@ public class PressurePlateScript : LogicInput
         //If Duck enters and no player 
         if (pressed == false && tag == "Duck" && playerCollider == null)
         {
-            pressed = true;
+            active = true;
             duckCollider = other;
             CallChange();
         }
@@ -44,7 +44,7 @@ public class PressurePlateScript : LogicInput
         //If Player enters and no duck
         if (pressed == false && tag == "Player" && duckCollider == null)
         {
-            pressed = true;
+            active = true;
             playerCollider = other;
             CallChange();
         }
@@ -75,13 +75,9 @@ public class PressurePlateScript : LogicInput
         //If both are off turn off
         if (playerCollider == null && duckCollider == null)
         {
-            pressed = false;
+            //pressed = false;
+            active = false;
             CallChange();
         }
-    }
-
-    public override bool IsActive()
-    {
-        return pressed;
     }
 }

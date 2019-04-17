@@ -22,8 +22,9 @@ public class Gate : LogicOutput
 
     DuckTile.TileType originalType;
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
+        base.Start();
         gateTransform = gameObject.transform;
         active = false;
        

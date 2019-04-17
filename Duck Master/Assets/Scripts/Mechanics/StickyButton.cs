@@ -6,7 +6,7 @@ public class StickyButton : LogicInput
 {
     [SerializeField] Material unpressedMaterial;
     [SerializeField] Material pressedMaterial;
-    bool active;
+    //bool active;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,10 +33,5 @@ public class StickyButton : LogicInput
             active = true;
             CallChange();
         }
-    }
-
-    public override bool IsActive()
-    {
-        return active;
     }
 }
