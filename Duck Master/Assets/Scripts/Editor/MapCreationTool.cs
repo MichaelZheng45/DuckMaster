@@ -18,13 +18,25 @@ public class MapCreationTool : EditorWindow
 
 	string[] gridSelStrings;
 	int gridSel;
-	// 3d array to 1d array
-	// current index is (verticalLevel * widthOfLevel * heightOfLevel + yIndex * heightOfLevel + xIndex)
-	//string[] listGridSelStrings;
 	List<List<List<string>>> listGridSelStrings;
 
-	string[] blockTypes = { "Ground", "Water", "None" };
-	int defaultBlockIndex = 2;
+	Dictionary<string, GameObject> blockNameObjectPairs;
+	// First is what you see in editor
+	// Second is the location from 'Prefab' that it loads from
+	Dictionary<string, string> prefabLocationsTypesPairs = new Dictionary<string, string>()
+	{
+		{ "Ground",			"TilePack1/ground" },
+		{ "Water",			"TilePack1/water" },
+		{ "Big Tree",		"TilePack1/NaturalWallType" },
+		{ "Rock",			"TilePack1/rock1" },
+		{ "Short Wall",		"TilePack1/shortwall" },
+		{ "None",			"" },
+	};
+
+	// These are the names of the buttons, this list should be the same order as prefabNames
+	// "None" needs to always be last
+	string[] blockTypes;
+	int defaultBlockIndex;
 	int blockSelectionIndex;
 
 	bool toggleSelector = false;
@@ -38,12 +50,25 @@ public class MapCreationTool : EditorWindow
 		window.Show();
 	}
 
-    /* TO DO: Fix copying issues
-                1: Doesn't scale down in size
-                2: Overwrites data
-     */
 	void OnGUI()
 	{
+		// initialize what I'm going to show in editor
+		if(blockTypes == null)
+		{
+			blockTypes = new List<string>(prefabLocationsTypesPairs.Keys).ToArray();
+			defaultBlockIndex = blockTypes.Length - 1;
+		}
+
+		// create the dictionary for easy use later
+		if(blockNameObjectPairs == null)
+		{
+			blockNameObjectPairs = new Dictionary<string, GameObject>();
+			for (int i = 0; i < blockTypes.Length - 1; ++i)
+			{
+				blockNameObjectPairs[blockTypes[i]] = Resources.Load("Prefab/" + prefabLocationsTypesPairs[blockTypes[i]]) as GameObject;
+			}
+		}
+
 		GUILayout.Label("Load An Existing Tile Map");
 		loadingScriptableObject = EditorGUILayout.ObjectField("Object to Load", loadingScriptableObject, typeof(UnityEngine.Object), false) as TileMapScriptableObject;
 
@@ -282,8 +307,6 @@ public class MapCreationTool : EditorWindow
 
 	void GenerateMap(int verticalLevels, string[] listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths, string scriptableObjectName = "", bool save = false)
 	{
-		GameObject groundObject = Resources.Load("Prefab/TilePack1/ground") as GameObject;
-		GameObject waterObject = Resources.Load("Prefab/TilePack1/water") as GameObject;
 		GameObject levelFold = GameObject.Find("LevelFolder");
 		if (levelFold == null)
 		{
@@ -311,19 +334,9 @@ public class MapCreationTool : EditorWindow
 					string currentBlock = listGridSelStrings[index];
 					Vector3 pos = new Vector3(j, i, k);
 
-					// string[] blockTypes = { "Ground", "Water", "None" };
-					if (currentBlock == blockTypes[0])
-					{
-						// passable both
-						tileObj = Instantiate(groundObject, pos, Quaternion.identity);
-						tileObj.transform.parent = levelFold.transform;
-					}
-					else if (currentBlock == blockTypes[1])
-					{
-						// unpassable master
-						tileObj = Instantiate(waterObject, pos, Quaternion.identity);
-						tileObj.transform.parent = levelFold.transform;
-					}
+					tileObj = Instantiate(blockNameObjectPairs[currentBlock], pos, Quaternion.identity);
+					tileObj.transform.parent = levelFold.transform;
+
 					index++;
 				}
 			}
@@ -364,12 +377,12 @@ public class MapCreationTool : EditorWindow
 	void LoadScriptableObject()
 	{
 		verticalLevels = loadingScriptableObject.verticalLevels;
-		blockTypes = new List<string>(loadingScriptableObject.blockTypes).ToArray();
 
 		currentLevelHeights = new List<int>(loadingScriptableObject.levelHeights).ToArray();
 		currentLevelWidths = new List<int>(loadingScriptableObject.levelWidths).ToArray();
 		lastLevelHeights = new List<int>(loadingScriptableObject.levelHeights).ToArray();
 		lastLevelWidths = new List<int>(loadingScriptableObject.levelWidths).ToArray();
+		scriptableObjectName = loadingScriptableObject.name;
 
 		listGridSelStrings = new List<List<List<string>>>();
 
@@ -389,8 +402,6 @@ public class MapCreationTool : EditorWindow
 				}
 			}
 		}
-
-		// TO DO: change so this doesn't change the scriptable object
 		GenerateMap(verticalLevels, loadingScriptableObject.listGridSelStrings, blockTypes, currentLevelHeights, currentLevelWidths);
 	}
 }

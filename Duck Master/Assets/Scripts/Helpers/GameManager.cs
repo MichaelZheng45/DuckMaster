@@ -346,7 +346,7 @@ public class GameManager : MonoBehaviour
                     string currentBlock = listGridSelStrings[index];
                     Vector3 pos = new Vector3(j, i, k);
 
-                    // string[] blockTypes = { "Ground", "Water", "None" };
+					// Add specific tile outputs here
                     if (currentBlock == blockTypes[0])
                     {
                         // passable both
