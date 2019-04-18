@@ -43,9 +43,13 @@ public class UIManager : MonoBehaviour
         currentType = BaitTypes.INVALID;
         primaryButtonText = primaryButton.GetComponentInChildren<Text>();
         throwButtonText = throwButton.GetComponentInChildren<Text>();
+        attractText = attractButton.GetComponentInChildren<Text>();
+        repelText = repelButton.GetComponentInChildren<Text>();
+        pepperText = pepperButton.GetComponentInChildren<Text>();
+
         throwToggle = false;
         baitToggle = false;
-        bait = GameManager.Instance.getduckTrans().GetComponentInChildren<BaitSystem>();
+        bait = GameManager.Instance.getPlayerTrans().GetComponentInChildren<BaitSystem>();
     }
 
     // Update is called once per frame
@@ -71,8 +75,20 @@ public class UIManager : MonoBehaviour
         {
             primaryBaitButton.GetComponent<RawImage>().color = Color.white;
             attractButton.SetActive(true);
+
+            int num = bait.GetBaitAmount(BaitTypes.ATTRACT);
+
+            attractText.text = "Attract: " + num;
+
+            num = bait.GetBaitAmount(BaitTypes.REPEL);
+
             repelButton.SetActive(true);
+            repelText.text = "Repel: " + num;
+
+            num = bait.GetBaitAmount(BaitTypes.PEPPER);
+
             pepperButton.SetActive(true);
+            pepperText.text = "Pepper: " + num;
         }
 
         else
@@ -173,8 +189,10 @@ public class UIManager : MonoBehaviour
 
                 }
             }
+            return;
         }
-        else
+        //Whistle Control
+        if (!throwToggle && !baitToggle)
         {
             //path find call
             if (manager != null)
@@ -187,25 +205,55 @@ public class UIManager : MonoBehaviour
                     {
                         if (hit.collider.gameObject.name == "ground(Clone)")
                         {
-                            //print("hit ground");
                             Vector3 pos = hit.collider.gameObject.transform.position;
-                            //Debug.Log(pos);
                             GameManager.Instance.movePlayerTo(pos);
-                            /*
-                            DuckTile tile = GameManager.Instance.getTileFromPosition(pos);
+                        }
+                    }
+                }
+            }
+            return;
+        }
+
+        //Bait Logic Input
+        if (baitToggle)
+        {
+            if (manager != null)
+            {
+                List<RaycastHit> hitList = manager.GetTapHits();
+
+                foreach (RaycastHit hit in hitList)
+                {
+                    if (hit.collider != null)
+                    {
+                        if (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(clone)")
+                        {
+                            Vector3 pos = hit.collider.gameObject.transform.position;
                             
-                            if (tile != null)
+                            if (currentType == BaitTypes.ATTRACT)
                             {
-                                print("Received tile pos is " + tile.mPosition.ToString());
-                                GameManager.Instance.movePlayerTo(tile.mPosition);
+                                bait.spawnBait(pos, BaitTypes.ATTRACT);
                             }
-                            */
+
+                            if (currentType == BaitTypes.REPEL)
+                            {
+                                bait.spawnBait(pos, BaitTypes.REPEL);
+                            }
+
+                            if (currentType == BaitTypes.PEPPER)
+                            {
+                                bait.spawnBait(pos, BaitTypes.PEPPER);
+                            }
+
                         }
                     }
 
                 }
             }
+            return;
         }
+
+
+
     }
 
     public void ToggleThrow()
