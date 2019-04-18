@@ -10,6 +10,12 @@ public enum BaitTypes
     PEPPER
 }
 
+/*
+          O   O   W    W     W  O   O
+          O   0    W  W W   W   O   0
+          0   0     WW  WW W    0   0
+           000       W    W      000
+*/
 public class BaitSystem : MonoBehaviour
 {
 	[Tooltip("Holds the data for the amount of baits")]
@@ -25,7 +31,7 @@ public class BaitSystem : MonoBehaviour
         placedBaits = new List<GameObject>();
 
 		//temp
-		spawnBait(new Vector3(4, 0, 3), BaitTypes.REPEL);
+		spawnBait(new Vector3(3, 0, 5), BaitTypes.PEPPER);
 		
     }
     //checks if that bait is available, returns true

@@ -10,6 +10,7 @@ TagManager:
   - Page
   - PepperBait
   - RepelBait
+  - Geyser
   layers:
   - Default
   - TransparentFX

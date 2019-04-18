@@ -44,8 +44,6 @@ public class GameManager : MonoBehaviour
     private Transform duckTransform;
 
     //throw and recall check data
-    [SerializeField]
-    //should be in another script to be honest
     private float throwDistanceMax;
     bool isThrowing = false;
     bool isRecalling = false;
@@ -56,7 +54,6 @@ public class GameManager : MonoBehaviour
     //lists
     //TO DO: find a way to populate this list with unfriendlies for each level
     private List<unfreindlyScript> unFriendlyList = null;
-    private List<GameObject> geyserList = null;
 
     [SerializeField]
     private TileMapScriptableObject mTileMapScriptableObject = null;
@@ -69,13 +66,9 @@ public class GameManager : MonoBehaviour
         {
             unFriendlyList = new List<unfreindlyScript>();
         }
-        if(geyserList == null)
-        {
-            geyserList = new List<GameObject>();
-        }
-
 
         playerActionSys = player.GetComponent<PlayerAction>();
+        throwDistanceMax = playerActionSys.getThrowDistance();
         duckBehaviourSys = duck.GetComponent<duckBehaviour>();
         altimeterSys = null;
         playerTransform = player.transform;
@@ -170,9 +163,11 @@ public class GameManager : MonoBehaviour
             {
                 //throw duck
                 playerActionSys.isHoldingDuck = false;
+                isThrowing = true;
+                duckBehaviourSys.prepThrow();
                 Vector3 Difference = atTile.mPosition - playerTransform.position;
                 playerTransform.transform.forward = new Vector3(Difference.x, 0, Difference.z).normalized;
-                isThrowing = true;
+
                 throwTilePosition = atTile.mPosition; 
             }
         }
@@ -190,6 +185,7 @@ public class GameManager : MonoBehaviour
             {
                 duckTilePath = tilePath;
                 isRecalling = true;
+                duckBehaviourSys.startleduck();
             }
         }
     }
@@ -219,52 +215,9 @@ public class GameManager : MonoBehaviour
     {
         return unFriendlyList;
     }
-
-    public List<GameObject> getGeyser()
-    {
-        return geyserList;
-    }
     public DuckTileMap GetTileMap()
     {
         return mTileMap;
-    }
-
-    public Vector3 checkGeyser(Vector3 atPos, Vector3 fromPos)
-    {
-        DuckTile atTile = mTileMap.getTileFromPosition(atPos);
-        //float startingRange = .8f;
-        /*
-        if (atTile.tType == tileType.Geyser)
-        {
-            //calculate a new trajectory
-            Vector3 trajectory = (atPos - fromPos);
-            List<bool> travables = duckBehaviourSys.traverseData.traversePossibilities;
-            bool tileFound = false;
-            while (!tileFound)
-            {
-                Vector3 distance = trajectory.normalized * (trajectory.magnitude * startingRange) + atPos;
-                //check if trajectory is within bounds and tile
-                if (!tilingSys.isInBoundsByAxis(ref distance, travables))
-                {
-                    startingRange -= .05f; //how specific? 
-                }
-                else
-                {
-                    //found a spot
-                    return distance;
-                }
-
-                //found no tile to move
-                if (startingRange < .5f)
-                {
-                    return Vector3.zero;
-                }
-            }
-			
-        }
-		*/
-        //is not a geyser
-        return Vector3.zero;
     }
 
     public Vector3 checkToRun(float range)

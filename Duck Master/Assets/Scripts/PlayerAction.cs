@@ -14,7 +14,6 @@ public class PlayerAction : MonoBehaviour
 
     //component data
     Transform playerTransform;
-    BaitSystem mBaitSystem;
 
     //pathfinding data;
     public List<Vector3> tilePath;
@@ -28,7 +27,6 @@ public class PlayerAction : MonoBehaviour
     void Start()
     {
         playerTransform = gameObject.transform;
-        mBaitSystem = gameObject.GetComponent<BaitSystem>();
     }
 
     // Update is called once per frame
@@ -84,18 +82,8 @@ public class PlayerAction : MonoBehaviour
         }
     }
 
-    //only throw onto standard block tiles
-    public void throwBait(Vector3 target, BaitTypes type) //TO DO: LOOK AT TILE AND IF IT IS STANDARD TILE THROW IT
+    public float getThrowDistance()
     {
-        //check for distance
-        if ((gameObject.transform.position - target).magnitude <= throwDistance && mBaitSystem.checkBait(type))
-        {
-            //throw object
-            mBaitSystem.spawnBait(target, type);
-        }
-        else
-        {
-            //Ran out of bait
-        }
+        return throwDistance;
     }
 }
