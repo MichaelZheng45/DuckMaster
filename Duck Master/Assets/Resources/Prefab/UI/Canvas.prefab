@@ -68,7 +68,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 3f4a292345e0c854cb8c5f4edd034f0f, type: 3}
+  m_Texture: {fileID: 2800000, guid: 74145a1029acc934e99ab3e3a2a2d02c, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -153,14 +153,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: ToggleThrow
-        m_Mode: 1
+        m_MethodName: SetBaitType
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Attract
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -312,7 +312,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 0b2da4fa58185704cbf3377f3c97f72d, type: 3}
+  m_Texture: {fileID: 2800000, guid: 5873be5fba4bbde439d17f96effe95f1, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -477,7 +477,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 3f4a292345e0c854cb8c5f4edd034f0f, type: 3}
+  m_Texture: {fileID: 2800000, guid: 528e530a76241234c805e8d29b1ff531, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1124,7 +1124,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 3f4a292345e0c854cb8c5f4edd034f0f, type: 3}
+  m_Texture: {fileID: 2800000, guid: bddbfadf1b527da438dc4a607330496e, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1209,14 +1209,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: ToggleThrow
-        m_Mode: 1
+        m_MethodName: SetBaitType
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Repel
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1289,7 +1289,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 3f4a292345e0c854cb8c5f4edd034f0f, type: 3}
+  m_Texture: {fileID: 2800000, guid: c9043fb64e9aaac49a954fbe64ee9626, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1374,14 +1374,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: ToggleThrow
-        m_Mode: 1
+        m_MethodName: SetBaitType
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Pepper
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -1753,7 +1753,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Texture: {fileID: 2800000, guid: 02769f110b681f24f8d89e05cbe681f0, type: 3}
+  m_Texture: {fileID: 2800000, guid: c22acac22069e9649b420da68594043f, type: 3}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -1799,7 +1799,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8855306170185832753}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: ToggleBait
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1001 &4618810402587873145
@@ -1809,11 +1820,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8855306169965726489}
     m_Modifications:
-    - target: {fileID: 8483047356764300478, guid: d967a19df841a2440baf2741ec804f38,
-        type: 3}
-      propertyPath: m_Name
-      value: Journal
-      objectReference: {fileID: 0}
     - target: {fileID: 8483047356764300477, guid: d967a19df841a2440baf2741ec804f38,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1918,6 +1924,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8483047356764300478, guid: d967a19df841a2440baf2741ec804f38,
+        type: 3}
+      propertyPath: m_Name
+      value: Journal
       objectReference: {fileID: 0}
     - target: {fileID: 8483047357355904681, guid: d967a19df841a2440baf2741ec804f38,
         type: 3}

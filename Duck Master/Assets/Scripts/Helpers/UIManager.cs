@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+
     [SerializeField]
     private GameObject primaryButton;
+    
     [SerializeField]
     private GameObject throwButton;
     [SerializeField]
@@ -18,9 +20,22 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject pepperButton;
 
-    private Text primaryButtonText;
-    private Text throwButtonText;
+    //private Text primaryButtonText;
+    //private Text throwButtonText;
 
+    [SerializeField]
+    Texture2D PickUpUnPushTex;
+    [SerializeField]
+    Texture2D PickUpPushTex;
+    [SerializeField]
+    Texture2D throwUnPushTex;
+    [SerializeField]
+    Texture2D throwPushTex;
+    [SerializeField]
+    Texture2D whistleUnPushTex;
+    [SerializeField]
+    Texture2D whistlePushTex;
+   
     private Text attractText;
     private Text repelText;
     private Text pepperText;
@@ -35,17 +50,27 @@ public class UIManager : MonoBehaviour
     private const string WHISTLE = "WHISTLE";
     private const string PICKUP = "PICK UP";
     private const string NONE = "   ";
-
+    private string currentPrimaryState = "WHISTLE";
+    private bool duckRecalled;
 
     // Start is called before the first frame update
     void Start()
     {
+        duckRecalled = false;
         currentType = BaitTypes.INVALID;
-        primaryButtonText = primaryButton.GetComponentInChildren<Text>();
-        throwButtonText = throwButton.GetComponentInChildren<Text>();
+        //primaryButtonText = primaryButton.GetComponentInChildren<Text>();
+        //throwButtonText = throwButton.GetComponentInChildren<Text>();
         attractText = attractButton.GetComponentInChildren<Text>();
         repelText = repelButton.GetComponentInChildren<Text>();
         pepperText = pepperButton.GetComponentInChildren<Text>();
+
+        
+        //pickUpUnpushed.texture = PickUpUnPushTex;
+        //pickUpPushed.texture = PickUpPushTex;
+        //throwUnPushed.texture = throwUnPushTex;
+        //throwPushed.texture = throwPushTex;
+        //whistleUnPushed.texture = whistleUnPushTex;
+        //whistlePushed.texture = whistlePushTex;
 
         throwToggle = false;
         baitToggle = false;
@@ -61,14 +86,19 @@ public class UIManager : MonoBehaviour
         //Graphical stuff
         if (throwToggle)
         {
-            throwButton.GetComponent<RawImage>().color = Color.white;
-            throwButtonText.color = Color.black;   
+            RawImage tex = throwButton.GetComponent<RawImage>();
+            //tex = throwPushed;
+            tex.texture = throwPushTex;
+            //throwButtonText.color = Color.black;   
         }
 
         else
         {
-            throwButton.GetComponent<RawImage>().color = Color.black;
-            throwButtonText.color = Color.white;
+            RawImage tex = throwButton.GetComponent<RawImage>();
+            //tex = throwUnPushed;
+            tex.texture = throwUnPushTex;
+            //throwButton.GetComponent<RawImage>().color = Color.black;
+            //throwButtonText.color = Color.white;
         }
 
         if (baitToggle)
@@ -78,22 +108,22 @@ public class UIManager : MonoBehaviour
 
             int num = bait.GetBaitAmount(BaitTypes.ATTRACT);
 
-            attractText.text = "Attract: " + num;
+            attractText.text = num.ToString();
 
             num = bait.GetBaitAmount(BaitTypes.REPEL);
 
             repelButton.SetActive(true);
-            repelText.text = "Repel: " + num;
+            repelText.text = num.ToString();
 
             num = bait.GetBaitAmount(BaitTypes.PEPPER);
 
             pepperButton.SetActive(true);
-            pepperText.text = "Pepper: " + num;
+            pepperText.text = num.ToString();
         }
 
         else
         {
-            primaryBaitButton.GetComponent<RawImage>().color = Color.black;
+            //primaryBaitButton.GetComponent<RawImage>().color = Color.black;
             attractButton.SetActive(false);
             repelButton.SetActive(false);
             pepperButton.SetActive(false);
@@ -101,49 +131,40 @@ public class UIManager : MonoBehaviour
 
         if (currentType == BaitTypes.ATTRACT)
         {
-            attractButton.GetComponent<RawImage>().color = Color.white;
-            attractText.color = Color.black;
-
-            repelButton.GetComponent<RawImage>().color = Color.black;
-            repelText.color = Color.white;
-
-            pepperButton.GetComponent<RawImage>().color = Color.black;
-            pepperText.color = Color.white;
+            attractButton.GetComponent<RawImage>().color = Color.green;
+            
+            repelButton.GetComponent<RawImage>().color = Color.white;
+            
+            pepperButton.GetComponent<RawImage>().color = Color.white;
         }
 
         if (currentType == BaitTypes.REPEL)
         {
-            attractButton.GetComponent<RawImage>().color = Color.black;
-            attractText.color = Color.white;
+            attractButton.GetComponent<RawImage>().color = Color.white;
 
-            repelButton.GetComponent<RawImage>().color = Color.white;
-            repelText.color = Color.black;
+            repelButton.GetComponent<RawImage>().color = Color.green;
 
-            pepperButton.GetComponent<RawImage>().color = Color.black;
-            pepperText.color = Color.white;
+            pepperButton.GetComponent<RawImage>().color = Color.white;
         }
 
         if (currentType == BaitTypes.PEPPER)
         {
-            attractButton.GetComponent<RawImage>().color = Color.black;
-            attractText.color = Color.white;
+            attractButton.GetComponent<RawImage>().color = Color.white;
 
-            repelButton.GetComponent<RawImage>().color = Color.black;
-            repelText.color = Color.white;
+            repelButton.GetComponent<RawImage>().color = Color.white;
 
-            pepperButton.GetComponent<RawImage>().color = Color.white;
-            pepperText.color = Color.black;
+            pepperButton.GetComponent<RawImage>().color = Color.green;
         }
 
         if (currentType == BaitTypes.INVALID)
         {
-            attractButton.GetComponent<RawImage>().color = Color.black;
+            attractButton.GetComponent<RawImage>().color = Color.white;
             attractText.color = Color.white;
 
-            repelButton.GetComponent<RawImage>().color = Color.black;
+            repelButton.GetComponent<RawImage>().color = Color.white;
             repelText.color = Color.white;
 
-            pepperButton.GetComponent<RawImage>().color = Color.black;
+            pepperButton.GetComponent<RawImage>().color = Color.white;
             pepperText.color = Color.white;
         }
 
@@ -153,10 +174,23 @@ public class UIManager : MonoBehaviour
         if (!GameManager.Instance.checkIsHoldingDuck())
         {
             if ((duck.position - player.position).magnitude < magnitude && !GameManager.Instance.checkIsHoldingDuck())
-                primaryButtonText.text = PICKUP;
+            {
+                //reset
+                duckRecalled = false;
+                RawImage tex = primaryButton.GetComponent<RawImage>();
+                tex.texture = PickUpUnPushTex;
+                currentPrimaryState = PICKUP;
+            }
 
             else
-                primaryButtonText.text = WHISTLE;
+            {
+                if (!duckRecalled)
+                {
+                    RawImage tex = primaryButton.GetComponent<RawImage>();
+                    tex.texture = whistleUnPushTex;
+                    currentPrimaryState = WHISTLE;
+                }
+            }
 
             throwButton.SetActive(false);
         }
@@ -183,7 +217,9 @@ public class UIManager : MonoBehaviour
                             //print("valid throw target");
                             GameManager.Instance.enableThrowDuck(hit);
                             throwToggle = false;
-                            primaryButtonText.text = WHISTLE;
+                            RawImage tex = primaryButton.GetComponent<RawImage>();
+                            //tex = whistleUnPushed;
+                            tex.texture = whistleUnPushTex;
                         }
                     }
 
@@ -207,6 +243,9 @@ public class UIManager : MonoBehaviour
                         {
                             Vector3 pos = hit.collider.gameObject.transform.position;
                             GameManager.Instance.movePlayerTo(pos);
+                            RawImage tex = primaryButton.GetComponent<RawImage>();
+                            //tex = whistlePushed;
+                            tex.texture = whistlePushTex;
                         }
                     }
                 }
@@ -264,14 +303,21 @@ public class UIManager : MonoBehaviour
     //To Pick up or Whistle for Duck, this will deduce that
     public void PrimaryButtonCall()
     {
-        if (primaryButtonText.text == PICKUP)
+        if (currentPrimaryState == PICKUP)
         {
             GameManager.Instance.pickUpDuck();
-            primaryButtonText.text = NONE;
+            RawImage tex = primaryButton.GetComponent<RawImage>();
+            //tex = pickUpPushed;
+            tex.texture = PickUpPushTex;
         }
 
-        if (primaryButtonText.text == WHISTLE)
+        if (currentPrimaryState == WHISTLE)
+        {
+            RawImage tex = primaryButton.GetComponent<RawImage>();
+            duckRecalled = true;
+            tex.texture = whistlePushTex;
             GameManager.Instance.duckRecall();
+        }
 
     }
 
@@ -296,21 +342,4 @@ public class UIManager : MonoBehaviour
             currentType = BaitTypes.INVALID;
     }
 
-    public void BaitCall()
-    {
-        if (currentType == BaitTypes.ATTRACT)
-        {
-
-        }
-
-        if (currentType == BaitTypes.REPEL)
-        {
-
-        }
-
-        if (currentType == BaitTypes.PEPPER)
-        {
-
-        }
-    }
 }
