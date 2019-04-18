@@ -17,6 +17,7 @@ public enum DuckStates
     BAIT_REPEL
 }
 
+
 public class duckBehaviour : MonoBehaviour
 {
     public DuckStates mDuckState;
@@ -34,8 +35,7 @@ public class duckBehaviour : MonoBehaviour
     [SerializeField]
     private float followThreshold;
     // velocity to follow
-    [SerializeField]
-    private float followVelocity;
+    private float followVelocity = .0225f;
     //circle size of the target point, so not a direct movement to target
     [SerializeField]
     private float targetRadius;
@@ -99,9 +99,9 @@ public class duckBehaviour : MonoBehaviour
     [SerializeField]
     private GameObject baitSystemObject;
     [SerializeField]
-    private float attractDistance = 3;
-    int repelDistance = 5;
-    int pepperLaunchDistance = 3;
+    private float attractDistance = 3; //distance where the duck will come to the bait
+    int repelDistance = 5; //how far will the duck run away
+    int pepperLaunchDistance = 3;    //how far will the duck be launched via APPLEBEES
     private BaitSystem baitSystem;
     private GameObject targetBait;
     private Vector3 repelTargetPos;
@@ -119,6 +119,10 @@ public class duckBehaviour : MonoBehaviour
     private float runCheckPerFrame = .3f;
     private float frameCount = 0;
 
+    //animation bool checks
+    bool beingThrown = false;
+    bool startled = false;
+    public GameObject playerHand;
     // Start is called before the first frame update
     void Start()
     {
@@ -129,7 +133,6 @@ public class duckBehaviour : MonoBehaviour
         mDuckRotation = gameObject.GetComponent<DuckRotation>();
         baitSystem = baitSystemObject.GetComponent<BaitSystem>();
         duckTransform = gameObject.transform;
-        
     }
 
     private void Update()
@@ -173,6 +176,19 @@ public class duckBehaviour : MonoBehaviour
         }
         frameCount += Time.deltaTime;
     }
+
+    //duck is being prepped to throw (duck position is linked to player's hand)
+    public void prepThrow()
+    {
+        beingThrown = true;
+    }
+
+    //duck is startled,maybe have a animation of the duck startled?
+    public void startleduck()
+    {
+        startled = true;
+    }
+
 
     void ChangeDuckState(DuckStates newDuckstate)
     {
@@ -228,7 +244,6 @@ public class duckBehaviour : MonoBehaviour
         }
         else if(mDuckState == DuckStates.BAIT_REPEL)
         {
-            Debug.Log("Repelled!!!");
             repelledBait();
         }
         else
@@ -254,7 +269,15 @@ public class duckBehaviour : MonoBehaviour
 
             if (mDuckState == DuckStates.HELD)
             {
-                duckTransform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
+                if(beingThrown)
+                {
+                    duckTransform.position = playerHand.transform.position;
+                }
+                else
+                {
+                    duckTransform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
+          
+                }
                 transform.rotation = playerTransform.rotation;
             }
         }
@@ -273,19 +296,19 @@ public class duckBehaviour : MonoBehaviour
 		}
 		else
 		{
-            bool stillPeppered = false;
+            //bool stillPeppered = false;
 
             //check if landed on geyser
-            Vector3 target = GameManager.Instance.checkGeyser(targetPos, startingPos);
+            //Vector3 target = GameManager.Instance.checkGeyser(targetPos, startingPos);
             if (mDuckState == DuckStates.AT_APPLEBEES)
             {
                 ChangeDuckState(DuckStates.BAITED); 
-                stillPeppered = true;
+             //   stillPeppered = true;
 
-                if (target == Vector3.zero)
-                {
+               // if (target == Vector3.zero)
+               // {
                     lookForBait();
-                }
+               //}
             }
             else
             {
@@ -293,10 +316,10 @@ public class duckBehaviour : MonoBehaviour
             }
 	
             //if there is geyser rethrow
-            if (target != Vector3.zero)
-            {
-                throwDuck(target, stillPeppered);
-            }
+            //if (target != Vector3.zero)
+           // {
+           //     throwDuck(target, stillPeppered);
+           // }
         }
 	}
 
@@ -345,7 +368,7 @@ public class duckBehaviour : MonoBehaviour
                 //reverse raycast to find furthest tile to move to
                 for (int count = pepperLaunchDistance; count > 0; count--)
                 {
-                    DuckTile currentTile = tileMap.getTileFromPosition(duckTransform.position + (direction * (count - .5f)));
+                    DuckTile currentTile = tileMap.getTileFromPosition(duckTransform.position + (direction * (count + .5f)));
                     if (currentTile != null && currentTile.mHeight <= currentHeight && (currentTile.mType == DuckTile.TileType.PassableBoth || currentTile.mType == DuckTile.TileType.UnpassableMaster))
                     {
                         furthestTile = currentTile;
@@ -451,7 +474,6 @@ public class duckBehaviour : MonoBehaviour
             if(positionCount != 0)
             {
                 //reset data
-                //Debug.Log("Resetting");
                 targetPoint = Vector3.zero;
                 startFollowing = false;
                 positionListData.Clear();
@@ -476,9 +498,17 @@ public class duckBehaviour : MonoBehaviour
             }
 
             //find direction and follow
-
+            float realVelocity;
+            if(playerDistance > 1)
+            {
+                realVelocity = followVelocity + .01f;
+            }
+            else
+            {
+                realVelocity = followVelocity;
+            }
             Vector3 dir = targetPoint - duckTransform.position;
-            duckTransform.position += dir.normalized * followVelocity;        
+            duckTransform.position += dir.normalized * realVelocity;        
 
             //check if approaching distance
             if (dir.magnitude < toPointDistance)
@@ -514,6 +544,8 @@ public class duckBehaviour : MonoBehaviour
     //send in the new path to be read and activate return
     public void applyNewPath(List<Vector3> newPath)
     {
+        //turn off startle animation
+        startled = false;
         ChangeDuckState(DuckStates.RETURN);
         tilePath = newPath;
         tilePathIndex = tilePath.Count - 1;
@@ -556,13 +588,15 @@ public class duckBehaviour : MonoBehaviour
 
     public void throwDuck(Vector3 target, bool peppered = false)
     {
+        //animation being thrown is off
+        beingThrown = false;
+
         if(peppered)
         {
             ChangeDuckState(DuckStates.AT_APPLEBEES);
         }
         else
         {
-           // mDuckState = DuckStates.INAIR;
             ChangeDuckState(DuckStates.INAIR);
         }
         // https://www.desmos.com/calculator/eryeuvorvr
@@ -597,4 +631,36 @@ public class duckBehaviour : MonoBehaviour
         parabolaB = (D1 - (A1 * parabolaA))/B1;
         parabolaC = initialPoint.y - parabolaA * Mathf.Pow(initialPoint.x, 2) - parabolaB * initialPoint.x;
     }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if(collision.gameObject.tag == "Geyser" && (mDuckState == DuckStates.INAIR ||mDuckState == DuckStates.AT_APPLEBEES))
+        {
+            bool peppered = false;
+            float interval = 1; //reduces the range of the launch distance
+            if (mDuckState == DuckStates.AT_APPLEBEES)
+            {
+                peppered = true;
+            }
+
+            Vector3 target = Vector3.zero;
+
+            DuckTileMap tileMap = GameManager.Instance.GetTileMap();
+
+            int currentHeight = tileMap.getTileFromPosition(duckTransform.position).mHeight;
+            Vector3 direction = targetPos - startingPos;
+            for(float count = direction.magnitude; count > 0; count--)
+            {
+                DuckTile tile = tileMap.getTileFromPosition(duckTransform.position + ((interval * count) * direction.normalized));
+                if (tile != null && (tile.mHeight == currentHeight || tile.mType == DuckTile.TileType.PassableBoth || tile.mType == DuckTile.TileType.UnpassableMaster))
+                {
+                    count = 0;
+                    target = tile.mPosition;
+                }
+            }
+   
+            throwDuck(target, peppered);
+        }
+    }
+
 }
