@@ -7,23 +7,45 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject primaryButton;
-    private Text primaryButtonText;
-    private Text throwButtonText;
     [SerializeField]
     private GameObject throwButton;
     [SerializeField]
+    private GameObject primaryBaitButton;
+    [SerializeField]
+    private GameObject attractButton;
+    [SerializeField]
+    private GameObject repelButton;
+    [SerializeField]
+    private GameObject pepperButton;
+
+    private Text primaryButtonText;
+    private Text throwButtonText;
+
+    private Text attractText;
+    private Text repelText;
+    private Text pepperText;
+
+    BaitSystem bait;
+    BaitTypes currentType;
+
+    [SerializeField]
     private double magnitude = 1.5;
     private bool throwToggle;
+    private bool baitToggle;
     private const string WHISTLE = "WHISTLE";
     private const string PICKUP = "PICK UP";
     private const string NONE = "   ";
 
+
     // Start is called before the first frame update
     void Start()
     {
+        currentType = BaitTypes.INVALID;
         primaryButtonText = primaryButton.GetComponentInChildren<Text>();
         throwButtonText = throwButton.GetComponentInChildren<Text>();
         throwToggle = false;
+        baitToggle = false;
+        bait = GameManager.Instance.getduckTrans().GetComponentInChildren<BaitSystem>();
     }
 
     // Update is called once per frame
@@ -37,21 +59,78 @@ public class UIManager : MonoBehaviour
         {
             throwButton.GetComponent<RawImage>().color = Color.white;
             throwButtonText.color = Color.black;   
-            //ColorBlock block = throwButton.GetComponent<Button>().colors;
-            //block.normalColor = Color.green;
-            //block.highlightedColor = new Color(100, 255, 100, 255);
-            //throwButton.GetComponent<Button>().colors = block;
         }
 
         else
         {
             throwButton.GetComponent<RawImage>().color = Color.black;
             throwButtonText.color = Color.white;
-            //ColorBlock block = throwButton.GetComponent<Button>().colors;
-            //block.normalColor = Color.white;
-            //block.highlightedColor = Color.white;
-            //throwButton.GetComponent<Button>().colors = block;
         }
+
+        if (baitToggle)
+        {
+            primaryBaitButton.GetComponent<RawImage>().color = Color.white;
+            attractButton.SetActive(true);
+            repelButton.SetActive(true);
+            pepperButton.SetActive(true);
+        }
+
+        else
+        {
+            primaryBaitButton.GetComponent<RawImage>().color = Color.black;
+            attractButton.SetActive(false);
+            repelButton.SetActive(false);
+            pepperButton.SetActive(false);
+        }
+
+        if (currentType == BaitTypes.ATTRACT)
+        {
+            attractButton.GetComponent<RawImage>().color = Color.white;
+            attractText.color = Color.black;
+
+            repelButton.GetComponent<RawImage>().color = Color.black;
+            repelText.color = Color.white;
+
+            pepperButton.GetComponent<RawImage>().color = Color.black;
+            pepperText.color = Color.white;
+        }
+
+        if (currentType == BaitTypes.REPEL)
+        {
+            attractButton.GetComponent<RawImage>().color = Color.black;
+            attractText.color = Color.white;
+
+            repelButton.GetComponent<RawImage>().color = Color.white;
+            repelText.color = Color.black;
+
+            pepperButton.GetComponent<RawImage>().color = Color.black;
+            pepperText.color = Color.white;
+        }
+
+        if (currentType == BaitTypes.PEPPER)
+        {
+            attractButton.GetComponent<RawImage>().color = Color.black;
+            attractText.color = Color.white;
+
+            repelButton.GetComponent<RawImage>().color = Color.black;
+            repelText.color = Color.white;
+
+            pepperButton.GetComponent<RawImage>().color = Color.white;
+            pepperText.color = Color.black;
+        }
+
+        if (currentType == BaitTypes.INVALID)
+        {
+            attractButton.GetComponent<RawImage>().color = Color.black;
+            attractText.color = Color.white;
+
+            repelButton.GetComponent<RawImage>().color = Color.black;
+            repelText.color = Color.white;
+
+            pepperButton.GetComponent<RawImage>().color = Color.black;
+            pepperText.color = Color.white;
+        }
+
 
         //Determine whether to whistle or hold - Do the calculation here to avoid merge conflict
         //Also check for throw
@@ -146,5 +225,44 @@ public class UIManager : MonoBehaviour
         if (primaryButtonText.text == WHISTLE)
             GameManager.Instance.duckRecall();
 
+    }
+
+    public void ToggleBait()
+    {
+        baitToggle = !baitToggle;
+        currentType = BaitTypes.INVALID;
+    }
+
+    public void SetBaitType(string type)
+    {
+        if (type == "Attract")
+            currentType = BaitTypes.ATTRACT;
+
+        if (type == "Repel")
+            currentType = BaitTypes.REPEL;
+
+        if (type == "Pepper")
+            currentType = BaitTypes.PEPPER;
+
+        if (type == "Invalid")
+            currentType = BaitTypes.INVALID;
+    }
+
+    public void BaitCall()
+    {
+        if (currentType == BaitTypes.ATTRACT)
+        {
+
+        }
+
+        if (currentType == BaitTypes.REPEL)
+        {
+
+        }
+
+        if (currentType == BaitTypes.PEPPER)
+        {
+
+        }
     }
 }
