@@ -139,6 +139,7 @@ ModelImporter:
     7400000: Take 001
     9500000: //RootNode
     13700000: Duckmaster 1
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -154,7 +155,8 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: Event PlaySound has a time (0.000000) outside the clip's
+      valid range (0.033333..0.666667). It will never be fired
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -170,7 +172,7 @@ ModelImporter:
     - serializedVersion: 16
       name: Take 001
       takeName: Take 001
-      firstFrame: 1
+      firstFrame: 0
       lastFrame: 20
       wrapMode: 0
       orientationOffsetY: 0
@@ -190,7 +192,23 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: PlaySound
+        data: Duckmaster,Walking
+        objectReferenceParameter: {fileID: 100012, guid: c395de280fe5288439cb6f432c992d17,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.3856859
+        functionName: PlaySound
+        data: Duckmaster,Walking
+        objectReferenceParameter: {fileID: 100012, guid: c395de280fe5288439cb6f432c992d17,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
