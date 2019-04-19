@@ -2150,6 +2150,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 346089943}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &357902468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3864256940320922237, guid: 9f11e5b4021552d4583e0816b364a3de,
+    type: 3}
+  m_PrefabInstance: {fileID: 3394064625345653849}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &385402882
 GameObject:
   m_ObjectHideFlags: 0
@@ -5064,7 +5070,6 @@ MonoBehaviour:
   altimeter: {fileID: 0}
   player: {fileID: 1066495802}
   duck: {fileID: 1459183245}
-  throwDistanceMax: 5
   mTileMapScriptableObject: {fileID: 11400000, guid: 744fad0a388c4484da907d11b4d0ae5d,
     type: 2}
 --- !u!4 &1050653461
@@ -10877,7 +10882,7 @@ PrefabInstance:
     - target: {fileID: 3864256940888289142, guid: 9f11e5b4021552d4583e0816b364a3de,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00010446517
+      value: 2.3361006
       objectReference: {fileID: 0}
     - target: {fileID: 3864256940504938465, guid: 9f11e5b4021552d4583e0816b364a3de,
         type: 3}
@@ -10919,6 +10924,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 117.80005
       objectReference: {fileID: 0}
+    - target: {fileID: 3864256940911733701, guid: 9f11e5b4021552d4583e0816b364a3de,
+        type: 3}
+      propertyPath: journalEntryPage
+      value: 
+      objectReference: {fileID: 357902468}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f11e5b4021552d4583e0816b364a3de, type: 3}
 --- !u!1 &3394064625345653850 stripped
