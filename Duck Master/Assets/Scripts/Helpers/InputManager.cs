@@ -137,7 +137,6 @@ public class InputManager : MonoBehaviour
         //  In order to detect a tap
         //      I need to know if my touch has ended and is not swiping
         //      
-        Debug.Log(mRaycastHits[0].collider);
         if(tapCount > 0)
         {
             for (int i = 0; i < tapCount; ++i)

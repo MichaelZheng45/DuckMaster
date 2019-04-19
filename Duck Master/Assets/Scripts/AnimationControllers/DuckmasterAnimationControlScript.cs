@@ -44,7 +44,6 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
     void ChangeWalk(bool newWalk)
     {
         animator.SetBool("Walking", newWalk);
-        Debug.Log(newWalk);
     }
     void StartThrow()
     {

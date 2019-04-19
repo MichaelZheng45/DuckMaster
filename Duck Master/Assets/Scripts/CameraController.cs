@@ -42,11 +42,11 @@ public class CameraController : MonoBehaviour
         // Change this to first and none of last
         if (swipeCount == 1)
 		{
-			//moveDirection = Quaternion.Euler(0, 0, -(transform.rotation.eulerAngles.y)) * moveDirection * Time.deltaTime * cameraSpeed;
-			//Vector3 tempPos = transform.position + new Vector3(-moveDirection.x, 0, -moveDirection.y);
-            //
-			//// this has to change somehow? To a bounding box? Something for later on.
-			//// TO DO: Center based on the level
+			moveDirection = Quaternion.Euler(0, 0, -(transform.rotation.eulerAngles.y)) * moveDirection * Time.deltaTime * cameraSpeed;
+			Vector3 tempPos = transform.position + new Vector3(-moveDirection.x, 0, -moveDirection.y);
+            
+			// this has to change somehow? To a bounding box? Something for later on.
+			// TO DO: Center based on the level
 			//if (tempPos.x >= lowerBounds.x && tempPos.x <= upperBounds.x && tempPos.z >= lowerBounds.y && tempPos.z <= upperBounds.y)
 			//{
 			//	transform.position = tempPos;
@@ -54,13 +54,43 @@ public class CameraController : MonoBehaviour
 		}
 		else if(swipeCount >= 2)
 		{
-			
+            Vector2 touchZeroPrevPos = swipeData[0].currentPos - swipeData[0].deltaPos;
+            Vector2 touchOnePrevPos = swipeData[1].currentPos - swipeData[1].deltaPos;
+
+            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+            float touchDeltaMag = (swipeData[0].currentPos - swipeData[1].currentPos).magnitude;
+
+            float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+
+            Debug.Log(deltaMagnitudeDiff);
 			// do rotation instead
-			//transform.Rotate(0, moveDirection.x, 0);
-			// TO DO: Make it center of map
-			float rotation = (swipeData[0].direction == InputManager.SwipeDirection.RIGHT || swipeData[0].direction == InputManager.SwipeDirection.LEFT) ?
-				cameraRotationSpeed * moveDirection.x * Time.deltaTime : cameraRotationSpeed * moveDirection.y * Time.deltaTime;
-			transform.RotateAround(rotateAroundPos, Vector3.up, rotation);
+            // I need to somehow tell if I'm pinching or if I'm rotating
+            if(Mathf.Abs(deltaMagnitudeDiff) > 1f)
+            {
+                transform.GetComponent<Camera>().orthographicSize += deltaMagnitudeDiff * .1f;
+                transform.GetComponent<Camera>().orthographicSize = Mathf.Max(transform.GetComponent<Camera>().orthographicSize, .1f);
+            }
+            else
+            {
+                float rotation = (swipeData[0].direction == InputManager.SwipeDirection.RIGHT || swipeData[0].direction == InputManager.SwipeDirection.LEFT) ?
+                cameraRotationSpeed * moveDirection.x * Time.deltaTime : cameraRotationSpeed * moveDirection.y * Time.deltaTime;
+                transform.RotateAround(rotateAroundPos, Vector3.up, rotation);
+            }
 		}
+    }
+
+    static private float Angle(Vector2 pos1, Vector2 pos2)
+    {
+        Vector2 from = pos2 - pos1;
+        Vector2 to = new Vector2(1, 0);
+        float result = Vector2.Angle(from, to);
+        Vector3 cross = Vector3.Cross(from, to);
+
+        if(cross.z > 0)
+        {
+            result = 360f - result;
+        }
+
+        return result;
     }
 }
