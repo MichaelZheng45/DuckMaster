@@ -68,7 +68,7 @@ public class duckBehaviour : MonoBehaviour
     [Header("Hold Data")]
     //hold data
     //height for duck when being held
-	[SerializeField] float duckHeightAtHold = .7f;
+    [SerializeField] float duckHeightAtHold = .7f;
 
     //throw data
     [Header("Throw Data")]
@@ -164,7 +164,7 @@ public class duckBehaviour : MonoBehaviour
             if (mDuckState == DuckStates.RETURN)
             {
                 //check bait system for objects in line of sight
-                GameObject target = baitSystem.duckLOSBait(duckTransform.forward,transform.position, attractDistance);
+                GameObject target = baitSystem.duckLOSBait(duckTransform.forward, transform.position, attractDistance);
 
                 if (target != null)
                 {
@@ -181,12 +181,14 @@ public class duckBehaviour : MonoBehaviour
     public void prepThrow()
     {
         beingThrown = true;
+        AnimationEventStuff.Throw();
     }
 
     //duck is startled,maybe have a animation of the duck startled?
     public void startleduck()
     {
         startled = true;
+        AnimationEventStuff.Whistle();
     }
 
 
@@ -200,8 +202,11 @@ public class duckBehaviour : MonoBehaviour
     {
         switch (mDuckState)
         {
+            case DuckStates.AT_APPLEBEES:
+                //AnimationEventStuff.DuckmasterThrowing();
+                break;
             case DuckStates.INAIR:
-                AnimationEventStuff.DuckmasterThrowing();
+                AnimationEventStuff.DuckInAirChange(true);
                 break;
             case DuckStates.RUN:
                 AnimationEventStuff.DuckWalkingChange(true);
@@ -214,6 +219,7 @@ public class duckBehaviour : MonoBehaviour
                 break;
             case DuckStates.HELD:
                 AnimationEventStuff.DuckWalkingChange(false);
+                AnimationEventStuff.DuckHeldChange(true);
                 break;
 
             default:
@@ -240,9 +246,9 @@ public class duckBehaviour : MonoBehaviour
         }
         else if (mDuckState == DuckStates.INAIR || mDuckState == DuckStates.AT_APPLEBEES)
         {
-			travelInAir();
+            travelInAir();
         }
-        else if(mDuckState == DuckStates.BAIT_REPEL)
+        else if (mDuckState == DuckStates.BAIT_REPEL)
         {
             repelledBait();
         }
@@ -264,73 +270,73 @@ public class duckBehaviour : MonoBehaviour
             }
             else if (mDuckState == DuckStates.BAITED)
             {
-				attractedToBait();
+                attractedToBait();
             }
 
             if (mDuckState == DuckStates.HELD)
             {
-                if(beingThrown)
+                if (beingThrown)
                 {
-                    duckTransform.position = playerHand.transform.position;
+                    //duckTransform.position = playerHand.transform.position;
                 }
                 else
                 {
                     duckTransform.position = playerTransform.position + new Vector3(0, duckHeightAtHold, 0);
-          
+
                 }
                 transform.rotation = playerTransform.rotation;
             }
         }
     }
 
-	//flowing in air
-	private void travelInAir()
-	{
-		currentTime += Time.deltaTime;
-		if (currentTime < totalTime)
-		{
-			float n = throwDistance * (currentTime / totalTime);
-			float yPos = startingPos.y + parabolaA * Mathf.Pow(n, 2) + parabolaB * n + parabolaC;
+    //flowing in air
+    private void travelInAir()
+    {
+        currentTime += Time.deltaTime;
+        if (currentTime < totalTime)
+        {
+            float n = throwDistance * (currentTime / totalTime);
+            float yPos = startingPos.y + parabolaA * Mathf.Pow(n, 2) + parabolaB * n + parabolaC;
             Vector3 forward = startingPos + new Vector3(direction.x, 0, direction.z) * n;
-			duckTransform.position = new Vector3(forward.x, yPos, forward.z);
-		}
-		else
-		{
+            duckTransform.position = new Vector3(forward.x, yPos, forward.z);
+        }
+        else
+        {
             //bool stillPeppered = false;
 
             //check if landed on geyser
             //Vector3 target = GameManager.Instance.checkGeyser(targetPos, startingPos);
             if (mDuckState == DuckStates.AT_APPLEBEES)
             {
-                ChangeDuckState(DuckStates.BAITED); 
-             //   stillPeppered = true;
+                ChangeDuckState(DuckStates.BAITED);
+                //   stillPeppered = true;
 
-               // if (target == Vector3.zero)
-               // {
-                    lookForBait();
-               //}
+                // if (target == Vector3.zero)
+                // {
+                lookForBait();
+                //}
             }
             else
             {
                 ChangeDuckState(DuckStates.STILL);
             }
-	
+
             //if there is geyser rethrow
             //if (target != Vector3.zero)
-           // {
-           //     throwDuck(target, stillPeppered);
-           // }
+            // {
+            //     throwDuck(target, stillPeppered);
+            // }
         }
-	}
+    }
 
-	//bait
-	private void attractedToBait()
-	{
-		Vector3 baitDirection = targetBait.transform.position - duckTransform.position;
-		duckTransform.position += baitDirection.normalized * duckBaitedVelocity;
+    //bait
+    private void attractedToBait()
+    {
+        Vector3 baitDirection = targetBait.transform.position - duckTransform.position;
+        duckTransform.position += baitDirection.normalized * duckBaitedVelocity;
 
-		if (duckAtBaitDistance > baitDirection.magnitude || (targetBait.tag == "RepelBait" && duckAtRepelBaitDistance > baitDirection.magnitude))
-		{
+        if (duckAtBaitDistance > baitDirection.magnitude || (targetBait.tag == "RepelBait" && duckAtRepelBaitDistance > baitDirection.magnitude))
+        {
             string targetTag = targetBait.tag;
             baitSystem.removeBait(targetBait);
 
@@ -345,16 +351,16 @@ public class duckBehaviour : MonoBehaviour
                 //search move in opposite direction five spaces away
                 for (int count = 1; count < repelDistance; count++)
                 {
-                    DuckTile currentTile = tileMap.getTileFromPosition(duckTransform.position + (-1 * direction * (count-.5f)));
-                    if (currentTile != null && currentTile.mHeight == currentHeight &&(currentTile.mType == DuckTile.TileType.PassableBoth || currentTile.mType == DuckTile.TileType.UnpassableMaster))
+                    DuckTile currentTile = tileMap.getTileFromPosition(duckTransform.position + (-1 * direction * (count - .5f)));
+                    if (currentTile != null && currentTile.mHeight == currentHeight && (currentTile.mType == DuckTile.TileType.PassableBoth || currentTile.mType == DuckTile.TileType.UnpassableMaster))
                     {
                         furthestTile = currentTile;
                     }
                 }
 
-                if(furthestTile != null)
+                if (furthestTile != null)
                 {
-                    repelTargetPos = furthestTile.mPosition + new Vector3(0,aboveTileHeight,0);
+                    repelTargetPos = furthestTile.mPosition + new Vector3(0, aboveTileHeight, 0);
                     mDuckRotation.rotateDuck(repelTargetPos - duckTransform.position);
                     ChangeDuckState(DuckStates.BAIT_REPEL);
                 }
@@ -363,7 +369,7 @@ public class duckBehaviour : MonoBehaviour
                     lookForBait();
                 }
             }
-            else if(targetTag == "PepperBait")
+            else if (targetTag == "PepperBait")
             {
                 //reverse raycast to find furthest tile to move to
                 for (int count = pepperLaunchDistance; count > 0; count--)
@@ -390,8 +396,8 @@ public class duckBehaviour : MonoBehaviour
             {
                 lookForBait();
             }
-		}
-	}
+        }
+    }
 
     private void repelledBait()
     {
@@ -419,18 +425,18 @@ public class duckBehaviour : MonoBehaviour
         }
     }
 
-	//move through the given path
-	void movePaths()
+    //move through the given path
+    void movePaths()
     {
         Vector3 direction = (tilePath[tilePathIndex] + new Vector3(0, aboveTileHeight, 0) - duckTransform.position);
-       
+
         duckTransform.position += direction.normalized * pathVelocity;
 
         //approaches the next tile, update new target tile to move to
         if (direction.magnitude < pathApproachValue)
         {
             tilePathIndex--;
-           
+
             if (tilePathIndex < 0)
             {
                 tilePath.Clear();
@@ -471,7 +477,7 @@ public class duckBehaviour : MonoBehaviour
         }
         else if (playerDistance < followThreshold)
         {
-            if(positionCount != 0)
+            if (positionCount != 0)
             {
                 //reset data
                 targetPoint = Vector3.zero;
@@ -499,7 +505,7 @@ public class duckBehaviour : MonoBehaviour
 
             //find direction and follow
             float realVelocity;
-            if(playerDistance > 1)
+            if (playerDistance > 1)
             {
                 realVelocity = followVelocity + .01f;
             }
@@ -508,7 +514,7 @@ public class duckBehaviour : MonoBehaviour
                 realVelocity = followVelocity;
             }
             Vector3 dir = targetPoint - duckTransform.position;
-            duckTransform.position += dir.normalized * realVelocity;        
+            duckTransform.position += dir.normalized * realVelocity;
 
             //check if approaching distance
             if (dir.magnitude < toPointDistance)
@@ -536,7 +542,7 @@ public class duckBehaviour : MonoBehaviour
     void addnewPos()
     {
         Vector3 newPos = playerTransform.position;
-        newPos += new Vector3(Random.Range(-targetRadius * 100, targetRadius * 100) / 100,-aboveTileHeight, Random.Range(-targetRadius * 100, targetRadius * 100) / 100);
+        newPos += new Vector3(Random.Range(-targetRadius * 100, targetRadius * 100) / 100, -aboveTileHeight, Random.Range(-targetRadius * 100, targetRadius * 100) / 100);
         positionListData.Enqueue(newPos);
         positionCount++;
     }
@@ -591,7 +597,7 @@ public class duckBehaviour : MonoBehaviour
         //animation being thrown is off
         beingThrown = false;
 
-        if(peppered)
+        if (peppered)
         {
             ChangeDuckState(DuckStates.AT_APPLEBEES);
         }
@@ -602,9 +608,9 @@ public class duckBehaviour : MonoBehaviour
         // https://www.desmos.com/calculator/eryeuvorvr
 
         currentTime = 0;
-        Vector3 Difference = target + new Vector3(0,aboveTileHeight,0) - duckTransform.position;
-        throwDistance = new Vector3(Difference.x,0,Difference.z).magnitude;
-        direction =   new Vector3(Difference.x,0,Difference.z).normalized;
+        Vector3 Difference = target + new Vector3(0, aboveTileHeight, 0) - duckTransform.position;
+        throwDistance = new Vector3(Difference.x, 0, Difference.z).magnitude;
+        direction = new Vector3(Difference.x, 0, Difference.z).normalized;
         startingPos = duckTransform.position;
         targetPos = target;
 
@@ -628,13 +634,13 @@ public class duckBehaviour : MonoBehaviour
         float D3 = (BMultiplier * D1) + D2;
 
         parabolaA = D3 / A3;
-        parabolaB = (D1 - (A1 * parabolaA))/B1;
+        parabolaB = (D1 - (A1 * parabolaA)) / B1;
         parabolaC = initialPoint.y - parabolaA * Mathf.Pow(initialPoint.x, 2) - parabolaB * initialPoint.x;
     }
 
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.tag == "Geyser" && (mDuckState == DuckStates.INAIR ||mDuckState == DuckStates.AT_APPLEBEES))
+        if (collision.gameObject.tag == "Geyser" && (mDuckState == DuckStates.INAIR || mDuckState == DuckStates.AT_APPLEBEES))
         {
             bool peppered = false;
             float interval = 1; //reduces the range of the launch distance
@@ -649,7 +655,7 @@ public class duckBehaviour : MonoBehaviour
 
             int currentHeight = tileMap.getTileFromPosition(duckTransform.position).mHeight;
             Vector3 direction = targetPos - startingPos;
-            for(float count = direction.magnitude; count > 0; count--)
+            for (float count = direction.magnitude; count > 0; count--)
             {
                 DuckTile tile = tileMap.getTileFromPosition(duckTransform.position + ((interval * count) * direction.normalized));
                 if (tile != null && (tile.mHeight == currentHeight || tile.mType == DuckTile.TileType.PassableBoth || tile.mType == DuckTile.TileType.UnpassableMaster))
@@ -658,7 +664,7 @@ public class duckBehaviour : MonoBehaviour
                     target = tile.mPosition;
                 }
             }
-   
+
             throwDuck(target, peppered);
         }
     }

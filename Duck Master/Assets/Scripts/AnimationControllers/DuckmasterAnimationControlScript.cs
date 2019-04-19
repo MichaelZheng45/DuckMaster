@@ -26,12 +26,14 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
     {
         AnimationEventStuff.onDuckmasterWalkingChange += ChangeWalk;
         AnimationEventStuff.onThrow += StartThrow;
+        AnimationEventStuff.onWhistle += Whistle;
     }
 
     void Unload()
     {
         AnimationEventStuff.onDuckmasterWalkingChange -= ChangeWalk;
         AnimationEventStuff.onThrow -= StartThrow;
+        AnimationEventStuff.onWhistle -= Whistle;
     }
 
     private void OnDisable()
@@ -48,6 +50,20 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
     {
         animator.SetTrigger("Throw");
     }
+    void Whistle()
+    {
+        animator.SetTrigger("Whistle");
+    }
+
+    public void ContinueThrow()
+    {
+        GameManager.Instance.masterThrow();
+    }
+    public void ContinueRecall()
+    {
+        GameManager.Instance.masterRecall();
+    }
+
 
     public void PlaySound(AnimationEvent soundsToPlay)
     {

@@ -26,22 +26,39 @@ public class DuckAnimationControlScript : MonoBehaviour
     {
         AnimationEventStuff.onDuckWalkingChange += ChangeWalk;
         AnimationEventStuff.onThrow += StartThrow;
+        AnimationEventStuff.onDuckHeldChange += ChangeHeld;
+        AnimationEventStuff.onDuckInAirChange += ChangeInAir;
     }
 
     private void OnDisable()
     {
         AnimationEventStuff.onDuckWalkingChange -= ChangeWalk;
         AnimationEventStuff.onThrow -= StartThrow;
+        AnimationEventStuff.onDuckHeldChange -= ChangeHeld;
+        AnimationEventStuff.onDuckInAirChange -= ChangeInAir;
     }
 
     void ChangeWalk(bool newWalk)
     {
         animator.SetBool("Walking", newWalk);
+        ChangeHeld(false);
+        ChangeInAir(false);
     }
 
     void StartThrow()
     {
         animator.SetTrigger("Throw");
+        ChangeHeld(false);
+        ChangeInAir(true);
+    }
+
+    void ChangeHeld(bool newHeld)
+    {
+        animator.SetBool("Held", newHeld);
+    }
+    void ChangeInAir(bool newInAir)
+    {
+        animator.SetBool("InAir", newInAir);
     }
 
 

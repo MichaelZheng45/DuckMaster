@@ -21,15 +21,15 @@ public class GameManager : MonoBehaviour
     }
 
     //systems objects
-    [SerializeField] 
+    [SerializeField]
     private GameObject cameraMain;
-    [SerializeField] 
+    [SerializeField]
     private GameObject highlighter;
     [SerializeField]
     private GameObject altimeter;
 
     //playable objects
-    [SerializeField] 
+    [SerializeField]
     private GameObject player;
     [SerializeField]
     private GameObject duck;
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(unFriendlyList == null)
+        if (unFriendlyList == null)
         {
             unFriendlyList = new List<unfreindlyScript>();
         }
@@ -81,13 +81,12 @@ public class GameManager : MonoBehaviour
                         mTileMapScriptableObject.levelHeights,
                         mTileMapScriptableObject.levelWidths);
 
-	//	movePlayerTo(new Vector3(0, 0, 4));
+        //	movePlayerTo(new Vector3(0, 0, 4));
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        masterPrep();
     }
 
     public bool checkIsHoldingDuck()
@@ -114,36 +113,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    float timerThrowWait = .5f; //<--Lag Time to throw duck
-    float timerRecallWait = .2f; //<---Lag Time to recall duck
-    void masterPrep()
+    //float timerThrowWait = .5f; //<--Lag Time to throw duck
+    //float timerRecallWait = .2f; //<---Lag Time to recall duck
+
+    public void masterThrow()
     {
-        if(isThrowing)
-        {
-            //prep to throw 
-            currentTimer += Time.deltaTime;
-            if(currentTimer > timerThrowWait)
-            {
-                //throw duck
-                isThrowing = false;
-                currentTimer = 0;
-                duckBehaviourSys.throwDuck(throwTilePosition);
-            }
-        }
+        isThrowing = false;
+        duckBehaviourSys.throwDuck(throwTilePosition);
+    }
 
-        if(isRecalling)
-        {
-            currentTimer += Time.deltaTime;
-            if(currentTimer > timerRecallWait)
-            {
-                //recall
-                isRecalling = false;
-                currentTimer = 0;
-
-                //give to duck
-                duckBehaviourSys.applyNewPath(duckTilePath);
-            }
-        }
+    public void masterRecall()
+    {
+        isRecalling = false;
+        duckBehaviourSys.applyNewPath(duckTilePath);
     }
 
     public void enableThrowDuck(RaycastHit hit)
@@ -156,7 +138,7 @@ public class GameManager : MonoBehaviour
         //check if anything is in the way (need to be changed)
         if (!Physics.Raycast(duckTransform.position, dir.normalized, out athit, dir.magnitude, unthrowMask) && dir.magnitude < throwDistanceMax)
         {
-			DuckTile atTile = mTileMap.getTileFromPosition(pos);
+            DuckTile atTile = mTileMap.getTileFromPosition(pos);
 
             //check if throwable
             if (atTile.mType == DuckTile.TileType.PassableBoth || atTile.mType == DuckTile.TileType.UnpassableMaster)
@@ -168,7 +150,7 @@ public class GameManager : MonoBehaviour
                 Vector3 Difference = atTile.mPosition - playerTransform.position;
                 playerTransform.transform.forward = new Vector3(Difference.x, 0, Difference.z).normalized;
 
-                throwTilePosition = atTile.mPosition; 
+                throwTilePosition = atTile.mPosition;
             }
         }
     }
@@ -299,7 +281,7 @@ public class GameManager : MonoBehaviour
                     string currentBlock = listGridSelStrings[index];
                     Vector3 pos = new Vector3(j, i, k);
 
-					// Add specific tile outputs here
+                    // Add specific tile outputs here
                     if (currentBlock == blockTypes[0])
                     {
                         // passable both
