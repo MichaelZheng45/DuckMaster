@@ -31,7 +31,7 @@ public class BaitSystem : MonoBehaviour
         placedBaits = new List<GameObject>();
 
 		//temp
-		spawnBait(new Vector3(3, 0, 5), BaitTypes.PEPPER);
+		//spawnBait(new Vector3(4, 0, 3), BaitTypes.REPEL);
 		
     }
     //checks if that bait is available, returns true
@@ -173,7 +173,18 @@ public class BaitSystem : MonoBehaviour
 	{
 		//spawn bait
 		GameObject newBait = Instantiate(baitObjects[(int)type], pos + new Vector3(0,heightAdd,0), gameObject.transform.rotation);
+        baitAmount[(int)type]--;
 		placedBaits.Add(newBait);
 	}
+
+    public int GetBaitAmount(BaitTypes type)
+    {
+        return baitAmount[(int)type];
+    }
+
+    public List<GameObject> GetBaitObjects()
+    {
+        return baitObjects;
+    }
 
 }

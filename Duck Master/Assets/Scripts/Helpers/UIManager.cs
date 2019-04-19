@@ -5,25 +5,76 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+
     [SerializeField]
     private GameObject primaryButton;
-    private Text primaryButtonText;
-    private Text throwButtonText;
+    
     [SerializeField]
     private GameObject throwButton;
     [SerializeField]
+    private GameObject primaryBaitButton;
+    [SerializeField]
+    private GameObject attractButton;
+    [SerializeField]
+    private GameObject repelButton;
+    [SerializeField]
+    private GameObject pepperButton;
+
+    //private Text primaryButtonText;
+    //private Text throwButtonText;
+
+    [SerializeField]
+    Texture2D PickUpUnPushTex;
+    [SerializeField]
+    Texture2D PickUpPushTex;
+    [SerializeField]
+    Texture2D throwUnPushTex;
+    [SerializeField]
+    Texture2D throwPushTex;
+    [SerializeField]
+    Texture2D whistleUnPushTex;
+    [SerializeField]
+    Texture2D whistlePushTex;
+   
+    private Text attractText;
+    private Text repelText;
+    private Text pepperText;
+
+    BaitSystem bait;
+    BaitTypes currentType;
+
+    [SerializeField]
     private double magnitude = 1.5;
     private bool throwToggle;
+    private bool baitToggle;
     private const string WHISTLE = "WHISTLE";
     private const string PICKUP = "PICK UP";
     private const string NONE = "   ";
+    private string currentPrimaryState = "WHISTLE";
+    private bool duckRecalled;
 
     // Start is called before the first frame update
     void Start()
     {
-        primaryButtonText = primaryButton.GetComponentInChildren<Text>();
-        throwButtonText = throwButton.GetComponentInChildren<Text>();
+        duckRecalled = false;
+        currentType = BaitTypes.INVALID;
+        //primaryButtonText = primaryButton.GetComponentInChildren<Text>();
+        //throwButtonText = throwButton.GetComponentInChildren<Text>();
+        attractText = attractButton.GetComponentInChildren<Text>();
+        repelText = repelButton.GetComponentInChildren<Text>();
+        pepperText = pepperButton.GetComponentInChildren<Text>();
+
+        
+        //pickUpUnpushed.texture = PickUpUnPushTex;
+        //pickUpPushed.texture = PickUpPushTex;
+        //throwUnPushed.texture = throwUnPushTex;
+        //throwPushed.texture = throwPushTex;
+        //whistleUnPushed.texture = whistleUnPushTex;
+        //whistlePushed.texture = whistlePushTex;
+
         throwToggle = false;
+        baitToggle = false;
+        bait = GameManager.Instance.getPlayerTrans().GetComponentInChildren<BaitSystem>();
     }
 
     // Update is called once per frame
@@ -35,33 +86,111 @@ public class UIManager : MonoBehaviour
         //Graphical stuff
         if (throwToggle)
         {
-            throwButton.GetComponent<RawImage>().color = Color.white;
-            throwButtonText.color = Color.black;   
-            //ColorBlock block = throwButton.GetComponent<Button>().colors;
-            //block.normalColor = Color.green;
-            //block.highlightedColor = new Color(100, 255, 100, 255);
-            //throwButton.GetComponent<Button>().colors = block;
+            RawImage tex = throwButton.GetComponent<RawImage>();
+            //tex = throwPushed;
+            tex.texture = throwPushTex;
+            //throwButtonText.color = Color.black;   
         }
 
         else
         {
-            throwButton.GetComponent<RawImage>().color = Color.black;
-            throwButtonText.color = Color.white;
-            //ColorBlock block = throwButton.GetComponent<Button>().colors;
-            //block.normalColor = Color.white;
-            //block.highlightedColor = Color.white;
-            //throwButton.GetComponent<Button>().colors = block;
+            RawImage tex = throwButton.GetComponent<RawImage>();
+            //tex = throwUnPushed;
+            tex.texture = throwUnPushTex;
+            //throwButton.GetComponent<RawImage>().color = Color.black;
+            //throwButtonText.color = Color.white;
         }
+
+        if (baitToggle)
+        {
+            primaryBaitButton.GetComponent<RawImage>().color = Color.white;
+            attractButton.SetActive(true);
+
+            int num = bait.GetBaitAmount(BaitTypes.ATTRACT);
+
+            attractText.text = num.ToString();
+
+            num = bait.GetBaitAmount(BaitTypes.REPEL);
+
+            repelButton.SetActive(true);
+            repelText.text = num.ToString();
+
+            num = bait.GetBaitAmount(BaitTypes.PEPPER);
+
+            pepperButton.SetActive(true);
+            pepperText.text = num.ToString();
+        }
+
+        else
+        {
+            //primaryBaitButton.GetComponent<RawImage>().color = Color.black;
+            attractButton.SetActive(false);
+            repelButton.SetActive(false);
+            pepperButton.SetActive(false);
+        }
+
+        if (currentType == BaitTypes.ATTRACT)
+        {
+            attractButton.GetComponent<RawImage>().color = Color.green;
+            
+            repelButton.GetComponent<RawImage>().color = Color.white;
+            
+            pepperButton.GetComponent<RawImage>().color = Color.white;
+        }
+
+        if (currentType == BaitTypes.REPEL)
+        {
+            attractButton.GetComponent<RawImage>().color = Color.white;
+
+            repelButton.GetComponent<RawImage>().color = Color.green;
+
+            pepperButton.GetComponent<RawImage>().color = Color.white;
+        }
+
+        if (currentType == BaitTypes.PEPPER)
+        {
+            attractButton.GetComponent<RawImage>().color = Color.white;
+
+            repelButton.GetComponent<RawImage>().color = Color.white;
+
+            pepperButton.GetComponent<RawImage>().color = Color.green;
+        }
+
+        if (currentType == BaitTypes.INVALID)
+        {
+            attractButton.GetComponent<RawImage>().color = Color.white;
+            attractText.color = Color.white;
+
+            repelButton.GetComponent<RawImage>().color = Color.white;
+            repelText.color = Color.white;
+
+            pepperButton.GetComponent<RawImage>().color = Color.white;
+            pepperText.color = Color.white;
+        }
+
 
         //Determine whether to whistle or hold - Do the calculation here to avoid merge conflict
         //Also check for throw
         if (!GameManager.Instance.checkIsHoldingDuck())
         {
             if ((duck.position - player.position).magnitude < magnitude && !GameManager.Instance.checkIsHoldingDuck())
-                primaryButtonText.text = PICKUP;
+            {
+                //reset
+                duckRecalled = false;
+                RawImage tex = primaryButton.GetComponent<RawImage>();
+                tex.texture = PickUpUnPushTex;
+                currentPrimaryState = PICKUP;
+            }
 
             else
-                primaryButtonText.text = WHISTLE;
+            {
+                if (!duckRecalled)
+                {
+                    RawImage tex = primaryButton.GetComponent<RawImage>();
+                    tex.texture = whistleUnPushTex;
+                    currentPrimaryState = WHISTLE;
+                }
+            }
 
             throwButton.SetActive(false);
         }
@@ -88,14 +217,18 @@ public class UIManager : MonoBehaviour
                             //print("valid throw target");
                             GameManager.Instance.enableThrowDuck(hit);
                             throwToggle = false;
-                            primaryButtonText.text = WHISTLE;
+                            RawImage tex = primaryButton.GetComponent<RawImage>();
+                            //tex = whistleUnPushed;
+                            tex.texture = whistleUnPushTex;
                         }
                     }
 
                 }
             }
+            return;
         }
-        else
+        //Whistle Control
+        if (!throwToggle && !baitToggle)
         {
             //path find call
             if (manager != null)
@@ -108,25 +241,58 @@ public class UIManager : MonoBehaviour
                     {
                         if (hit.collider.gameObject.name == "ground(Clone)")
                         {
-                            //print("hit ground");
                             Vector3 pos = hit.collider.gameObject.transform.position;
-                            //Debug.Log(pos);
                             GameManager.Instance.movePlayerTo(pos);
-                            /*
-                            DuckTile tile = GameManager.Instance.getTileFromPosition(pos);
+                            RawImage tex = primaryButton.GetComponent<RawImage>();
+                            //tex = whistlePushed;
+                            tex.texture = whistlePushTex;
+                        }
+                    }
+                }
+            }
+            return;
+        }
+
+        //Bait Logic Input
+        if (baitToggle)
+        {
+            if (manager != null)
+            {
+                List<RaycastHit> hitList = manager.GetTapHits();
+
+                foreach (RaycastHit hit in hitList)
+                {
+                    if (hit.collider != null)
+                    {
+                        if (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(clone)")
+                        {
+                            Vector3 pos = hit.collider.gameObject.transform.position;
                             
-                            if (tile != null)
+                            if (currentType == BaitTypes.ATTRACT)
                             {
-                                print("Received tile pos is " + tile.mPosition.ToString());
-                                GameManager.Instance.movePlayerTo(tile.mPosition);
+                                bait.spawnBait(pos, BaitTypes.ATTRACT);
                             }
-                            */
+
+                            if (currentType == BaitTypes.REPEL)
+                            {
+                                bait.spawnBait(pos, BaitTypes.REPEL);
+                            }
+
+                            if (currentType == BaitTypes.PEPPER)
+                            {
+                                bait.spawnBait(pos, BaitTypes.PEPPER);
+                            }
+
                         }
                     }
 
                 }
             }
+            return;
         }
+
+
+
     }
 
     public void ToggleThrow()
@@ -137,14 +303,43 @@ public class UIManager : MonoBehaviour
     //To Pick up or Whistle for Duck, this will deduce that
     public void PrimaryButtonCall()
     {
-        if (primaryButtonText.text == PICKUP)
+        if (currentPrimaryState == PICKUP)
         {
             GameManager.Instance.pickUpDuck();
-            primaryButtonText.text = NONE;
+            RawImage tex = primaryButton.GetComponent<RawImage>();
+            //tex = pickUpPushed;
+            tex.texture = PickUpPushTex;
         }
 
-        if (primaryButtonText.text == WHISTLE)
+        if (currentPrimaryState == WHISTLE)
+        {
+            RawImage tex = primaryButton.GetComponent<RawImage>();
+            duckRecalled = true;
+            tex.texture = whistlePushTex;
             GameManager.Instance.duckRecall();
+        }
 
     }
+
+    public void ToggleBait()
+    {
+        baitToggle = !baitToggle;
+        currentType = BaitTypes.INVALID;
+    }
+
+    public void SetBaitType(string type)
+    {
+        if (type == "Attract")
+            currentType = BaitTypes.ATTRACT;
+
+        if (type == "Repel")
+            currentType = BaitTypes.REPEL;
+
+        if (type == "Pepper")
+            currentType = BaitTypes.PEPPER;
+
+        if (type == "Invalid")
+            currentType = BaitTypes.INVALID;
+    }
+
 }

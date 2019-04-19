@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class buttonScript : LogicInput
 {
-	bool pressed = false;
+	//bool pressed = false;
 	[SerializeField]float waitPeriod;
 	float timer;
 
@@ -28,13 +28,15 @@ public class buttonScript : LogicInput
         //    pressed = !pressed;
         //}
 
-        if(pressed)
+       // if(pressed)
+        if (active)
 		{
 			timer += Time.deltaTime;
 			if(waitPeriod < timer)
 			{
 				timer = 0;
-				pressed = false;
+				//pressed = false;
+                active = false;
                 CallChange();
 			}
 		}
@@ -43,8 +45,9 @@ public class buttonScript : LogicInput
 	private void OnTriggerEnter(Collider other)
 	{
 		string tag = other.gameObject.tag;
-		if (pressed == false &&(tag == "Duck" || tag == "Player"))
-		{
+        //if (pressed == false &&(tag == "Duck" || tag == "Player"))
+        if (active == false && (tag == "Duck" || tag == "Player"))
+        {
             active = true;
             CallChange();
 		}
