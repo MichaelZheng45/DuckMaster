@@ -756,7 +756,7 @@ Animator:
   m_GameObject: {fileID: 3690311607857424093}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 285ec4beb21267648b5c88e8376b5310, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -896,9 +896,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: -17}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3864256939829855444
 MonoBehaviour:
@@ -1040,7 +1040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3864256940320922210
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1167,9 +1167,9 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 20}
+  m_SizeDelta: {x: -17, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &3864256940364325959
 CanvasRenderer:
@@ -1247,8 +1247,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3864256940504938470}
   m_HandleRect: {fileID: 3864256940504938465}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 0.5
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1366,8 +1366,8 @@ RectTransform:
   m_Father: {fileID: 3864256939961905910}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.000000029802322, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1443,9 +1443,9 @@ RectTransform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 0}
+  m_SizeDelta: {x: 20, y: -17}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &3864256940613117220
 CanvasRenderer:
@@ -1524,7 +1524,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 3864256941111889094}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999979
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1564,7 +1564,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000050631675}
+  m_AnchoredPosition: {x: 0, y: -0.000046544003}
   m_SizeDelta: {x: 0, y: 769}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &3864256940911733703
@@ -1655,9 +1655,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc1c2a1f9841ba4daf72a510dd5b791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  journalEntryPage: {fileID: 3864256940320922237}
   jornalEntryButton: {fileID: 8753162278184244547, guid: 31acf51f4bcbe4647bd2477f811e6bad,
     type: 3}
   JournalText: {fileID: 3864256940422678485}
+  openJournal: {fileID: 3690311607857424093}
   goToJournalButtons: []
   SaveGame: {fileID: 11400000, guid: 2bdc46cc96f50d04c81f23eae640a1e4, type: 2}
 --- !u!1 &3864256940988326604
@@ -1741,7 +1743,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2140,7 +2142,7 @@ GameObject:
   - component: {fileID: 8855306169965726495}
   - component: {fileID: 8855306169965726494}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: GameUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

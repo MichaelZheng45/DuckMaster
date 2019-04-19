@@ -11,10 +11,13 @@ public class TableOfContents : MonoBehaviour
 
     Transform topMid;
     GameObject journalContainer;
+    [SerializeField]
     GameObject journalEntryPage;
     public GameObject jornalEntryButton;
     public Text JournalText;
 
+    [SerializeField]
+    GameObject openJournal;
     Animator flasher;
 
     Image JournalBackground;
@@ -26,7 +29,7 @@ public class TableOfContents : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LoadJournal();
+        //LoadJournal();
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
         {
@@ -36,12 +39,11 @@ public class TableOfContents : MonoBehaviour
         }
 
 
-
         JournalBackground = GetComponent<Image>();
         journalContainer = transform.GetChild(0).gameObject;
         topMid = journalContainer.transform.Find("TopMid");
-        flasher = GameObject.Find("OpenJournal").GetComponent<Animator>();
-        journalEntryPage = journalContainer.transform.Find("JournalPage").gameObject;
+        flasher = openJournal.GetComponent<Animator>();
+        //journalEntryPage = journalContainer.transform.Find("JournalPage").gameObject;
         CloseJournalEntry();
         CloseJournal();
 
