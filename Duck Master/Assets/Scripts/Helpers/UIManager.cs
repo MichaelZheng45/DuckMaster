@@ -159,13 +159,13 @@ public class UIManager : MonoBehaviour
         if (currentType == BaitTypes.INVALID)
         {
             attractButton.GetComponent<RawImage>().color = Color.white;
-            attractText.color = Color.white;
+            //attractText.color = Color.white;
 
             repelButton.GetComponent<RawImage>().color = Color.white;
-            repelText.color = Color.white;
+            //repelText.color = Color.white;
 
             pepperButton.GetComponent<RawImage>().color = Color.white;
-            pepperText.color = Color.white;
+            //pepperText.color = Color.white;
         }
 
 
