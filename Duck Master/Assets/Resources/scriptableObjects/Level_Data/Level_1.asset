@@ -19,15 +19,15 @@ MonoBehaviour:
   - Ground
   - Ground
   - Ground
+  - None
   - Ground
   - Ground
   - Ground
   - Ground
   - Ground
   - Ground
+  - None
   - Ground
-  - 
-  - 
   - Ground
   - Ground
   - Ground
@@ -66,6 +66,9 @@ MonoBehaviour:
   blockTypes:
   - Ground
   - Water
+  - Big Tree
+  - Rock
+  - Short Wall
   - None
   levelHeights: 07000000
   levelWidths: 07000000
