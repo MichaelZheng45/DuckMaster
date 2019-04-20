@@ -53,28 +53,23 @@ public class UIManager : MonoBehaviour
     private string currentPrimaryState = "WHISTLE";
     private bool duckRecalled;
 
+    List<GameObject> highlightedThrowTiles;
+
     // Start is called before the first frame update
     void Start()
     {
+        highlightedThrowTiles = new List<GameObject>();
         duckRecalled = false;
         currentType = BaitTypes.INVALID;
-        //primaryButtonText = primaryButton.GetComponentInChildren<Text>();
-        //throwButtonText = throwButton.GetComponentInChildren<Text>();
+      
         attractText = attractButton.GetComponentInChildren<Text>();
         repelText = repelButton.GetComponentInChildren<Text>();
         pepperText = pepperButton.GetComponentInChildren<Text>();
 
-        
-        //pickUpUnpushed.texture = PickUpUnPushTex;
-        //pickUpPushed.texture = PickUpPushTex;
-        //throwUnPushed.texture = throwUnPushTex;
-        //throwPushed.texture = throwPushTex;
-        //whistleUnPushed.texture = whistleUnPushTex;
-        //whistlePushed.texture = whistlePushTex;
-
         throwToggle = false;
         baitToggle = false;
         bait = GameManager.Instance.getPlayerTrans().GetComponentInChildren<BaitSystem>();
+        HighlightThrowTiles();
     }
 
     // Update is called once per frame
@@ -87,18 +82,15 @@ public class UIManager : MonoBehaviour
         if (throwToggle)
         {
             RawImage tex = throwButton.GetComponent<RawImage>();
-            //tex = throwPushed;
             tex.texture = throwPushTex;
-            //throwButtonText.color = Color.black;   
+            HighlightThrowTiles();
         }
 
         else
         {
             RawImage tex = throwButton.GetComponent<RawImage>();
-            //tex = throwUnPushed;
             tex.texture = throwUnPushTex;
-            //throwButton.GetComponent<RawImage>().color = Color.black;
-            //throwButtonText.color = Color.white;
+            UnHighlightTiles();
         }
 
         if (baitToggle)
@@ -159,13 +151,11 @@ public class UIManager : MonoBehaviour
         if (currentType == BaitTypes.INVALID)
         {
             attractButton.GetComponent<RawImage>().color = Color.white;
-            //attractText.color = Color.white;
 
             repelButton.GetComponent<RawImage>().color = Color.white;
-            //repelText.color = Color.white;
-
+            
             pepperButton.GetComponent<RawImage>().color = Color.white;
-            //pepperText.color = Color.white;
+
         }
 
 
@@ -214,11 +204,9 @@ public class UIManager : MonoBehaviour
                     {
                         if (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(Clone)")
                         {
-                            //print("valid throw target");
                             GameManager.Instance.enableThrowDuck(hit);
                             throwToggle = false;
                             RawImage tex = primaryButton.GetComponent<RawImage>();
-                            //tex = whistleUnPushed;
                             tex.texture = whistleUnPushTex;
                         }
                     }
@@ -244,7 +232,6 @@ public class UIManager : MonoBehaviour
                             Vector3 pos = hit.collider.gameObject.transform.position;
                             GameManager.Instance.movePlayerTo(pos);
                             RawImage tex = primaryButton.GetComponent<RawImage>();
-                            //tex = whistlePushed;
                             tex.texture = whistlePushTex;
                         }
                     }
@@ -307,7 +294,6 @@ public class UIManager : MonoBehaviour
         {
             GameManager.Instance.pickUpDuck();
             RawImage tex = primaryButton.GetComponent<RawImage>();
-            //tex = pickUpPushed;
             tex.texture = PickUpPushTex;
         }
 
@@ -342,4 +328,34 @@ public class UIManager : MonoBehaviour
             currentType = BaitTypes.INVALID;
     }
 
+    public void HighlightThrowTiles()
+    {
+        DuckTileMap tileMap = GameManager.Instance.GetTileMap();
+        float MaxThrow = GameManager.Instance.getPlayerTrans().GetComponent<PlayerAction>().getThrowDistance();
+
+        RaycastHit[] hitList = Physics.SphereCastAll(GameManager.Instance.getPlayerTrans().position, MaxThrow - 1, Vector3.down, LayerMask.NameToLayer("TileMask"));
+        
+        foreach (RaycastHit hit in hitList)
+        {
+            if (hit.collider != null && (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(Clone)"))
+            {
+                hit.collider.gameObject.GetComponent<Renderer>().material.color = Color.green;
+                highlightedThrowTiles.Add(hit.collider.gameObject);
+            }
+        }
+    }
+
+
+    public void UnHighlightTiles()
+    {
+        if (highlightedThrowTiles.Count > 0)
+        {
+            foreach(GameObject obj in highlightedThrowTiles)
+            {
+                obj.GetComponent<Renderer>().material.color = Color.white;
+            }
+
+            highlightedThrowTiles.Clear();
+        }
+    }
 }
