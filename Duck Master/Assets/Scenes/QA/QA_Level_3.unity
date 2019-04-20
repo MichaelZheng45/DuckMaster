@@ -1041,7 +1041,7 @@ PrefabInstance:
     - target: {fileID: 3394064625530781549, guid: be131ec3598f5db4fb450eafbb38353a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleBait
+      value: ToggleThrow
       objectReference: {fileID: 0}
     - target: {fileID: 3864256940911733701, guid: be131ec3598f5db4fb450eafbb38353a,
         type: 3}
