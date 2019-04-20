@@ -74,7 +74,8 @@ public class UIManager : MonoBehaviour
 
         throwToggle = false;
         baitToggle = false;
-        bait = GameManager.Instance.getPlayerTrans().GetComponentInChildren<BaitSystem>();
+        //bait = GameManager.Instance.getPlayerTrans().GetComponentInChildren<BaitSystem>();
+        bait = GameManager.Instance.GetBait();
     }
 
     // Update is called once per frame
@@ -103,16 +104,19 @@ public class UIManager : MonoBehaviour
             primaryBaitButton.GetComponent<RawImage>().color = Color.white;
             attractButton.SetActive(true);
 
-            int num = bait.GetBaitAmount(BaitTypes.ATTRACT);
+            //int num = bait.GetBaitAmount(BaitTypes.ATTRACT);
+            int num = GameManager.Instance.GetBait().GetBaitAmount(BaitTypes.ATTRACT);
 
             attractText.text = num.ToString();
 
-            num = bait.GetBaitAmount(BaitTypes.REPEL);
+            //num = bait.GetBaitAmount(BaitTypes.REPEL);
+            num = GameManager.Instance.GetBait().GetBaitAmount(BaitTypes.REPEL);
 
             repelButton.SetActive(true);
             repelText.text = num.ToString();
 
-            num = bait.GetBaitAmount(BaitTypes.PEPPER);
+            //num = bait.GetBaitAmount(BaitTypes.PEPPER);
+            num = GameManager.Instance.GetBait().GetBaitAmount(BaitTypes.PEPPER);
 
             pepperButton.SetActive(true);
             pepperText.text = num.ToString();
@@ -262,17 +266,20 @@ public class UIManager : MonoBehaviour
                             
                             if (currentType == BaitTypes.ATTRACT)
                             {
-                                bait.spawnBait(pos, BaitTypes.ATTRACT);
+                                //bait.spawnBait(pos, BaitTypes.ATTRACT);
+                                GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.ATTRACT);
                             }
 
                             if (currentType == BaitTypes.REPEL)
                             {
-                                bait.spawnBait(pos, BaitTypes.REPEL);
+                                //bait.spawnBait(pos, BaitTypes.REPEL);
+                                GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.REPEL);
                             }
 
                             if (currentType == BaitTypes.PEPPER)
                             {
-                                bait.spawnBait(pos, BaitTypes.PEPPER);
+                                //bait.spawnBait(pos, BaitTypes.PEPPER);
+                                GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.PEPPER);
                             }
 
                         }

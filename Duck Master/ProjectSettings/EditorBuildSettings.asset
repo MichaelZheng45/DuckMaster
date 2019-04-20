@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/QA/QA_Level_1.unity
     guid: 2099bd8034a3a3a4e975509968e6712d
   - enabled: 1
+    path: Assets/Scenes/QA/QA_Level_2.unity
+    guid: 1cd42d25ae1b9d940b19f7553bca6333
+  - enabled: 1
     path: Assets/Scenes/QA/QA_Level_3.unity
     guid: 64a415521dea6c0499fec5c865ac83da
   - enabled: 1
