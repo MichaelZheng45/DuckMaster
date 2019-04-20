@@ -2982,6 +2982,8 @@ MonoBehaviour:
   throwPushTex: {fileID: 2800000, guid: 1cade19098e208346b6eb4dc3e253696, type: 3}
   whistleUnPushTex: {fileID: 2800000, guid: 92c3eb126a0bf5d49bdfa5bca1fb9456, type: 3}
   whistlePushTex: {fileID: 2800000, guid: 6451605baa79168429b4c27d8ba3bdae, type: 3}
+  underGateMat: {fileID: 2100000, guid: 6cae08893ac63a74dad9e7db5433138f, type: 2}
+  waterMat: {fileID: 2100000, guid: 32e08eaa5c974894bbcca4b8731b2241, type: 2}
   magnitude: 1.5
 --- !u!222 &1176724931
 CanvasRenderer:
