@@ -39,8 +39,6 @@ public class UIManager : MonoBehaviour
     Material underGateMat;
     [SerializeField]
     Material waterMat;
-    [SerializeField]
-    Material normalGrass;
    
     private Text attractText;
     private Text repelText;
@@ -60,7 +58,7 @@ public class UIManager : MonoBehaviour
     private bool duckRecalled;
 
     List<GameObject> highlightedThrowTiles;
-    List<GameObject> underGateTiles;
+    static List<GameObject> underGateTiles;
 
     // Start is called before the first frame update
     void Start()
@@ -347,19 +345,8 @@ public class UIManager : MonoBehaviour
             if (hit.collider != null && hit.collider.gameObject.name == "ground(Clone)")
             {
                 Renderer rend = hit.collider.gameObject.GetComponent<Renderer>();
-
-                //If this is a gate tile on start up, permanently store it in the gate list so the proper material can be changed back to on un highlight
-                if (GameManager.Instance.GetTileMap().getTileFromPosition(hit.collider.gameObject.transform.position).mType == DuckTile.TileType.UnpassableBoth)
-                {
-                    underGateTiles.Add(hit.collider.gameObject);
-                    rend.material.color = Color.green;
-                }
-
-                else
-                {
-                    rend.material.color = Color.green;
-                    highlightedThrowTiles.Add(hit.collider.gameObject);
-                }
+                rend.material.color = Color.green;
+                highlightedThrowTiles.Add(hit.collider.gameObject);
             }
 
             if (hit.collider != null && hit.collider.gameObject.name == "water(Clone)")
@@ -398,5 +385,11 @@ public class UIManager : MonoBehaviour
                 obj.GetComponent<Renderer>().material = underGateMat;
             }
         }
+    }
+
+    //Need to get a reference to all tile objects to be able to reset material properly
+    public static void AddUnderGateTile(GameObject tile)
+    {
+        underGateTiles.Add(tile);
     }
 }

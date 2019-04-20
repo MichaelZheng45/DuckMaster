@@ -78,6 +78,7 @@ public class Gate : LogicOutput
         if (other.gameObject.name == "ground(Clone)")
         {
             other.gameObject.GetComponent<Renderer>().material = underTileMat;
+            UIManager.AddUnderGateTile(other.gameObject);
             print("colliding with ground tile");
             tilePosition = other.gameObject.transform.position;
             originalType = GameManager.Instance.GetTileMap().getTileFromPosition(tilePosition).mType;
