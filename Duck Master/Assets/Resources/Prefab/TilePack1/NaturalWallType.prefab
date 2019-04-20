@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1835136623566528505}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300000, guid: 45774aacb2dc7eb41b6de1233a1619b4, type: 3}
 --- !u!23 &1835136623566528511
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2e634251ebb4e0f4088a2eb215f909d9, type: 2}
+  - {fileID: 2100000, guid: 3a8e0109551e16946be853c8b8e69cc2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -99,10 +99,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1835136623566528509}
     m_Modifications:
-    - target: {fileID: 100000, guid: f7de32a1c0cdb764cb1769fb99798f7e, type: 3}
-      propertyPath: m_Name
-      value: BigTree
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f7de32a1c0cdb764cb1769fb99798f7e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.158
@@ -158,6 +154,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: f7de32a1c0cdb764cb1769fb99798f7e, type: 3}
       propertyPath: m_LocalScale.z
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f7de32a1c0cdb764cb1769fb99798f7e, type: 3}
+      propertyPath: m_Name
+      value: BigTree
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: f7de32a1c0cdb764cb1769fb99798f7e, type: 3}
       propertyPath: m_Materials.Array.data[0]
