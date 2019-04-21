@@ -7,12 +7,15 @@ public class DuckAnimationControlScript : MonoBehaviour
 {
     Animator animator;
     SoundFile[] Sounds;
+	[SerializeField]
     GameObject SoundPlayer;
+	AudioSource audioSource;
 
     public void Start()
     {
-        SoundPlayer = Resources.Load<GameObject>("Sounds/Soundplayer");
+        //SoundPlayer = Resources.Load<GameObject>("Sounds/Soundplayer");
         animator = GetComponent<Animator>();
+		audioSource = SoundPlayer.GetComponent<AudioSource>();
 
         Sounds = new SoundFile[] {
             //new SoundFile(Resources.Load<AudioClip>("Sounds/Duckmaster/GrassStep1"), new string[]{ "Duck", "Walking" }),
@@ -84,13 +87,11 @@ public class DuckAnimationControlScript : MonoBehaviour
         }
         if (tempSounds.Count > 0)
         {
+			// TO DO: Change this so it's playing on a single block
             AudioClip ac = tempSounds[(int)Random.Range(0, tempSounds.Count)].GetClip();
-            GameObject g = Instantiate(SoundPlayer);
-            g.transform.position = transform.position;
-            g.GetComponent<AudioSource>().clip = ac;
-            g.GetComponent<AudioSource>().Play();
-            Destroy(g, ac.length);
-        }
+			audioSource.clip = ac;
+			audioSource.Play();
+		}
     }
 
 }

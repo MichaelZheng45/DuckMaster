@@ -7,12 +7,16 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
 {
     Animator animator;
     SoundFile[] Sounds;
+	[SerializeField]
     GameObject SoundPlayer;
+
+	AudioSource audioSource;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-        SoundPlayer = Resources.Load<GameObject>("Sounds/Soundplayer");
+		audioSource = SoundPlayer.GetComponent<AudioSource>();
+        //SoundPlayer = Resources.Load<GameObject>("Sounds/Soundplayer");
 
         Sounds = new SoundFile[] {
             new SoundFile(Resources.Load<AudioClip>("Sounds/Duckmaster/GrassStep1"), new string[]{ "Duckmaster", "Walking" }),
@@ -87,12 +91,10 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
         }
         if (tempSounds.Count > 0)
         {
+			// TO DO: Change so it's playing on a single object
             AudioClip ac = tempSounds[(int)Random.Range(0, tempSounds.Count)].GetClip();
-            GameObject g = Instantiate(SoundPlayer);
-            g.transform.position = transform.position;
-            g.GetComponent<AudioSource>().clip = ac;
-            g.GetComponent<AudioSource>().Play();
-            Destroy(g, ac.length);
+			audioSource.clip = ac;
+			audioSource.Play();
         }
     }
 
