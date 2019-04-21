@@ -8,6 +8,7 @@ ModelImporter:
     400000: Basic_Block:Basic_Cube
     400002: //RootNode
     2100000: initialShadingGroup
+    2100002: Basic_Block_Basic_CubeMat
     2300000: Basic_Block:Basic_Cube
     3300000: Basic_Block:Basic_Cube
     4300000: Basic_Block:Basic_Cube

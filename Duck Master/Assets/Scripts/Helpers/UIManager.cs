@@ -35,6 +35,10 @@ public class UIManager : MonoBehaviour
     Texture2D whistleUnPushTex;
     [SerializeField]
     Texture2D whistlePushTex;
+    [SerializeField]
+    Material underGateMat;
+    [SerializeField]
+    Material waterMat;
    
     private Text attractText;
     private Text repelText;
@@ -54,11 +58,13 @@ public class UIManager : MonoBehaviour
     private bool duckRecalled;
 
     List<GameObject> highlightedThrowTiles;
+    static List<GameObject> underGateTiles;
 
     // Start is called before the first frame update
     void Start()
     {
         highlightedThrowTiles = new List<GameObject>();
+        underGateTiles = new List<GameObject>();
         duckRecalled = false;
         currentType = BaitTypes.INVALID;
       
@@ -68,8 +74,8 @@ public class UIManager : MonoBehaviour
 
         throwToggle = false;
         baitToggle = false;
-        bait = GameManager.Instance.getPlayerTrans().GetComponentInChildren<BaitSystem>();
-        HighlightThrowTiles();
+        //bait = GameManager.Instance.getPlayerTrans().GetComponentInChildren<BaitSystem>();
+        bait = GameManager.Instance.GetBait();
     }
 
     // Update is called once per frame
@@ -98,16 +104,19 @@ public class UIManager : MonoBehaviour
             primaryBaitButton.GetComponent<RawImage>().color = Color.white;
             attractButton.SetActive(true);
 
-            int num = bait.GetBaitAmount(BaitTypes.ATTRACT);
+            //int num = bait.GetBaitAmount(BaitTypes.ATTRACT);
+            int num = GameManager.Instance.GetBait().GetBaitAmount(BaitTypes.ATTRACT);
 
             attractText.text = num.ToString();
 
-            num = bait.GetBaitAmount(BaitTypes.REPEL);
+            //num = bait.GetBaitAmount(BaitTypes.REPEL);
+            num = GameManager.Instance.GetBait().GetBaitAmount(BaitTypes.REPEL);
 
             repelButton.SetActive(true);
             repelText.text = num.ToString();
 
-            num = bait.GetBaitAmount(BaitTypes.PEPPER);
+            //num = bait.GetBaitAmount(BaitTypes.PEPPER);
+            num = GameManager.Instance.GetBait().GetBaitAmount(BaitTypes.PEPPER);
 
             pepperButton.SetActive(true);
             pepperText.text = num.ToString();
@@ -257,17 +266,20 @@ public class UIManager : MonoBehaviour
                             
                             if (currentType == BaitTypes.ATTRACT)
                             {
-                                bait.spawnBait(pos, BaitTypes.ATTRACT);
+                                //bait.spawnBait(pos, BaitTypes.ATTRACT);
+                                GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.ATTRACT);
                             }
 
                             if (currentType == BaitTypes.REPEL)
                             {
-                                bait.spawnBait(pos, BaitTypes.REPEL);
+                                //bait.spawnBait(pos, BaitTypes.REPEL);
+                                GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.REPEL);
                             }
 
                             if (currentType == BaitTypes.PEPPER)
                             {
-                                bait.spawnBait(pos, BaitTypes.PEPPER);
+                                //bait.spawnBait(pos, BaitTypes.PEPPER);
+                                GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.PEPPER);
                             }
 
                         }
@@ -337,9 +349,17 @@ public class UIManager : MonoBehaviour
         
         foreach (RaycastHit hit in hitList)
         {
-            if (hit.collider != null && (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(Clone)"))
+            if (hit.collider != null && hit.collider.gameObject.name == "ground(Clone)")
             {
-                hit.collider.gameObject.GetComponent<Renderer>().material.color = Color.green;
+                Renderer rend = hit.collider.gameObject.GetComponent<Renderer>();
+                rend.material.color = Color.green;
+                highlightedThrowTiles.Add(hit.collider.gameObject);
+            }
+
+            if (hit.collider != null && hit.collider.gameObject.name == "water(Clone)")
+            {
+                Renderer rend = hit.collider.gameObject.GetComponent<Renderer>();
+                rend.material.color = Color.green;
                 highlightedThrowTiles.Add(hit.collider.gameObject);
             }
         }
@@ -352,10 +372,31 @@ public class UIManager : MonoBehaviour
         {
             foreach(GameObject obj in highlightedThrowTiles)
             {
-                obj.GetComponent<Renderer>().material.color = Color.white;
+                if (obj.name == "water(Clone)")
+                {
+                    Renderer rend = obj.GetComponent<Renderer>();
+                    rend.material = waterMat;
+                }
+
+                else
+                    obj.GetComponent<Renderer>().material.color = Color.white;
             }
 
             highlightedThrowTiles.Clear();
         }
+
+        if (underGateTiles.Count > 0)
+        {
+            foreach(GameObject obj in underGateTiles)
+            {
+                obj.GetComponent<Renderer>().material = underGateMat;
+            }
+        }
+    }
+
+    //Need to get a reference to all tile objects to be able to reset material properly
+    public static void AddUnderGateTile(GameObject tile)
+    {
+        underGateTiles.Add(tile);
     }
 }

@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private TileMapScriptableObject mTileMapScriptableObject = null;
     private DuckTileMap mTileMap;
+    BaitSystem bait;
 
     // Start is called before the first frame update
     void Start()
@@ -80,6 +81,8 @@ public class GameManager : MonoBehaviour
                         mTileMapScriptableObject.blockTypes,
                         mTileMapScriptableObject.levelHeights,
                         mTileMapScriptableObject.levelWidths);
+
+        bait = player.GetComponentInChildren<BaitSystem>();
 
         //	movePlayerTo(new Vector3(0, 0, 4));
     }
@@ -243,6 +246,11 @@ public class GameManager : MonoBehaviour
     public void markUnfreindlies(ref List<DuckTile> previousAOE, Vector3 pos, int range)
     {
         //turn all of those back to the
+    }
+
+    public BaitSystem GetBait()
+    {
+        return bait;
     }
 
     private void GenerateTileMap(int verticalLevels, string[] listGridSelStrings, string[] blockTypes, int[] levelHeights, int[] levelWidths)

@@ -872,7 +872,7 @@ Animator:
   m_GameObject: {fileID: 3690311607857424093}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 285ec4beb21267648b5c88e8376b5310, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1820,6 +1820,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8855306169965726489}
     m_Modifications:
+    - target: {fileID: 8483047356764300478, guid: d967a19df841a2440baf2741ec804f38,
+        type: 3}
+      propertyPath: m_Name
+      value: Journal
+      objectReference: {fileID: 0}
     - target: {fileID: 8483047356764300477, guid: d967a19df841a2440baf2741ec804f38,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1924,11 +1929,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8483047356764300478, guid: d967a19df841a2440baf2741ec804f38,
-        type: 3}
-      propertyPath: m_Name
-      value: Journal
       objectReference: {fileID: 0}
     - target: {fileID: 8483047356404821429, guid: d967a19df841a2440baf2741ec804f38,
         type: 3}
