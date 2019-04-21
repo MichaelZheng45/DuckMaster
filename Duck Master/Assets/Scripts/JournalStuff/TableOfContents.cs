@@ -25,15 +25,17 @@ public class TableOfContents : MonoBehaviour
     public List<TableOfContentsButton> goToJournalButtons = new List<TableOfContentsButton>();
     public JournalSaveObjects SaveGame;
 
+	string dataPath;
 
     // Start is called before the first frame update
     void Start()
     {
-        //LoadJournal();
+		dataPath = Path.Combine(Application.persistentDataPath, "SaveGame.txt");
+        LoadJournal();
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
         {
-            Debug.Log("HI");
+			// Why are we resetting the data on re-opens?
             SaveGame.CollectedObjects.Clear();
             SaveJournal();
         }
@@ -135,19 +137,32 @@ public class TableOfContents : MonoBehaviour
 
     public void SaveJournal()
     {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + string.Format("/{0}.pso", "Temp", 0));
-        var json = JsonUtility.ToJson(SaveGame);
-        bf.Serialize(file, json);
-        file.Close();
+		//BinaryFormatter bf = new BinaryFormatter();
+		//FileStream file = File.Create(Application.persistentDataPath + string.Format("/{0}.pso", "Temp", 0));
+		//var json = JsonUtility.ToJson(SaveGame);
+		//bf.Serialize(file, json);
+		//file.Close();
+		string jsonString = JsonUtility.ToJson(SaveGame);
+		using (StreamWriter streamWriter = File.CreateText(dataPath))
+		{
+			streamWriter.Write(jsonString);
+		}
     }
 
     public void LoadJournal()
     {
-        BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Open(Application.persistentDataPath + string.Format("/{0}.pso", "Temp", 0), FileMode.Open);
-        JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), SaveGame);
-        file.Close();
+		//BinaryFormatter bf = new BinaryFormatter();
+		//FileStream file = File.Open(Application.persistentDataPath + string.Format("/{0}.pso", "Temp", 0), FileMode.Open);
+		//JsonUtility.FromJsonOverwrite((string)bf.Deserialize(file), SaveGame);
+		//file.Close();
+		if (File.Exists(dataPath))
+		{
+			using (StreamReader streamReader = File.OpenText(dataPath))
+			{
+				string jsonString = streamReader.ReadToEnd();
+				JsonUtility.FromJsonOverwrite(jsonString, SaveGame);
+			}
+		}
     }
 
 }
