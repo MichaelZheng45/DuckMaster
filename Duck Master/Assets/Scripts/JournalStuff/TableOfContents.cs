@@ -108,7 +108,7 @@ public class TableOfContents : MonoBehaviour
                 else
                     g.transform.position = topMid.position + new Vector3(0, -150, 0);
                 goToJournalButtons.Add(g.GetComponent<TableOfContentsButton>());
-                Debug.Log(jeo.JournalEntryName);
+                //Debug.Log(jeo.JournalEntryName);
                 g.GetComponent<TableOfContentsButton>().UpdateText(this, jeo.JournalEntryName);
                 g.transform.SetAsFirstSibling();
             }

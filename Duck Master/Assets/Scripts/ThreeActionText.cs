@@ -27,7 +27,6 @@ public class ThreeActionText : MonoBehaviour {
 
     public void TextSwitch()
     {
-        Debug.Log("Clicked the FUCKING BUTTON");
         counter++;
 
         if (counter == pickIndex)
