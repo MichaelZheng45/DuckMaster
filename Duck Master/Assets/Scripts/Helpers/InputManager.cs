@@ -13,8 +13,6 @@ using System;
 
 public class InputManager : MonoBehaviour
 {
-	/////// The taps might not work but will always have to be checked in update because of the fact that they get reset every frame \\\\\\\\
-
 	/// <summary>
 	/// Class to abstract the difference between PC and Mobile platform
 	/// This makes it easier to iterate and develop code for testing on both platforms
@@ -31,18 +29,24 @@ public class InputManager : MonoBehaviour
     private Touch[] taps;
     private int tapCount = 0;
 #endif
-	[Tooltip("Pixel Distance A Tap Becomes A Swipe")]
+	[Tooltip("Pixel distance a tap becomes a swipe")]
     [SerializeField]
     private int swipeTolerance = 25;
 	// Enums used for generic direction
     public enum SwipeDirection
     {
         NONE = -1,
-        UP,
-        DOWN,
-        RIGHT,
-        LEFT
+		UP,
+		UP_RIGHT,
+		RIGHT,
+		DOWN_RIGHT,
+		DOWN,
+		DOWN_LEFT,
+		LEFT,
+		UP_LEFT
     }
+
+	private float directionToleranceNormalized = .2f;
 
 	// Used to contain the data needed to process and keep track of swipes
     public struct SwipeData
@@ -367,14 +371,101 @@ public class InputManager : MonoBehaviour
 	// Helper function that returns the generic direction
 	private SwipeDirection FindDirection(Vector2 vector)
 	{
-		if(vector.sqrMagnitude == 0)
+		if(vector.sqrMagnitude < 4)
 		{
 			return SwipeDirection.NONE;
 		}
-		return (Mathf.Abs(vector.x) > Mathf.Abs(vector.y)) ?
-					((vector.x >= 0) ? SwipeDirection.RIGHT : SwipeDirection.LEFT) :
-					((vector.y >= 0) ? SwipeDirection.UP : SwipeDirection.DOWN);
-    }
+
+		Vector2 temp = vector.normalized;
+		int xDir = 0;
+
+		// there might be a better way to do this I'm not sure though
+		// it's right
+		if(temp.x > directionToleranceNormalized)
+		{
+			xDir = 1;
+		}
+		// it's left
+		else if(temp.x < -directionToleranceNormalized)
+		{
+			xDir = -1;
+		}
+
+		// it's up
+		if(temp.y > directionToleranceNormalized)
+		{
+			// set to up right or up left or just up
+			switch (xDir)
+			{
+				case 1:
+				{
+					return SwipeDirection.UP_RIGHT;
+				}
+				case -1:
+				{
+					return SwipeDirection.UP_LEFT;
+				}
+				case 0:
+				{
+					return SwipeDirection.UP;
+				}
+			}
+		}
+		// it's down
+		else if(temp.y < -directionToleranceNormalized)
+		{
+			// set to down right or down left or just down
+			switch (xDir)
+			{
+				case 1:
+				{
+					return SwipeDirection.DOWN_RIGHT;
+				}
+				case -1:
+				{
+					return SwipeDirection.DOWN_LEFT;
+				}
+				case 0:
+				{
+					return SwipeDirection.DOWN;
+				}
+			}
+		}
+		// it's neither up or down
+		else
+		{
+			// set to right or left
+			switch (xDir)
+			{
+				case 1:
+				{
+					return SwipeDirection.RIGHT;
+				}
+				case -1:
+				{
+					return SwipeDirection.LEFT;
+				}
+				case 0:
+				{
+					return SwipeDirection.NONE;
+				}
+			}
+		}
+
+		return SwipeDirection.NONE;
+	}
+
+	static public bool AreOppositeDirections(SwipeDirection dir1, SwipeDirection dir2)
+	{
+		return (dir1 == SwipeDirection.DOWN && dir2 == SwipeDirection.UP) ||
+				(dir1 == SwipeDirection.DOWN_LEFT && dir2 == SwipeDirection.UP_RIGHT) ||
+				(dir1 == SwipeDirection.DOWN_RIGHT && dir2 == SwipeDirection.UP_LEFT) ||
+				(dir1 == SwipeDirection.RIGHT && dir2 == SwipeDirection.LEFT) ||
+				(dir1 == SwipeDirection.LEFT && dir2 == SwipeDirection.RIGHT) ||
+				(dir1 == SwipeDirection.UP && dir2 == SwipeDirection.DOWN) ||
+				(dir1 == SwipeDirection.UP_RIGHT && dir2 == SwipeDirection.DOWN_LEFT) ||
+				(dir1 == SwipeDirection.UP_LEFT && dir2 == SwipeDirection.DOWN_RIGHT);
+	}
 
 	public int GetSwipeCount()
 	{

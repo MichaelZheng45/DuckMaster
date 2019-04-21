@@ -23,11 +23,15 @@ public class CameraController : MonoBehaviour
 	Vector2 moveDirection;
     Vector3 rotateAroundPos;
 
+	int halfScreenWidth, halfScreenHeight;
+
     // Start is called before the first frame update
     void Start()
     {
         inputManager = gameManager.GetComponent<InputManager>();
 		swipeData = InputManager.DefaultSwipeDataArray;
+		halfScreenWidth = Screen.width / 2;
+		halfScreenWidth = Screen.height / 2;
         //rotateAroundPos = gameManager.GetComponent<GameManager>().tileMap.GetCenterPos();
     }
 
@@ -40,57 +44,82 @@ public class CameraController : MonoBehaviour
         rotateAroundPos = gameManager.GetComponent<GameManager>().GetTileMap().GetCenterPos();
 
         // Change this to first and none of last
-        if (swipeCount == 1)
+        //if (swipeCount == 1)
+		//{
+		//	moveDirection = Quaternion.Euler(0, 0, -(transform.rotation.eulerAngles.y)) * moveDirection * Time.deltaTime * cameraSpeed;
+		//	Vector3 tempPos = transform.position + new Vector3(-moveDirection.x, 0, -moveDirection.y);
+        //    
+		//	// this has to change somehow? To a bounding box? Something for later on.
+		//	// TO DO: Center based on the level
+		//	//if (tempPos.x >= lowerBounds.x && tempPos.x <= upperBounds.x && tempPos.z >= lowerBounds.y && tempPos.z <= upperBounds.y)
+		//	//{
+		//		transform.position = tempPos;
+		//	//}
+		//}
+		//else if(swipeCount >= 2)
+		//{
+        //    Vector2 touchZeroPrevPos = swipeData[0].currentPos - swipeData[0].deltaPos;
+        //    Vector2 touchOnePrevPos = swipeData[1].currentPos - swipeData[1].deltaPos;
+		//	Vector2 deltaPos = swipeData[0].currentPos - swipeData[1].currentPos;
+		//	Vector2 prevDeltaPos = touchZeroPrevPos - touchOnePrevPos;
+		//
+		//	float prevTouchDeltaMag = (prevDeltaPos).magnitude;
+        //    float touchDeltaMag = (deltaPos).magnitude;
+		//
+        //    float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
+		//	
+		//	// difference between frames is going to be small
+		//	// but the actual distance is going to be big
+		//	// do rotation instead
+        //    if((Mathf.Abs((deltaPos - prevDeltaPos).x) > 15 || Mathf.Abs(deltaPos.x) < quarterScreenWidth) && InputManager.AreOppositeDirections(swipeData[0].direction, swipeData[1].direction) && Mathf.Abs(deltaMagnitudeDiff) > .1f)
+        //    {
+        //        transform.GetComponent<Camera>().orthographicSize += deltaMagnitudeDiff * .05f;
+        //        transform.GetComponent<Camera>().orthographicSize = Mathf.Clamp(transform.GetComponent<Camera>().orthographicSize, .1f, 5f);
+        //    }
+		//	// TO DO: fix opposite finger gesture
+        //    else
+        //    {
+        //        float rotation = (swipeData[0].direction == InputManager.SwipeDirection.RIGHT || swipeData[0].direction == InputManager.SwipeDirection.LEFT) ?
+        //        cameraRotationSpeed * moveDirection.x * Time.deltaTime : cameraRotationSpeed * moveDirection.y * Time.deltaTime;
+        //        transform.RotateAround(rotateAroundPos, Vector3.up, rotation);
+        //    }
+		//}
+
+		if(swipeCount == 1)
 		{
-			moveDirection = Quaternion.Euler(0, 0, -(transform.rotation.eulerAngles.y)) * moveDirection * Time.deltaTime * cameraSpeed;
-			Vector3 tempPos = transform.position + new Vector3(-moveDirection.x, 0, -moveDirection.y);
-            
-			// this has to change somehow? To a bounding box? Something for later on.
-			// TO DO: Center based on the level
-			//if (tempPos.x >= lowerBounds.x && tempPos.x <= upperBounds.x && tempPos.z >= lowerBounds.y && tempPos.z <= upperBounds.y)
-			//{
-			//	transform.position = tempPos;
-			//}
+			float rotation = (swipeData[0].direction == InputManager.SwipeDirection.RIGHT || swipeData[0].direction == InputManager.SwipeDirection.LEFT) ?
+			cameraRotationSpeed * moveDirection.x * Time.deltaTime : cameraRotationSpeed * moveDirection.y * Time.deltaTime;
+			transform.RotateAround(rotateAroundPos, Vector3.up, rotation);
 		}
 		else if(swipeCount >= 2)
 		{
-            Vector2 touchZeroPrevPos = swipeData[0].currentPos - swipeData[0].deltaPos;
-            Vector2 touchOnePrevPos = swipeData[1].currentPos - swipeData[1].deltaPos;
+			Vector2 touchZeroPrevPos = swipeData[0].currentPos - swipeData[0].deltaPos;
+			Vector2 touchOnePrevPos = swipeData[1].currentPos - swipeData[1].deltaPos;
+			Vector2 deltaPos = swipeData[0].currentPos - swipeData[1].currentPos;
+			Vector2 prevDeltaPos = touchZeroPrevPos - touchOnePrevPos;
+			
+			float prevTouchDeltaMag = (prevDeltaPos).magnitude;
+			float touchDeltaMag = (deltaPos).magnitude;
+			
+			float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
 
-            float prevTouchDeltaMag = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-            float touchDeltaMag = (swipeData[0].currentPos - swipeData[1].currentPos).magnitude;
-
-            float deltaMagnitudeDiff = prevTouchDeltaMag - touchDeltaMag;
-
-            Debug.Log(deltaMagnitudeDiff);
-			// do rotation instead
-            // I need to somehow tell if I'm pinching or if I'm rotating
-            if(Mathf.Abs(deltaMagnitudeDiff) > 1f)
-            {
-                transform.GetComponent<Camera>().orthographicSize += deltaMagnitudeDiff * .1f;
-                transform.GetComponent<Camera>().orthographicSize = Mathf.Max(transform.GetComponent<Camera>().orthographicSize, .1f);
-            }
-            else
-            {
-                float rotation = (swipeData[0].direction == InputManager.SwipeDirection.RIGHT || swipeData[0].direction == InputManager.SwipeDirection.LEFT) ?
-                cameraRotationSpeed * moveDirection.x * Time.deltaTime : cameraRotationSpeed * moveDirection.y * Time.deltaTime;
-                transform.RotateAround(rotateAroundPos, Vector3.up, rotation);
-            }
+			if (/*InputManager.AreOppositeDirections(swipeData[0].direction, swipeData[1].direction)/* && */Mathf.Abs(deltaMagnitudeDiff) > 4/**/)
+			{
+				transform.GetComponent<Camera>().orthographicSize += deltaMagnitudeDiff * .01f;
+				transform.GetComponent<Camera>().orthographicSize = Mathf.Clamp(transform.GetComponent<Camera>().orthographicSize, .1f, 5f);
+			}
+			else
+			{
+				moveDirection = Quaternion.Euler(0, 0, -(transform.rotation.eulerAngles.y)) * moveDirection * Time.deltaTime * cameraSpeed;
+				Vector3 tempPos = transform.position + new Vector3(-moveDirection.x, 0, -moveDirection.y);
+				  
+				// this has to change somehow? To a bounding box? Something for later on.
+				// TO DO: Center based on the level
+				//if (tempPos.x >= lowerBounds.x && tempPos.x <= upperBounds.x && tempPos.z >= lowerBounds.y && tempPos.z <= upperBounds.y)
+				//{
+					transform.position = tempPos;
+				//}
+			}
 		}
-    }
-
-    static private float Angle(Vector2 pos1, Vector2 pos2)
-    {
-        Vector2 from = pos2 - pos1;
-        Vector2 to = new Vector2(1, 0);
-        float result = Vector2.Angle(from, to);
-        Vector3 cross = Vector3.Cross(from, to);
-
-        if(cross.z > 0)
-        {
-            result = 360f - result;
-        }
-
-        return result;
     }
 }
