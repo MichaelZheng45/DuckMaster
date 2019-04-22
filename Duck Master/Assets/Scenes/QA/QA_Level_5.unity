@@ -4315,14 +4315,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 263347115, guid: 3dd178f5f0b36fd42b95fbe971c4ff1d, type: 3}
-      propertyPath: baitSystemObject
-      value: 
-      objectReference: {fileID: 2074347688}
-    - target: {fileID: 263347115, guid: 3dd178f5f0b36fd42b95fbe971c4ff1d, type: 3}
-      propertyPath: playerTransform
-      value: 
-      objectReference: {fileID: 2074347687}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dd178f5f0b36fd42b95fbe971c4ff1d, type: 3}
 --- !u!1 &770865322 stripped
@@ -14697,18 +14689,6 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: c27a27242a54e3747a7df9fc9827c14d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6114d2551b02e504b907041e87631e85, type: 3}
---- !u!4 &2074347687 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7737685086803534188, guid: 6114d2551b02e504b907041e87631e85,
-    type: 3}
-  m_PrefabInstance: {fileID: 2074347686}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2074347688 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7737685086244513339, guid: 6114d2551b02e504b907041e87631e85,
-    type: 3}
-  m_PrefabInstance: {fileID: 2074347686}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2074347689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7737685086803534096, guid: 6114d2551b02e504b907041e87631e85,

@@ -46,8 +46,7 @@ public class Gate : LogicOutput
         var mat = new Material[2];
 
         if (active)
-        {
-            print("Opening gate");
+        { 
             GameManager.Instance.GetTileMap().getTileFromPosition(tilePosition).mType = originalType;
             if (!portalEmissions[0].isPlaying)
             {
@@ -79,7 +78,6 @@ public class Gate : LogicOutput
         {
             other.gameObject.GetComponent<Renderer>().material = underTileMat;
             UIManager.AddUnderGateTile(other.gameObject);
-            print("colliding with ground tile");
             tilePosition = other.gameObject.transform.position;
             originalType = GameManager.Instance.GetTileMap().getTileFromPosition(tilePosition).mType;
             Activate(active);

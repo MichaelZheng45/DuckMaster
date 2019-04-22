@@ -17,11 +17,9 @@ public enum DuckStates
     BAIT_REPEL
 }
 
-
 public class duckBehaviour : MonoBehaviour
 {
-    public DuckStates mDuckState;
-    public DuckStates GetDuckStates() { return mDuckState; }
+    public DuckStates mDuckState { get; set; }
 
     //follow data
     [Header("Follow Data")]
@@ -96,7 +94,7 @@ public class duckBehaviour : MonoBehaviour
 
     //bait data
     [Header("Bait Data")]
-    [SerializeField]
+    // FIX REFERENCE
     private GameObject baitSystemObject;
     [SerializeField]
     private float attractDistance = 3; //distance where the duck will come to the bait
@@ -109,8 +107,7 @@ public class duckBehaviour : MonoBehaviour
     private float duckAtBaitDistance = .2f;
     private float duckAtRepelBaitDistance = 1.2f;
 
-    [Header("Misc")]
-    [SerializeField]
+    // FIX REFERENCE
     private Transform playerTransform;
     private DuckRotation mDuckRotation;
     private Transform duckTransform;
@@ -122,7 +119,7 @@ public class duckBehaviour : MonoBehaviour
     //animation bool checks
     bool beingThrown = false;
     bool startled = false;
-    public GameObject playerHand;
+    private GameObject playerHand;
     // Start is called before the first frame update
     void Start()
     {
@@ -131,8 +128,12 @@ public class duckBehaviour : MonoBehaviour
         positionListData = new Queue<Vector3>();
 
         mDuckRotation = gameObject.GetComponent<DuckRotation>();
-        baitSystem = baitSystemObject.GetComponent<BaitSystem>();
         duckTransform = gameObject.transform;
+
+        playerTransform = GameObject.Find("Player").transform;
+        baitSystemObject = playerTransform.GetChild(0).gameObject;
+
+        baitSystem = baitSystemObject.GetComponent<BaitSystem>();
     }
 
     private void Update()
