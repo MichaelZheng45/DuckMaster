@@ -11,11 +11,14 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
     GameObject SoundPlayer;
 
 	AudioSource audioSource;
+    PlayerAction playerController;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
 		audioSource = SoundPlayer.GetComponent<AudioSource>();
+        playerController = transform.parent.GetComponent<PlayerAction>();
+        animator.SetFloat("SpeedPlay", playerController.getMoveSpeed());
         //SoundPlayer = Resources.Load<GameObject>("Sounds/Soundplayer");
 
         Sounds = new SoundFile[] {

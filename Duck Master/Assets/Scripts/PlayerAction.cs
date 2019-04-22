@@ -10,7 +10,7 @@ public class PlayerAction : MonoBehaviour
     public bool isHoldingDuck;
 
     //moving data
-    [SerializeField] float mVelocity;
+    [SerializeField] float mVelocity =0;
 
     //component data
     Transform playerTransform;
@@ -85,5 +85,9 @@ public class PlayerAction : MonoBehaviour
     public float getThrowDistance()
     {
         return throwDistance;
+    }
+    public float getMoveSpeed()
+    {
+        return mVelocity;
     }
 }
