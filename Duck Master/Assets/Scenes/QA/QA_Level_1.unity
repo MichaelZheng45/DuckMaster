@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.41747764, g: 0.63087076, b: 0.788269, a: 1}
+  m_IndirectSpecularColor: {r: 0.4173331, g: 0.63135993, b: 0.7882974, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1482,12 +1482,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41fa1310cb9d6d2498de8a6d3fb5ddba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camSpeed: 0.2
-  mouseLeftClick: 0
-  mouseRightClick: 0
-  holdinDuck: 0
-  mask: 512
-  duckMask: 1024
 --- !u!114 &534669907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3006,6 +3000,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1231625429}
   m_Mesh: {fileID: 4300000, guid: 45774aacb2dc7eb41b6de1233a1619b4, type: 3}
+--- !u!1 &1258770792 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2978825811556058011, guid: 6114d2551b02e504b907041e87631e85,
+    type: 3}
+  m_PrefabInstance: {fileID: 592662613}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1296765642
 GameObject:
   m_ObjectHideFlags: 0
@@ -3354,6 +3354,10 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1066495806}
+    - target: {fileID: 263347115, guid: 3dd178f5f0b36fd42b95fbe971c4ff1d, type: 3}
+      propertyPath: playerHand
+      value: 
+      objectReference: {fileID: 1258770792}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dd178f5f0b36fd42b95fbe971c4ff1d, type: 3}
 --- !u!1 &1317544247 stripped
