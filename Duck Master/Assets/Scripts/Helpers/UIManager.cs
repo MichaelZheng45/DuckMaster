@@ -200,6 +200,33 @@ public class UIManager : MonoBehaviour
 
         InputManager manager = GameManager.Instance.GetComponent<InputManager>();
 
+        //Duck Rotate
+        if (manager != null)
+        {
+            List<RaycastHit> hitList = manager.GetTapHits();
+
+            foreach(RaycastHit hit in hitList)
+            {
+                if (hit.collider != null)
+                {
+                    if (hit.collider.gameObject.name == "Duck" || hit.collider.gameObject.tag == "Duck")
+                    {
+                        DuckRotation duckRot = GameManager.Instance.getduckTrans().gameObject.GetComponent<DuckRotation>();
+
+                        if (duckRot.currentRotation < DuckRotationState.DOWN)
+                            duckRot.rotateDuckToDirection(duckRot.currentRotation + 1);
+                        else
+                        {
+                            duckRot.currentRotation = 0;
+                            duckRot.rotateDuckToDirection(duckRot.currentRotation);
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
+
         //If throw enabled tap on tile to throw
         if (throwToggle)
         {
