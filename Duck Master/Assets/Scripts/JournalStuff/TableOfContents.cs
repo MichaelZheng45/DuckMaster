@@ -18,7 +18,7 @@ public class TableOfContents : MonoBehaviour
 
     [SerializeField]
     GameObject openJournal;
-    Animator flasher;
+    public Animator flasher;
 
     Image JournalBackground;
 
@@ -44,7 +44,7 @@ public class TableOfContents : MonoBehaviour
         JournalBackground = GetComponent<Image>();
         journalContainer = transform.GetChild(0).gameObject;
         topMid = journalContainer.transform.Find("TopMid");
-        flasher = openJournal.GetComponent<Animator>();
+        flasher = transform.parent.Find("OpenJournal").GetComponent<Animator>();
         //journalEntryPage = journalContainer.transform.Find("JournalPage").gameObject;
         CloseJournalEntry();
         CloseJournal();
