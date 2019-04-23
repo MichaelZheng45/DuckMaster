@@ -144,16 +144,15 @@ public class duckBehaviour : MonoBehaviour
         //every or so frame check if duck is near unfreindlies
         if (frameCount > runCheckPerFrame && mDuckState != DuckStates.RUN)
         {
-            //flee from unfreindlies
+			//flee from unfreindlies
             runTarget = GameManager.Instance.checkToRun(fleeRange);
             frameCount = 0;
 
             if (runTarget != Vector3.zero)
             {
-                if (mDuckState == DuckStates.INAIR)
-                {
-                    runTarget = playerTransform.position;
-                }
+				startingPos = duckTransform.position;
+				targetPos = runTarget;
+				runTarget += new Vector3(0, aboveTileHeight, 0);
                 mDuckRotation.rotateDuck(runTarget - duckTransform.position);
 
                 ChangeDuckState(DuckStates.RUN);
@@ -353,7 +352,7 @@ public class duckBehaviour : MonoBehaviour
                 for (int count = 1; count < repelDistance; count++)
                 {
                     DuckTile currentTile = tileMap.getTileFromPosition(duckTransform.position + (-1 * direction * (count - .5f)));
-                    if (currentTile != null && currentTile.mHeight == currentHeight && (currentTile.mType == DuckTile.TileType.PassableBoth || currentTile.mType == DuckTile.TileType.UnpassableMaster))
+                    if (currentTile != null && currentTile.mHeight == currentHeight && currentTile.GetDuckPassable())
                     {
                         furthestTile = currentTile;
                     }
@@ -376,7 +375,7 @@ public class duckBehaviour : MonoBehaviour
                 for (int count = pepperLaunchDistance; count > 0; count--)
                 {
                     DuckTile currentTile = tileMap.getTileFromPosition(duckTransform.position + (direction * (count + .5f)));
-                    if (currentTile != null && currentTile.mHeight <= currentHeight && (currentTile.mType == DuckTile.TileType.PassableBoth || currentTile.mType == DuckTile.TileType.UnpassableMaster))
+                    if (currentTile != null && currentTile.mHeight <= currentHeight && currentTile.GetDuckPassable())
                     {
                         furthestTile = currentTile;
                         count = 0; //break out of loop
@@ -639,10 +638,11 @@ public class duckBehaviour : MonoBehaviour
         parabolaC = initialPoint.y - parabolaA * Mathf.Pow(initialPoint.x, 2) - parabolaB * initialPoint.x;
     }
 
-    private void OnTriggerEnter(Collider collision)
+	private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Geyser" && (mDuckState == DuckStates.INAIR || mDuckState == DuckStates.AT_APPLEBEES))
+        if (collision.gameObject.tag == "Geyser" && (mDuckState == DuckStates.INAIR || mDuckState == DuckStates.AT_APPLEBEES || mDuckState == DuckStates.RUN))
         {
+			
             bool peppered = false;
             float interval = 1; //reduces the range of the launch distance
             if (mDuckState == DuckStates.AT_APPLEBEES)

@@ -7,7 +7,7 @@ public class unfreindlyScript : MonoBehaviour
 	List<DuckTile> untouchables;
 	[SerializeField] int range;
 
-	public Transform unitTransform;
+	Transform unitTransform;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +28,11 @@ public class unfreindlyScript : MonoBehaviour
 	public void scareDuckMoved(Vector3 newPosition)
 	{
 		//untouchables passed by reference
-		GameManager.Instance.markUnfreindlies(ref untouchables, newPosition, range);
+	//	GameManager.Instance.markUnfreindlies(ref untouchables, newPosition, range);
+	}
+
+	public Transform getUnitTransform()
+	{
+		return unitTransform;
 	}
 }

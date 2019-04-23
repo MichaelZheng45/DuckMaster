@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
             DuckTile atTile = mTileMap.getTileFromPosition(pos);
 
             //check if throwable
-            if (atTile.mType == DuckTile.TileType.PassableBoth || atTile.mType == DuckTile.TileType.UnpassableMaster)
+            if (atTile.GetDuckPassable())
             {
                 //throw duck
                 playerActionSys.isHoldingDuck = false;
@@ -207,27 +207,27 @@ public class GameManager : MonoBehaviour
 
     public Vector3 checkToRun(float range)
     {
-        foreach (unfreindlyScript enemy in unFriendlyList)
+		foreach (unfreindlyScript enemy in unFriendlyList)
         {
-            Vector3 dist = new Vector3(duckTransform.position.x - enemy.unitTransform.position.x, 0, duckTransform.position.z - enemy.unitTransform.position.z);
-            if (dist.magnitude < range)
+	
+			Vector3 dist = new Vector3(duckTransform.position.x - enemy.getUnitTransform().position.x, 0, duckTransform.position.z - enemy.getUnitTransform().position.z);
+			int currentHeight = mTileMap.getTileFromPosition(duckTransform.position).mHeight;
+			if (dist.magnitude < range)
             {
                 playerActionSys.isHoldingDuck = false;
-                //find a tile to move to
-                DuckTile atTile = mTileMap.getTileFromPosition(duckTransform.position);
-
-                for (int row = -1; row < 2; row++)
-                {
-                    for (int col = -1; col < 2; col++)
-                    {
-                        // tile adjTile = tilingSys.getTilebyIndex((int)atTile.index2.x + col, (int)atTile.index2.y + row);
-                        //   if (duckBehaviourSys.traverseData.traversePossibilities[(int)adjTile.tType] && adjTile.walkable && !(col == 0 && row == 0))
-                        //   {
-                        //       return adjTile.pos + new Vector3(0, 1, 0);
-                        //   }
-                    }
-                }
-                return playerTransform.position;
+				//find a tile to move to
+				//DuckTile atTile = mTileMap.getTileFromPosition(duckTransform.position);
+				float runRange = 10;
+				float interval = .33f;
+				for(float count = 2; count < runRange; count+=interval)
+				{
+					DuckTile atTile = mTileMap.getTileFromPosition(duckTransform.position + (dist.normalized * count));
+					if (atTile.GetDuckPassable() && atTile.mHeight <= currentHeight)
+					{
+						return atTile.mPosition;
+					}	
+				}
+				return playerTransform.position;
             }
         }
 
@@ -240,8 +240,12 @@ public class GameManager : MonoBehaviour
         {
             unFriendlyList.Add(newUnfreindly);
         }
+		else
+		{
+			unFriendlyList = new List<unfreindlyScript>();
+			unFriendlyList.Add(newUnfreindly);
+		}
     }
-
 
     public void markUnfreindlies(ref List<DuckTile> previousAOE, Vector3 pos, int range)
     {
