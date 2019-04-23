@@ -15,4 +15,10 @@ public class Geyser : MonoBehaviour
     {
         
     }
+	
+	//do your thing here
+	public void geyserAwake()
+	{
+
+	}
 }
