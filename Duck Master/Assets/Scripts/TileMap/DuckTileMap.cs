@@ -172,7 +172,7 @@ public class DuckTileMap
 		}
     }
 
-	void CreateConnections()
+	public void CreateConnections()
 	{
 		DuckTile currentTile, rightTile, bottomTile;
 		currentTile = rightTile = bottomTile = null;

@@ -18,6 +18,12 @@ public class GameManager : MonoBehaviour
         {
             _instance = this;
         }
+
+        GenerateTileMap(mTileMapScriptableObject.verticalLevels,
+                mTileMapScriptableObject.listGridSelStrings,
+                mTileMapScriptableObject.blockTypes,
+                mTileMapScriptableObject.levelHeights,
+                mTileMapScriptableObject.levelWidths);
     }
 
     //systems objects
@@ -76,11 +82,6 @@ public class GameManager : MonoBehaviour
         duckTransform = duck.transform;
 
         //tileMap = tileMapScriptableObject.tileMap;
-        GenerateTileMap(mTileMapScriptableObject.verticalLevels,
-                        mTileMapScriptableObject.listGridSelStrings,
-                        mTileMapScriptableObject.blockTypes,
-                        mTileMapScriptableObject.levelHeights,
-                        mTileMapScriptableObject.levelWidths);
 
         bait = player.GetComponentInChildren<BaitSystem>();
 
