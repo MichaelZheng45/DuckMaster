@@ -172,9 +172,20 @@ public class BaitSystem : MonoBehaviour
 	public void spawnBait(Vector3 pos, BaitTypes type)
 	{
 		//spawn bait
-		GameObject newBait = Instantiate(baitObjects[(int)type], pos + new Vector3(0,heightAdd,0), gameObject.transform.rotation);
-        baitAmount[(int)type]--;
+		if(baitAmount[(int)type] > 0)
+		{
+			GameObject newBait = Instantiate(baitObjects[(int)type], pos + new Vector3(0, heightAdd, 0), gameObject.transform.rotation);
+			baitAmount[(int)type]--;
+			placedBaits.Add(newBait);
+		}
+	}
+
+	public void spawnDispenserBait(Vector3 pos, BaitTypes type)
+	{
+		//spawn bait
+		GameObject newBait = Instantiate(baitObjects[(int)type], pos + new Vector3(0, heightAdd, 0), gameObject.transform.rotation);
 		placedBaits.Add(newBait);
+		
 	}
 
     public int GetBaitAmount(BaitTypes type)
