@@ -20,7 +20,7 @@ public class PickupTemp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" || other.tag == "Duck")
         {
             FindObjectOfType<TableOfContents>().AddNewJournalEntry(NarrativeToAdd);
             Destroy(gameObject);

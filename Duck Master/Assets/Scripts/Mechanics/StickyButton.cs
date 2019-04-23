@@ -31,6 +31,8 @@ public class StickyButton : LogicInput
         {
             transform.Find("ButtonParticle").GetComponent<ParticleSystem>().Play();
             active = true;
+            GetComponentInChildren<Animation>().Play();
+            GetComponentInChildren<AudioSource>().Play();
             CallChange();
         }
     }

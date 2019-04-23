@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.4173331, g: 0.63135993, b: 0.7882974, a: 1}
+  m_IndirectSpecularColor: {r: 0.4175629, g: 0.63111603, b: 0.7877504, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -448,21 +448,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 147384343, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
-      propertyPath: Ordered_List.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 147384343, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
       propertyPath: OR_List.Array.data[0]
       value: 
       objectReference: {fileID: 2327841997149397613}
-    - target: {fileID: 147384343, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
-      propertyPath: Ordered_List.Array.data[0]
-      value: 
-      objectReference: {fileID: 2327841997149397613}
-    - target: {fileID: 147384343, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
-      propertyPath: Ordered_List.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 147384346, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.922
@@ -506,14 +494,6 @@ PrefabInstance:
     - target: {fileID: 147384346, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 147384344, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
-      propertyPath: m_Size.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 147384344, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
-      propertyPath: m_Size.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34ba6d02a000d294e946287f439ab3ff, type: 3}
@@ -1776,7 +1756,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 647901627}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 5}
+  m_LocalPosition: {x: 2.014, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 948502513}
@@ -5562,11 +5542,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sticky_Plate
-      objectReference: {fileID: 0}
-    - target: {fileID: 1024619208376269549, guid: 84146b71d57b1a64694be3d0fb8110c3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5405873902460313963, guid: 84146b71d57b1a64694be3d0fb8110c3,
         type: 3}
