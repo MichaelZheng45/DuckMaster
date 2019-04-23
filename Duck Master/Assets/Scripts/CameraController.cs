@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     float cameraSpeed = 1.0f;
 	[SerializeField]
-	float cameraRotationSpeed = 1.5f;
+	float cameraRotationSpeed = 1f;
 
 	InputManager.SwipeData[] swipeData;
 	int swipeCount;
@@ -31,8 +31,8 @@ public class CameraController : MonoBehaviour
         inputManager = gameManager.GetComponent<InputManager>();
 		swipeData = InputManager.DefaultSwipeDataArray;
 		halfScreenWidth = Screen.width / 2;
-		halfScreenWidth = Screen.height / 2;
-        //rotateAroundPos = gameManager.GetComponent<GameManager>().tileMap.GetCenterPos();
+		halfScreenHeight = Screen.height / 2;
+		rotateAroundPos = GameManager.Instance.GetTileMap().GetCenterPos();
     }
 
     // Update is called once per frame
@@ -41,13 +41,15 @@ public class CameraController : MonoBehaviour
 		swipeCount = inputManager.GetSwipeCount();
 		swipeData = inputManager.GetSwipeData();
 		moveDirection = swipeData[0].deltaPos;
-        rotateAroundPos = gameManager.GetComponent<GameManager>().GetTileMap().GetCenterPos();
-
+        
 		if(swipeCount == 1)
 		{
-			float rotation = (swipeData[0].direction == InputManager.SwipeDirection.RIGHT || swipeData[0].direction == InputManager.SwipeDirection.LEFT) ?
-			cameraRotationSpeed * moveDirection.x * Time.deltaTime : cameraRotationSpeed * moveDirection.y * Time.deltaTime;
-			transform.RotateAround(rotateAroundPos, Vector3.up, rotation);
+			// all I'm doing is treating the map and screen as a circle and going to the next point
+			Vector2 touchZeroPrevPos = swipeData[0].currentPos - swipeData[0].deltaPos;
+			float anglePrev = Mathf.Atan2(touchZeroPrevPos.y - halfScreenHeight, touchZeroPrevPos.x - halfScreenWidth) * Mathf.Rad2Deg;
+			float angleCurr = Mathf.Atan2(swipeData[0].currentPos.y - halfScreenHeight, swipeData[0].currentPos.x - halfScreenWidth) * Mathf.Rad2Deg;
+
+			transform.RotateAround(rotateAroundPos, Vector3.up, (anglePrev - angleCurr) * -cameraRotationSpeed);
 		}
 		else if(swipeCount >= 2)
 		{
