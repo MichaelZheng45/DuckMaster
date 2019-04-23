@@ -11,6 +11,7 @@ TagManager:
   - PepperBait
   - RepelBait
   - Geyser
+  - Hand
   layers:
   - Default
   - TransparentFX

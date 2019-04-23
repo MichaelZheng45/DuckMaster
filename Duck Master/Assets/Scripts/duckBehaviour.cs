@@ -134,6 +134,8 @@ public class duckBehaviour : MonoBehaviour
         baitSystemObject = playerTransform.GetChild(0).gameObject;
 
         baitSystem = baitSystemObject.GetComponent<BaitSystem>();
+
+		playerHand = GameObject.FindGameObjectWithTag("Hand");
     }
 
     private void Update()
@@ -277,7 +279,7 @@ public class duckBehaviour : MonoBehaviour
             {
                 if (beingThrown)
                 {
-                    //duckTransform.position = playerHand.transform.position;
+                    duckTransform.position = playerHand.transform.position;
                 }
                 else
                 {
@@ -642,7 +644,7 @@ public class duckBehaviour : MonoBehaviour
     {
         if (collision.gameObject.tag == "Geyser" && (mDuckState == DuckStates.INAIR || mDuckState == DuckStates.AT_APPLEBEES || mDuckState == DuckStates.RUN))
         {
-			
+			collision.gameObject.GetComponent<Geyser>().geyserAwake();
             bool peppered = false;
             float interval = 1; //reduces the range of the launch distance
             if (mDuckState == DuckStates.AT_APPLEBEES)
