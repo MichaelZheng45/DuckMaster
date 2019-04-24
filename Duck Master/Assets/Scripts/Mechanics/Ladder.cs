@@ -6,6 +6,7 @@ public class Ladder : LogicOutput
 {
     [SerializeField] float moveSpeed = 0.5f;
     [SerializeField] bool isActive = true;
+    [SerializeField] bool duckActivate = true;
     GameObject target;
     GameObject player;
     PlayerAction action;
@@ -67,7 +68,8 @@ public class Ladder : LogicOutput
             UseLadder(other.gameObject);
         else
         {
-            if (other.gameObject.tag == "Player" || other.gameObject.tag == "Duck")
+            //if (other.gameObject.tag == "Player" || other.gameObject.tag == "Duck")
+            if (other.gameObject.tag == "Duck" && duckActivate)
             {
                 SetLadder(true);
             }
@@ -129,9 +131,6 @@ public class Ladder : LogicOutput
                     
                 }
             }
-
-            else
-                print("Use Ladder Error: Player was not passed in");
         }
     }
 
