@@ -5,5 +5,5 @@ using UnityEngine;
 public class JournalSaveObjects : ScriptableObject
 {
     public List<JournalEntryObject> CollectedObjects = new List<JournalEntryObject>();
-
+    public int levelsUnlocked = 1;
 }

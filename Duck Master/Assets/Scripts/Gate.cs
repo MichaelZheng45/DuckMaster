@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Gate : LogicOutput
 {
-    [SerializeField] 
+    [SerializeField]
     private bool active;
-    [SerializeField] 
+    [SerializeField]
     private Material underTileMat;
-    [SerializeField] 
+    [SerializeField]
     private GameObject obj;
-    [SerializeField] 
+    [SerializeField]
     private List<Material> gateMaterial;
     [SerializeField]
     private ParticleSystem[] portalEmissions;
@@ -27,7 +27,7 @@ public class Gate : LogicOutput
         base.Start();
         gateTransform = gameObject.transform;
         active = false;
-       
+
         if (obj != null)
         {
             objMeshRenderer = obj.GetComponent<MeshRenderer>();
@@ -44,12 +44,13 @@ public class Gate : LogicOutput
     {
         active = activate;
         var mat = new Material[2];
-
+        GetComponent<Animator>().SetBool("Open", active);
         if (active)
-        { 
+        {
             GameManager.Instance.GetTileMap().getTileFromPosition(tilePosition).mType = originalType;
             if (!portalEmissions[0].isPlaying)
             {
+
                 portalEmissions[0].Play();
                 portalEmissions[1].Play();
             }

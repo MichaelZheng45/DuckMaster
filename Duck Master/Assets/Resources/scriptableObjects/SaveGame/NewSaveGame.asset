@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: NewSaveGame
   m_EditorClassIdentifier: 
   CollectedObjects: []
+  levelsUnlocked: 0
