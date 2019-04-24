@@ -91,6 +91,8 @@ public class duckBehaviour : MonoBehaviour
     //run away speed
     private float runVelocity;
     Vector3 runTarget;
+    [SerializeField]
+    float verticalityChangeSpeed = 0.1f; //Will: the speed at which the duck lerps when it is moving to a lower tile
 
     //bait data
     [Header("Bait Data")]
@@ -120,6 +122,7 @@ public class duckBehaviour : MonoBehaviour
     bool beingThrown = false;
     bool startled = false;
     private GameObject playerHand;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -432,8 +435,15 @@ public class duckBehaviour : MonoBehaviour
     {
         Vector3 direction = (tilePath[tilePathIndex] + new Vector3(0, aboveTileHeight, 0) - duckTransform.position);
 
-        duckTransform.position += direction.normalized * pathVelocity;
-
+        DuckTile currentTile = GameManager.Instance.GetTileMap().getTileFromPosition(duckTransform.position);
+        DuckTile tile = GameManager.Instance.GetTileMap().getTileFromPosition(tilePath[tilePathIndex]);
+        
+        if (tile.mHeight < currentTile.mHeight)
+            duckTransform.position = Vector3.MoveTowards(duckTransform.position, new Vector3(tile.mPosition.x, aboveTileHeight + tile.mPosition.y + currentTile.mHeight, tile.mPosition.z), verticalityChangeSpeed);
+        
+        else
+            duckTransform.position += direction.normalized * pathVelocity;
+        
         //approaches the next tile, update new target tile to move to
         if (direction.magnitude < pathApproachValue)
         {
@@ -671,5 +681,4 @@ public class duckBehaviour : MonoBehaviour
             throwDuck(target, peppered);
         }
     }
-
 }
