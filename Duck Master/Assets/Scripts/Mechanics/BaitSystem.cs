@@ -180,12 +180,13 @@ public class BaitSystem : MonoBehaviour
 		}
 	}
 
-	public void spawnDispenserBait(Vector3 pos, BaitTypes type)
+    //Will: Need a reference to the GameObject for the dispenser
+	public GameObject spawnDispenserBait(Vector3 pos, BaitTypes type)
 	{
 		//spawn bait
 		GameObject newBait = Instantiate(baitObjects[(int)type], pos + new Vector3(0, heightAdd, 0), gameObject.transform.rotation);
 		placedBaits.Add(newBait);
-		
+        return newBait;
 	}
 
     public int GetBaitAmount(BaitTypes type)

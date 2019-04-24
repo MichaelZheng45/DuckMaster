@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PressurePlateScript : LogicInput
 {
-    public Collider playerCollider;
-    public Collider duckCollider;
-
+    //These do not need to be public, they are handled in collision functions
+    Collider playerCollider;
+    Collider duckCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -79,8 +79,6 @@ public class PressurePlateScript : LogicInput
         //If both are off turn off
         if (playerCollider == null && duckCollider == null)
         {
-            
-            //pressed = false;
             active = false;
             CallChange();
         }

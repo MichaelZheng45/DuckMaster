@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dispenser : MonoBehaviour
+public class Dispenser : LogicOutput
 {
 	[SerializeField] BaitTypes baitType;
+    GameObject spawnedBait;
 
-	public void SpawnBait()
+    public override void Activate(bool active)
+    {
+        if (active && spawnedBait == null)
+            SpawnBait();
+    }
+
+    public void SpawnBait()
 	{
 		Vector3 position = transform.position;
 		position = new Vector3(position.x, 0, position.y) + (transform.forward * 1);
-		GameManager.Instance.GetBait().spawnDispenserBait(position, baitType);
+		spawnedBait = GameManager.Instance.GetBait().spawnDispenserBait(position, baitType);
 	}
 }
