@@ -135,7 +135,7 @@ public class Ladder : LogicOutput
                     action = playerObj.GetComponent<PlayerAction>();
                     duckBehaviour duck = GameManager.Instance.getduckTrans().gameObject.GetComponent<duckBehaviour>();
 
-                    if (!action.isHoldingDuck && duck.mDuckState != DuckStates.FOLLOW)
+                    if (!action.isHoldingDuck && duck.mDuckState == DuckStates.STILL)
                     {
                         //Maybe we can use it but for now - since this screws with duck animations
                         //if (duck.mDuckState == DuckStates.FOLLOW)
