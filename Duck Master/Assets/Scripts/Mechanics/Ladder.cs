@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ladder : LogicOutput
 {
-    [SerializeField] float moveSpeed = 0.5f;
+    [SerializeField] float moveSpeed = 0.1f;
     [SerializeField] bool isActive = true;
     [SerializeField] bool duckActivate = true;
     GameObject target;
@@ -13,7 +13,8 @@ public class Ladder : LogicOutput
     Ladder otherLadder;
     bool isPlayerUsing;
     bool isChild;
-
+    bool reachedIntermediateTarget;
+    Vector3 intermediateTarget;
 
     // Start is called before the first frame update
     new void Start()
@@ -25,6 +26,8 @@ public class Ladder : LogicOutput
             target = transform.Find("Ladder-End").gameObject;
             otherLadder = target.GetComponent<Ladder>();
             isChild = false;
+            intermediateTarget = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+            otherLadder.intermediateTarget = intermediateTarget;
         }
 
         if (gameObject.name == "Ladder-End")
@@ -39,6 +42,7 @@ public class Ladder : LogicOutput
             target.SetActive(false);
         
         isPlayerUsing = false;
+        reachedIntermediateTarget = false;
     }
 
     // Update is called once per frame
@@ -49,14 +53,24 @@ public class Ladder : LogicOutput
         if (isPlayerUsing)
         {
             if (!action.CheckMoving())
-                player.transform.position = Vector3.MoveTowards(player.transform.position, target.transform.position, moveSpeed);
+            {
+                if (!reachedIntermediateTarget)
+                    player.transform.position = Vector3.MoveTowards(player.transform.position, intermediateTarget, moveSpeed);
+                else
+                    player.transform.position = Vector3.MoveTowards(player.transform.position, target.transform.position, moveSpeed);   
+            }
+
+            if (player.transform.position == intermediateTarget)
+                reachedIntermediateTarget = true;
 
             if (player.transform.position == target.transform.position)
             {
+                reachedIntermediateTarget = false;
                 isPlayerUsing = false;
                 player = null;
                 action = null;
             }
+
 
         }
     }
@@ -119,9 +133,14 @@ public class Ladder : LogicOutput
                 if (!otherLadder.GetUsing())
                 {
                     action = playerObj.GetComponent<PlayerAction>();
+                    duckBehaviour duck = GameManager.Instance.getduckTrans().gameObject.GetComponent<duckBehaviour>();
 
-                    if (!action.isHoldingDuck)
+                    if (!action.isHoldingDuck && duck.mDuckState == DuckStates.STILL)
                     {
+                        //Maybe we can use it but for now - since this screws with duck animations
+                        //if (duck.mDuckState == DuckStates.FOLLOW)
+                        //    duck.mDuckState = DuckStates.STILL;
+
                         player = playerObj;
                         isPlayerUsing = true;
                     }

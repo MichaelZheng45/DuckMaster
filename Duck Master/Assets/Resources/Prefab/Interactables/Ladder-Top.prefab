@@ -199,7 +199,7 @@ MonoBehaviour:
   OR_List: []
   NOT_List: []
   Ordered_List: []
-  moveSpeed: 0.5
+  moveSpeed: 0.1
   isActive: 1
   duckActivate: 1
 --- !u!1 &3806039149615124842
@@ -312,6 +312,6 @@ MonoBehaviour:
   OR_List: []
   NOT_List: []
   Ordered_List: []
-  moveSpeed: 0.5
+  moveSpeed: 0.1
   isActive: 1
   duckActivate: 1
