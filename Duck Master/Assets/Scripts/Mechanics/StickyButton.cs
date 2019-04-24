@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class StickyButton : LogicInput
 {
-    [SerializeField] Material unpressedMaterial;
-    [SerializeField] Material pressedMaterial;
-    //bool active;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,22 +14,16 @@ public class StickyButton : LogicInput
     // Update is called once per frame
     void Update()
     {
-        //Debug
-        //if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-        //    print("changing sticky buttons states");
-        //    active = !active;
-        //}
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!active)
         {
-            transform.Find("ButtonParticle").GetComponent<ParticleSystem>().Play();
             active = true;
             GetComponentInChildren<Animation>().Play();
             GetComponentInChildren<AudioSource>().Play();
+            GetComponentInChildren<ParticleSystem>().Play();
             CallChange();
         }
     }

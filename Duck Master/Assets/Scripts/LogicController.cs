@@ -13,7 +13,7 @@ public class LogicInput : MonoBehaviour
     bool IsAdded = false;
     [SerializeField] List<LogicOutput> outputList;
     //input used for order
-    public void CallChange()
+    public virtual void CallChange()
     {
         foreach (LogicOutput output in outputList)
         {
