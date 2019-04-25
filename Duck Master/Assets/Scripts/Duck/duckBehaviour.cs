@@ -103,7 +103,7 @@ public class duckBehaviour : MonoBehaviour
     int repelDistance = 5; //how far will the duck run away
     int pepperLaunchDistance = 3;    //how far will the duck be launched via APPLEBEES
     private BaitSystem baitSystem;
-    private GameObject targetBait;
+    private BaitTypeHolder targetBait;
     private Vector3 repelTargetPos;
     private float duckBaitedVelocity = .05f;
     private float duckAtBaitDistance = .2f;
@@ -172,13 +172,13 @@ public class duckBehaviour : MonoBehaviour
             if (mDuckState == DuckStates.RETURN)
             {
                 //check bait system for objects in line of sight
-                GameObject target = baitSystem.duckLOSBait(duckTransform.forward, transform.position, attractDistance);
+                BaitTypeHolder target = baitSystem.duckLOSBait(duckTransform.forward, transform.position, attractDistance);
 
                 if (target != null)
                 {
                     mDuckRotation.rotateDuck(target.transform.position - duckTransform.position);
                     ChangeDuckState(DuckStates.BAITED);
-                    targetBait = target;
+                    targetBait = target.GetComponent<BaitTypeHolder>();
                 }
             }
         }
@@ -215,6 +215,7 @@ public class duckBehaviour : MonoBehaviour
 
     void UpdateAnimationState()
     {
+
         if (mDuckState == DuckStates.RUN || mDuckState == DuckStates.RETURN)
         {
             AnimationEventStuff.DuckWalkingChange(true);
@@ -346,9 +347,8 @@ public class duckBehaviour : MonoBehaviour
         Vector3 baitDirection = targetBait.transform.position - duckTransform.position;
         duckTransform.position += baitDirection.normalized * duckBaitedVelocity;
 
-        if (duckAtBaitDistance > baitDirection.magnitude || (targetBait.tag == "RepelBait" && duckAtRepelBaitDistance > baitDirection.magnitude))
+        if (duckAtBaitDistance > baitDirection.magnitude || (targetBait.GetBaitType() == BaitTypes.REPEL && duckAtRepelBaitDistance > baitDirection.magnitude))
         {
-            string targetTag = targetBait.tag;
             baitSystem.removeBait(targetBait);
 
             Vector3 direction = mDuckRotation.findDirection();
@@ -356,7 +356,7 @@ public class duckBehaviour : MonoBehaviour
             DuckTileMap tileMap = GameManager.Instance.GetTileMap();
             int currentHeight = tileMap.getTileFromPosition(duckTransform.position).mHeight;
 
-            if (targetTag == "RepelBait")
+            if (targetBait.GetBaitType() == BaitTypes.REPEL)
             {
                 //raycast to find furthest tile to move to
                 //search move in opposite direction five spaces away
@@ -380,7 +380,7 @@ public class duckBehaviour : MonoBehaviour
                     lookForBait();
                 }
             }
-            else if (targetTag == "PepperBait")
+            else if (targetBait.GetBaitType() == BaitTypes.PEPPER)
             {
                 //reverse raycast to find furthest tile to move to
                 for (int count = pepperLaunchDistance; count > 0; count--)
@@ -534,6 +534,10 @@ public class duckBehaviour : MonoBehaviour
             }
 
             updateTimer();
+        }
+        else
+        {
+            FindObjectOfType<UIManager>().SetNewState(UIState.Pickup);
         }
     }
 

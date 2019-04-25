@@ -6,13 +6,12 @@ TagManager:
   tags:
   - Duck
   - tree
-  - AttractBait
   - Page
-  - PepperBait
-  - RepelBait
   - Geyser
   - Hand
   - Neck
+  - Bait
+  - Ground
   layers:
   - Default
   - TransparentFX

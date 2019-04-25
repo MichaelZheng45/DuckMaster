@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
                 mTileMapScriptableObject.blockTypes,
                 mTileMapScriptableObject.levelHeights,
                 mTileMapScriptableObject.levelWidths);
+
+        bait = player.GetComponentInChildren<BaitSystem>();
+        bait.setBaitAmounts(mTileMapScriptableObject.attractQuantity, mTileMapScriptableObject.repelQuantity, mTileMapScriptableObject.pepperQuantity);
     }
 
     //systems objects
@@ -84,8 +87,6 @@ public class GameManager : MonoBehaviour
 
         //tileMap = tileMapScriptableObject.tileMap;
 
-        bait = player.GetComponentInChildren<BaitSystem>();
-
         //	movePlayerTo(new Vector3(0, 0, 4));
     }
 
@@ -125,6 +126,7 @@ public class GameManager : MonoBehaviour
     {
         isThrowing = false;
         duckBehaviourSys.throwDuck(throwTilePosition);
+        FindObjectOfType<UIManager>().SetNewState(UIState.Whistle);
     }
 
     public void masterRecall()
@@ -136,6 +138,7 @@ public class GameManager : MonoBehaviour
     public void duckPickupEnd()
     {
         duckBehaviourSys.endPickup();
+        FindObjectOfType<UIManager>().SetNewState(UIState.Holding);
     }
 
     public void enableThrowDuck(RaycastHit hit)

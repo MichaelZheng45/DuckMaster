@@ -14,12 +14,6 @@ public class PressurePlateScript : LogicInput
         active = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public override void CallChange()
     {
         GetComponent<Animator>().SetBool("Active", active);

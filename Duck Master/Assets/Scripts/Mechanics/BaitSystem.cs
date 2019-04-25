@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum BaitTypes
 {
-	INVALID = -1,
-	ATTRACT,
-	REPEL,
+    INVALID = -1,
+    ATTRACT,
+    REPEL,
     PEPPER
 }
 
@@ -18,34 +18,39 @@ public enum BaitTypes
 */
 public class BaitSystem : MonoBehaviour
 {
-	[Tooltip("Holds the data for the amount of baits")]
-	[SerializeField]List<int> baitAmount;
-	[SerializeField] List<GameObject> baitObjects; //prefab list
+    [Tooltip("Holds the data for the amount of baits")]
+    Dictionary<BaitTypes, int> baitAmount = new Dictionary<BaitTypes, int>();
+    [SerializeField] GameObject baitObject; //prefab list
 
-	List<GameObject> placedBaits;
-	float heightAdd = .5f;
+    List<BaitTypeHolder> placedBaits = new List<BaitTypeHolder>();
+    float heightAdd = .5f;
 
 
     private void Start()
     {
-        placedBaits = new List<GameObject>();
 
-		//temp
-		//spawnBait(new Vector3(4, 0, 3), BaitTypes.REPEL);
-		
+        //temp
+        //spawnBait(new Vector3(4, 0, 3), BaitTypes.REPEL);
+
     }
     //checks if that bait is available, returns true
     public bool checkBait(BaitTypes type)
-	{
-		int index = (int)type;
-		if (baitAmount[index] > 0)
-		{
-			baitAmount[index]--;
-			return true;
-		}
+    {
+        if (baitAmount[type] > 0)
+        {
+            baitAmount[type]--;
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
+
+    public void setBaitAmounts(int attract, int repel, int pepper)
+    {
+        baitAmount.Add(BaitTypes.ATTRACT, attract);
+        baitAmount.Add(BaitTypes.REPEL, repel);
+        baitAmount.Add(BaitTypes.PEPPER, pepper);
+    }
 
     bool raycastToObject(Vector3 baitPosition, Vector3 duckPos)
     {
@@ -60,10 +65,10 @@ public class BaitSystem : MonoBehaviour
         while (!endOfRay)
         {
             float length = interval * processCount;
-            if(length < direction.magnitude)
+            if (length < direction.magnitude)
             {
                 DuckTile tile = tileMap.getTileFromPosition(duckPos + (length * direction.normalized));
-                if(tile.mHeight != currentHeight || tile.mType == DuckTile.TileType.UnpassableBoth || tile.mType == DuckTile.TileType.UnpasssableDuck)
+                if (tile.mHeight != currentHeight || tile.mType == DuckTile.TileType.UnpassableBoth || tile.mType == DuckTile.TileType.UnpasssableDuck)
                 {
                     return false;
                 }
@@ -77,28 +82,28 @@ public class BaitSystem : MonoBehaviour
         return true;
     }
 
-    public GameObject duckLOSBait(Vector3 forward,Vector3 duckPos, float attractRange)
+    public BaitTypeHolder duckLOSBait(Vector3 forward, Vector3 duckPos, float attractRange)
     {
-        List<GameObject> processedBaits = new List<GameObject>();
-        if(placedBaits.Count == 0)
+        List<BaitTypeHolder> processedBaits = new List<BaitTypeHolder>();
+        if (placedBaits.Count == 0)
         {
             return null;
         }
 
-        foreach(GameObject bait in placedBaits)
+        foreach (BaitTypeHolder bait in placedBaits)
         {
             Vector3 baitPosition = bait.transform.position;
 
             if (Vector3.Dot((baitPosition - duckPos), forward) > 0 && (baitPosition - duckPos).magnitude < attractRange)
             {
-                if(raycastToObject(baitPosition,duckPos))
+                if (raycastToObject(baitPosition, duckPos))
                 {
                     processedBaits.Add(bait);
                 }
             }
         }
 
-        if(processedBaits.Count > 0)
+        if (processedBaits.Count > 0)
         {
             return getShortestBait(processedBaits, duckPos);
         }
@@ -108,10 +113,10 @@ public class BaitSystem : MonoBehaviour
         }
     }
 
-	public GameObject duckFindBait(Vector3 duckPos, float attractRange)
-	{
-        List<GameObject> processedBaits = new List<GameObject>();
-        foreach (GameObject bait in placedBaits)
+    public BaitTypeHolder duckFindBait(Vector3 duckPos, float attractRange)
+    {
+        List<BaitTypeHolder> processedBaits = new List<BaitTypeHolder>();
+        foreach (BaitTypeHolder bait in placedBaits)
         {
             Vector3 baitPosition = bait.transform.position;
             if ((baitPosition - duckPos).magnitude < attractRange)
@@ -133,15 +138,15 @@ public class BaitSystem : MonoBehaviour
         }
     }
 
-    GameObject getShortestBait(List<GameObject> baitList,Vector3 duckPos)
+    BaitTypeHolder getShortestBait(List<BaitTypeHolder> baitList, Vector3 duckPos)
     {
-        GameObject shortestBait = null;
+        BaitTypeHolder shortestBait = null;
         float distance = 0;
 
-        foreach (GameObject bait in baitList)
+        foreach (BaitTypeHolder bait in baitList)
         {
             float currentDistance = (bait.transform.position - duckPos).magnitude;
-            if(shortestBait)
+            if (shortestBait)
             {
                 if (currentDistance < distance)
                 {
@@ -155,48 +160,54 @@ public class BaitSystem : MonoBehaviour
             }
         }
         distance = (shortestBait.transform.position - duckPos).magnitude;
-        return shortestBait;
+        return shortestBait.GetComponent<BaitTypeHolder>();
     }
 
-	public void pickupNewBait(BaitTypes type)
-	{
-		baitAmount[(int)type]++;
-	}
+    public void pickupNewBait(BaitTypes type)
+    {
+        baitAmount[type]++;
+    }
 
-	public void removeBait(GameObject bait)
-	{
-		placedBaits.Remove(bait);
-		Destroy(bait);
-	}
+    public void removeBait(BaitTypeHolder bait)
+    {
+        placedBaits.Remove(bait);
+        baitAmount[bait.GetBaitType()]++;
+        Destroy(bait.gameObject);
+    }
 
-	public void spawnBait(Vector3 pos, BaitTypes type)
-	{
-		//spawn bait
-		if(baitAmount[(int)type] > 0)
-		{
-			GameObject newBait = Instantiate(baitObjects[(int)type], pos + new Vector3(0, heightAdd, 0), gameObject.transform.rotation);
-			baitAmount[(int)type]--;
-			placedBaits.Add(newBait);
-		}
-	}
+    public void spawnBait(Vector3 pos, BaitTypes type)
+    {
+        //spawn bait
+        if (baitAmount[type] > 0)
+        {
+            GameObject g = Instantiate(baitObject, pos + new Vector3(0, heightAdd, 0), gameObject.transform.rotation);
+            g.GetComponent<BaitTypeHolder>().SetBaitType(type);
+            baitAmount[type]--;
+            placedBaits.Add(g.GetComponent<BaitTypeHolder>());
+            if (baitAmount[type] == 0)
+                FindObjectOfType<UIManager>().SetBaitType("INVALID");
+        }
+    }
 
     //Will: Need a reference to the GameObject for the dispenser
-	public GameObject spawnDispenserBait(Vector3 pos, BaitTypes type)
-	{
-		//spawn bait
-		GameObject newBait = Instantiate(baitObjects[(int)type], pos + new Vector3(0, heightAdd, 0), gameObject.transform.rotation);
-		placedBaits.Add(newBait);
-        return newBait;
-	}
+    public GameObject spawnDispenserBait(Vector3 pos, BaitTypes type)
+    {
+        //spawn bait
+        GameObject g = Instantiate(baitObject, pos + new Vector3(0, heightAdd, 0), gameObject.transform.rotation);
+        g.GetComponent<BaitTypeHolder>().SetBaitType(type);
+        placedBaits.Add(g.GetComponent<BaitTypeHolder>());
+        return g;
+    }
 
     public int GetBaitAmount(BaitTypes type)
     {
-        return baitAmount[(int)type];
+        return baitAmount[type];
     }
 
-    public List<GameObject> GetBaitObjects()
-    {
-        return baitObjects;
-    }
-
+    /*
+   public List<GameObject> GetBaitObjects()
+   {
+       return baitObjects;
+   }
+   */
 }

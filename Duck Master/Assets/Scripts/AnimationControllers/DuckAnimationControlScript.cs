@@ -70,7 +70,6 @@ public class DuckAnimationControlScript : MonoBehaviour
 
         if (!newInAir)
         {
-            Debug.Log("HitTheGround");
             Ground.Play();
         }
     }

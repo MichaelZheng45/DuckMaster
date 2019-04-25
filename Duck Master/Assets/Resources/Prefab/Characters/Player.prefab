@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 7737685086244513333}
   m_Layer: 0
   m_Name: Bait
-  m_TagString: Untagged
+  m_TagString: Bait
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,11 +56,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 281c56e9cdda0d9409b09509e9301b6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baitAmount: 050000000500000005000000
-  baitObjects:
-  - {fileID: 4607009969776139668, guid: ca057f907108448428b229c249528701, type: 3}
-  - {fileID: 911309652240438322, guid: 24bbf026c3f659d44a9904a0ccae3382, type: 3}
-  - {fileID: 4838683858813920539, guid: cf70e58c509344f4dbac6007f3a0a3e7, type: 3}
+  baitObject: {fileID: 23449109905901252, guid: 0a1403ef6bb67834297d7da0dcff56c4,
+    type: 3}
 --- !u!1 &7737685086803534096
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Dispenser : LogicOutput
 {
-	[SerializeField] BaitTypes baitType;
+    [SerializeField] BaitTypes baitType;
     GameObject spawnedBait;
 
     public override void Activate(bool active)
@@ -14,9 +14,9 @@ public class Dispenser : LogicOutput
     }
 
     public void SpawnBait()
-	{
-		Vector3 position = transform.position;
-		position = new Vector3(position.x, 0, position.y) + (transform.forward * 1);
-		spawnedBait = GameManager.Instance.GetBait().spawnDispenserBait(position, baitType);
-	}
+    {
+        Vector3 position = transform.position;
+        position = new Vector3(position.x, 0, position.z) + (transform.forward);
+        spawnedBait = GameManager.Instance.GetBait().spawnDispenserBait(position, baitType);
+    }
 }
