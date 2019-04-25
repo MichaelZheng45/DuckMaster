@@ -76,7 +76,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        BaitButton.SetActive(!(GameManager.Instance.GetBait().GetBaitAmount(BaitTypes.ATTRACT) == 0 && GameManager.Instance.GetBait().GetBaitAmount(BaitTypes.REPEL) == 0 && GameManager.Instance.GetBait().GetBaitAmount(BaitTypes.PEPPER) == 0));
         highlightedThrowTiles = new List<GameObject>();
         underGateTiles = new List<GameObject>();
         duckRecalled = false;
