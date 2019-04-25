@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 36233061253936608}
   - component: {fileID: 36233061253936611}
   - component: {fileID: 36233061253936620}
+  - component: {fileID: 7635081806431774853}
   m_Layer: 2
   m_Name: Pressure Plate
   m_TagString: Untagged
@@ -45,8 +46,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4, y: 0.1, z: 0.4}
-  m_Center: {x: -0.05, y: 0.1, z: 0.025}
+  m_Size: {x: 0.25, y: 0.1, z: 0.25}
+  m_Center: {x: -0.02, y: 0.1, z: 0.025}
 --- !u!114 &36233061253936620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,24 +61,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outputList: []
-  pressedMat: {fileID: 2100000, guid: 7ddc02e60403d464891d92d23dc5cafa, type: 2}
-  unpressedMat: {fileID: 2100000, guid: 8f56cbe4977ab5e48a3369fa6a156f90, type: 2}
---- !u!111 &5148755757473774200
-Animation:
+--- !u!95 &7635081806431774853
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 819060206329487506}
+  m_GameObject: {fileID: 36233061253936621}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: d90a15121218d324aab5938117ff67f0, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: d90a15121218d324aab5938117ff67f0, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e65b8f232c82e3d4582f3c8e01644cf0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &819060206329456176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85,6 +87,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 36233061253936608}
     m_Modifications:
+    - target: {fileID: 100000, guid: 96bd79e8b17efa0429b0cdae9497a48e, type: 3}
+      propertyPath: m_Name
+      value: PressurePlate
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 96bd79e8b17efa0429b0cdae9497a48e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.269
@@ -141,10 +147,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.03
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 96bd79e8b17efa0429b0cdae9497a48e, type: 3}
-      propertyPath: m_Name
-      value: PressurePlate
-      objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 96bd79e8b17efa0429b0cdae9497a48e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -154,12 +156,6 @@ PrefabInstance:
 --- !u!4 &819060206329330864 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 96bd79e8b17efa0429b0cdae9497a48e,
-    type: 3}
-  m_PrefabInstance: {fileID: 819060206329456176}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &819060206329487506 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100002, guid: 96bd79e8b17efa0429b0cdae9497a48e,
     type: 3}
   m_PrefabInstance: {fileID: 819060206329456176}
   m_PrefabAsset: {fileID: 0}

@@ -22,9 +22,10 @@ public class PressurePlateScript : LogicInput
 
     public override void CallChange()
     {
+        GetComponent<Animator>().SetBool("Active", active);
+        Debug.Log(active);
         if (active)
         {
-            GetComponentInChildren<Animation>().Play();
             //GetComponentInChildren<AudioSource>().Play();
             GetComponentInChildren<ParticleSystem>().Play();
         }
@@ -55,12 +56,12 @@ public class PressurePlateScript : LogicInput
         //If duck here, add player
         if (active == true && tag == "Player")
             playerCollider = other;
-        
-        
+
+
         //If player here add duck
-        if (active == true && tag == "Duck")           
+        if (active == true && tag == "Duck")
             duckCollider = other;
-     
+
     }
 
     private void OnTriggerExit(Collider other)
