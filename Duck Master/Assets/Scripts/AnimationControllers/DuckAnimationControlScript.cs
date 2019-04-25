@@ -37,6 +37,7 @@ public class DuckAnimationControlScript : MonoBehaviour
         AnimationEventStuff.onThrow += StartThrow;
         AnimationEventStuff.onDuckHeldChange += ChangeHeld;
         AnimationEventStuff.onDuckInAirChange += ChangeInAir;
+        AnimationEventStuff.onWhistle += Startle;
     }
 
     private void OnDisable()
@@ -45,6 +46,7 @@ public class DuckAnimationControlScript : MonoBehaviour
         AnimationEventStuff.onThrow -= StartThrow;
         AnimationEventStuff.onDuckHeldChange -= ChangeHeld;
         AnimationEventStuff.onDuckInAirChange -= ChangeInAir;
+        AnimationEventStuff.onWhistle -= Startle;
     }
 
     void ChangeWalk(bool newWalk)
@@ -61,6 +63,11 @@ public class DuckAnimationControlScript : MonoBehaviour
     void ChangeHeld(bool newHeld)
     {
         animator.SetBool("Held", newHeld);
+    }
+
+    void Startle()
+    {
+        animator.SetTrigger("Startle");
     }
 
     void ChangeInAir(bool newInAir)

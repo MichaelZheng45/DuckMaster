@@ -119,8 +119,7 @@ public class UIManager : MonoBehaviour
                 break;
 
             case UIState.Whistle:
-                duckRecalled = true;
-                GameManager.Instance.duckRecall();
+                AnimationEventStuff.Whistle();
                 SetNewState(UIState.Recalling);
                 break;
             case UIState.Throwing:
@@ -259,12 +258,16 @@ public class UIManager : MonoBehaviour
                 {
                     if (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(Clone)")
                     {
-                        GameManager.Instance.enableThrowDuck(hit);
+                        if (highlightedThrowTiles.Contains(hit.collider.gameObject))
+                        {
+                            GameManager.Instance.enableThrowDuck(hit);
+                            SetNewState(UIState.Whistle);
+                        }
+                        else
+                            SetNewState(UIState.Holding);
 
-                        SetNewState(UIState.Whistle);
                     }
                 }
-
             }
             return;
         }

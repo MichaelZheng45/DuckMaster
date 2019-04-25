@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour
     public void masterRecall()
     {
         isRecalling = false;
+        duckRecall();
         duckBehaviourSys.applyNewPath(duckTilePath);
     }
 
@@ -180,7 +181,6 @@ public class GameManager : MonoBehaviour
             {
                 duckTilePath = tilePath;
                 isRecalling = true;
-                duckBehaviourSys.startleduck();
             }
         }
     }

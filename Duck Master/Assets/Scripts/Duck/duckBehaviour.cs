@@ -192,12 +192,6 @@ public class duckBehaviour : MonoBehaviour
         AnimationEventStuff.Throw();
     }
 
-    //duck is startled,maybe have a animation of the duck startled?
-    public void startleduck()
-    {
-        startled = true;
-        AnimationEventStuff.Whistle();
-    }
     public void prepPickup()
     {
         AnimationEventStuff.Pickup();
