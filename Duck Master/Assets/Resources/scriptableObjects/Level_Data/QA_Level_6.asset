@@ -18,7 +18,7 @@ MonoBehaviour:
   - Ground
   - Ground
   - Ground
-  - None
+  - Water
   - Ground
   - Ground
   - Ground
@@ -195,17 +195,20 @@ MonoBehaviour:
   - None
   - None
   - None
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
   - Ground
   - Ground
   - Ground
@@ -219,6 +222,23 @@ MonoBehaviour:
   - None
   - None
   - None
+  - None
+  - None
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
   - Ground
   - Ground
   - Ground
@@ -227,6 +247,13 @@ MonoBehaviour:
   - None
   - None
   - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
   - Ground
   - Ground
   - Ground
@@ -235,9 +262,83 @@ MonoBehaviour:
   - None
   - None
   - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
   - Ground
   - Ground
   - Ground
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - Ground
+  - Ground
+  - Ground
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
   - None
   - None
   - None
@@ -250,5 +351,5 @@ MonoBehaviour:
   - Rock
   - Short Wall
   - None
-  levelHeights: 0b00000008000000
-  levelWidths: 0f00000008000000
+  levelHeights: 0b0000000b000000
+  levelWidths: 0f0000000f000000

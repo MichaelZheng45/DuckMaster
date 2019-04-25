@@ -16,26 +16,26 @@ MonoBehaviour:
   listGridSelStrings:
   - Ground
   - Ground
-  - Ground
-  - Ground
-  - None
-  - None
-  - None
   - None
   - Ground
   - None
-  - Ground
-  - Ground
+  - None
+  - None
+  - None
   - Ground
   - None
   - Ground
   - Ground
   - Ground
+  - None
   - Ground
   - Ground
   - Ground
   - Ground
   - Ground
+  - Ground
+  - Ground
+  - None
   - Ground
   - Ground
   - Ground
@@ -50,7 +50,7 @@ MonoBehaviour:
   - Water
   - Water
   - Ground
-  - Water
+  - None
   - Water
   - Water
   - Ground
