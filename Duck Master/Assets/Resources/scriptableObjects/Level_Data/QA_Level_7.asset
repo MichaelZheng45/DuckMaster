@@ -353,6 +353,6 @@ MonoBehaviour:
   - None
   levelHeights: 0b0000000b000000
   levelWidths: 0f0000000f000000
-  attractQuantity: 5
-  repelQuantity: 5
-  pepperQuantity: 5
+  attractQuantity: 0
+  repelQuantity: 1
+  pepperQuantity: 1

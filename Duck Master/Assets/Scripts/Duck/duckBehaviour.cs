@@ -202,6 +202,8 @@ public class duckBehaviour : MonoBehaviour
     {
         if (mDuckState == DuckStates.INAIR && newDuckstate != DuckStates.INAIR)
             AnimationEventStuff.DuckInAirChange(false);
+        if (newDuckstate == DuckStates.STILL)
+            FindObjectOfType<UIManager>().SetNewState(UIState.Whistle);
 
         mDuckState = newDuckstate;
         UpdateAnimationState();

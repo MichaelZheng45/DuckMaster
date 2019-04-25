@@ -17,7 +17,6 @@ public class PressurePlateScript : LogicInput
     public override void CallChange()
     {
         GetComponent<Animator>().SetBool("Active", active);
-        Debug.Log(active);
         if (active)
         {
             //GetComponentInChildren<AudioSource>().Play();
