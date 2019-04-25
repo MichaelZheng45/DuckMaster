@@ -12,30 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e986345417ea142bcefb7830d86ef1, type: 3}
   m_Name: QA_Level_4
   m_EditorClassIdentifier: 
-  verticalLevels: 1
+  verticalLevels: 2
   listGridSelStrings:
   - Ground
-  - Ground
-  - Ground
-  - Water
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
   - Water
   - Water
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
   - Water
   - Ground
   - Ground
@@ -48,6 +29,25 @@ MonoBehaviour:
   - Water
   - Water
   - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Water
+  - Water
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Water
+  - Water
+  - Water
+  - Ground
   - None
   - None
   - None
@@ -111,12 +111,20 @@ MonoBehaviour:
   - Ground
   - Ground
   - None
+  - Ground
+  - Ground
   - Ground
   - Ground
   - Ground
   blockTypes:
   - Ground
   - Water
+  - Big Tree
+  - Rock
+  - Short Wall
   - None
-  levelHeights: 0a000000
-  levelWidths: 0a000000
+  levelHeights: 0a00000002000000
+  levelWidths: 0a00000001000000
+  attractQuantity: 0
+  repelQuantity: 0
+  pepperQuantity: 0

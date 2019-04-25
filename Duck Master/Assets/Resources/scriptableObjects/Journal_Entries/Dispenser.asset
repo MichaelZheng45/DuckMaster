@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e57e97b8e029458ed216f0f3814c8, type: 3}
+  m_Name: Dispenser
+  m_EditorClassIdentifier: 
+  JournalEntryName: Dispenser
+  JournalEntryText: "Huh, an Island Duck Bait Dispenser. A lot of other Duck Master\u2019s
+    campaigned to have these things implemented on the backs of most Island Ducks,
+    so that they could better manager their baby Island Ducks. I, obviously, am a
+    cut above most Duck Masters. My pet duck listens to me, even without cheating
+    methods like bait. I mean, yeah, I do SOMETIMES use bait, but it\u2019s only in
+    instances where my commands aren\u2019t enough to make my pet duck do exactly
+    what I need it to do. Me and my pet duck are friends, our relationship isn\u2019t
+    built solely on me providing a constant flow of treats."
