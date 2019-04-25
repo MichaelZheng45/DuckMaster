@@ -60,8 +60,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outputList: []
-  unpressedMaterial: {fileID: 2100000, guid: 8f56cbe4977ab5e48a3369fa6a156f90, type: 2}
-  pressedMaterial: {fileID: 2100000, guid: 7ddc02e60403d464891d92d23dc5cafa, type: 2}
 --- !u!1 &2297371262542717190
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +167,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7602357e5a1936a44826fe224ec090a5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

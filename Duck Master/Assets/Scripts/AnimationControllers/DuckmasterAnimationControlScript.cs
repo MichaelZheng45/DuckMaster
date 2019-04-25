@@ -7,16 +7,16 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
 {
     Animator animator;
     SoundFile[] Sounds;
-	[SerializeField]
+    [SerializeField]
     GameObject SoundPlayer;
 
-	AudioSource audioSource;
+    AudioSource audioSource;
     PlayerAction playerController;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-		audioSource = SoundPlayer.GetComponent<AudioSource>();
+        audioSource = SoundPlayer.GetComponent<AudioSource>();
         playerController = transform.parent.GetComponent<PlayerAction>();
         animator.SetFloat("SpeedPlay", playerController.getMoveSpeed());
         //SoundPlayer = Resources.Load<GameObject>("Sounds/Soundplayer");
@@ -26,6 +26,7 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
             new SoundFile(Resources.Load<AudioClip>("Sounds/Duckmaster/GrassStep2"), new string[]{ "Duckmaster", "Walking" }),
             new SoundFile(Resources.Load<AudioClip>("Sounds/Duckmaster/GrassStep3"), new string[]{ "Duckmaster", "Walking" }),
             new SoundFile(Resources.Load<AudioClip>("Sounds/Duckmaster/GrassStep4"), new string[]{ "Duckmaster", "Walking" }),
+            new SoundFile(Resources.Load<AudioClip>("Sounds/Duckmaster/Whistle"),    new string[]{ "Duckmaster", "Whistle" }),
             };
     }
 
@@ -34,6 +35,8 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
         AnimationEventStuff.onDuckmasterWalkingChange += ChangeWalk;
         AnimationEventStuff.onThrow += StartThrow;
         AnimationEventStuff.onWhistle += Whistle;
+        AnimationEventStuff.onPickup += Pickup;
+
     }
 
     void Unload()
@@ -41,6 +44,7 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
         AnimationEventStuff.onDuckmasterWalkingChange -= ChangeWalk;
         AnimationEventStuff.onThrow -= StartThrow;
         AnimationEventStuff.onWhistle -= Whistle;
+        AnimationEventStuff.onPickup -= Pickup;
     }
 
     private void OnDisable()
@@ -52,10 +56,16 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
     {
         animator.SetBool("Walking", newWalk);
     }
+    void Pickup()
+    {
+        animator.SetTrigger("Pickup");
+    }
+
     void StartThrow()
     {
         animator.SetTrigger("Throw");
     }
+
     void Whistle()
     {
         animator.SetTrigger("Whistle");
@@ -69,6 +79,10 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
     {
         GameManager.Instance.masterRecall();
     }
+    public void EndPickup()
+    {
+        GameManager.Instance.duckPickupEnd();
+    }
 
 
     public void PlaySound(AnimationEvent soundsToPlay)
@@ -76,6 +90,7 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
         string[] tempTags = soundsToPlay.stringParameter.Split(',');
 
         List<SoundFile> tempSounds = new List<SoundFile>();
+        List<SoundFile> tempSounds2 = new List<SoundFile>();
 
         foreach (SoundFile sf in Sounds)
         {
@@ -83,20 +98,27 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
                 tempSounds.Add(sf);
         }
 
+
         for (int i = 1; i < tempTags.Length; i++)
         {
             foreach (SoundFile sf in tempSounds)
             {
                 if (!sf.HasTag(tempTags[i]))
-                    tempSounds.Remove(sf);
+                    tempSounds2.Add(sf);
             }
         }
+        foreach (SoundFile sf in tempSounds2)
+        {
+            tempSounds.Remove(sf);
+        }
+
         if (tempSounds.Count > 0)
         {
-			// TO DO: Change so it's playing on a single object
+
+            // TO DO: Change so it's playing on a single object
             AudioClip ac = tempSounds[(int)Random.Range(0, tempSounds.Count)].GetClip();
-			audioSource.clip = ac;
-			audioSource.Play();
+            audioSource.clip = ac;
+            audioSource.Play();
         }
     }
 

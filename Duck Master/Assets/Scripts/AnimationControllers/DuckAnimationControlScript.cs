@@ -7,15 +7,21 @@ public class DuckAnimationControlScript : MonoBehaviour
 {
     Animator animator;
     SoundFile[] Sounds;
-	[SerializeField]
+    [SerializeField]
     GameObject SoundPlayer;
-	AudioSource audioSource;
+    AudioSource audioSource;
+
+    ParticleSystem Ground;
+    GameObject Trail;
 
     public void Start()
     {
         //SoundPlayer = Resources.Load<GameObject>("Sounds/Soundplayer");
+        Trail = transform.Find("Trail").gameObject;
+        Ground = transform.Find("Landing").GetComponent<ParticleSystem>();
+        Trail.SetActive(false);
         animator = GetComponent<Animator>();
-		audioSource = SoundPlayer.GetComponent<AudioSource>();
+        audioSource = SoundPlayer.GetComponent<AudioSource>();
 
         Sounds = new SoundFile[] {
             //new SoundFile(Resources.Load<AudioClip>("Sounds/Duckmaster/GrassStep1"), new string[]{ "Duck", "Walking" }),
@@ -45,23 +51,28 @@ public class DuckAnimationControlScript : MonoBehaviour
     {
         animator.SetBool("Walking", newWalk);
         ChangeHeld(false);
-        ChangeInAir(false);
     }
 
     void StartThrow()
     {
         animator.SetTrigger("Throw");
-        ChangeHeld(false);
-        ChangeInAir(true);
     }
 
     void ChangeHeld(bool newHeld)
     {
         animator.SetBool("Held", newHeld);
     }
+
     void ChangeInAir(bool newInAir)
     {
         animator.SetBool("InAir", newInAir);
+        Trail.SetActive(newInAir);
+
+        if (!newInAir)
+        {
+            Debug.Log("HitTheGround");
+            Ground.Play();
+        }
     }
 
 
@@ -87,11 +98,11 @@ public class DuckAnimationControlScript : MonoBehaviour
         }
         if (tempSounds.Count > 0)
         {
-			// TO DO: Change this so it's playing on a single block
+            // TO DO: Change this so it's playing on a single block
             AudioClip ac = tempSounds[(int)Random.Range(0, tempSounds.Count)].GetClip();
-			audioSource.clip = ac;
-			audioSource.Play();
-		}
+            audioSource.clip = ac;
+            audioSource.Play();
+        }
     }
 
 }

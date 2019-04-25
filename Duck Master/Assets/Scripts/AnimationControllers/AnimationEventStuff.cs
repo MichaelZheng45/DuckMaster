@@ -15,6 +15,7 @@ public class AnimationEventStuff : MonoBehaviour
     public static event EventHandlerBool onDuckHeldChange;
     public static event EventHandlerBool onDuckInAirChange;
 
+    public static event GenericEventHandler onPickup;
     public static event GenericEventHandler onThrow;
     public static event GenericEventHandler onWhistle;
     public static event GenericEventHandler unloadScene;
@@ -59,6 +60,11 @@ public class AnimationEventStuff : MonoBehaviour
     {
         if (onThrow != null)
             onThrow();
+    }
+    public static void Pickup()
+    {
+        if (onPickup != null)
+            onPickup();
     }
 
 }

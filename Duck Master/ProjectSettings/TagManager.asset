@@ -12,6 +12,7 @@ TagManager:
   - RepelBait
   - Geyser
   - Hand
+  - Neck
   layers:
   - Default
   - TransparentFX

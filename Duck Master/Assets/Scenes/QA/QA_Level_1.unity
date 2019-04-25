@@ -1623,6 +1623,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c27a27242a54e3747a7df9fc9827c14d, type: 2}
+    - target: {fileID: 4926375796730221390, guid: 6114d2551b02e504b907041e87631e85,
+        type: 3}
+      propertyPath: m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4926375796730221390, guid: 6114d2551b02e504b907041e87631e85,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6114d2551b02e504b907041e87631e85, type: 3}
 --- !u!1 &600428343
