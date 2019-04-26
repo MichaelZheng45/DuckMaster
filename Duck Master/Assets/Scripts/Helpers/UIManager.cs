@@ -264,7 +264,9 @@ public class UIManager : MonoBehaviour
                             SetNewState(UIState.Whistle);
                         }
                         else
+                        {
                             SetNewState(UIState.Holding);
+                        }
 
                     }
                 }

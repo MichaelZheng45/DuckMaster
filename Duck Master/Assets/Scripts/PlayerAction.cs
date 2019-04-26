@@ -42,7 +42,6 @@ public class PlayerAction : MonoBehaviour
     void movePaths()
     {
         DuckTile.TileType currTileType = GameManager.Instance.GetTileMap().getTileFromPosition(tilePath[tilePathIndex]).mType;
-        Debug.Log(tilePath[tilePathIndex]);
 
         if (currTileType != DuckTile.TileType.PassableBoth && currTileType != DuckTile.TileType.UnpasssableDuck)
         {
