@@ -27,6 +27,17 @@ public class GameManager : MonoBehaviour
 
         bait = player.GetComponentInChildren<BaitSystem>();
         bait.setBaitAmounts(mTileMapScriptableObject.attractQuantity, mTileMapScriptableObject.repelQuantity, mTileMapScriptableObject.pepperQuantity);
+
+        if (unFriendlyList == null)
+        {
+            unFriendlyList = new List<unfreindlyScript>();
+        }
+
+        playerActionSys = player.GetComponent<PlayerAction>();
+        throwDistanceMax = playerActionSys.getThrowDistance();
+        duckBehaviourSys = duck.GetComponent<duckBehaviour>();
+        playerTransform = player.transform;
+        duckTransform = duck.transform;
     }
 
     //systems objects
@@ -46,7 +57,6 @@ public class GameManager : MonoBehaviour
     //script systems
     private PlayerAction playerActionSys;
     private duckBehaviour duckBehaviourSys;
-    private Altimeter altimeterSys;
 
     //transforms
     private Transform playerTransform;
@@ -70,24 +80,11 @@ public class GameManager : MonoBehaviour
     private DuckTileMap mTileMap;
     BaitSystem bait;
 
+    //GameObject uiManager;
+
     // Start is called before the first frame update
     void Start()
     {
-        if (unFriendlyList == null)
-        {
-            unFriendlyList = new List<unfreindlyScript>();
-        }
-
-        playerActionSys = player.GetComponent<PlayerAction>();
-        throwDistanceMax = playerActionSys.getThrowDistance();
-        duckBehaviourSys = duck.GetComponent<duckBehaviour>();
-        altimeterSys = null;
-        playerTransform = player.transform;
-        duckTransform = duck.transform;
-
-        //tileMap = tileMapScriptableObject.tileMap;
-
-        //	movePlayerTo(new Vector3(0, 0, 4));
     }
 
     // Update is called once per frame
@@ -193,11 +190,6 @@ public class GameManager : MonoBehaviour
     public Transform getduckTrans()
     {
         return duckTransform;
-    }
-
-    public Altimeter GetAltimeter()
-    {
-        return altimeterSys;
     }
 
     //Will: For Running Water
