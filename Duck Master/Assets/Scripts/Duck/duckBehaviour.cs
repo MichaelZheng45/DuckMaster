@@ -435,40 +435,50 @@ public class duckBehaviour : MonoBehaviour
     //move through the given path
     void movePaths()
     {
-        Vector3 direction = (tilePath[tilePathIndex] + new Vector3(0, aboveTileHeight, 0) - duckTransform.position);
+        DuckTile.TileType currTileType = GameManager.Instance.GetTileMap().getTileFromPosition(tilePath[tilePathIndex]).mType;
 
-        DuckTile currentTile = GameManager.Instance.GetTileMap().getTileFromPosition(duckTransform.position);
-        DuckTile tile = GameManager.Instance.GetTileMap().getTileFromPosition(tilePath[tilePathIndex]);
-
-        if (tile.mHeight < currentTile.mHeight)
-            duckTransform.position = Vector3.MoveTowards(duckTransform.position, new Vector3(tile.mPosition.x, aboveTileHeight + tile.mPosition.y + currentTile.mHeight, tile.mPosition.z), verticalityChangeSpeed);
-
-        else
-            duckTransform.position += direction.normalized * pathVelocity;
-
-        //approaches the next tile, update new target tile to move to
-        if (direction.magnitude < pathApproachValue)
+        // check to make sure we can still path to that tile
+        if(currTileType != DuckTile.TileType.PassableBoth && currTileType != DuckTile.TileType.UnpassableMaster)
         {
-            tilePathIndex--;
-
-            if (tilePathIndex < 0)
-            {
-                tilePath.Clear();
-                ChangeDuckState(DuckStates.FOLLOW);
-
-                //begin following
-                targetPoint = positionListData.Dequeue();
-            }
-            else
-            {
-                mDuckRotation.rotateDuck((tilePath[tilePathIndex] - transform.position).normalized);
-            }
-
+            tilePath.Clear();
+            ChangeDuckState(DuckStates.STILL);
         }
+        else
+        {
+            Vector3 direction = (tilePath[tilePathIndex] + new Vector3(0, aboveTileHeight, 0) - duckTransform.position);
 
-        //updateTimer for follow, this way it will move towards player from pathfinding
-        //then will have an already follow path to follow once follow takes over
-        updateTimer();
+            DuckTile currentTile = GameManager.Instance.GetTileMap().getTileFromPosition(duckTransform.position);
+            DuckTile tile = GameManager.Instance.GetTileMap().getTileFromPosition(tilePath[tilePathIndex]);
+
+            if (tile.mHeight < currentTile.mHeight)
+                duckTransform.position = Vector3.MoveTowards(duckTransform.position, new Vector3(tile.mPosition.x, aboveTileHeight + tile.mPosition.y + currentTile.mHeight, tile.mPosition.z), verticalityChangeSpeed);
+
+            else
+                duckTransform.position += direction.normalized * pathVelocity;
+
+            //approaches the next tile, update new target tile to move to
+            if (direction.magnitude < pathApproachValue)
+            {
+                tilePathIndex--;
+
+                if (tilePathIndex < 0)
+                {
+                    tilePath.Clear();
+                    ChangeDuckState(DuckStates.FOLLOW);
+
+                    //begin following
+                    targetPoint = positionListData.Dequeue();
+                }
+                else
+                {
+                    mDuckRotation.rotateDuck((tilePath[tilePathIndex] - transform.position).normalized);
+                }
+
+            }
+            //updateTimer for follow, this way it will move towards player from pathfinding
+            //then will have an already follow path to follow once follow takes over
+            updateTimer();
+        }
     }
 
     void followPlayer()

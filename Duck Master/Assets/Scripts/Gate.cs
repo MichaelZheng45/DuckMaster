@@ -37,7 +37,6 @@ public class Gate : LogicOutput
     // Update is called once per frame
     new void Update()
     {
-        base.Update();
     }
 
     public override void Activate(bool activate)

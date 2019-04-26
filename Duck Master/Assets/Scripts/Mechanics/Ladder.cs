@@ -48,8 +48,6 @@ public class Ladder : LogicOutput
     // Update is called once per frame
     new void Update()
     {
-        base.Update();
-
         if (isPlayerUsing)
         {
             if (!action.CheckMoving())
