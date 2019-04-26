@@ -34,7 +34,6 @@ public class DuckTileGrid
             for (int k = 0; k < x; ++k)
             {
                 tempList.Add(new DuckTile());
-                Debug.Log("X: " + k + " Y: " + j);
             }
             mGrid.Add(new DuckList(tempList));
         }
@@ -52,7 +51,6 @@ public class DuckTileGrid
             {
                 // j is y, k is x
                 tempList.Add(new DuckTile(typeGrid[j][k], baitableGrid[j][k], heightChangeGrid[j][k], positionGrid[j][k], height));
-                //Debug.Log("X: " + k + " Y: " + j + "\nType: " + typeGrid[j][k] + "\nBaitable: " + baitableGrid[j][k] + "\nHeight Change: " + heightChangeGrid[j][k]);
             }
             mGrid.Add(new DuckList(tempList));
         }
