@@ -63,17 +63,23 @@ public class Water : MonoBehaviour
         {
             if (duckbehavior.mDuckState == DuckStates.STILL)
             {
+                Vector3 position = duck.transform.position;
                 if (direction == WaterDirections.UP)
-                    duck.transform.position += (baseUp * moveSpeed * Time.deltaTime);
-
+                    position += (baseUp * moveSpeed * Time.deltaTime);
+                    
                 if (direction == WaterDirections.RIGHT)
-                    duck.transform.position += (baseRight * moveSpeed * Time.deltaTime);
+                    position += (baseRight * moveSpeed * Time.deltaTime);
 
                 if (direction == WaterDirections.DOWN)
-                    duck.transform.position += (baseDown * moveSpeed * Time.deltaTime);
+                    position += (baseDown * moveSpeed * Time.deltaTime);
 
                 if (direction == WaterDirections.LEFT)
-                    duck.transform.position += (baseLeft * moveSpeed * Time.deltaTime);
+                    position += (baseLeft * moveSpeed * Time.deltaTime);
+
+                if(GameManager.Instance.GetTileMap().getTileFromPosition(position) != null)
+                {
+                    duck.transform.position = position;
+                }
             }
         }
     }
