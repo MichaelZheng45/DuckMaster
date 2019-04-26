@@ -239,7 +239,6 @@ public class duckBehaviour : MonoBehaviour
 
     void FixedUpdate()
     {
-
         if (mDuckState == DuckStates.RUN) //run away ducko! The unfriendlies
         {
             Vector3 dir = (runTarget - duckTransform.position);
@@ -262,9 +261,9 @@ public class duckBehaviour : MonoBehaviour
         }
         else
         {
-            int tilePathCount = tilePath.Count;
             if (mDuckState == DuckStates.FOLLOW) //follow
             {
+                
                 AnimationEventStuff.DuckWalkingChange(startFollowing);
                 if (positionListData.Count == 0)
                 {
@@ -272,7 +271,7 @@ public class duckBehaviour : MonoBehaviour
                 }
                 followPlayer();
             }
-            else if (mDuckState == DuckStates.RETURN && tilePathCount != 0) //recall
+            else if (mDuckState == DuckStates.RETURN && tilePath != null && tilePath.Count > 0) //recall
             {
                 movePaths();
             }
@@ -328,12 +327,6 @@ public class duckBehaviour : MonoBehaviour
             {
                 ChangeDuckState(DuckStates.STILL);
             }
-
-            //if there is geyser rethrow
-            //if (target != Vector3.zero)
-            // {
-            //     throwDuck(target, stillPeppered);
-            // }
         }
     }
 
@@ -571,7 +564,6 @@ public class duckBehaviour : MonoBehaviour
     public void applyNewPath(List<Vector3> newPath)
     {
         //turn off startle animation
-        Debug.Log(newPath);
         if(newPath != null)
         {
             startled = false;

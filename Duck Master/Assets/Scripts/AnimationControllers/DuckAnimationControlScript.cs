@@ -14,13 +14,17 @@ public class DuckAnimationControlScript : MonoBehaviour
     ParticleSystem Ground;
     GameObject Trail;
 
+    public void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     public void Start()
     {
         //SoundPlayer = Resources.Load<GameObject>("Sounds/Soundplayer");
         Trail = transform.Find("Trail").gameObject;
         Ground = transform.Find("Landing").GetComponent<ParticleSystem>();
         Trail.SetActive(false);
-        animator = GetComponent<Animator>();
         audioSource = SoundPlayer.GetComponent<AudioSource>();
 
         Sounds = new SoundFile[] {

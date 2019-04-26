@@ -352,7 +352,6 @@ public class MapCreationTool : EditorWindow
 					// if it's not a none tile
 					if (currentBlock != blockTypes[blockTypes.Length - 1])
 					{
-                        Debug.Log(currentBlock);
 						tileObj = Instantiate(blockNameObjectPairs[currentBlock], pos, Quaternion.identity);
 						tileObj.transform.parent = levelFold.transform;
 					}
