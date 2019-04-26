@@ -43,6 +43,10 @@ public class MapCreationTool : EditorWindow
 
 	string scriptableObjectName = "";
 
+    bool baitFoldout = false;
+
+    int attractQuantity = 0, repelQuantity = 0, pepperQuantity = 0;
+
 	[MenuItem("Window/Level Generator")]
 	static void Init()
 	{
@@ -69,6 +73,7 @@ public class MapCreationTool : EditorWindow
 			}
 		}
 
+        // Loading Stuff
 		GUILayout.Label("Load An Existing Tile Map");
 		loadingScriptableObject = EditorGUILayout.ObjectField("Object to Load", loadingScriptableObject, typeof(UnityEngine.Object), false) as TileMapScriptableObject;
 
@@ -80,7 +85,17 @@ public class MapCreationTool : EditorWindow
 			}
 		}
 
-		GUILayout.Label("Layer Change / Selection");
+        GUILayout.Label("Bait numbers for the current level");
+        baitFoldout = EditorGUILayout.Foldout(baitFoldout, "Bait numbers for the current level");
+        if(baitFoldout)
+        {
+            attractQuantity = EditorGUILayout.IntField("Attract Quantity", attractQuantity);
+            repelQuantity = EditorGUILayout.IntField("Repel Quantity", repelQuantity);
+            pepperQuantity = EditorGUILayout.IntField("Pepper Quantity", pepperQuantity);
+        }
+
+
+        GUILayout.Label("Layer Change / Selection");
 		verticalLevels = EditorGUILayout.IntField("Max Number of Layers", verticalLevels);
 		// make sure we have layers
 		if (verticalLevels != 0)
@@ -362,6 +377,9 @@ public class MapCreationTool : EditorWindow
 			scriptableObject.blockTypes = blockTypes;
 			scriptableObject.levelHeights = levelHeights;
 			scriptableObject.levelWidths = levelWidths;
+            scriptableObject.attractQuantity = attractQuantity;
+            scriptableObject.repelQuantity = repelQuantity;
+            scriptableObject.pepperQuantity = pepperQuantity;
 			EditorUtility.SetDirty(scriptableObject);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
@@ -407,6 +425,11 @@ public class MapCreationTool : EditorWindow
 				}
 			}
 		}
+
+        attractQuantity = loadingScriptableObject.attractQuantity;
+        repelQuantity = loadingScriptableObject.repelQuantity;
+        pepperQuantity = loadingScriptableObject.pepperQuantity;
+
 		GenerateMap(verticalLevels, loadingScriptableObject.listGridSelStrings, blockTypes, currentLevelHeights, currentLevelWidths);
 	}
 }

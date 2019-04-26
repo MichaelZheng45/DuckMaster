@@ -41,20 +41,31 @@ public class PlayerAction : MonoBehaviour
     //move through the path list
     void movePaths()
     {
-        Vector3 direction = (tilePath[tilePathIndex] - playerTransform.position);
+        DuckTile.TileType currTileType = GameManager.Instance.GetTileMap().getTileFromPosition(tilePath[tilePathIndex]).mType;
 
-        playerTransform.position += direction.normalized * mVelocity;
-        playerTransform.forward = Vector3.Lerp(playerTransform.forward, direction.normalized, 0.5f);
-
-        if (direction.magnitude < approachValue)
-        {
-            tilePathIndex--;
-        }
-
-        if (tilePathIndex < 0)
+        if (currTileType != DuckTile.TileType.PassableBoth && currTileType != DuckTile.TileType.UnpasssableDuck)
         {
             moving = false;
+            tilePathIndex = -1;
             AnimationEventStuff.DuckmasterWalkingChange(moving);
+        }
+        else
+        {
+            Vector3 direction = (tilePath[tilePathIndex] + new Vector3(0, 1, 0) - playerTransform.position);
+
+            playerTransform.position += direction.normalized * mVelocity;
+            playerTransform.forward = Vector3.Lerp(playerTransform.forward, direction.normalized, 0.5f);
+
+            if (direction.magnitude < approachValue)
+            {
+                tilePathIndex--;
+            }
+
+            if (tilePathIndex < 0)
+            {
+                moving = false;
+                AnimationEventStuff.DuckmasterWalkingChange(moving);
+            }
         }
     }
 
