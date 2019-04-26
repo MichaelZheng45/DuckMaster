@@ -561,11 +561,24 @@ public class duckBehaviour : MonoBehaviour
     public void applyNewPath(List<Vector3> newPath)
     {
         //turn off startle animation
-        startled = false;
-        ChangeDuckState(DuckStates.RETURN);
-        tilePath = newPath;
-        tilePathIndex = tilePath.Count - 1;
-        mDuckRotation.rotateDuck((tilePath[tilePathIndex] - transform.position).normalized);
+        Debug.Log(newPath);
+        if(newPath != null)
+        {
+            startled = false;
+            ChangeDuckState(DuckStates.RETURN);
+            tilePath = newPath;
+            tilePathIndex = tilePath.Count - 1;
+            mDuckRotation.rotateDuck((tilePath[tilePathIndex] - transform.position).normalized);
+        }
+        else if((duckTransform.position - playerTransform.position).magnitude < 1)
+        {
+            ChangeDuckState(DuckStates.FOLLOW);
+            addnewPos();
+        }
+        else
+        {
+            ChangeDuckState(DuckStates.STILL);
+        }
     }
 
     public bool isRecallable()
@@ -674,7 +687,7 @@ public class duckBehaviour : MonoBehaviour
             for (float count = direction.magnitude; count > 0; count--)
             {
                 DuckTile tile = tileMap.getTileFromPosition(duckTransform.position + ((interval * count) * direction.normalized));
-                if (tile != null && (tile.mHeight == currentHeight || tile.mType == DuckTile.TileType.PassableBoth || tile.mType == DuckTile.TileType.UnpassableMaster))
+                if (tile != null && tile.GetDuckPassable())
                 {
                     count = 0;
                     target = tile.mPosition;

@@ -388,7 +388,6 @@ public class UIManager : MonoBehaviour
                     Renderer rend = obj.GetComponent<Renderer>();
                     rend.material = waterMat;
                 }
-
                 else
                     obj.GetComponent<Renderer>().material.color = Color.white;
             }

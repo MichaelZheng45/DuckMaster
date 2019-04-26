@@ -5,30 +5,25 @@ using UnityEngine;
 public enum WaterDirections
 {
     NONE,
-    UPRIGHT,
-    UPLEFT,
-    DOWNRIGHT,
-    DOWNLEFT
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
 }
 
 public class Water : MonoBehaviour
 {
     //PLEASE NOTE, DUCK SHOULD BE AT LEAST 1.25 scale in order for colliders to actually hit
-    [SerializeField] WaterDirections direction = WaterDirections.DOWNRIGHT;
+    [SerializeField] WaterDirections direction = WaterDirections.NONE;
     [SerializeField] float moveSpeed = 2.0f;
 
     const float norm = 0.707f;
 
-    Vector3 baseUpRight; 
-    Vector3 baseUpLeft;
-    Vector3 baseDownRight;
-    Vector3 baseDownLeft;
-
     //These directions will be determined based on the camera's orientation at start up
-    Vector3 upRight;
-    Vector3 upLeft;
-    Vector3 downRight;
-    Vector3 downLeft;
+    Vector3 baseUp;
+    Vector3 baseRight;
+    Vector3 baseDown;
+    Vector3 baseLeft;
 
     duckBehaviour duckbehavior;
     GameObject duck;
@@ -36,10 +31,10 @@ public class Water : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        baseUpRight = new Vector3(1, 0, 1);
-        baseUpLeft = new Vector3(-1, 0, 1);
-        baseDownRight = new Vector3(1, 0, -1);
-        baseDownLeft = new Vector3(-1, 0, -1);
+        baseUp = new Vector3(0, 0, 1);
+        baseRight = new Vector3(1, 0, 0);
+        baseDown = new Vector3(0, 0, -1);
+        baseLeft = new Vector3(-1, 0, 0);
 
         GameObject camera = GameManager.Instance.GetMainCamera();
 
@@ -59,11 +54,6 @@ public class Water : MonoBehaviour
         //downLeft = new Vector3(init.x, 0.0f, init.z);
 
         //When accounting for how the camera is facing initially, the directions are as follows
-        upRight = Vector3.forward;
-        upLeft = Vector3.back;
-        downRight = Vector3.right;
-        downLeft = Vector3.left;
-
     }
 
     // Update is called once per frame
@@ -73,17 +63,17 @@ public class Water : MonoBehaviour
         {
             if (duckbehavior.mDuckState == DuckStates.STILL)
             {
-                if (direction == WaterDirections.UPRIGHT)
-                    duck.transform.Translate(upRight * moveSpeed * Time.deltaTime);
+                if (direction == WaterDirections.UP)
+                    duck.transform.position += (baseUp * moveSpeed * Time.deltaTime);
 
-                if (direction == WaterDirections.UPLEFT)
-                    duck.transform.Translate(upLeft * moveSpeed * Time.deltaTime);
+                if (direction == WaterDirections.RIGHT)
+                    duck.transform.position += (baseRight * moveSpeed * Time.deltaTime);
 
-                if (direction == WaterDirections.DOWNRIGHT)
-                    duck.transform.Translate(downRight * moveSpeed * Time.deltaTime);
+                if (direction == WaterDirections.DOWN)
+                    duck.transform.position += (baseDown * moveSpeed * Time.deltaTime);
 
-                if (direction == WaterDirections.DOWNLEFT)
-                    duck.transform.Translate(downLeft * moveSpeed * Time.deltaTime);
+                if (direction == WaterDirections.LEFT)
+                    duck.transform.position += (baseLeft * moveSpeed * Time.deltaTime);
             }
         }
     }
