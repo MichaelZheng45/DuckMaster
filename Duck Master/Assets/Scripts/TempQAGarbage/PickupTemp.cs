@@ -5,11 +5,19 @@ using UnityEngine;
 public class PickupTemp : MonoBehaviour
 {
     public string NarrativeToAdd;
+    bool destroying;
+
+    ParticleSystem normalParticle;
+    ParticleSystem destroyParticle;
+
+    [SerializeField]
+    GameObject journalParticle;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        normalParticle = transform.Find("QuillParticle").GetComponent<ParticleSystem>();
+        destroyParticle = transform.Find("QuillDisappear").GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -20,10 +28,16 @@ public class PickupTemp : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" || other.tag == "Duck")
+        if (!destroying && (other.tag == "Player" || other.tag == "Duck"))
         {
             FindObjectOfType<TableOfContents>().AddNewJournalEntry(NarrativeToAdd);
-            Destroy(gameObject);
+            destroying = true;
+            normalParticle.Stop();
+            destroyParticle.Play();
+            GameObject g = Instantiate(journalParticle);
+            g.transform.position = transform.position;
+            Destroy(gameObject, 1);
+
         }
     }
 }
