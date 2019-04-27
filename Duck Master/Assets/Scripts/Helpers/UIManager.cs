@@ -262,7 +262,8 @@ public class UIManager : MonoBehaviour
             {
                 if (hit.collider != null)
                 {
-                    if (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(Clone)")
+                    DuckTile.TileType hitTileType = GameManager.Instance.GetTileMap().getTileFromPosition(hit.collider.gameObject.transform.position).mType;
+                    if ((hitTileType == DuckTile.TileType.PassableBoth || hitTileType == DuckTile.TileType.UnpassableMaster) && (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(Clone)"))
                     {
                         if (highlightedThrowTiles.Contains(hit.collider.gameObject))
                         {
