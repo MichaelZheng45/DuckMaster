@@ -50,7 +50,7 @@ MonoBehaviour:
   - Water
   - Water
   - Ground
-  - None
+  - Water
   - Water
   - Water
   - Ground
@@ -72,3 +72,6 @@ MonoBehaviour:
   - None
   levelHeights: 07000000
   levelWidths: 07000000
+  attractQuantity: 0
+  repelQuantity: 0
+  pepperQuantity: 0

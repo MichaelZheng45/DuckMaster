@@ -17,19 +17,8 @@ MonoBehaviour:
   - Ground
   - Ground
   - Ground
-  - Water
-  - Water
-  - Water
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
   - Ground
   - Water
-  - Water
-  - Water
   - Ground
   - Ground
   - Ground
@@ -37,9 +26,6 @@ MonoBehaviour:
   - Ground
   - Ground
   - Ground
-  - Water
-  - Water
-  - Water
   - Ground
   - Ground
   - Ground
@@ -47,9 +33,18 @@ MonoBehaviour:
   - Ground
   - Ground
   - Ground
-  - Water
-  - Water
-  - Water
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
   - Ground
   - Ground
   - Ground
@@ -60,13 +55,7 @@ MonoBehaviour:
   - Water
   - Water
   - Water
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Ground
+  - Water
   - Water
   - Ground
   - Water
@@ -77,19 +66,15 @@ MonoBehaviour:
   - Ground
   - Ground
   - Ground
-  - Water
-  - Water
-  - Water
-  - Ground
-  - Ground
-  - Ground
-  - Ground
-  - Water
   - Ground
   - Water
   - Water
   - Water
   - Water
+  - Water
+  - Ground
+  - Water
+  - Ground
   - Ground
   - Ground
   - Ground
@@ -100,6 +85,11 @@ MonoBehaviour:
   - Water
   - Water
   - Water
+  - Water
+  - Water
+  - Ground
+  - Water
+  - Ground
   - Ground
   - Ground
   - Ground
@@ -110,86 +100,81 @@ MonoBehaviour:
   - Water
   - Water
   - Water
+  - Water
+  - Water
+  - Ground
+  - Water
   - Ground
   - Ground
   - Ground
   - Ground
-  - None
-  - None
-  - None
-  - None
-  - None
-  - None
   - Ground
   - Ground
   - Ground
   - Ground
-  - None
-  - None
-  - None
-  - None
-  - None
-  - None
+  - Water
+  - Water
+  - Water
+  - Water
+  - Water
+  - Ground
+  - Water
   - Ground
   - Ground
   - Ground
   - Ground
-  - None
-  - None
-  - None
-  - None
-  - None
-  - None
+  - Water
+  - Water
+  - Water
+  - Water
+  - Water
+  - Water
+  - Water
+  - Water
+  - Water
+  - Ground
+  - Water
   - Ground
   - Ground
   - Ground
   - Ground
-  - None
-  - None
-  - None
-  - None
-  - None
-  - None
+  - Big Tree
+  - Big Tree
+  - Big Tree
+  - Big Tree
+  - Ground
+  - Big Tree
+  - Big Tree
+  - Big Tree
+  - Big Tree
+  - Ground
+  - Big Tree
   - Ground
   - Ground
   - Ground
   - Ground
-  - None
-  - None
-  - None
-  - None
-  - None
-  - None
   - Ground
   - Ground
   - Ground
   - Ground
-  - None
-  - None
-  - None
-  - None
-  - None
-  - None
   - Ground
   - Ground
   - Ground
   - Ground
-  - None
-  - None
-  - None
-  - None
-  - None
-  - None
   - Ground
   - Ground
   - Ground
   - Ground
-  - None
-  - None
-  - None
-  - None
-  - None
-  - None
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
   - Ground
   - Ground
   - Ground
@@ -200,6 +185,31 @@ MonoBehaviour:
   - None
   - None
   - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
   - Ground
   - Ground
   - Ground
@@ -209,11 +219,30 @@ MonoBehaviour:
   - None
   - None
   - None
+  - Ground
+  - Ground
+  - Ground
+  - None
+  - None
+  - None
+  - None
   - None
   - Ground
   - Ground
   - Ground
+  - None
+  - None
+  - None
+  - None
+  - None
   - Ground
+  - Ground
+  - Ground
+  - None
+  - None
+  - None
+  - None
+  - None
   blockTypes:
   - Ground
   - Water
@@ -221,16 +250,8 @@ MonoBehaviour:
   - Rock
   - Short Wall
   - None
-<<<<<<< Updated upstream:Duck Master/Assets/Resources/scriptableObjects/Level_Data/QA_Level_7.asset
-  levelHeights: 0b0000000b000000
-  levelWidths: 0f0000000f000000
-  attractQuantity: 0
-  repelQuantity: 1
+  levelHeights: 0b00000008000000
+  levelWidths: 0f00000008000000
+  attractQuantity: 2
+  repelQuantity: 0
   pepperQuantity: 1
-=======
-  levelHeights: 0a0000000a000000
-  levelWidths: 0a0000000a000000
-  attractQuantity: 5
-  repelQuantity: 4
-  pepperQuantity: 0
->>>>>>> Stashed changes:Duck Master/Assets/Resources/scriptableObjects/Level_Data/QA_Level_6.asset

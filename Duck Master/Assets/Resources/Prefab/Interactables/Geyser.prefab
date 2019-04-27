@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 961180909774659959}
   - component: {fileID: 7706966224182341637}
   - component: {fileID: 2546810578685251967}
-  - component: {fileID: 261559722454852871}
   - component: {fileID: 7779580728125332828}
   - component: {fileID: 4877542507873654525}
+  - component: {fileID: 7399430393095448793}
+  - component: {fileID: 7406017952895465981}
   m_Layer: 2
   m_Name: Geyser
   m_TagString: Geyser
@@ -82,19 +83,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &261559722454852871
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8840173161149213988}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 96.230865
-  m_Center: {x: 0, y: -37.39, z: 0}
 --- !u!54 &7779580728125332828
 Rigidbody:
   m_ObjectHideFlags: 0
