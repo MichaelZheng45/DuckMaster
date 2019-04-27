@@ -81,7 +81,9 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		for (int i = 0; i < MAX_TAPS; ++i)
+        int invertMask = ~((1 << 11) | (1 << 2));
+
+        for (int i = 0; i < MAX_TAPS; ++i)
 		{
 			mRaycastHits[i] = DefaultRaycastHit;
 		}
@@ -116,7 +118,7 @@ public class InputManager : MonoBehaviour
 				{
 					Ray ray = mainCamera.ScreenPointToRay(lastMousePos);
 					RaycastHit rayHit;
-					Physics.Raycast(ray, out rayHit, 100);
+					Physics.Raycast(ray, out rayHit, 100, invertMask);
 					mRaycastHits[i] = rayHit;
 				}
 			}
@@ -175,7 +177,7 @@ public class InputManager : MonoBehaviour
 							// probably need to have an event fire here?
 							Ray ray = mainCamera.ScreenPointToRay(taps[i].position);
 							RaycastHit rayHit;
-							Physics.Raycast(ray, out rayHit, 100);
+							Physics.Raycast(ray, out rayHit, 100, invertMask);
 							mRaycastHits[i] = rayHit;
 							Debug.Log("END: Tapped");
 						}
@@ -227,10 +229,10 @@ public class InputManager : MonoBehaviour
             }
         }
 #endif
-	}
+    }
 
-	// For getting the raycast hit object
-	public List<RaycastHit> GetTapHits()
+    // For getting the raycast hit object
+    public List<RaycastHit> GetTapHits()
 	{
 		return mRaycastHits;
 	}

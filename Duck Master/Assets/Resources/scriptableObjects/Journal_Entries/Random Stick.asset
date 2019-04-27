@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2e57e97b8e029458ed216f0f3814c8, type: 3}
+  m_Name: Random Stick
+  m_EditorClassIdentifier: 
+  JournalEntryName: Random Stick
+  JournalEntryText: "Hm. A stick. This reminds me\u2026 There was one time when my
+    pet duck kicked down the door to the kitchen, it completely ripped the hinges
+    off the frame. It did that because I was singing while doing the dishes, and I
+    hadn\u2019t heard it's quacking and knocking to get  me to shut up... Wait, why
+    am I holding a stick?"

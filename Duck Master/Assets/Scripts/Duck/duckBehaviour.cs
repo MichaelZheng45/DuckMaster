@@ -172,7 +172,7 @@ public class duckBehaviour : MonoBehaviour
             if (mDuckState == DuckStates.RETURN)
             {
                 //check bait system for objects in line of sight
-                BaitTypeHolder target = baitSystem.duckLOSBait(duckTransform.forward, transform.position, attractDistance);
+                BaitTypeHolder target = baitSystem.duckLOSBait(duckTransform.forward, duckTransform.position, attractDistance);
 
                 if (target != null)
                 {
@@ -416,7 +416,7 @@ public class duckBehaviour : MonoBehaviour
         if (targetBait == null)
         {
             ChangeDuckState(DuckStates.STILL);
-            GameManager.Instance.duckRecall();
+            GameManager.Instance.masterRecall();
         }
         else //rotate duck
         {
@@ -564,23 +564,38 @@ public class duckBehaviour : MonoBehaviour
     public void applyNewPath(List<Vector3> newPath)
     {
         //turn off startle animation
-        if(newPath != null)
+        BaitTypeHolder target = baitSystem.duckLOSBait(duckTransform.forward, duckTransform.position, attractDistance);
+        if (target != null)
         {
-            startled = false;
-            ChangeDuckState(DuckStates.RETURN);
-            tilePath = newPath;
-            tilePathIndex = tilePath.Count - 1;
-            mDuckRotation.rotateDuck((tilePath[tilePathIndex] - transform.position).normalized);
-        }
-        else if((duckTransform.position - playerTransform.position).magnitude < 1)
-        {
-            ChangeDuckState(DuckStates.FOLLOW);
-            addnewPos();
+            Debug.Log("Look for another bait");
+            mDuckRotation.rotateDuck(target.transform.position - duckTransform.position);
+            ChangeDuckState(DuckStates.BAITED);
+            targetBait = target.GetComponent<BaitTypeHolder>();
         }
         else
         {
-            ChangeDuckState(DuckStates.STILL);
+            if (newPath != null)
+            {
+                Debug.Log("recalling");
+                startled = false;
+                ChangeDuckState(DuckStates.RETURN);
+                tilePath = newPath;
+                tilePathIndex = tilePath.Count - 1;
+                mDuckRotation.rotateDuck((tilePath[tilePathIndex] - transform.position).normalized);
+            }
+            else if ((duckTransform.position - playerTransform.position).magnitude < 1)
+            {
+                ChangeDuckState(DuckStates.FOLLOW);
+                Debug.Log("following");
+                addnewPos();
+            }
+            else
+            {
+                Debug.Log("still");
+                ChangeDuckState(DuckStates.STILL);
+            }
         }
+      
     }
 
     public bool isRecallable()
