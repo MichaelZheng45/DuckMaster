@@ -1,44 +1,23 @@
 fileFormatVersion: 2
-guid: 9c30aa004075f9747a41e8b0bda6d62e
+guid: 847e7010059bbf145bea686651556e41
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Scareduck:Group60319
-    100004: Scareduck:pCylinder1
-    100006: Scareduck:pSphere2
+    100002: pCylinder2
+    100004: polySurface1
     400000: //RootNode
-    400002: Scareduck:Group60319
-    400004: Scareduck:pCylinder1
-    400006: Scareduck:pSphere2
-    2100000: Scareduck_Group60319Mat
-    2100002: Scareduck_pCylinder1Mat
-    2100004: Scareduck_pSphere2Mat
-    2300000: Scareduck:Group60319
-    2300002: Scareduck:pCylinder1
-    2300004: Scareduck:pSphere2
-    3300000: Scareduck:Group60319
-    3300002: Scareduck:pCylinder1
-    3300004: Scareduck:pSphere2
-    4300000: Scareduck:Group60319
-    4300002: Scareduck:pCylinder1
-    4300004: Scareduck:pSphere2
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Scareduck_Group60319Mat
-    second: {fileID: 2100000, guid: af8e21d4cda5a804eb95239e953cde61, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Scareduck_pCylinder1Mat
-    second: {fileID: 2100000, guid: af8e21d4cda5a804eb95239e953cde61, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Scareduck_pSphere2Mat
-    second: {fileID: 2100000, guid: af8e21d4cda5a804eb95239e953cde61, type: 2}
+    400002: pCylinder2
+    400004: polySurface1
+    2100000: pCylinder2Mat
+    2100002: polySurface1Mat
+    2300000: pCylinder2
+    2300002: polySurface1
+    3300000: pCylinder2
+    3300002: polySurface1
+    4300000: pCylinder2
+    4300002: polySurface1
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0
