@@ -267,8 +267,11 @@ public class UIManager : MonoBehaviour
                     {
                         if (highlightedThrowTiles.Contains(hit.collider.gameObject))
                         {
-                            GameManager.Instance.enableThrowDuck(hit);
-                            SetNewState(UIState.Whistle);
+                            if (GameManager.Instance.IsThrowable(hit, hit.collider.gameObject.transform.position))
+                            {
+                                GameManager.Instance.enableThrowDuck(hit);
+                                SetNewState(UIState.Whistle);
+                            }
                         }
                         else
                         {
