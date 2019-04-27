@@ -141,29 +141,30 @@ public class GameManager : MonoBehaviour
 
     public void enableThrowDuck(RaycastHit hit)
     {
-        //layer mask
+        Vector3 pos = hit.collider.gameObject.transform.position;
+        //check if anything is in the way (need to be changed)
+        DuckTile atTile = mTileMap.getTileFromPosition(pos);
+
+        //check if throwable
+        if (atTile.GetDuckPassable())
+        {
+            //throw duck
+            playerActionSys.isHoldingDuck = false;
+            isThrowing = true;
+            duckBehaviourSys.prepThrow();
+            Vector3 Difference = atTile.mPosition - playerTransform.position;
+            playerTransform.transform.forward = new Vector3(Difference.x, 0, Difference.z).normalized;
+
+            throwTilePosition = atTile.mPosition;
+        }
+    }
+
+    public bool IsThrowable(RaycastHit hit, Vector3 pos)
+    {
         int unthrowMask = 1 << 11;
         RaycastHit athit;
         Vector3 dir = hit.point - duckTransform.position;
-        Vector3 pos = hit.collider.gameObject.transform.position;
-        //check if anything is in the way (need to be changed)
-        if (!Physics.Raycast(duckTransform.position, dir.normalized, out athit, dir.magnitude, unthrowMask) && dir.magnitude < throwDistanceMax)
-        {
-            DuckTile atTile = mTileMap.getTileFromPosition(pos);
-
-            //check if throwable
-            if (atTile.GetDuckPassable())
-            {
-                //throw duck
-                playerActionSys.isHoldingDuck = false;
-                isThrowing = true;
-                duckBehaviourSys.prepThrow();
-                Vector3 Difference = atTile.mPosition - playerTransform.position;
-                playerTransform.transform.forward = new Vector3(Difference.x, 0, Difference.z).normalized;
-
-                throwTilePosition = atTile.mPosition;
-            }
-        }
+        return !Physics.Raycast(duckTransform.position, dir.normalized, out athit, dir.magnitude, unthrowMask) && dir.magnitude < throwDistanceMax;
     }
 
     //create pathfinding to return duck back to the player

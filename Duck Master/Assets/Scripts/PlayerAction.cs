@@ -54,7 +54,7 @@ public class PlayerAction : MonoBehaviour
             Vector3 direction = (tilePath[tilePathIndex] + new Vector3(0, 1, 0) - playerTransform.position);
 
             playerTransform.position += direction.normalized * mVelocity;
-            playerTransform.forward = Vector3.Lerp(playerTransform.forward, direction.normalized, 0.5f);
+            playerTransform.forward = Vector3.Lerp(playerTransform.forward, direction.normalized, 0.6f);
 
             if (direction.magnitude < approachValue)
             {
