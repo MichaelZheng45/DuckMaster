@@ -25,7 +25,6 @@ public class BaitSystem : MonoBehaviour
     List<BaitTypeHolder> placedBaits = new List<BaitTypeHolder>();
     float heightAdd = .5f;
 
-
     private void Start()
     {
 
@@ -93,8 +92,8 @@ public class BaitSystem : MonoBehaviour
         foreach (BaitTypeHolder bait in placedBaits)
         {
             Vector3 baitPosition = bait.transform.position;
-
-            if (Vector3.Dot((baitPosition - duckPos), forward) > 0 && (baitPosition - duckPos).magnitude < attractRange)
+            Debug.Log(Vector3.Dot((baitPosition - duckPos), forward));
+            if (Vector3.Dot((baitPosition - duckPos), forward) >= 0 && (baitPosition - duckPos).magnitude < attractRange)
             {
                 if (raycastToObject(baitPosition, duckPos))
                 {
@@ -184,8 +183,8 @@ public class BaitSystem : MonoBehaviour
             g.GetComponent<BaitTypeHolder>().SetBaitType(type);
             baitAmount[type]--;
             placedBaits.Add(g.GetComponent<BaitTypeHolder>());
-            if (baitAmount[type] == 0)
-                FindObjectOfType<UIManager>().SetBaitType("INVALID");
+           // if (baitAmount[type] == 0)
+           //     FindObjectOfType<UIManager>().SetBaitType("INVALID");
         }
     }
 

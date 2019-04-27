@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a7e986345417ea142bcefb7830d86ef1, type: 3}
-  m_Name: QA_Level_5
+  m_Name: QA_Level_6
   m_EditorClassIdentifier: 
   verticalLevels: 2
   listGridSelStrings:
   - Ground
-  - Water
   - Ground
   - Ground
   - Ground
@@ -25,7 +24,6 @@ MonoBehaviour:
   - Ground
   - Ground
   - Ground
-  - Water
   - Ground
   - Ground
   - Ground
@@ -35,32 +33,19 @@ MonoBehaviour:
   - Ground
   - Ground
   - Ground
-  - Water
-  - Water
-  - Water
-  - Water
-  - Water
-  - Water
-  - Water
-  - Water
-  - Ground
-  - Ground
-  - Water
-  - Water
-  - Water
-  - Water
-  - Water
-  - Water
-  - Water
-  - Water
   - Ground
   - Ground
   - Ground
-  - Big Tree
-  - Big Tree
-  - Big Tree
-  - Big Tree
-  - Big Tree
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
   - Ground
   - Ground
   - Ground
@@ -84,6 +69,14 @@ MonoBehaviour:
   - Ground
   - Water
   - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
   - Water
   - Water
   - Water
@@ -91,6 +84,66 @@ MonoBehaviour:
   - Water
   - Ground
   - Water
+  - Ground
+  - Ground
+  - Ground
+  - Water
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Water
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Water
+  - Water
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Water
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Water
+  - Ground
+  - Ground
+  - Ground
+  - Water
+  - Water
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Water
+  - Ground
+  - Ground
+  - Ground
   - Water
   - Water
   - Ground
@@ -98,12 +151,13 @@ MonoBehaviour:
   - Water
   - Water
   - Water
-  - Water
+  - Ground
+  - Ground
+  - Ground
+  - Ground
+  - Ground
   - Ground
   - Water
-  - Water
-  - Water
-  - Ground
   - None
   - None
   - None
@@ -113,7 +167,53 @@ MonoBehaviour:
   - None
   - None
   - None
-  - Ground
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
+  - None
   blockTypes:
   - Ground
   - Water
@@ -121,8 +221,8 @@ MonoBehaviour:
   - Rock
   - Short Wall
   - None
-  levelHeights: 0900000001000000
+  levelHeights: 0a0000000a000000
   levelWidths: 0a0000000a000000
-  attractQuantity: 0
-  repelQuantity: 0
-  pepperQuantity: 0
+  attractQuantity: 1
+  repelQuantity: 1
+  pepperQuantity: 1
