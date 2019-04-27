@@ -46,6 +46,18 @@ public class UIManager : MonoBehaviour
     Material underGateMat;
     [SerializeField]
     Material waterMat;
+    [SerializeField]
+    Sprite attractPushed;
+    [SerializeField]
+    Sprite attractUnPushed;
+    [SerializeField]
+    Sprite repelPushed;
+    [SerializeField]
+    Sprite repelUnPushed;
+    [SerializeField]
+    Sprite pepperPushed;
+    [SerializeField]
+    Sprite pepperUnPushed;
 
     private Text attractText;
     private Text repelText;
@@ -348,9 +360,13 @@ public class UIManager : MonoBehaviour
     public void SetBaitType(string type)
     {
         System.Enum.TryParse(type, out currentType);
-        attractButton.GetComponent<Image>().color = (currentType == BaitTypes.ATTRACT) ? Color.green : Color.white;
-        repelButton.GetComponent<Image>().color = (currentType == BaitTypes.REPEL) ? Color.green : Color.white;
-        pepperButton.GetComponent<Image>().color = (currentType == BaitTypes.PEPPER) ? Color.green : Color.white;
+        //attractButton.GetComponent<Image>().color = (currentType == BaitTypes.ATTRACT) ? Color.green : Color.white;
+        //repelButton.GetComponent<Image>().color = (currentType == BaitTypes.REPEL) ? Color.green : Color.white;
+        //pepperButton.GetComponent<Image>().color = (currentType == BaitTypes.PEPPER) ? Color.green : Color.white;
+        attractButton.GetComponent<Image>().sprite = (currentType == BaitTypes.ATTRACT) ? attractPushed : attractUnPushed;
+        repelButton.GetComponent<Image>().sprite = (currentType == BaitTypes.REPEL) ? repelPushed : repelUnPushed;
+        pepperButton.GetComponent<Image>().sprite = (currentType == BaitTypes.PEPPER) ? pepperPushed : pepperUnPushed;
+
     }
 
     public void HighlightThrowTiles()
