@@ -19,6 +19,7 @@ public class AnimationEventStuff : MonoBehaviour
     public static event GenericEventHandler onThrow;
     public static event GenericEventHandler onWhistle;
     public static event GenericEventHandler unloadScene;
+    public static event GenericEventHandler onScare;
 
 
     public static void UnloadScene()
@@ -49,7 +50,11 @@ public class AnimationEventStuff : MonoBehaviour
             onDuckInAirChange(newVal);
     }
 
-
+    public static void Scare()
+    {
+        if (onScare != null)
+            onScare();
+    }
 
     public static void Whistle()
     {

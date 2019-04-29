@@ -211,6 +211,8 @@ public class duckBehaviour : MonoBehaviour
 
     void UpdateAnimationState()
     {
+        if (mDuckState == DuckStates.RUN)
+            AnimationEventStuff.Scare();
 
         if (mDuckState == DuckStates.RUN || mDuckState == DuckStates.RETURN)
         {
@@ -263,7 +265,7 @@ public class duckBehaviour : MonoBehaviour
         {
             if (mDuckState == DuckStates.FOLLOW) //follow
             {
-                
+
                 AnimationEventStuff.DuckWalkingChange(startFollowing);
                 if (positionListData.Count == 0)
                 {
@@ -431,7 +433,7 @@ public class duckBehaviour : MonoBehaviour
         DuckTile.TileType currTileType = GameManager.Instance.GetTileMap().getTileFromPosition(tilePath[tilePathIndex]).mType;
 
         // check to make sure we can still path to that tile
-        if(currTileType != DuckTile.TileType.PassableBoth && currTileType != DuckTile.TileType.UnpassableMaster)
+        if (currTileType != DuckTile.TileType.PassableBoth && currTileType != DuckTile.TileType.UnpassableMaster)
         {
             tilePath.Clear();
             ChangeDuckState(DuckStates.STILL);
@@ -595,7 +597,7 @@ public class duckBehaviour : MonoBehaviour
                 ChangeDuckState(DuckStates.STILL);
             }
         }
-      
+
     }
 
     public bool isRecallable()
