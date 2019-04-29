@@ -53,7 +53,6 @@ public class Gate : LogicOutput
             RaycastHit rhc;
             Physics.Raycast(new Ray(ps.transform.position + new Vector3(0, .1f, 0), -ps.transform.up), out rhc);
             Debug.DrawLine(ps.transform.position + new Vector3(0, 0.1f, 0), rhc.point, Color.red, 1000);
-            Debug.Log(Camera.main.WorldToScreenPoint(rhc.point));
             Vector3 VarTemp = Camera.main.WorldToScreenPoint(rhc.point);
             var p = ps.main;
             p.startColor = Color.Lerp(tex.GetPixel((int)VarTemp.x, (int)VarTemp.y), new Color(1, 1, 1, .25f), .25f);

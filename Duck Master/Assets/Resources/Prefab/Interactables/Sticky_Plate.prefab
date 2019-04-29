@@ -347,6 +347,11 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7131679428989981367, guid: d03d1a7eed1640c43a6526568afeb047,
+        type: 3}
+      propertyPath: simulationSpeed
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d03d1a7eed1640c43a6526568afeb047, type: 3}
 --- !u!4 &382330368304617966 stripped

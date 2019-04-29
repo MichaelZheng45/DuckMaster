@@ -6,6 +6,8 @@ public class StickyButton : LogicInput
 {
     ParticleSystem pressed;
     ParticleSystem failed;
+
+    List<GameObject> entered = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -37,13 +39,27 @@ public class StickyButton : LogicInput
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!active)
+        if (entered.Count == 0)
         {
-            Debug.Log("HelloThree");
-            active = true;
-            GetComponentInChildren<AudioSource>().Play();
-            pressed.Play();
-            CallChange();
+            if (other.tag == "Duck" || other.tag == "Player")
+            {
+                entered.Add(other.gameObject);
+            }
+
+            if (!active)
+            {
+                active = true;
+                GetComponentInChildren<AudioSource>().Play();
+                pressed.Play();
+                CallChange();
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Duck" || other.tag == "Player")
+        {
+            entered.Remove(other.gameObject);
         }
     }
 }

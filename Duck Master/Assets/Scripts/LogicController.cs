@@ -29,7 +29,7 @@ public class LogicInput : MonoBehaviour
                 //If added to the list and set to false, cancel the operation
                 if (!active && IsAdded)
                 {
-                    print("Sequential Input turned off, clearing and setting adding false");
+                    Debug.Log("Sequential Input turned off, clearing and setting adding false");
                     output.ClearReceive();
                     IsAdded = false;
                 }
@@ -202,7 +202,6 @@ public class LogicOutput : MonoBehaviour
                 {
                     for (int i = 0; i < Ordered_List.Count; i++)
                     {
-                        Debug.Log("Out of order inputs!!");
                         Ordered_List[i].SetActive(false);
                         Ordered_List[i].SetAdded(false);
                         StickyButton s = Ordered_List[i] as StickyButton;
@@ -242,9 +241,9 @@ public class LogicController : MonoBehaviour
         outputs = transform.GetComponentsInChildren<LogicOutput>();
 
         if (inputs == null)
-            print("ERROR: input is null");
+            Debug.Log("ERROR: input is null");
         if (outputs == null)
-            print("ERROR: outputs is null");
+            Debug.Log("ERROR: outputs is null");
 
     }
 
