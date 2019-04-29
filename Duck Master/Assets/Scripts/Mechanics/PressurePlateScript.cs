@@ -14,6 +14,14 @@ public class PressurePlateScript : LogicInput
         active = false;
     }
 
+    public void UpdateParticleColor(Texture2D tex)
+    {
+        ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+        Vector3 VarTemp = Camera.main.WorldToScreenPoint(ps.transform.position);
+        var p = ps.main;
+        p.startColor = tex.GetPixel((int)VarTemp.x, (int)VarTemp.y);
+    }
+
     public override void CallChange()
     {
         GetComponent<Animator>().SetBool("Active", active);

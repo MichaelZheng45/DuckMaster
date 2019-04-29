@@ -6,4 +6,5 @@ public class JournalEntryObject : ScriptableObject
 {
     public string JournalEntryName = "default";
     public string JournalEntryText = "SampleText";
+    public Sprite JournalEntrySprite;
 }

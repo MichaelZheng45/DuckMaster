@@ -17,6 +17,9 @@ public class TableOfContents : MonoBehaviour
     public Text JournalText;
 
     [SerializeField]
+    Image JournalSprite;
+
+    [SerializeField]
     Sprite newDiary;
     [SerializeField]
     Sprite noDiary;
@@ -85,6 +88,7 @@ public class TableOfContents : MonoBehaviour
             {
                 journalEntryPage.SetActive(true);
                 JournalText.text = jeo.JournalEntryText;
+                JournalSprite.sprite = jeo.JournalEntrySprite;
             }
         }
     }

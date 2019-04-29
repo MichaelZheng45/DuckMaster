@@ -33,36 +33,18 @@ public class Gate : LogicOutput
             objMeshRenderer = obj.GetComponent<MeshRenderer>();
         }
 
-        UpdateParticleColor();
-
     }
 
-    void UpdateParticleColor()
+    public void UpdateParticleColor(Texture2D tex)
     {
-        RenderTexture rs = new RenderTexture(Camera.main.pixelWidth, Camera.main.pixelHeight, 24);
-        Camera.main.targetTexture = rs;
-        Camera.main.Render();
-        RenderTexture.active = rs;
-
-        Texture2D tex = new Texture2D(Camera.main.pixelWidth, Camera.main.pixelHeight, TextureFormat.RGB24, false);
-        tex.ReadPixels(new Rect(0, 0, Camera.main.pixelWidth, Camera.main.pixelHeight), 0, 0);
-        tex.Apply();
-
         foreach (ParticleSystem ps in portalEmissions)
         {
-            RaycastHit rhc;
-            Physics.Raycast(new Ray(ps.transform.position + new Vector3(0, .1f, 0), -ps.transform.up), out rhc);
-            Debug.DrawLine(ps.transform.position + new Vector3(0, 0.1f, 0), rhc.point, Color.red, 1000);
-            Vector3 VarTemp = Camera.main.WorldToScreenPoint(rhc.point);
+            Vector3 VarTemp = Camera.main.WorldToScreenPoint(ps.transform.position);
             var p = ps.main;
-            p.startColor = Color.Lerp(tex.GetPixel((int)VarTemp.x, (int)VarTemp.y), new Color(.5f, .5f, .5f, 0), .5f);
+            p.startColor = tex.GetPixel((int)VarTemp.x, (int)VarTemp.y);
         }
-
-        Camera.main.targetTexture = null;
-        RenderTexture.active = null;
-        DestroyImmediate(rs);
-        DestroyImmediate(tex);
     }
+
 
 
     // Update is called once per frame

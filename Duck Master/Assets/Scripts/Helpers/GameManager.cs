@@ -80,16 +80,71 @@ public class GameManager : MonoBehaviour
     private DuckTileMap mTileMap;
     BaitSystem bait;
 
+
+
     //GameObject uiManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        TakeSnapshot();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void TakeSnapshot()
     {
+        Vector3 CamStart = Camera.main.transform.position;
+        Quaternion CamStartRot = Camera.main.transform.rotation;
+        float CameraStartSize = Camera.main.orthographicSize;
+
+        Vector3 MaxVect = Vector3.zero;
+        foreach (GameObject g in GameObject.FindGameObjectsWithTag("Ground"))
+        {
+            if (g.transform.position.x > MaxVect.x)
+                MaxVect.x = g.transform.position.x;
+            if (g.transform.position.z > MaxVect.z)
+                MaxVect.z = g.transform.position.z;
+        }
+        MaxVect /= 2;
+        MaxVect.y = 15;
+
+        Camera.main.transform.position = MaxVect;
+        Camera.main.transform.rotation = Quaternion.Euler(90, 0, 0);
+        Camera.main.orthographicSize = 8;
+
+        RenderTexture rs = new RenderTexture(Camera.main.pixelWidth, Camera.main.pixelHeight, 24);
+        Camera.main.targetTexture = rs;
+        Camera.main.Render();
+        RenderTexture.active = rs;
+
+        Texture2D tex = new Texture2D(Camera.main.pixelWidth, Camera.main.pixelHeight, TextureFormat.RGB24, false);
+        tex.ReadPixels(new Rect(0, 0, Camera.main.pixelWidth, Camera.main.pixelHeight), 0, 0);
+        tex.Apply();
+
+
+
+        foreach (StickyButton sb in FindObjectsOfType<StickyButton>())
+        {
+            sb.UpdateParticleColor(tex);
+        }
+        foreach (Gate g in FindObjectsOfType<Gate>())
+        {
+            g.UpdateParticleColor(tex);
+        }
+        foreach (PressurePlateScript ps in FindObjectsOfType<PressurePlateScript>())
+        {
+            ps.UpdateParticleColor(tex);
+        }
+
+        Camera.main.targetTexture = null;
+        RenderTexture.active = null;
+
+        Camera.main.transform.position = CamStart;
+        Camera.main.transform.rotation = CamStartRot;
+        Camera.main.orthographicSize = CameraStartSize;
+
+
+        DestroyImmediate(rs);
+        DestroyImmediate(tex);
     }
 
     public bool checkIsHoldingDuck()
