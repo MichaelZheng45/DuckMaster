@@ -38,7 +38,7 @@ public class LogicInput : MonoBehaviour
             output.CheckState();
         }
     }
-   
+
 
     public List<LogicOutput> GetOutputs()
     {
@@ -54,9 +54,9 @@ public class LogicInput : MonoBehaviour
 public class LogicOutput : MonoBehaviour
 {
     public virtual void Activate(bool active) { }
-    [SerializeField] 
+    [SerializeField]
     private List<LogicInput> AND_List;
-    [SerializeField] 
+    [SerializeField]
     private List<LogicInput> OR_List;
     [SerializeField]
     private List<LogicInput> NOT_List;
@@ -104,7 +104,7 @@ public class LogicOutput : MonoBehaviour
         {
             Received_Inputs = new List<LogicInput>();
             foreach (LogicInput input in Ordered_List)
-            { 
+            {
                 input.GetOutputs().Add(this);
                 input.SetOrder(true);
             }
@@ -115,7 +115,7 @@ public class LogicOutput : MonoBehaviour
     //Something tells me this is insanely over-engineered, and/or unnecessary but oh well.
     public void Update()
     {
-        
+
     }
 
     public void CheckState()
@@ -129,11 +129,11 @@ public class LogicOutput : MonoBehaviour
             and = true;
 
             foreach (LogicInput input in AND_List)
-            if (!input.IsActive())
-            {
-                and = false;
-                break;
-            }
+                if (!input.IsActive())
+                {
+                    and = false;
+                    break;
+                }
         }
 
 
@@ -173,21 +173,19 @@ public class LogicOutput : MonoBehaviour
             order = true;
 
             //Make sure it doesn't fire but don't remove until complete pass
-            if (Received_Inputs.Count != Ordered_List.Count) 
+            if (Received_Inputs.Count != Ordered_List.Count)
                 order = false;
-            
+
             else
             {
                 bool orderFail = false;
 
                 for (int i = 0; i < Ordered_List.Count; i++)
                 {
-                    
+
                     if (Received_Inputs[i] != Ordered_List[i])
                     {
-                        print("Out of order inputs!!");
                         order = false;
-                        Received_Inputs.Clear();
                         orderFail = true;
                         break;
                     }
@@ -195,7 +193,6 @@ public class LogicOutput : MonoBehaviour
                     if (!Ordered_List[i].IsActive())
                     {
                         order = false;
-                        Received_Inputs.Clear();
                         orderFail = true;
                         break;
                     }
@@ -203,12 +200,17 @@ public class LogicOutput : MonoBehaviour
 
                 if (orderFail)
                 {
-                    foreach(LogicInput input in Ordered_List)
+                    for (int i = 0; i < Ordered_List.Count; i++)
                     {
-                        input.SetActive(false);
-                        input.SetAdded(false);
+                        Debug.Log("Out of order inputs!!");
+                        Ordered_List[i].SetActive(false);
+                        Ordered_List[i].SetAdded(false);
+                        StickyButton s = Ordered_List[i] as StickyButton;
+                        s.ResetButton(Ordered_List[i] == Received_Inputs[i]);
                     }
+                    Received_Inputs.Clear();
                 }
+
             }
         }
 

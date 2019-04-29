@@ -74,15 +74,18 @@ public class DuckmasterAnimationControlScript : MonoBehaviour
 
     public void ContinueThrow()
     {
-        GameManager.Instance.masterThrow();
+        if (GameManager.Instance)
+            GameManager.Instance.masterThrow();
     }
     public void ContinueRecall()
     {
-        GameManager.Instance.masterRecall();
+        if (GameManager.Instance)
+            GameManager.Instance.masterRecall();
     }
     public void EndPickup()
     {
-        GameManager.Instance.duckPickupEnd();
+        if (GameManager.Instance)
+            GameManager.Instance.duckPickupEnd();
     }
 
 
