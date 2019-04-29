@@ -9,10 +9,29 @@ public class MenuCamera : MonoBehaviour
     [SerializeField]
     Transform[] CameraPositions;
 
+    public float timer = 10;
+
     // Start is called before the first frame update
     void Start()
     {
 
+    }
+
+    void CallTimer()
+    {
+        int i = Random.Range(0, 2);
+        switch (i)
+        {
+            case 0:
+                AnimationEventStuff.Whistle();
+                break;
+            case 1:
+                AnimationEventStuff.Pickup();
+                break;
+
+        }
+
+        timer = Random.Range(10, 30);
     }
 
     public void SetCameraPosition(int i)
@@ -23,6 +42,10 @@ public class MenuCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+            CallTimer();
+
         if (Vector3.Distance(transform.position, CameraPositions[PositionIndex].position) > 1)
         {
             transform.position = Vector3.Lerp(transform.position, CameraPositions[PositionIndex].position, 0.05f);

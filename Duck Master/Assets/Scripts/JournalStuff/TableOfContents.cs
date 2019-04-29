@@ -17,6 +17,13 @@ public class TableOfContents : MonoBehaviour
     public Text JournalText;
 
     [SerializeField]
+    Sprite newDiary;
+    [SerializeField]
+    Sprite noDiary;
+
+    Image openJournalButton;
+
+    [SerializeField]
     GameObject openJournal;
     public Animator flasher;
 
@@ -48,6 +55,7 @@ public class TableOfContents : MonoBehaviour
             SaveJournal();
         }
 
+        openJournalButton = GameObject.Find("OpenJournal").GetComponent<Image>();
 
         JournalBackground = GetComponent<Image>();
         journalContainer = transform.GetChild(0).gameObject;
@@ -63,6 +71,7 @@ public class TableOfContents : MonoBehaviour
     {
         SaveGame.CollectedObjects.Add(Resources.Load<JournalEntryObject>("scriptableObjects/Journal_Entries/" + JournalToLoad));
         SaveJournal();
+        openJournalButton.sprite = newDiary;
         flasher.SetTrigger("Flash");
         if (!flasher.GetComponent<AudioSource>().isPlaying)
             flasher.GetComponent<AudioSource>().Play();
@@ -124,6 +133,7 @@ public class TableOfContents : MonoBehaviour
 
     public void OpenJournal()
     {
+        openJournalButton.sprite = noDiary;
         if (journalEntryPage.activeInHierarchy)
             CloseJournalEntry();
         else
