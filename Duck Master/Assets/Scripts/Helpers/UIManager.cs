@@ -86,6 +86,9 @@ public class UIManager : MonoBehaviour
     Transform player;
     Vector3 lastPlayerPos;
 
+    [SerializeField]
+    GameObject TapIndicator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -155,7 +158,6 @@ public class UIManager : MonoBehaviour
                 break;
 
             case UIState.Recalling:
-                //primaryButton.GetComponent<Button>().interactable = false;
                 primaryButtonImage.sprite = whistlePushTex;
                 break;
 
@@ -164,7 +166,6 @@ public class UIManager : MonoBehaviour
                 break;
 
             case UIState.PickingUp:
-                //primaryButton.GetComponent<Button>().interactable = false;
                 primaryButtonImage.sprite = PickUpPushTex;
                 break;
             case UIState.Holding:
@@ -265,7 +266,7 @@ public class UIManager : MonoBehaviour
         //If throw enabled tap on tile to throw
         if (currentState == UIState.Throwing)
         {
-            if(player.position != lastPlayerPos)
+            if (player.position != lastPlayerPos)
             {
                 UnHighlightTiles();
                 HighlightThrowTiles();
@@ -306,31 +307,34 @@ public class UIManager : MonoBehaviour
                     if (hit.collider.gameObject.name == "ground(Clone)" || hit.collider.gameObject.name == "water(clone)")
                     {
                         Vector3 pos = hit.collider.gameObject.transform.position;
+                        BaitTypeHolder tempHolder = CheckBaitPlaced(pos + new Vector3(0, 0.5f, 0));
 
-                        if (currentType == BaitTypes.ATTRACT)
+                        if (tempHolder == null)
                         {
-                            //bait.spawnBait(pos, BaitTypes.ATTRACT);
-                            GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.ATTRACT);
-                        }
+                            if (currentType == BaitTypes.ATTRACT)
+                            {
+                                GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.ATTRACT);
+                            }
 
-                        if (currentType == BaitTypes.REPEL)
+                            if (currentType == BaitTypes.REPEL)
+                            {
+                                GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.REPEL);
+                            }
+
+                            if (currentType == BaitTypes.PEPPER)
+                            {
+                                GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.PEPPER);
+                            }
+                            UpdateBaitButtons();
+                        }
+                        else
                         {
-                            //bait.spawnBait(pos, BaitTypes.REPEL);
-                            GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.REPEL);
+                            PickupBait(tempHolder);
                         }
-
-                        if (currentType == BaitTypes.PEPPER)
-                        {
-                            //bait.spawnBait(pos, BaitTypes.PEPPER);
-                            GameManager.Instance.GetBait().spawnBait(pos, BaitTypes.PEPPER);
-                        }
-                        UpdateBaitButtons();
-
                     }
                     else if (hit.collider.gameObject.tag == "Bait")
                     {
-                        GameManager.Instance.GetBait().removeBait(hit.collider.gameObject.GetComponent<BaitTypeHolder>());
-                        UpdateBaitButtons();
+                        PickupBait(hit.collider.gameObject.GetComponent<BaitTypeHolder>());
                     }
                 }
 
@@ -355,11 +359,32 @@ public class UIManager : MonoBehaviour
             return;
         }
     }
+    void PickupBait(BaitTypeHolder baitHit)
+    {
+        GameManager.Instance.GetBait().removeBait(baitHit);
+        UpdateBaitButtons();
+    }
 
+    BaitTypeHolder CheckBaitPlaced(Vector3 pos)
+    {
+        foreach (BaitTypeHolder bth in GameManager.Instance.GetBait().GetBaitObjects())
+        {
+            if (Vector3.Distance(bth.transform.position, pos) < 0.01f)
+                return bth;
+        }
+
+        return null;
+    }
 
     public void SetBaitType(string type)
     {
-        System.Enum.TryParse(type, out currentType);
+        BaitTypes swapTo;
+        System.Enum.TryParse(type, out swapTo);
+
+        if (swapTo == currentType)
+            currentType = BaitTypes.INVALID;
+        else
+            currentType = swapTo;
         //attractButton.GetComponent<Image>().color = (currentType == BaitTypes.ATTRACT) ? Color.green : Color.white;
         //repelButton.GetComponent<Image>().color = (currentType == BaitTypes.REPEL) ? Color.green : Color.white;
         //pepperButton.GetComponent<Image>().color = (currentType == BaitTypes.PEPPER) ? Color.green : Color.white;

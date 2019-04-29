@@ -28,6 +28,11 @@ public class SettingsMenu : MonoBehaviour
         {
             GetComponentInChildren<Button>().image.enabled = false;
         }
+        else
+        {
+            Camera.main.GetComponent<CameraController>().SetMovable(!gameObject.activeInHierarchy);
+        }
+
     }
 
     public void LoadMenu()
@@ -37,37 +42,50 @@ public class SettingsMenu : MonoBehaviour
 
     public void UpdateVolume(string VolumeGroup, float newVolume)
     {
-        switch (VolumeGroup)
+        if (PlayerSounds)
         {
-            case "Master":
-                PlayerSounds.SetFloat("MasterVol", newVolume);
-                break;
-            case "SFX":
-                PlayerSounds.SetFloat("SfxVol", newVolume);
-                PlayerSounds.SetFloat("PlayerVol", newVolume - 20);
-                break;
-            case "Music":
-                PlayerSounds.SetFloat("MusicVol", newVolume);
-                break;
+            switch (VolumeGroup)
+            {
+                case "Master":
+                    PlayerSounds.SetFloat("MasterVol", newVolume);
+                    break;
+                case "SFX":
+                    PlayerSounds.SetFloat("SfxVol", newVolume);
+                    PlayerSounds.SetFloat("PlayerVol", newVolume - 20);
+                    break;
+                case "Music":
+                    PlayerSounds.SetFloat("MusicVol", newVolume);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     public float GetVolume(string VolumeGroup)
     {
         float valueReturn = 0;
-
-        switch (VolumeGroup)
+        if (PlayerSounds)
         {
-            case "Master":
-                PlayerSounds.GetFloat("MasterVol", out valueReturn);
-                break;
-            case "SFX":
-                PlayerSounds.GetFloat("SfxVol", out valueReturn);
-                break;
-            case "Music":
-                PlayerSounds.GetFloat("MusicVol", out valueReturn);
-                break;
+            switch (VolumeGroup)
+            {
+                case "Master":
+                    PlayerSounds.GetFloat("MasterVol", out valueReturn);
+                    break;
+                case "SFX":
+                    PlayerSounds.GetFloat("SfxVol", out valueReturn);
+                    break;
+                case "Music":
+                    PlayerSounds.GetFloat("MusicVol", out valueReturn);
+                    break;
+                default:
+                    valueReturn = 200;
+                    break;
+            }
         }
+        else
+            valueReturn = 200;
+
         return valueReturn;
     }
 }

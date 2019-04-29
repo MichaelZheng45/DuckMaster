@@ -104,3 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85c2bce813a47c42990b33d11d098fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attractParticle: {fileID: 5476128151501994095, guid: ed403df5c2acc0745846df9d31e3424a,
+    type: 3}
+  repelParticle: {fileID: 8391571077518077707, guid: 64259243d4c952a4bb667aaa901c3fe7,
+    type: 3}
+  pepperParticle: {fileID: 1194967142130295908, guid: d1db3f907f5a4c946905b15b9e572498,
+    type: 3}

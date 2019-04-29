@@ -138,18 +138,19 @@ public class TableOfContents : MonoBehaviour
             CloseJournalEntry();
         else
         {
-
             JournalBackground.enabled = true;
             journalContainer.SetActive(true);
         }
 
         UpdateJournalEntries();
+        Camera.main.GetComponent<CameraController>().SetMovable(false);
     }
 
     public void CloseJournal()
     {
         JournalBackground.enabled = false;
         journalContainer.SetActive(false);
+        Camera.main.GetComponent<CameraController>().SetMovable(true);
     }
 
     public void SaveJournal()

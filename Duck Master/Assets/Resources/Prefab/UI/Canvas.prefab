@@ -70,6 +70,7 @@ MonoBehaviour:
   pepperPushed: {fileID: 21300000, guid: a4e20f110b19e754b9a037563b7575b7, type: 3}
   pepperUnPushed: {fileID: 21300000, guid: 1ea22dee08ba12e46a2f870ff86c86c4, type: 3}
   magnitude: 1.5
+  TapIndicator: {fileID: 0}
 --- !u!222 &1176724931
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -840,10 +841,10 @@ RectTransform:
   m_Father: {fileID: 8855306169965726489}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 702, y: 429}
-  m_SizeDelta: {x: 300, y: 200}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 673, y: -115.3}
+  m_SizeDelta: {x: 225, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6188186209014808509
 CanvasRenderer:
@@ -2296,8 +2297,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -51, y: -44.5}
-  m_SizeDelta: {x: 76.900024, y: 76.899994}
+  m_AnchoredPosition: {x: -85, y: -85}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8855306169564012078
 CanvasRenderer:

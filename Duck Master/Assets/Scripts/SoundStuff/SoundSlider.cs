@@ -17,11 +17,12 @@ public class SoundSlider : Slider
     {
         base.OnEnable();
         sm = FindObjectOfType<SettingsMenu>();
-        value = sm.GetVolume(name);
+        value = (sm.GetVolume(name) == 200) ? value : sm.GetVolume(name);
     }
 
     public void UpdateSlider()
     {
-        sm.UpdateVolume(name, value);
+        if (sm)
+            sm.UpdateVolume(name, value);
     }
 }

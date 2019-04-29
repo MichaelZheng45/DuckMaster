@@ -55,7 +55,7 @@ public class Gate : LogicOutput
             Debug.DrawLine(ps.transform.position + new Vector3(0, 0.1f, 0), rhc.point, Color.red, 1000);
             Vector3 VarTemp = Camera.main.WorldToScreenPoint(rhc.point);
             var p = ps.main;
-            p.startColor = Color.Lerp(tex.GetPixel((int)VarTemp.x, (int)VarTemp.y), new Color(1, 1, 1, .25f), .25f);
+            p.startColor = Color.Lerp(tex.GetPixel((int)VarTemp.x, (int)VarTemp.y), new Color(.5f, .5f, .5f, 0), .5f);
         }
 
         Camera.main.targetTexture = null;

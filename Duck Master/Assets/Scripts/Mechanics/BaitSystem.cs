@@ -183,8 +183,8 @@ public class BaitSystem : MonoBehaviour
             g.GetComponent<BaitTypeHolder>().SetBaitType(type);
             baitAmount[type]--;
             placedBaits.Add(g.GetComponent<BaitTypeHolder>());
-           // if (baitAmount[type] == 0)
-           //     FindObjectOfType<UIManager>().SetBaitType("INVALID");
+            // if (baitAmount[type] == 0)
+            //     FindObjectOfType<UIManager>().SetBaitType("INVALID");
         }
     }
 
@@ -203,10 +203,8 @@ public class BaitSystem : MonoBehaviour
         return baitAmount[type];
     }
 
-    /*
-   public List<GameObject> GetBaitObjects()
-   {
-       return baitObjects;
-   }
-   */
+    public List<BaitTypeHolder> GetBaitObjects()
+    {
+        return placedBaits;
+    }
 }
