@@ -82,6 +82,8 @@ public class TableOfContents : MonoBehaviour
 
     public void GoToJournalEntry(string _JournalEntryName)
     {
+        journalEntryPage.transform.Find("Scroll View").GetComponent<ScrollRect>().normalizedPosition = new Vector2(0, 1);
+
         foreach (JournalEntryObject jeo in SaveGame.CollectedObjects)
         {
             if (jeo.JournalEntryName == _JournalEntryName)
@@ -89,6 +91,11 @@ public class TableOfContents : MonoBehaviour
                 journalEntryPage.SetActive(true);
                 JournalText.text = jeo.JournalEntryText;
                 JournalSprite.sprite = jeo.JournalEntrySprite;
+            }
+
+            if (jeo.JournalEntryName == "Deadliest Catch")
+            {
+                AudioSource.PlayClipAtPoint(Resources.Load<AudioClip>("Special/Deadliest/Deadliest"), Camera.main.transform.position);
             }
         }
     }
@@ -137,6 +144,10 @@ public class TableOfContents : MonoBehaviour
 
     public void OpenJournal()
     {
+        int i = Random.Range(0, 100);
+        if (i == 0)
+            AddNewJournalEntry("Deadliest Catch");
+
         openJournalButton.sprite = noDiary;
         if (journalEntryPage.activeInHierarchy)
             CloseJournalEntry();
