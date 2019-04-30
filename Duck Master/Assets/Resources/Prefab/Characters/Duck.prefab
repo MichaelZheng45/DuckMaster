@@ -73,7 +73,7 @@ MonoBehaviour:
   pathVelocity: 0.05
   duckHeightAtHold: 0.4
   fleeRange: 1.3
-  runVelocity: 0.1
+  runVelocity: 0.15
   verticalityChangeSpeed: 0.1
   attractDistance: 3
 --- !u!114 &263347116
