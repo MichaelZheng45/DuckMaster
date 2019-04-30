@@ -16,6 +16,6 @@ public class LevelSelectButton : MonoBehaviour
 
     public void LoadLevel()
     {
-        SceneManager.LoadSceneAsync(LevelToLoad);
+        FindObjectOfType<SceneFlow>().GoToScene(LevelToLoad);
     }
 }
