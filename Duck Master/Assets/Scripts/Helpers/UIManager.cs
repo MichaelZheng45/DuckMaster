@@ -88,6 +88,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     GameObject TapIndicator;
+    TapFeedback currentTapIndicator;
 
     // Start is called before the first frame update
     void Start()
@@ -350,7 +351,14 @@ public class UIManager : MonoBehaviour
                 {
                     if (hit.collider.gameObject.name == "ground(Clone)")
                     {
+                        if (currentTapIndicator)
+                            currentTapIndicator.KillThis();
+
                         Vector3 pos = hit.collider.gameObject.transform.position;
+                        GameObject g = Instantiate(TapIndicator);
+                        g.transform.position = pos + new Vector3(0, .6f, 0);
+                        currentTapIndicator = g.GetComponent<TapFeedback>();
+
                         GameManager.Instance.movePlayerTo(pos);
                     }
                 }
